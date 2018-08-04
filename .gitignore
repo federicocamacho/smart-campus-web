@@ -1,1 +1,3 @@
 .vs
+/web-application/node_modules
+/web-application/.vscode

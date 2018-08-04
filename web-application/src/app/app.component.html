@@ -1,0 +1,6 @@
+<sc-nav *ngIf="isLogin; else notLoged">
+    <router-outlet></router-outlet>
+</sc-nav>
+<ng-template #notLoged>
+    <router-outlet></router-outlet>
+</ng-template>
