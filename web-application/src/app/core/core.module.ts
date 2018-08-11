@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -22,6 +23,7 @@ import { SharedModule } from '../shared/shared.module';
 @NgModule({
   imports: [
     CommonModule,
+    FlexLayoutModule,
     FormsModule,
     HttpClientModule,
     RouterModule,
@@ -35,6 +37,7 @@ import { SharedModule } from '../shared/shared.module';
   ],
   exports: [
     CommonModule,
+    FlexLayoutModule,
     FooterComponent,
     FormsModule,
     HttpClientModule,

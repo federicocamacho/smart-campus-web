@@ -9,6 +9,7 @@ import {
   MatIconModule,
   MatInputModule,
   MatListModule,
+  MatMenuModule,
   MatSidenavModule,
   MatProgressSpinnerModule,
   MatToolbarModule } from '@angular/material';
@@ -24,6 +25,7 @@ import { NavSearchComponent } from './components/nav-search/nav-search.component
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatMenuModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatToolbarModule
@@ -36,6 +38,7 @@ import { NavSearchComponent } from './components/nav-search/nav-search.component
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatMenuModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatToolbarModule,
