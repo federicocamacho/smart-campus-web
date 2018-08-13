@@ -1,3 +1,25 @@
-<p>
-  login works!
-</p>
+<div fxLayout="row" fxLayoutAlign="center center" style="height: 100vh">
+    <div fxLayout='column' fxFlex="30" fxFlex.xs="100" fxFlexAlign="center" style="margin: 20px">
+      <form class="login-form" #loginForm="ngForm">
+        <div class="border-container">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <input class="login-input"placeholder="Usuario" required="true" [(ngModel)]="username" name="username" type="text">
+          </div>
+          <hr class="login-line">
+          <div fxLayout="row" fxLayoutAlign="center center">
+            <input class="login-input"placeholder="Contraseña" required="true" [(ngModel)]="password" name="password" type="password">
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <button 
+            mat-flat-button color="primary" (click)="login()" 
+            [disabled]="loginForm.form.touched && loginForm.form.invalid" 
+            style="color: white" class="login-button">Iniciar sesión</button>
+        </div>
+      </form>
+      <div fxLayout="row" fxLayoutAlign="center center">
+          <a class="login-link">Registrarse</a>
+          <a class="login-link">Olvidé mi contraseña</a>
+      </div>
+    </div>
+  </div>

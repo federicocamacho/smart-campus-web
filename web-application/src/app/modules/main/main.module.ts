@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms';
 import { HomeComponent, LoginComponent, NotFoundComponent} from './pages';
 import { SharedModule } from '../../shared/shared.module';
 
@@ -14,6 +16,8 @@ import { SharedModule } from '../../shared/shared.module';
 @NgModule({
   imports: [
     CommonModule,
+    FlexLayoutModule,
+    FormsModule,
     SharedModule
   ],
   declarations: [
