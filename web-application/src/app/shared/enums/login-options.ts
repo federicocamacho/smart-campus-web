@@ -1,5 +1,5 @@
-export class LoginOptions {
-    public static LOGIN = 0;
-    public static SIGNING = 1;
-    public static PASSWORD = 2;
+export enum LoginOptions {
+    LOGIN = 0,
+    SIGNING = 1,
+    PASSWORD = 2
 }

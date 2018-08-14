@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginOptions } from '../../../../shared/enums';
 
 @Component({
   selector: 'sc-login',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  public username: string;
+  public password: string;
+  public loginMode: LoginOptions;
 
-  ngOnInit() {
+  constructor() {
+    this.username = '';
+    this.password = '';
+    this.loginMode = LoginOptions.LOGIN;
   }
+
+  ngOnInit() {}
 
 }

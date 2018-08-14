@@ -1,5 +1,5 @@
-<div fxLayout="row" fxLayoutAlign="center center" style="height: 100vh">
-    <div fxLayout='column' fxFlex="30" fxFlex.xs="100" fxFlexAlign="center" style="margin: 20px">
+<div fxLayout="row" fxLayoutAlign="center center" class="login-bg" style="height: 100vh">
+    <div fxLayout='column' fxFlex="30" fxFlex.xs="100" fxFlex.gt-md="20" fxFlexAlign="center" style="margin: 20px">
       <form class="login-form" #loginForm="ngForm">
         <div class="border-container">
           <div fxLayout="row" fxLayoutAlign="center center">
@@ -17,7 +17,7 @@
             style="color: white" class="login-button">Iniciar sesión</button>
         </div>
       </form>
-      <div fxLayout="row" fxLayoutAlign="center center">
+      <div fxLayout="row login-links" style="margin-top: 8px;" fxLayoutAlign="center center">
           <a class="login-link">Registrarse</a>
           <a class="login-link">Olvidé mi contraseña</a>
       </div>
