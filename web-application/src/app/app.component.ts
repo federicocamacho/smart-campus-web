@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './core/auth/authentication.service';
 
 /**
- *Application's main Component
+ * Application's main Component
  *
- * @author Federico Camacho
  * @date 2018-06-28
  * @export
  * @class AppComponent
@@ -14,8 +13,9 @@ import { AuthenticationService } from './core/auth/authentication.service';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
+
   /**
-   *Represents if the user is loged or not. Is used to hide and show dashboard elements in login page.
+   * Represents if the user is loged or not. Is used to hide and show dashboard elements in login page.
    *
    * @type {boolean}
    * @memberof AppComponent
@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   public isLogin: boolean;
 
   /**
-   *Binded to side bar menu display.
+   * Binded to side bar menu display.
    *
    * @type {boolean}
    * @memberof HomeComponent
@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
   public isMenuOpened: boolean;
 
   /**
-   *Application Title
+   * Application Title
    *
    * @type {string}
    * @memberof AppComponent
@@ -39,8 +39,7 @@ export class AppComponent implements OnInit {
   public title: string;
 
   /**
-   *Creates an instance of AppComponent.
-   * @author Federico Camacho
+   * Creates an instance of AppComponent.
    * @date 2018-07-07
    * @memberof AppComponent
    */

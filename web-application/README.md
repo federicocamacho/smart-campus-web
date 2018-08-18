@@ -23,6 +23,8 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 [Angular Material](https://material.angular.io/guide/getting-started)
 See [Docs](https://material.angular.io/components/categories)
 
+Responsive and grid using Angular's [Flex Layout](https://github.com/angular/flex-layout)
+See [Docs](https://github.com/angular/flex-layout/wiki/API-Documentation)
 
 ## Folder Structure
 
@@ -38,7 +40,7 @@ Documentation generated using [Compodoc](https://github.com/compodoc/gulp-compod
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
-## Styles
+## Styling
 Without theming angular.json must contain the following property:
  "styles": [
     {

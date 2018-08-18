@@ -4,9 +4,8 @@ import { CoreModule } from '../core.module';
 import { AuthenticationService } from '../auth/authentication.service';
 
 /**
- *Routing guard to control user's navigation to login page.
+ * Routing guard to control user's navigation when trying to open login page.
  *
- * @author Federico Camacho
  * @date 2018-06-28
  * @export
  * @class LoginGuardService
@@ -18,7 +17,7 @@ import { AuthenticationService } from '../auth/authentication.service';
 export class LoginGuard implements CanActivate {
 
   /**
-   *Creates an instance of LoginGuardService.
+   * Creates an instance of LoginGuardService.
    * @param {AuthenticationService} auth
    * @param {Router} router
    * @memberof LoginGuardService
@@ -26,7 +25,7 @@ export class LoginGuard implements CanActivate {
   constructor(public auth: AuthenticationService, public router: Router) { }
 
   /**
-   *Routing Guard method to check if user's authenticated or not.
+   * Routing Guard method to check if the user is authenticated or not.
    *
    * @returns {boolean}
    * @memberof AuthGuardService

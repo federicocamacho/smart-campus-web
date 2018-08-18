@@ -36,9 +36,8 @@ const routes: Routes = [
 ];
 
 /**
- *App's Root Routing Module.
+ * App's Root Routing Module.
  *
- * @author Federico Camacho
  * @date 2018-06-28
  * @export
  * @class AppRoutingModule

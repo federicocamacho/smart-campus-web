@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { CoreModule } from '../core.module';
 
 /**
- *Service to control user's Authentication
+ * Service to control Authentication
  *
- * @author Federico Camacho
  * @date 2018-06-28
  * @export
  * @class AuthenticationService
@@ -13,7 +12,6 @@ import { CoreModule } from '../core.module';
   providedIn: CoreModule
 })
 export class AuthenticationService {
-
 
   /**
    * Creates an instance of AuthenticationService.

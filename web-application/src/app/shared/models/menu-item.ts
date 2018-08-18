@@ -1,7 +1,6 @@
 /**
- *Model for elements inside Side menu.
+ * Model of elements inside Side menu.
  *
- * @author Federico Camacho
  * @date 2018-06-30
  * @export
  * @class MenuItem
@@ -9,7 +8,7 @@
 export class MenuItem {
 
   /**
-   *If the item is a parent this property reflects if the second level menu is opened or closed.
+   * If the item is a parent this property reflects if the second level menu is opened or closed.
    *
    * @type {boolean}
    * @memberof MenuItem
@@ -17,7 +16,7 @@ export class MenuItem {
   public areChildrenOpened?: boolean;
 
   /**
-   *Stores current element children.
+   * Stores current's element children.
    *
    * @type {MenuItem[]}
    * @memberof MenuItem
@@ -25,7 +24,7 @@ export class MenuItem {
   public children?: MenuItem[];
 
   /**
-   *Material icon name for this element.
+   * Material icon name for this element.
    *
    * @type {string}
    * @memberof MenuItem
@@ -33,7 +32,7 @@ export class MenuItem {
   public iconName: string;
 
   /**
-   *Number to identify the menu item.
+   * Number to identify the menu item.
    *
    * @type {number}
    * @memberof MenuItem
@@ -41,7 +40,7 @@ export class MenuItem {
   public id: number;
 
   /**
-   *Menu element name.
+   * Menu element name.
    *
    * @type {string}
    * @memberof MenuItem
@@ -49,7 +48,7 @@ export class MenuItem {
   public name: string;
 
   /**
-   *Menu element name to navigate using routerLink (absolute or relative paths).
+   * Menu element name to navigate using routerLink (absolute or relative paths).
    *
    * @type {string}
    * @memberof MenuItem
@@ -57,7 +56,7 @@ export class MenuItem {
   public path: string;
 
   /**
-   *Represents if the current element is actual navigation page.
+   * Represents if the current element is the actual navigation page.
    *
    * @type {boolean}
    * @memberof MenuItem
@@ -65,9 +64,8 @@ export class MenuItem {
   public selected: boolean;
 
   /**
-   *Creates an instance of Menu Item.
+   * Creates an instance of Menu Item.
    *
-   * @author Federico Camacho
    * @date 2018-06-30
    * @param {number} id
    * @param {string} name

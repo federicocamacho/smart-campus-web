@@ -6,9 +6,8 @@ import { HomeComponent, LoginComponent, NotFoundComponent} from './pages';
 import { SharedModule } from '../../shared/shared.module';
 
 /**
- *Application's main module which also includes Login component
+ * Application's main module (not lazy-loaded) which also includes Login component
  *
- * @author Federico Camacho
  * @date 2018-06-28
  * @export
  * @class MainModule

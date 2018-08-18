@@ -13,9 +13,8 @@ import { NavComponent } from './components/nav/nav.component';
 import { SharedModule } from '../shared/shared.module';
 
 /**
- *Module which includes Application's main utils and singleton services. This module is only imported in AppModule.
+ * Module which includes Application's main utils and singleton services. This module is only imported by AppModule.
  *
- * @author Federico Camacho
  * @date 2018-06-28
  * @export
  * @class CoreModule
