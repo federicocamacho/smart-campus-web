@@ -1,9 +1,9 @@
 export class ChangePasswordInput {
 
-    email: string;
+  email: string;
 
-    constructor(email = '') {
-        this.email = email;
-    }
+  constructor(email = '') {
+    this.email = email;
+  }
 
 }

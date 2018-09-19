@@ -1,5 +1,5 @@
 export enum LoginOptions {
-    LOGIN = 0,
-    SIGNING = 1,
-    PASSWORD = 2
+  LOGIN = 0,
+  SIGNING = 1,
+  PASSWORD = 2
 }

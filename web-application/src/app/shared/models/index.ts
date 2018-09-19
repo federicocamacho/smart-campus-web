@@ -1,4 +1,3 @@
-export { APIResponse } from './api-response';
 export { ChangePasswordInput } from './change-password';
 export { LoginInput } from './login';
 export { MenuItem } from './menu-item';

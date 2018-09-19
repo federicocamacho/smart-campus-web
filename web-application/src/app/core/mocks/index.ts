@@ -1,1 +1,1 @@
-export { MenuMock } from './menu-mock';
+export { SearchMock } from './search-mock';
