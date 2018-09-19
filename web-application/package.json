@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "stats": "webpack-bundle-analyzer dist/web-application/stats.json",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

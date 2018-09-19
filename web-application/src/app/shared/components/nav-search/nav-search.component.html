@@ -6,8 +6,7 @@
     (ngModelChange)="queryChanged($event)">
 </mat-form-field>
 <mat-autocomplete #auto="matAutocomplete"
-  [autoActiveFirstOption]="true"
-  [classList]="nav-search">
+  [autoActiveFirstOption]="true">
   <mat-option *ngFor="let element of filteredSet" (click)="selectElement(element)">
     <span>{{ element.name }}</span>
   </mat-option>
