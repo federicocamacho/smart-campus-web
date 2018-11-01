@@ -5,10 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { ScCommonModule } from 'sc-common';
 import { environment } from '../environments/environment';
 
 import { CoreModule } from './core/core.module';
-import { MainModule } from './modules/main/main.module';
+import { MainModule } from './main/main.module';
+import { MaterialModule } from './material/material.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { MainModule } from './modules/main/main.module';
     BrowserAnimationsModule,
     CoreModule,
     MainModule,
-    ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
+    MaterialModule,
+    ScCommonModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   bootstrap: [AppComponent]
 })

@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent, NotFoundComponent, HomeComponent } from './modules/main/pages';
+import { LoginComponent } from './main/login/login.component';
 import { LoginGuard, AuthGuard } from './core/guards';
+import { HomeComponent } from './main/home/home.component';
+import { NotFoundComponent } from './main/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -43,7 +45,7 @@ const routes: Routes = [
  * @class AppRoutingModule
  */
 @NgModule({
-  imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

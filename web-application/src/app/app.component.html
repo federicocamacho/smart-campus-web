@@ -1,6 +1,23 @@
-<sc-nav *ngIf="isLogin; else notLoged">
-    <router-outlet></router-outlet>
-</sc-nav>
-<ng-template #notLoged>
-    <router-outlet></router-outlet>
-</ng-template>
+<ng-container *ngIf="isLogin">
+  <sc-header
+    backgroundColor="white"
+    brandLogoSrc="assets/icons/icon-72x72.png"
+    [brandName]="title"
+    [headerOptions]="service.headerItems"
+    iconsColor="#a2a2a2"
+    [isMenuOpened]="service.isMenuOpened"
+    textColor="#20aee3"
+    userImgSrc="assets/imgs/tony-stark.jpg"
+    userName="Tony Stark"
+    (menuToggled)="service.toggleSideMenu()"
+    (userToggled)="service.toggleUserCard()">
+  </sc-header>
+  <sc-menu
+    backgroundColor="white"
+    iconsColor="#a2a2a2"
+    [isOpened]="service.isMenuOpened"
+    [menuItems]="service.menuItems"
+    (menuClosed)="service.closeMenu()">
+  </sc-menu>
+</ng-container>
+<router-outlet></router-outlet>

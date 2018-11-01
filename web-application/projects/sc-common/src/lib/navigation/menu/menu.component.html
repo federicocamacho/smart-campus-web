@@ -1,0 +1,29 @@
+<div 
+  class="menu-container" 
+  *ngIf="isOpened"
+  [fxHide]="!isOpened">
+  <div 
+    class="menu-item-container" 
+    *ngFor="let item of menuItems"
+    flexLayout="row" fxLayoutAlign="fill center"
+    [style.color]="iconsColor">
+    <div 
+      class="menu-icon" 
+      flexLayout="col" fxLayoutAlign="center center"
+      style="width: 50px; height: 50px;">
+      <mat-icon style="font-size: 27px">{{ item.icon }}</mat-icon>
+    </div>
+    <div 
+      class="menu-option-name"
+      flexLayout="col"  
+      style="width: 125px;">
+      {{ item.name }}
+    </div>
+    <div scBadge="#20aee3"
+      *ngIf="item.hasNotifications()"
+      flexLayout="col"
+      style="width: 30px">
+      {{ item.notificationCount }}
+    </div>
+  </div>
+</div>

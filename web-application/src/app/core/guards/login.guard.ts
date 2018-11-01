@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { CoreModule } from '../core.module';
-import { AuthenticationService } from '../auth/authentication.service';
+import { AuthService } from '../services/auth.service';
 
 /**
  * Routing guard to control user's navigation when trying to open login page.
@@ -17,12 +17,12 @@ import { AuthenticationService } from '../auth/authentication.service';
 export class LoginGuard implements CanActivate {
 
   /**
-   * Creates an instance of LoginGuardService.
-   * @param {AuthenticationService} auth
+   * Creates an instance of LoginGuard.
+   * @param {AuthService} auth
    * @param {Router} router
    * @memberof LoginGuardService
    */
-  constructor(public auth: AuthenticationService, public router: Router) { }
+  constructor(public auth: AuthService, public router: Router) { }
 
   /**
    * Routing Guard method to check if the user is authenticated or not.

@@ -1,0 +1,23 @@
+.menu-container {
+    background-color: white;
+    width: 230px;
+    min-height: calc(100vh - 76px);
+    border-right: solid 1px #eee;
+}
+
+.menu-item-container {
+    height: 60px;
+}
+
+.menu-item-container:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.menu-item-container:hover * {
+    color: #20aee3;
+}
+
+.menu-option-name {
+    padding-left: 10px;
+}

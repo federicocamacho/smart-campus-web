@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
 import { CoreModule } from '../core.module';
-import { AuthenticationService } from '../auth/authentication.service';
+import { AuthService } from '../services/auth.service';
+
 
 /**
  * Routing guard to control user's navigation according if it's authenticated or not
  *
  * @date 2018-06-28
  * @export
- * @class AuthGuardService
+ * @class AuthGuard
  * @implements {CanActivate}
  */
 @Injectable({
@@ -17,12 +18,12 @@ import { AuthenticationService } from '../auth/authentication.service';
 export class AuthGuard implements CanActivate {
 
   /**
-   * Creates an instance of AuthGuardService.
-   * @param {AuthenticationService} auth
+   * Creates an instance of AuthGuard.
+   * @param {AuthService} auth
    * @param {Router} router
    * @memberof AuthGuardService
    */
-  constructor(public auth: AuthenticationService, public router: Router) { }
+  constructor(public auth: AuthService, public router: Router) { }
 
   /**
    * Routing Guard method to check if user's authenticated or not.
@@ -39,4 +40,5 @@ export class AuthGuard implements CanActivate {
   }
 
 }
+
 

@@ -1,0 +1,50 @@
+<header class="top-bar" [ngStyle]="{ 'background-color': backgroundColor, 'color': textColor }">
+  <nav class="navbar" fxLayout="row" fxLayoutAlign="fill center">
+    <div class="navbar-header" (click)="goHome()" fxLayout="col">
+      <a class="navbar-brand" fxLayout="row">
+        <img [src]="brandLogoSrc" [alt]="brandName" class="brand-logo" fxLayout="col" />
+        <div 
+          fxLayout="col" fxLayoutAlign="start center" 
+          [fxHide]="!isMenuOpened" 
+          style="padding-left: 10px;">
+          <span class="brand-name">
+            {{ brandName | uppercase }}
+          </span>
+        </div>
+      </a>
+    </div>
+    <div class="navbar-collapse" fxLayout="col">
+      <ul class="navbar-nav" fxLayout="row">
+        <li class="nav-item" [ngStyle]="{ 'color': iconsColor }" fxLayout="col">
+          <button mat-icon-button (click)="toggleMenu()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="navbar-nav" fxLayout="row">
+        <li class="nav-item" [ngStyle]="{ 'color': iconsColor }" fxLayout="col">
+          <button mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </li>
+      </ul>
+      <ul class="navbar-nav nav-right" fxLayout="row">
+        <li 
+          class="nav-item"
+          *ngFor="let item of headerOptions"
+          [ngStyle]="{ 'color': iconsColor }"
+          fxLayout="col" fxHide.lt-sm>
+          <button mat-icon-button (click)="item.action">
+            <mat-icon>{{ item.iconName }}</mat-icon>
+          </button>
+        </li>
+        <li class="nav-item user-item" fxLayout="col" style="height: 100%; margin-left: 10px">
+          <div fxLayout="row" fxLayoutAlign="fill center"></div>
+          <img [src]="userImgSrc" [alt]="userName" class="user-img" fxLayout="col" />
+          <span class="user-name">{{ userName }}</span>
+          <mat-icon style="margin: auto">keyboard_arrow_down</mat-icon>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,79 @@
+header {
+    position: relative;
+    z-index: 50;
+    display: block;
+    height: 76px;
+    max-height: 76px;
+    padding: 0px 15px 0 0;
+    align-items: center;
+}
+
+nav {
+    height: 100%;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+.navbar-header {
+    cursor: pointer;
+    padding: 5px;
+    padding-left: 10px;
+}
+
+.navbar-collapse {
+    margin-left: 6px;
+    border-left: 1px solid #eee;
+}
+
+.nav-item {
+    font-size: 15px;
+}
+
+.brand-logo {
+    width: 40px;
+    height: 40px;
+}
+
+.brand-name {
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: -0.5px;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.nav-right {
+    position: absolute;
+    right: 0;
+}
+
+.user-item {
+    cursor: pointer;
+    height: 100%;
+    margin-top: -4px;
+}
+
+.user-item:hover, .navbar-header:hover {
+    background-color: #eee;
+}
+
+.user-img {
+    max-width: 50px;
+    max-height: 50px;
+}
+
+.user-name {
+    margin: auto 10px;
+}
+
+@media (max-width: 1279px) {
+    .user-name {
+        display: none;
+    }
+}
