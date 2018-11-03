@@ -10,7 +10,8 @@
     "e2e": "ng e2e",
     "stats": "webpack-bundle-analyzer dist/web-application/stats.json",
     "lib": "ng build --project sc-common",
-    "dev": "npm run lib && ng serve"
+    "dev": "npm run lib && ng serve",
+    "prod": "npm run lib && ng build --prod"
   },
   "private": true,
   "dependencies": {
