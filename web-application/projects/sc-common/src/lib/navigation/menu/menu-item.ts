@@ -1,3 +1,5 @@
+import { StringUtils } from '../../utils/string-utils';
+
 /**
  * Represents a single option found in the side menu.
  *
@@ -22,10 +24,24 @@ export class MenuItem {
     this.isOpened = false;
   }
   
+  /**
+   * Check if the item has an icon.
+   *
+   * @date 2018-11-04
+   * @returns
+   * @memberof MenuItem
+   */
   hasIcon(): boolean {
-    return this.icon && this.icon !== '';
+    return StringUtils.isNullOrEmpty(this.icon);
   }
   
+  /**
+   * Checks if the item has notifications
+   *
+   * @date 2018-11-04
+   * @returns
+   * @memberof MenuItem
+   */
   hasNotifications(): boolean {
     return this.notificationCount && this.notificationCount > 0;
   }

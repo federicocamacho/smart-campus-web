@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CoreModule } from '../core.module';
+import { CookieService } from 'ngx-cookie-service';
+import { UserCookie } from '../models/auth';
 
 /**
  * Service to control Authentication
@@ -13,16 +15,24 @@ import { CoreModule } from '../core.module';
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(private cookieService: CookieService) { }
 
   /**
-   * Checks if user is currently authenticated checking token in session storage.
+   * Checks if there's a used logedin.
    *
    * @returns {boolean}
    * @memberof AuthenticationService
    */
   public isAuthenticated(): boolean {
-    const token = sessionStorage.getItem('token');
-    return (token && token !== '');
+    if (this.cookieService.check('user')) {
+      try {
+        const user: UserCookie = UserCookie.fromJSON(this.cookieService.get('user'));
+        return user && user.hasValidToken();
+      } catch (e) {
+        return false;
+      }
+    }
+
+    return false;
   }
 }

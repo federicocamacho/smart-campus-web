@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+import { CookieService } from 'ngx-cookie-service';
 
 /**
  * Module which includes Application's main utils and singleton services. This module is only imported by AppModule.
@@ -20,12 +22,12 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     RouterModule
   ],
-  declarations: [],
   exports: [
     CommonModule,
     FlexLayoutModule,
     FormsModule,
     HttpClientModule
-  ]
+  ],
+  providers: [ CookieService ]
 })
 export class CoreModule { }

@@ -7,4 +7,5 @@ export * from './lib/navigation/menu/menu-item';
 export * from './lib/navigation/header/header-item';
 
 // Utils
-export * from './lib/utils/rxjs-util';
+export * from './lib/utils/cleanable';
+export * from './lib/utils/string-utils';

@@ -1,10 +1,9 @@
 import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, takeUntil } from 'rxjs/operators';
 
 import { MenuItem } from './menu-item';
-import { RxJsUtil } from '../../utils/rxjs-util';
+import { Cleanable } from '../../utils/cleanable';
 
 /**
  * Sidebar Menu Component
@@ -18,7 +17,7 @@ import { RxJsUtil } from '../../utils/rxjs-util';
   styleUrls: ['./menu.component.css']
 })
 
-export class MenuComponent implements OnInit, OnDestroy {
+export class MenuComponent extends Cleanable implements OnInit, OnDestroy {
 
   /**
    * Navbar's background color as a string (receives HEX and color names).
@@ -50,26 +49,16 @@ export class MenuComponent implements OnInit, OnDestroy {
 
   @Output() menuClosed: EventEmitter<void>;
 
-  /**
-   * {@link Subscription } used to detect when the device has small screen.
-   *
-   * @memberof MenuComponent
-   */
-  private smScreenSubscription: Subscription;
-
   constructor(private bpObserver: BreakpointObserver) {
+    super();
     this.menuClosed = new EventEmitter();
   }
 
   ngOnInit() {
-    this.smScreenSubscription = this.bpObserver
+    this.bpObserver
       .observe([Breakpoints.Small, Breakpoints.XSmall])
-      .pipe(map(value => value.matches))
+      .pipe(map(value => value.matches), takeUntil(this.destroy))
       .subscribe(isMobile => this.emitIfIsMobile(isMobile));
-  }
-
-  ngOnDestroy() {
-    RxJsUtil.unsubscribe(this.smScreenSubscription);
   }
 
   /**

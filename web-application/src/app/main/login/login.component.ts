@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { ChangePasswordInput, LoginInput, SigningInput } from '../../core/models/auth';
+import { Component } from '@angular/core';
+
+import { LoginInput, SigningInput, UserCookie } from '../../core/models/auth';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 /**
  * Login, Signing and Change password component for the application.
  * @date 2018-08-17
  * @export
  * @class LoginComponent
- * @implements {OnInit}
  */
 @Component({
   selector: 'sc-login',
@@ -14,20 +16,9 @@ import { ChangePasswordInput, LoginInput, SigningInput } from '../../core/models
   styleUrls: ['./login.component.scss']
 })
 
-export class LoginComponent implements OnInit {
-
-
+export class LoginComponent {
   /**
-   * Includes the fields filled by the user to change the password.
-   *
-   * @type {ChangePasswordInput}
-   * @memberof LoginComponent
-   */
-  public forgotPassword: ChangePasswordInput;
-
-
-  /**
-   * Includes the fields filled by the user when is executing a login.
+   * Includes the fields filled by the user when is loging in.
    *
    * @type {LoginInput}
    * @memberof LoginComponent
@@ -35,12 +26,11 @@ export class LoginComponent implements OnInit {
   public login: LoginInput;
 
   /**
-   * Binded to the form to be displayed (LOGIN = 0, SIGNING = 1, PASSWORD = 2).
+   * Determines whether the form is a login form (1) or signing form (0)
    *
-   * @type {number}
    * @memberof LoginComponent
    */
-  public loginMode: 0 | 1 | 2;
+  public isLogin: boolean;
 
   /**
    * Includes the fields filled by the user to signin.
@@ -50,32 +40,20 @@ export class LoginComponent implements OnInit {
    */
   public signing: SigningInput;
 
-  constructor() {
-    this.loginMode = 0; // Login mode.
+  constructor(private cookieService: CookieService, private router: Router) {
+    this.isLogin = true;
     this.login = new LoginInput();
     this.signing = new SigningInput();
-    this.forgotPassword = new ChangePasswordInput();
-  }
-
-  ngOnInit() {}
-
-  /**
-   * Changes LoginMode attribute to change the currently displayed form.
-   * @date 2018-08-17
-   * @param {number} option
-   * @memberof LoginComponent
-   */
-  public changeLoginOption(option: 0 | 1 | 2) {
-    this.loginMode = option;
   }
 
   /**
-   * Executed when the user performs the change password action.
-   * @date 2018-08-17
+   * Changes the form to be displayed (login or signin).
+   *
+   * @date 2018-11-03
    * @memberof LoginComponent
    */
-  public changePassword(): void {
-
+  public changeLoginOption() {
+    this.isLogin = !this.isLogin;
   }
 
   /**
@@ -84,7 +62,13 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   public doLogin(): void {
+    // TODO: Implement this like for real
+    if (!this.login.isValid()) { return; }
 
+    const userCookie = new UserCookie(this.login.username, '', '', '', 'asdfghjk');
+
+    this.cookieService.set('user', JSON.stringify(userCookie), 1);
+    this.router.navigate(['/dashboard']);
   }
 
   /**
@@ -93,7 +77,6 @@ export class LoginComponent implements OnInit {
    * @memberof LoginComponent
    */
   public doSigning(): void {
-
+    // TODO: Implement this
   }
-
 }
