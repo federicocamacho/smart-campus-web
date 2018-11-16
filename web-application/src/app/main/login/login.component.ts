@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { LoginInput, SigningInput, UserCookie } from '../../core/models/auth';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
+import { AppService } from '../../app.service';
 
 /**
  * Login, Signing and Change password component for the application.
@@ -40,7 +41,7 @@ export class LoginComponent {
    */
   public signing: SigningInput;
 
-  constructor(private cookieService: CookieService, private router: Router) {
+  constructor(private service: AppService, private cookieService: CookieService, private router: Router) {
     this.isLogin = true;
     this.login = new LoginInput();
     this.signing = new SigningInput();
@@ -68,6 +69,7 @@ export class LoginComponent {
     const userCookie = new UserCookie(this.login.username, '', '', '', 'asdfghjk');
 
     this.cookieService.set('user', JSON.stringify(userCookie), 1);
+    this.service.isLogedIn = true;
     this.router.navigate(['/dashboard']);
   }
 

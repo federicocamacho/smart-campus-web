@@ -7,6 +7,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatBadgeModule, MatButtonModule, MatIconModule } from '@angular/material';
 import { BadgeDirective } from './directives/badge.directive';
 import { MenuComponent } from './navigation/menu/menu.component';
+import { AnimatedDirective } from './directives/animated.directive';
 
 @NgModule({
   imports: [
@@ -18,14 +19,16 @@ import { MenuComponent } from './navigation/menu/menu.component';
   ],
   declarations: [
     ScCommonComponent, 
-    HeaderComponent,
+    AnimatedDirective,
     BadgeDirective,
+    HeaderComponent,
     MenuComponent
   ],
   exports: [
     ScCommonComponent,
-    HeaderComponent,
+    AnimatedDirective,
     BadgeDirective,
+    HeaderComponent,
     MenuComponent
   ]
 })

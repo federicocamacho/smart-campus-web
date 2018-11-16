@@ -19,6 +19,8 @@ export class AppService {
    */
   public headerItems: HeaderItem[];
 
+  public isLogedIn: boolean;
+  
   /**
    * Determines whether the user profile is opened or not.
    *

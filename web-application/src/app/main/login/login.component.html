@@ -4,12 +4,16 @@
   style="height: 100vh">
   <div 
     fxLayout='column' fxFlexAlign="center" 
-    fxFlex="30" fxFlex.xs="100" fxFlex.gt-md="20" 
+    fxFlex="40" fxFlex.xs="100" fxFlex.gt-lg="20" 
     style="margin: 20px">
+      <div scAnimated="pulse" class="title-container">
+        <img src="assets/icons/icon.png" alt="Smart Campus" class="brand-img">
+        <span class="brand-name">SMART CAMPUS</span>
+      </div>
       <!-- LOGIN MODE -->
       <div class="login-wraper" *ngIf="isLogin; else signIn">
         <form class="login-form" #loginForm="ngForm">
-          <div class="border-container">
+          <div scAnimated="fadeIn" class="border-container box-shadow">
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
                 class="login-input" name="username" 
@@ -25,10 +29,11 @@
             </div>
           </div>
           <div fxLayout="row" fxLayoutAlign="center center">
-            <button mat-flat-button
-              class="login-button" 
+            <button mat-flat-button scAnimated="fadeIn"
+              class="login-button box-shadow" 
+              type="button"
               (click)="doLogin()" 
-              [disabled]="loginForm.form.touched && loginForm.form.invalid" 
+              [disabled]="loginForm.form.invalid" 
               color="primary" 
               style="color: white">
               Iniciar sesión
@@ -42,7 +47,7 @@
       <!-- SIGNIN MODE -->
       <ng-template #signIn class="signing-wraper">
         <form class="login-form" #signingForm="ngForm">
-          <div class="border-container">
+          <div scAnimated="fadeIn" class="border-container box-shadow">
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
                 class="login-input" name="newUsername"
@@ -72,10 +77,10 @@
             </div>
           </div>
           <div fxLayout="row" fxLayoutAlign="center center">
-            <button mat-flat-button
-              class="login-button"
+            <button mat-flat-button scAnimated="fadeIn"
+              class="login-button box-shadow"
               (click)="doSigning()"
-              [disabled]="signingForm.form.touched && signingForm.form.invalid"
+              [disabled]="signingForm.form.invalid"
               color="primary"
               style="color: white">
               Registrarse

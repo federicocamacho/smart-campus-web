@@ -14,7 +14,7 @@ import { AppService } from './app.service';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {  
-  public isLogin: boolean;
+  
   public title: string;
 
   constructor(private auth: AuthService, public service: AppService) {
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.auth.isAuthenticated()) { this.isLogin = true; }
+    if (this.auth.isAuthenticated()) { this.service.isLogedIn = true; }
   }
 }
 
