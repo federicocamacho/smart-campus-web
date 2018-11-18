@@ -1,6 +1,9 @@
 <header class="top-bar" [ngStyle]="{ 'background-color': backgroundColor, 'color': textColor }">
   <nav class="navbar" fxLayout="row" fxLayoutAlign="fill center">
-    <div class="navbar-header" (click)="goHome()" fxLayout="col">
+    <div 
+      class="navbar-header"
+      fxLayout="col" fxFlexFill [fxFlex]="isMenuOpened ? '255px' : '60px'"
+      (click)="goHome()">
       <a class="navbar-brand" fxLayout="row">
         <img [src]="brandLogoSrc" [alt]="brandName" class="brand-logo" fxLayout="col" />
         <div 

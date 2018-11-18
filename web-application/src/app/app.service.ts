@@ -54,8 +54,10 @@ export class AppService {
       new HeaderItem(0, 'Messages', 'email', () => console.log('action'))
     ];
     this.menuItems = [
-      new MenuItem(0, 'Application', null, 'computer', 2),
-      new MenuItem(1, 'Parking', 'applications/parking', 'directions_car', 0)
+      new MenuItem(0, 'Application', null, 'computer', 2, [
+        new MenuItem(1, 'Parking', 'applications/parking', 'directions_car', 3)
+      ]),
+      new MenuItem(2, 'Configuration', 'config', 'settings', 0)
     ];
   }
 

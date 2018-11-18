@@ -3,7 +3,7 @@
   fxLayout="row" fxLayoutAlign="center center"
   style="height: 100vh">
   <div 
-    fxLayout='column' fxFlexAlign="center" 
+    fxLayout="column" fxFlexAlign="center" 
     fxFlex="40" fxFlex.xs="100" fxFlex.gt-lg="20" 
     style="margin: 20px">
       <div scAnimated="pulse" class="title-container">
@@ -12,7 +12,7 @@
       </div>
       <!-- LOGIN MODE -->
       <div class="login-wraper" *ngIf="isLogin; else signIn">
-        <form class="login-form" #loginForm="ngForm">
+        <form class="login-form" #loginForm="ngForm" (ngSubmit)="doLogin()">
           <div scAnimated="fadeIn" class="border-container box-shadow">
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
@@ -31,8 +31,7 @@
           <div fxLayout="row" fxLayoutAlign="center center">
             <button mat-flat-button scAnimated="fadeIn"
               class="login-button box-shadow" 
-              type="button"
-              (click)="doLogin()" 
+              type="submit"
               [disabled]="loginForm.form.invalid" 
               color="primary" 
               style="color: white">
@@ -46,7 +45,7 @@
       </div>
       <!-- SIGNIN MODE -->
       <ng-template #signIn class="signing-wraper">
-        <form class="login-form" #signingForm="ngForm">
+        <form class="login-form" #signingForm="ngForm" (ngSubmit)="doSigning()">
           <div scAnimated="fadeIn" class="border-container box-shadow">
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
@@ -79,7 +78,6 @@
           <div fxLayout="row" fxLayoutAlign="center center">
             <button mat-flat-button scAnimated="fadeIn"
               class="login-button box-shadow"
-              (click)="doSigning()"
               [disabled]="signingForm.form.invalid"
               color="primary"
               style="color: white">

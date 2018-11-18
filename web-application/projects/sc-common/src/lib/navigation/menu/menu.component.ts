@@ -1,9 +1,11 @@
 import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Router } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map, takeUntil } from 'rxjs/operators';
 
 import { MenuItem } from './menu-item';
 import { Cleanable } from '../../utils/cleanable';
+import { StringUtils } from '../../utils/string-utils';
 
 /**
  * Sidebar Menu Component
@@ -49,7 +51,7 @@ export class MenuComponent extends Cleanable implements OnInit, OnDestroy {
 
   @Output() menuClosed: EventEmitter<void>;
 
-  constructor(private bpObserver: BreakpointObserver) {
+  constructor(private bpObserver: BreakpointObserver, private router: Router) {
     super();
     this.menuClosed = new EventEmitter();
   }
@@ -73,5 +75,33 @@ export class MenuComponent extends Cleanable implements OnInit, OnDestroy {
     if (isMobile) {
       this.menuClosed.next();
     }
+  }
+
+  /**
+   * Executed when a parent {@link MenuItem} is clicked.
+   *
+   * @date 2018-11-17
+   * @param item the {@link MenuItem} clicked.
+   * @memberof MenuComponent
+   */
+  public parentNodeClicked(item: MenuItem): void {
+    if (item.hasChildren()) {
+      item.toggleOpen();
+    } else if (!StringUtils.isNullOrEmpty(item.path)) {
+      this.router.navigate(StringUtils.getPathArray(item.path));
+    }
+  }
+
+  /**
+   * Executed when a children {@link MenuItem} (leaf node) is clicked.
+   *
+   * @date 2018-11-17
+   * @param item the {@link MenuItem} clicked.
+   * @memberof MenuComponent
+   */
+  public childrenNodeClicked(item: MenuItem): void {
+    if (StringUtils.isNullOrEmpty(item.path)) { return; }
+
+    this.router.navigate(StringUtils.getPathArray(item.path));
   }
 }

@@ -15,13 +15,14 @@ export class MenuItem {
   notificationCount: number;
   isOpened: boolean;
 
-  constructor(id?: number, name?: string, path?: string, icon?: string, notCount?: number) {
+  constructor(id?: number, name?: string, path?: string, icon?: string, notCount?: number, children?: MenuItem[]) {
     this.id = id;
     this.name = name;
     this.path = path;
     this.icon = icon;
     this.notificationCount = notCount;
     this.isOpened = false;
+    this.children = children;
   }
   
   /**
@@ -32,7 +33,7 @@ export class MenuItem {
    * @memberof MenuItem
    */
   hasIcon(): boolean {
-    return StringUtils.isNullOrEmpty(this.icon);
+    return !StringUtils.isNullOrEmpty(this.icon);
   }
   
   /**
@@ -44,5 +45,26 @@ export class MenuItem {
    */
   hasNotifications(): boolean {
     return this.notificationCount && this.notificationCount > 0;
+  }
+
+  /**
+   * Checks if the current item has children
+   *
+   * @date 2018-11-17
+   * @returns
+   * @memberof MenuItem
+   */
+  hasChildren(): boolean {
+    return this.children && this.children.length > 0;
+  }
+
+  /**
+   * Change item opened state.
+   *
+   * @date 2018-11-17
+   * @memberof MenuItem
+   */
+  toggleOpen(): void {
+    this.isOpened = !this.isOpened;
   }
 }

@@ -1,29 +1,76 @@
 <div scAnimated="fadeIn"
-  class="menu-container" 
-  *ngIf="isOpened"
-  [fxHide]="!isOpened">
+  class="menu-container"
+  [ngStyle]="{'visibility': isOpened ? 'visible' : 'hidden'}">
   <div 
-    class="menu-item-container" 
     *ngFor="let item of menuItems"
-    flexLayout="row" fxLayoutAlign="fill center"
-    [style.color]="iconsColor">
-    <div 
-      class="menu-icon" 
-      flexLayout="col" fxLayoutAlign="center center"
-      style="width: 50px; height: 50px;">
-      <mat-icon style="font-size: 27px">{{ item.icon }}</mat-icon>
-    </div>
-    <div 
-      class="menu-option-name"
-      flexLayout="col"  
-      style="width: 125px;">
-      {{ item.name }}
-    </div>
-    <div scBadge="#20aee3"
-      *ngIf="item.hasNotifications()"
-      flexLayout="col"
-      style="width: 30px">
-      {{ item.notificationCount }}
+    flexLayout="row wrap" fxFlexFill
+    [style.color]="iconsColor" style="height: 60px">
+    <div flexLayout="col wrap" fxFlexFill>
+        <div class="menu-item-container" flexLayout="row wrap" fxFlexFill (click)="parentNodeClicked(item)">
+          <div 
+            class="menu-icon" 
+            flexLayout="col" fxFlex="50px" fxLayoutAlign="center center"
+            style="height: 60px">
+            <mat-icon style="font-size: 27px">{{ item.hasIcon() ? item.icon : '' }}</mat-icon>
+          </div>
+          <div 
+            class="menu-option-name"
+            flexLayout="col" fxFlex="125px" fxLayoutAlign="start center"
+            style="height: 60px">
+            {{ item.name }}
+          </div>
+          <div 
+            flexLayout="col" fxFlex="30px" fxLayoutAlign="center center"
+            style="margin: auto">
+            <div scBadge="#20aee3" *ngIf="item.hasNotifications()" fxFlexFill style="height: 17px">
+              {{ item.notificationCount }}
+            </div>
+          </div>
+          <div 
+            class="menu-icon" 
+            flexLayout="col" fxFlex="15px" fxLayoutAlign="end center"
+            style="height: 60px; margin: auto">
+            <mat-icon *ngIf="item.hasChildren()" style="font-size: 23px">
+              {{ item.isOpened ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+            </mat-icon>
+          </div>
+        </div>
+        <div scAnimated="fadeIn"
+          *ngIf="item.isOpened"
+          flexLayout="row wrap" fxFlexFill>
+          <div
+            class="menu-item-container"
+            *ngFor="let child of item.children"
+            (click)="childrenNodeClicked(child)"
+            flexLayout="col wrap" fxFlexFill
+            [style.color]="iconsColor" style="height: 60px">
+            <div flexLayout="row wrap" fxFlexFill style="padding-left: 15px">
+              <div 
+                class="menu-icon" 
+                flexLayout="col" fxFlex="50px" fxLayoutAlign="center center"
+                style="height: 60px">
+                <mat-icon style="font-size: 27px">{{ child.icon }}</mat-icon>
+              </div>
+              <div 
+                class="menu-option-name"
+                flexLayout="col" fxFlex="110px" fxLayoutAlign="start center"
+                style="height: 60px">
+                {{ child.name }}
+              </div>
+              <div 
+                flexLayout="col" fxFlex="30px" fxLayoutAlign="center center"
+                style="margin: auto">
+                <div scBadge="#20aee3" *ngIf="item.hasNotifications()" fxFlexFill style="height: 17px">
+                  {{ child.notificationCount }}
+                </div>
+              </div>
+              <div 
+                class="menu-icon"
+                flexLayout="col" fxFlex="15px" fxLayoutAlign="center center"
+                style="height: 60px"></div>
+            </div>
+          </div>
+        </div>
     </div>
   </div>
 </div>

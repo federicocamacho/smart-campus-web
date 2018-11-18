@@ -1,13 +1,14 @@
 import { StringUtils } from 'sc-common';
+import { Validated } from '../interfaces';
 
 /**
- * Model used to authenticate a user.
+ * Model used for user's authentication input.
  *
  * @date 2018-11-03
  * @export
  * @class LoginInput
  */
-export class LoginInput {
+export class LoginInput implements Validated {
   public username: string;
   public password: string;
 
@@ -17,18 +18,18 @@ export class LoginInput {
   }
 
   public isValid(): boolean {
-    return StringUtils.areNullOrEmpty(this.username, this.password);
+    return !StringUtils.anyIsNullOrEmpty(this.username, this.password);
   }
 }
 
 /**
- * Model used to register a new user in the platform.
+ * Model used for user's register input.
  *
  * @date 2018-11-03
  * @export
  * @class SigningInput
  */
-export class SigningInput {
+export class SigningInput implements Validated {
   public email: string;
   public lastName: string;
   public name: string;
@@ -44,40 +45,9 @@ export class SigningInput {
     this.name = name;
     this.lastName = lastName;
   }
-}
 
-/**
- * Model used to map the authenticated user data stored in the cookie
- *
- * @date 2018-11-03
- * @export
- * @class UserCookie
- */
-export class UserCookie {
-
-  constructor(username?, email?, name?, lastName?, token?) {
-    this.username = username;
-    this.email = email;
-    this.name = name;
-    this.lastName = lastName;
-    this.token = token;
-  }
-  public email: string;
-  public lastName: string;
-  public name: string;
-  public username: string;
-  public token: string;
-
-  public static fromJSON(cookieAsJson: string): UserCookie {
-    try {
-      const cookie: UserCookie = JSON.parse(cookieAsJson);
-      return new UserCookie(cookie.username, cookie.email, cookie.name, cookie.lastName, cookie.token);
-    } catch (e) {
-      return null;
-    }
- }
-
-  public hasValidToken(): boolean {
-    return StringUtils.isNullOrEmpty(this.token);
+  public isValid(): boolean {
+    if (StringUtils.anyIsNullOrEmpty(this.username, this.password)) { return false; }
   }
 }
+

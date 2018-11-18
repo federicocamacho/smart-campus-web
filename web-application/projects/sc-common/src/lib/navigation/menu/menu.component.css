@@ -1,12 +1,9 @@
 .menu-container {
     background-color: white;
-    width: 230px;
+    width: 255px;
     min-height: calc(100vh - 76px);
     border-right: solid 1px #eee;
-}
-
-.menu-item-container {
-    height: 60px;
+    font-size: 15px;
 }
 
 .menu-item-container:hover {

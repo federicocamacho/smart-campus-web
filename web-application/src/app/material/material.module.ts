@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
   MatAutocompleteModule,
+  MatBadgeModule,
   MatButtonModule,
   MatCardModule,
   MatFormFieldModule,
@@ -12,8 +13,7 @@ import {
   MatMenuModule,
   MatSidenavModule,
   MatProgressSpinnerModule,
-  MatToolbarModule, 
-  MatBadgeModule} from '@angular/material';
+  MatToolbarModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
