@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { LoginInput, SigningInput, UserCookie } from '../../core/models/auth';
+import { LoginInput, SigningInput, UserCookie } from '../../core/models';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AppService } from '../../app.service';
@@ -63,14 +63,17 @@ export class LoginComponent {
    * @memberof LoginComponent
    */
   public doLogin(): void {
-    // TODO: Implement this like for real
-    if (!this.login.isValid()) { return; }
+    this.service.isBusyGlobally = true;
 
+    // TODO: Implement this like for real
     const userCookie = new UserCookie(this.login.username, '', '', '', 'asdfghjk');
 
     this.cookieService.set('user', JSON.stringify(userCookie), 1);
     this.service.isLogedIn = true;
     this.router.navigate(['/dashboard']);
+
+    // The timeout is only to notice the loader while the login is fake.
+    setTimeout(() => this.service.isBusyGlobally = false, 2000);   
   }
 
   /**

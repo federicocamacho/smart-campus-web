@@ -8,6 +8,7 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { MaterialModule } from '../material/material.module';
+import { CoreModule } from '../core/core.module';
 
 /**
  * Application's main module (not lazy-loaded) which also includes Login component
@@ -19,6 +20,7 @@ import { MaterialModule } from '../material/material.module';
 @NgModule({
   imports: [
     CommonModule,
+    CoreModule,
     FlexLayoutModule,
     FormsModule,
     MaterialModule,

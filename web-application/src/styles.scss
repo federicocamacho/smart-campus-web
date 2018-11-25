@@ -36,3 +36,9 @@ button:hover {
   -webkit-animation: pulse 1s;
   animation: pulse 1s;
 }
+
+sc-full-screen-loader {
+  z-index: 9999;
+  position: absolute;
+  top: 0;
+}

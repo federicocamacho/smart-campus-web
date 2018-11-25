@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CoreModule } from '../core.module';
 import { CookieService } from 'ngx-cookie-service';
-import { UserCookie } from '../models/auth';
+import { UserCookie } from '../models';
 
 /**
  * Service to control Authentication

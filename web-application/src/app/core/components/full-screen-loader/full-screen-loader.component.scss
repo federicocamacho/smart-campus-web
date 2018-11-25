@@ -1,0 +1,44 @@
+.fs-loading {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    z-index: 99;
+    background-color: rgba($color: #fff, $alpha: 0.7);
+}
+
+.fs-spinner {
+    margin: 30px auto 0;
+    width: 70px;
+    text-align: center;
+}
+
+.fs-spinner>div {
+    width: 14px;
+    height: 14px;
+    background-color: #c6c5ca;
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.fs-spinner .fs-bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.fs-spinner .fs-bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+.fs-loading-logo {
+    width: 100px;
+    height: auto;
+    -webkit-animation: logo 1.8s infinite ease-in-out both;
+    animation: logo 1.8s infinite ease-in-out both;
+}

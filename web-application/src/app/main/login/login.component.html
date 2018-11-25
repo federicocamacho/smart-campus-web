@@ -17,14 +17,16 @@
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
                 class="login-input" name="username" 
-                type="text" required="true" placeholder="Usuario"
+                type="text" placeholder="Usuario"
+                required="true" minlength="4"
                 [(ngModel)]="login.username"/>
             </div>
             <hr class="login-line">
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
                 class="login-input" name="password"
-                type="password" required="true" placeholder="Contraseña"
+                type="password" placeholder="Contraseña"
+                required="true" minlength="4"
                 [(ngModel)]="login.password"/>
             </div>
           </div>
@@ -32,7 +34,7 @@
             <button mat-flat-button scAnimated="fadeIn"
               class="login-button box-shadow" 
               type="submit"
-              [disabled]="loginForm.form.invalid" 
+              [disabled]="loginForm.form.invalid && (loginForm.form.dirty || loginForm.form.touched)" 
               color="primary" 
               style="color: white">
               Iniciar sesión
@@ -50,35 +52,39 @@
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
                 class="login-input" name="newUsername"
-                type="text" required="true" placeholder="Usuario"
+                type="text" placeholder="Usuario"
+                required="true" minlength="4"
                 [(ngModel)]="signing.username"/>
             </div>
             <hr class="login-line">
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
-                class="login-input" name="newPassword"
-                type="text" required="true" placeholder="Email"
+                class="login-input" name="email"
+                type="email" placeholder="Email"
+                required="true" minlength="20"
                 [(ngModel)]="signing.email"/>
             </div>
             <hr class="login-line">
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
                 class="login-input" name="newPassword"
-                type="password" required="true" placeholder="Contraseña"
+                type="password" placeholder="Contraseña"
+                required="true" minlength="4"
                 [(ngModel)]="signing.password"/>
             </div>
             <hr class="login-line">
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
                 class="login-input" name="newPasswordRepeat"
-                type="password" required="true" placeholder="Repetir Contraseña"
+                type="password" placeholder="Repetir Contraseña"
+                required="true" minlength="4"
                 [(ngModel)]="signing.passwordCheck"/>
             </div>
           </div>
           <div fxLayout="row" fxLayoutAlign="center center">
             <button mat-flat-button scAnimated="fadeIn"
               class="login-button box-shadow"
-              [disabled]="signingForm.form.invalid"
+              [disabled]="signingForm.form.invalid && (signingForm.form.dirty || signingForm.form.touched)" 
               color="primary"
               style="color: white">
               Registrarse

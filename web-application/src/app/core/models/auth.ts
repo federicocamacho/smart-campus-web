@@ -1,5 +1,3 @@
-import { StringUtils } from 'sc-common';
-import { Validated } from '../interfaces';
 
 /**
  * Model used for user's authentication input.
@@ -8,17 +6,13 @@ import { Validated } from '../interfaces';
  * @export
  * @class LoginInput
  */
-export class LoginInput implements Validated {
+export class LoginInput {
   public username: string;
   public password: string;
 
   constructor(username?, password?) {
     this.username = username;
     this.password = password;
-  }
-
-  public isValid(): boolean {
-    return !StringUtils.anyIsNullOrEmpty(this.username, this.password);
   }
 }
 
@@ -29,7 +23,7 @@ export class LoginInput implements Validated {
  * @export
  * @class SigningInput
  */
-export class SigningInput implements Validated {
+export class SigningInput {
   public email: string;
   public lastName: string;
   public name: string;
@@ -46,8 +40,4 @@ export class SigningInput implements Validated {
     this.lastName = lastName;
   }
 
-  public isValid(): boolean {
-    if (StringUtils.anyIsNullOrEmpty(this.username, this.password)) { return false; }
-  }
 }
-

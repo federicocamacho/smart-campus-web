@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { CookieService } from 'ngx-cookie-service';
+import { FullScreenLoaderComponent } from './components/full-screen-loader/full-screen-loader.component';
+import { UserCardComponent } from './components/user-card/user-card.component';
 
 /**
  * Module which includes Application's main utils and singleton services. This module is only imported by AppModule.
@@ -26,8 +28,11 @@ import { CookieService } from 'ngx-cookie-service';
     CommonModule,
     FlexLayoutModule,
     FormsModule,
-    HttpClientModule
+    FullScreenLoaderComponent,
+    HttpClientModule,
+    UserCardComponent
   ],
-  providers: [ CookieService ]
+  providers: [ CookieService ],
+  declarations: [FullScreenLoaderComponent, UserCardComponent]
 })
 export class CoreModule { }
