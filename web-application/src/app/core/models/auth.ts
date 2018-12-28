@@ -10,7 +10,7 @@ export class LoginInput {
   public username: string;
   public password: string;
 
-  constructor(username?, password?) {
+  constructor(username?: string, password?: string) {
     this.username = username;
     this.password = password;
   }
@@ -25,19 +25,17 @@ export class LoginInput {
  */
 export class SigningInput {
   public email: string;
-  public lastName: string;
   public name: string;
   public password: string;
   public passwordCheck: string;
   public username: string;
 
-  constructor(username?, email?, name?, lastName?, password?, passwordCheck?) {
+  constructor(username?: string, email?: string, name?: string, password?: string, passwordCheck?: string) {
     this.username = username;
     this.password = password;
     this.passwordCheck = passwordCheck;
     this.email = email;
     this.name = name;
-    this.lastName = lastName;
   }
 
 }

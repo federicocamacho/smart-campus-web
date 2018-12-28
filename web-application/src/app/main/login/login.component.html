@@ -59,6 +59,14 @@
             <hr class="login-line">
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
+                class="login-input" name="name"
+                type="text" placeholder="Nombre"
+                required="true" minlength="8"
+                [(ngModel)]="signing.name"/>
+            </div>
+            <hr class="login-line">
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <input 
                 class="login-input" name="email"
                 type="email" placeholder="Email"
                 required="true" minlength="20"

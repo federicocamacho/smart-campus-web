@@ -19,6 +19,7 @@
     [menuItems]="service.menuItems"
     (menuClosed)="service.closeMenu()">
   </sc-menu>
+  <!-- <sc-user-card></sc-user-card> -->
 </ng-container>
 <router-outlet></router-outlet>
 <sc-full-screen-loader *ngIf="service.isBusyGlobally"></sc-full-screen-loader>

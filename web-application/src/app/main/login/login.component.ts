@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 
-import { LoginInput, SigningInput, UserCookie } from '../../core/models';
+import { LoginInput, SigningInput, UserCookie, IUser, ApiError } from '../../core/models';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 import { AppService } from '../../app.service';
+import { UserService } from 'src/app/core/api/user.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 /**
  * Login, Signing and Change password component for the application.
@@ -41,7 +43,10 @@ export class LoginComponent {
    */
   public signing: SigningInput;
 
-  constructor(private service: AppService, private cookieService: CookieService, private router: Router) {
+  constructor(private service: AppService, 
+              private cookieService: CookieService, 
+              private router: Router, 
+              private userService: UserService) {
     this.isLogin = true;
     this.login = new LoginInput();
     this.signing = new SigningInput();
@@ -66,7 +71,7 @@ export class LoginComponent {
     this.service.isBusyGlobally = true;
 
     // TODO: Implement this like for real
-    const userCookie = new UserCookie(this.login.username, '', '', '', 'asdfghjk');
+    const userCookie = new UserCookie(this.login.username, '', '', 'asdfghjk');
 
     this.cookieService.set('user', JSON.stringify(userCookie), 1);
     this.service.isLogedIn = true;
@@ -82,6 +87,10 @@ export class LoginComponent {
    * @memberof LoginComponent
    */
   public doSigning(): void {
-    // TODO: Implement this
+    this.userService.register(this.signing)
+      .subscribe(
+        (user: IUser) => console.log(user),
+        (err: ApiError) => console.log(err)
+      );
   }
 }

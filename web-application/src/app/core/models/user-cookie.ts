@@ -9,15 +9,13 @@ import { StringUtils } from 'sc-common';
  */
 export class UserCookie {
 
-  constructor(username?, email?, name?, lastName?, token?) {
+  constructor(username?: string, email?: string, name?: string, token?: string) {
     this.username = username;
     this.email = email;
     this.name = name;
-    this.lastName = lastName;
     this.token = token;
   }
   public email: string;
-  public lastName: string;
   public name: string;
   public username: string;
   public token: string;
@@ -34,7 +32,7 @@ export class UserCookie {
   public static fromJSON(cookieAsJson: string): UserCookie {
     try {
       const cookie: UserCookie = JSON.parse(cookieAsJson);
-      return new UserCookie(cookie.username, cookie.email, cookie.name, cookie.lastName, cookie.token);
+      return new UserCookie(cookie.username, cookie.email, cookie.name, cookie.token);
     } catch (e) {
       return null;
     }
