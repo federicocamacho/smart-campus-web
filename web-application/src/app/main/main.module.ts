@@ -10,6 +10,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { MaterialModule } from '../material/material.module';
 import { CoreModule } from '../core/core.module';
 
+import { CustomFormsModule } from 'ngx-custom-validators';
+
 /**
  * Application's main module (not lazy-loaded) which also includes Login component
  *
@@ -23,6 +25,7 @@ import { CoreModule } from '../core/core.module';
     CoreModule,
     FlexLayoutModule,
     FormsModule,
+    CustomFormsModule,
     MaterialModule,
     ScCommonModule
   ],

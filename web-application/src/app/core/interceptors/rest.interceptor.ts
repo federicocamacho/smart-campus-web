@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { timeout, tap } from 'rxjs/operators';
 import { RestUtil } from '../api/rest-util';
 import { ApiError } from '../models';
+import { environment } from 'src/environments/environment';
 
 /**
  * Http Interceptors that handles general errors by mapping them into API errors.
@@ -24,7 +25,7 @@ export class RestInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
-      timeout(30000),
+      timeout(environment.timeout),
       tap(
         res => {},
         err => {
