@@ -59,7 +59,7 @@ export class MenuComponent extends Cleanable implements OnInit, OnDestroy {
   ngOnInit() {
     this.bpObserver
       .observe([Breakpoints.Small, Breakpoints.XSmall])
-      .pipe(map(value => value.matches), takeUntil(this.destroy))
+      .pipe(map(value => value.matches), takeUntil(this.destroyed))
       .subscribe(isMobile => this.emitIfIsMobile(isMobile));
   }
 

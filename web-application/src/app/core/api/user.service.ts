@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { RestUtil } from './rest-util';
 import { environment } from 'src/environments/environment';
-import { SigningInput, IUser } from '../models';
+import { SigningInput, IUser, LoginInput } from '../models';
 import { catchError } from 'rxjs/operators';
 
 /**
@@ -21,11 +21,29 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  /**
+   * Consumes Signing (register user) REST service.
+   *
+   * @date 2018-12-29
+   * @param user to be created.
+   * @returns an Observable with the response.
+   * @memberof UserService
+   */
   public register(user: SigningInput): Observable<any> {
     return this.http
-      .put<IUser>(RestUtil.endpoint(environment.registerEndpoint), user, RestUtil.options())
-      .pipe(
-        catchError(RestUtil.handleError)
-      );
+      .put<IUser>(RestUtil.endpoint(environment.register), user, RestUtil.options());
+  }
+
+  /**
+   * Consumes login REST service.
+   *
+   * @date 2018-12-29
+   * @param user to be authenticated.
+   * @returns an Observable with the response.
+   * @memberof UserService
+   */
+  public login(user: LoginInput): Observable<any> {
+    return this.http
+      .post<IUser>(RestUtil.endpoint(environment.authentication), user, RestUtil.options());
   }
 }

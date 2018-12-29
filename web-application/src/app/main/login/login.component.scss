@@ -81,3 +81,11 @@ input.login-input.ng-invalid.ng-touched::placeholder {
     padding-left: 10px;
     padding-right: 5px;
 }
+
+.validation-error {
+    font-size: 11px;
+    height: 20px;
+    padding-top: 10px;
+    font-style: italic;
+    font-weight: bold;
+}

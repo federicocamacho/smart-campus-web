@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './core/services';
 import { AppService } from './app.service';
+import { ToastyConfig } from 'ng2-toasty';
 
 /**
  * Application's main Component
@@ -17,8 +18,11 @@ export class AppComponent implements OnInit {
   
   public title: string;
 
-  constructor(private auth: AuthService, public service: AppService) {
+  constructor(private auth: AuthService, 
+              public service: AppService,
+              private toastyConfig: ToastyConfig) {
     this.title = 'Smart Campus';
+    this.toastyConfig.theme = 'material';
   }
 
   ngOnInit(): void {

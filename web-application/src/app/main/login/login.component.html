@@ -30,6 +30,9 @@
                 [(ngModel)]="login.password"/>
             </div>
           </div>
+          <div class="validation-error" fxLayout="row" fxLayoutAlign="center center">
+            {{ validationError }}
+          </div>
           <div fxLayout="row" fxLayoutAlign="center center">
             <button mat-flat-button scAnimated="fadeIn"
               class="login-button box-shadow" 
@@ -54,7 +57,7 @@
                 class="login-input" name="newUsername"
                 type="text" placeholder="Usuario"
                 required="true" minlength="4"
-                [(ngModel)]="signing.username"/>
+                [ngModel]="signing.username" (ngModelChange)="onUsernameChanged($event, false)" />
             </div>
             <hr class="login-line">
             <div fxLayout="row" fxLayoutAlign="center center">
@@ -88,6 +91,9 @@
                 required="true" minlength="4"
                 [(ngModel)]="signing.passwordCheck"/>
             </div>
+          </div>
+          <div class="validation-error" fxLayout="row" fxLayoutAlign="center center">
+              {{ validationError }}
           </div>
           <div fxLayout="row" fxLayoutAlign="center center">
             <button mat-flat-button scAnimated="fadeIn"

@@ -2,7 +2,7 @@ import { Subject } from 'rxjs';
 import { OnDestroy } from '@angular/core';
 
 /**
- * Util class that destroys all {@link takeUntil()} observers in the OnDestroy event.
+ * Util class that destroys all {@link takeUntil()} observers in the OnDestroy cycle.
  *
  * @date 2018-11-04
  * @export
@@ -10,20 +10,20 @@ import { OnDestroy } from '@angular/core';
 export class Cleanable implements OnDestroy {
 
   /**
-   * {@link Subject} that emits a value and completes when the component is going to be destroyed.
+   * {@link Subject} that emits a value and completes when the component is going to be destroyeded.
    *
    * @memberof Cleanable
    */
-  public destroy:  Subject<void>;
+  public destroyed:  Subject<void>;
 
   constructor() {
-    this.destroy = new Subject();
+    this.destroyed = new Subject();
   }
 
   ngOnDestroy() {
-    console.log('Cleaning component');
-    this.destroy.next();
-    this.destroy.complete();
+    console.log('Cleaning component...');
+    this.destroyed.next();
+    this.destroyed.complete();
   }
 
 }

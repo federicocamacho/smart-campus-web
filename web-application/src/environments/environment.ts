@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   endpoint: 'http://localhost:8090',
-  registerEndpoint: '/users/user',
-  authenticationEndpoint: '/users/authentication'
+  register: '/users/user',
+  authentication: '/users/authentication'
 };
 
 /*

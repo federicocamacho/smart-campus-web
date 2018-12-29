@@ -15,6 +15,7 @@ import {
   MatProgressSpinnerModule,
   MatToolbarModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import {ToastyModule} from 'ng2-toasty';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatMenuModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
+    ToastyModule.forRoot()
   ],
   declarations: [],
   exports: [
@@ -46,7 +48,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatMenuModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
-    MatToolbarModule
+    MatToolbarModule,
+    ToastyModule
   ]
 })
 export class MaterialModule { }

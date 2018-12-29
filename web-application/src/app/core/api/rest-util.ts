@@ -1,6 +1,5 @@
 import { environment } from 'src/environments/environment.prod';
 import { HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { throwError, Observable } from 'rxjs';
 import { ApiError } from '../models';
 
 /**
@@ -48,20 +47,23 @@ export class RestUtil {
    * @date 2018-12-27
    * @private
    * @param error the error obtained.
-   * @returns an Observable with the APIError.
+   * @returns the APIError.
    * @memberof RestUtil
    */
-  public static handleError(error: HttpErrorResponse): Observable<never> {
+  public static handleError(error: HttpErrorResponse): ApiError {
     let apiError: ApiError = null;
     if (error.error instanceof ErrorEvent) {
-      apiError = ApiError.ofGeneric();
+      apiError = ApiError.fromGeneric();
       apiError.message += ` ${ error.error.message }.`;
-    } else {
+    } else if (!(error.error instanceof ProgressEvent)) { // API error
       apiError = error.error;
       apiError.statusCode = error.status;
+    } else { // Http Errors
+      apiError = ApiError.fromGeneric();
+      apiError.exception = error.name;
     }
-    console.error(apiError);
-    return throwError(apiError);
+    console.error('API ERROR', apiError);
+    return apiError;
   }
   
 }
