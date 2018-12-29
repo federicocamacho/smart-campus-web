@@ -1,4 +1,4 @@
-import { StringUtils } from '../../utils/string-utils';
+import { Utils } from '../../utils/utils';
 
 /**
  * Represents a single option found in the side menu.
@@ -33,7 +33,7 @@ export class MenuItem {
    * @memberof MenuItem
    */
   hasIcon(): boolean {
-    return !StringUtils.isNullOrEmpty(this.icon);
+    return !Utils.isEmptyString(this.icon);
   }
   
   /**

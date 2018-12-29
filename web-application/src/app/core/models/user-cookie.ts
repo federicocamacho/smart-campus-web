@@ -1,4 +1,4 @@
-import { StringUtils } from 'sc-common';
+import { Utils } from 'sc-common';
 
 /**
  * Model used to map the authenticated user data stored in the cookie
@@ -46,6 +46,6 @@ export class UserCookie {
    * @memberof UserCookie
    */
   public hasValidToken(): boolean {
-    return !StringUtils.isNullOrEmpty(this.token);
+    return !Utils.isEmptyString(this.token);
   }
 }

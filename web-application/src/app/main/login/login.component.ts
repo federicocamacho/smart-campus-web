@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { LoginInput, SigningInput, UserCookie, IUser, ApiError, ApiException } from '../../core/models';
 import { CookieService } from 'ngx-cookie-service';
@@ -6,8 +6,7 @@ import { Router } from '@angular/router';
 import { AppService } from '../../app.service';
 import { UserService } from 'src/app/core/api/user.service';
 import { ToastyService } from 'ng2-toasty';
-import { Utils } from 'src/app/core/utils';
-import { Cleanable } from 'sc-common';
+import { Cleanable, Utils } from 'sc-common';
 import { takeUntil } from 'rxjs/operators';
 
 /**

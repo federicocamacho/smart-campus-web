@@ -8,5 +8,4 @@ export * from './lib/navigation/header/header-item';
 
 // Utils
 export * from './lib/utils/cleanable';
-export * from './lib/utils/string-utils';
-export * from './lib/utils/list-utils';
+export * from './lib/utils/utils';

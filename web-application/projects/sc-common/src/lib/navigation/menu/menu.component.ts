@@ -5,7 +5,7 @@ import { map, takeUntil } from 'rxjs/operators';
 
 import { MenuItem } from './menu-item';
 import { Cleanable } from '../../utils/cleanable';
-import { StringUtils } from '../../utils/string-utils';
+import { Utils } from '../../utils/utils';
 
 /**
  * Sidebar Menu Component
@@ -87,8 +87,8 @@ export class MenuComponent extends Cleanable implements OnInit, OnDestroy {
   public parentNodeClicked(item: MenuItem): void {
     if (item.hasChildren()) {
       item.toggleOpen();
-    } else if (!StringUtils.isNullOrEmpty(item.path)) {
-      this.router.navigate(StringUtils.getPathArray(item.path));
+    } else if (!Utils.isEmptyString(item.path)) {
+      this.router.navigate(Utils.getPathArray(item.path));
     }
   }
 
@@ -100,8 +100,8 @@ export class MenuComponent extends Cleanable implements OnInit, OnDestroy {
    * @memberof MenuComponent
    */
   public childrenNodeClicked(item: MenuItem): void {
-    if (StringUtils.isNullOrEmpty(item.path)) { return; }
+    if (Utils.isEmptyString(item.path)) { return; }
 
-    this.router.navigate(StringUtils.getPathArray(item.path));
+    this.router.navigate(Utils.getPathArray(item.path));
   }
 }
