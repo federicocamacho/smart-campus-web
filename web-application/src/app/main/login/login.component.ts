@@ -7,7 +7,7 @@ import { AppService } from '../../app.service';
 import { UserService } from 'src/app/core/api/user.service';
 import { ToastyService } from 'ng2-toasty';
 import { Cleanable, Utils } from 'sc-common';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take } from 'rxjs/operators';
 
 /**
  * Login, Signing and Change password component for the application.
@@ -84,7 +84,9 @@ export class LoginComponent extends Cleanable {
   public doLogin(): void {
     this.service.isBusyGlobally = true;
     this.userService.login(this.login)
-      .pipe(takeUntil(this.destroyed))
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
       .subscribe(
         (user: IUser) => {
           this.validationError = null;
@@ -103,7 +105,9 @@ export class LoginComponent extends Cleanable {
   public doSigning(): void {
     this.service.isBusyGlobally = true;
     this.userService.register(this.signing)
-      .pipe(takeUntil(this.destroyed))
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
       .subscribe(
         (user: IUser) => {
           this.validationError = null;
