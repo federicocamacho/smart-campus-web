@@ -14,22 +14,53 @@
       <div class="login-wraper" *ngIf="isLogin; else signIn">
         <form class="login-form" #loginForm="ngForm" (ngSubmit)="doLogin()">
           <div scAnimated="fadeIn" class="border-container box-shadow">
+            <!-- Username field -->
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
-                class="login-input" name="username" 
+                class="login-input" name="username" #username="ngModel"
                 type="text" placeholder="Usuario"
                 required="true" minlength="4"
                 [(ngModel)]="login.username"/>
+              <div  *ngIf="username.invalid && (username.dirty || username.touched)">
+                  <mat-icon
+                    class="validation-icon"
+                    *ngIf="username.errors?.required"
+                    matTooltip="Nombre de usuario requerido">
+                    report_problem
+                  </mat-icon>
+                  <mat-icon
+                    class="validation-icon"
+                    *ngIf="username.errors?.minlength"
+                    matTooltip="Nombre de usuario debe tener minimo 4 caracteres">
+                    report_problem
+                  </mat-icon>
+                </div>
             </div>
             <hr class="login-line">
+            <!-- Password field -->
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
-                class="login-input" name="password"
+                class="login-input" name="password" #password="ngModel"
                 type="password" placeholder="Contraseña"
                 required="true" minlength="4"
                 [(ngModel)]="login.password"/>
+              <div  *ngIf="password.invalid && (password.dirty || password.touched)">
+                <mat-icon
+                  class="validation-icon"
+                  *ngIf="password.errors?.required"
+                  matTooltip="Contraseña requerida">
+                  report_problem
+                </mat-icon>
+                <mat-icon
+                  class="validation-icon"
+                  *ngIf="password.errors?.minlength"
+                  matTooltip="Contraseña debe tener minimo 4 caracteres">
+                  report_problem
+                </mat-icon>
+              </div>
             </div>
           </div>
+          <!-- Server side validations. -->
           <div class="validation-error" fxLayout="row" fxLayoutAlign="center center">
             {{ validationError }}
           </div>
@@ -52,49 +83,119 @@
       <ng-template #signIn class="signing-wraper">
         <form class="login-form" #signingForm="ngForm" (ngSubmit)="doSigning()">
           <div scAnimated="fadeIn" class="border-container box-shadow">
+            <!-- Username field -->
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
                 class="login-input" name="newUsername" #newUsername="ngModel"
                 type="text" placeholder="Usuario"
                 required="true" minlength="4"
                 [ngModel]="signing.username" (ngModelChange)="onUsernameChanged($event, false)" />
+              <div  *ngIf="newUsername.invalid && (newUsername.dirty || newUsername.touched)">
+                <mat-icon
+                  class="validation-icon"
+                  *ngIf="newUsername.errors?.required"
+                  matTooltip="Nombre de usuario requerido">
+                  report_problem
+                </mat-icon>
+                <mat-icon
+                  class="validation-icon"
+                  *ngIf="newUsername.errors?.minlength"
+                  matTooltip="Nombre de usuario debe tener minimo 4 caracteres">
+                  report_problem
+                </mat-icon>
+              </div>
             </div>
             <hr class="login-line">
+            <!-- Name field -->
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
-                class="login-input" name="name"
+                class="login-input" name="newName" #newName="ngModel"
                 type="text" placeholder="Nombre"
                 required="true" minlength="8"
                 [(ngModel)]="signing.name"/>
+              <div  *ngIf="newName.invalid && (newName.dirty || newName.touched)">
+                  <mat-icon
+                    class="validation-icon"
+                    *ngIf="newName.errors?.required"
+                    matTooltip="Nombre requerido">
+                    report_problem
+                  </mat-icon>
+                  <mat-icon
+                    class="validation-icon"
+                    *ngIf="newName.errors?.minlength"
+                    matTooltip="Nombre debe tener minimo 8 caracteres">
+                    report_problem
+                  </mat-icon>
+                </div>
             </div>
             <hr class="login-line">
+            <!-- Email field -->
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
-                class="login-input" name="email"
+                class="login-input" name="newEmail" #newEmail="ngModel"
                 type="email" placeholder="Email"
-                required="true" minlength="20"
+                required="true" ngvemail
                 [(ngModel)]="signing.email"/>
+              <div  *ngIf="newEmail.invalid && (newEmail.dirty || newEmail.touched)">
+                <mat-icon
+                  class="validation-icon"
+                  *ngIf="newEmail.errors?.required"
+                  matTooltip="Email requerido">
+                  report_problem
+                </mat-icon>
+                <mat-icon
+                  class="validation-icon"
+                  *ngIf="newEmail.errors?.email"
+                  matTooltip="Email invalido">
+                  report_problem
+                </mat-icon>
+              </div>
             </div>
             <hr class="login-line">
+            <!-- Password field -->
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
                 class="login-input" name="newPassword" #newPassword="ngModel"
                 type="password" placeholder="Contraseña"
                 required="true" minlength="4"
                 [(ngModel)]="signing.password"/>
+              <div  *ngIf="newPassword.invalid && (newPassword.dirty || newPassword.touched)">
+                <mat-icon
+                  class="validation-icon"
+                  *ngIf="newPassword.errors?.required"
+                  matTooltip="Contraseña requerida">
+                  report_problem
+                </mat-icon>
+                <mat-icon
+                  class="validation-icon"
+                  *ngIf="newPassword.errors?.minlength"
+                  matTooltip="Contraseña debe tener minimo 4 caracteres">
+                  report_problem
+                </mat-icon>
+              </div>
             </div>
             <hr class="login-line">
+            <!-- Validate Password field -->
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
                 class="login-input" name="newPasswordRepeat" #newPasswordRepeat="ngModel"
                 type="password" placeholder="Repetir Contraseña"
                 required="true" minlength="4" [equal]="signing.password"
                 [(ngModel)]="signing.passwordCheck" />
+              <div *ngIf="newPasswordRepeat.invalid && (newPasswordRepeat.dirty || newPasswordRepeat.touched)">
+                <mat-icon
+                  class="validation-icon"
+                  *ngIf="newPasswordRepeat.errors?.equal"
+                  matTooltip="Las contraseñas no coinciden">
+                  report_problem
+                </mat-icon>
+              </div>
+                
             </div>
           </div>
+          <!-- Server side validations. -->
           <div class="validation-error" fxLayout="row" fxLayoutAlign="center center">
             <span *ngIf="validationError">{{ validationError }}</span>
-            <span *ngIf="newPasswordRepeat.errors?.equal">Las contraseñas no coinciden.</span>
           </div>
           <div fxLayout="row" fxLayoutAlign="center center">
             <button mat-flat-button scAnimated="fadeIn"

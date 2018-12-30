@@ -84,8 +84,20 @@ input.login-input.ng-invalid.ng-touched::placeholder {
 
 .validation-error {
     font-size: 11px;
-    height: 20px;
+    height: 100%;
     padding-top: 10px;
     font-style: italic;
     font-weight: bold;
+    text-align: center;
+
 }
+
+.validation-icon {
+    font-size: 16px;
+    color: red;
+}
+
+.validation-icon:hover {
+    cursor: pointer;
+}
+

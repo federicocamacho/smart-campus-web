@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 
 import { LoginInput, SigningInput, UserCookie, IUser, ApiError, ApiException } from '../../core/models';
 import { CookieService } from 'ngx-cookie-service';

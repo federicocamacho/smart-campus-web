@@ -45,6 +45,9 @@ import { CustomFormsModule } from 'ngx-custom-validators';
       multi: true,
     }
   ],
-  declarations: [FullScreenLoaderComponent, UserCardComponent]
+  declarations: [
+    FullScreenLoaderComponent,
+    UserCardComponent
+  ]
 })
 export class CoreModule { }
