@@ -7,10 +7,12 @@ export const environment = {
   endpoint: 'https://apiuisiot.serveo.net',
   timeout: 50000,
   register: '/users/user',
-  authentication: '/users/authentication'
+  authentication: '/users/authentication',
+  deleteUser: '/users/user/name'
 };
 
 // endpoint: 'http://localhost:8090',
+// endpoint: 'https://apiuisiot.serveo.net',
 
 /*
  * For easier debugging in development mode, you can import the following file

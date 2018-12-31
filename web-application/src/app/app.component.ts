@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
+import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import { takeUntil, take } from 'rxjs/operators';
 
 import { CookieService } from 'ngx-cookie-service';
-import { ToastyConfig } from 'ng2-toasty';
+import { ToastyConfig, ToastyService } from 'ng2-toasty';
 
 import { AppService } from './app.service';
-import { AuthService } from './core';
+import { ApiError, AuthService, Cleanable, IResponse, Utils } from './core';
+import { DeleteUserDialogComponent } from './core/components';
 import { UserService } from './core/api';
 
 /**
@@ -19,16 +23,19 @@ import { UserService } from './core/api';
   selector: 'sc-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent implements OnInit {  
+export class AppComponent extends Cleanable implements OnInit {  
   
   public title: string;
 
   constructor(private auth: AuthService,
               private cookieService: CookieService,
+              private dialog: MatDialog,
               private router: Router,
               public service: AppService,
               private toastyConfig: ToastyConfig,
+              private toastyService: ToastyService,
               private userService: UserService) {
+    super();
     this.title = 'Smart Campus';
     this.toastyConfig.theme = 'material';
   }
@@ -89,6 +96,7 @@ export class AppComponent implements OnInit {
    * @memberof AppComponent
    */
   public onProfileClicked(): void {
+    this.service.isMenuOpened = false;
     this.router.navigate(['/profile']);
   }
 
@@ -99,7 +107,49 @@ export class AppComponent implements OnInit {
    * @memberof AppComponent
    */
   public onDeleteProfileClicked(): void {
-    // TODO Show a confirmation and then proceed to delete the profile if the user confirme.
+    this.service.isUserCardOpened = false;
+    // this.service.isBusyGlobally = true;
+    const deleteDialog = this.dialog.open(DeleteUserDialogComponent, {
+      width: '350px',
+      data: { username: this.service.user.username }
+    });
+
+    deleteDialog.afterClosed()
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(result => {
+        if (result) {
+          this.onDeleteProfileConfirmed();
+        }
+      });
+  }
+
+  private onDeleteProfileConfirmed(): void {
+    this.service.isBusyGlobally = true;
+    const username = this.service.user.username;
+    this.userService.deleteUser(username)
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(
+        (res: HttpResponse<IResponse>) => {
+          if (res.ok) {
+            this.onLogoutClicked();
+            this.toastyService
+              .success(Utils.buildToastyConfig('ELIMINAR USUARIO', res.body.message));
+          } else {
+            this.toastyService
+              .error(Utils.buildToastyConfig('ERROR ELIMINANDO USUARIO', res.body.message));
+          }
+          this.service.isBusyGlobally = false;
+        },
+        (err: ApiError) => {
+          this.toastyService
+            .error(Utils.buildToastyConfig('ERROR ELIMINANDO USUARIO', err.message));
+          this.service.isBusyGlobally = false;
+        }
+      );
   }
 
   /**
@@ -117,4 +167,3 @@ export class AppComponent implements OnInit {
   }
 
 }
-

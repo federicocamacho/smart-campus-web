@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { CoreModule } from '../core.module';
 import { environment } from '../../../environments/environment';
-import { IUser, LoginInput, RestUtil, SigningInput } from '..';
+import { IResponse, IUser, LoginInput, RestUtil, SigningInput } from '..';
 
 /**
  * Consumes User related REST Services.
@@ -44,6 +44,20 @@ export class UserService {
   public login(user: LoginInput): Observable<any> {
     return this.http
       .post<HttpResponse<IUser>>(RestUtil.endpoint(environment.authentication), user, RestUtil.options());
+  }
+
+  /**
+   * Consumes delete user by username REST service.
+   *
+   * @date 2018-12-31
+   * @param username to be deleted.
+   * @returns an Observable with the response.
+   * @memberof UserService
+   */
+  public deleteUser(username: string): Observable<any> {
+    return this.http
+      .delete<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.deleteUser) }/${ username }`,
+                                      RestUtil.options());
   }
 
 }

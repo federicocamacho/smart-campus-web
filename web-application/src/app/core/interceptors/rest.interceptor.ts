@@ -14,7 +14,7 @@ import { RestUtil } from '../utils/rest-util';
 
 /**
  * Http Interceptors that handles general errors by mapping them into API errors.
- * Also sets the defaul timeout (30 secs) for all requests.
+ * Also sets the defaul timeout obtained from environments.
  *
  * @date 2018-12-29
  * @export

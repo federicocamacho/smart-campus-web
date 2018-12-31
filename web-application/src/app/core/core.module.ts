@@ -9,7 +9,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { CustomFormsModule } from 'ngx-custom-validators';
 
 import { AnimatedDirective, BadgeDirective, ClickOutsideDirective } from './directives';
-import { 
+import {
+  DeleteUserDialogComponent,
   HeaderComponent,
   FullScreenLoaderComponent,
   MenuComponent,
@@ -63,7 +64,9 @@ import { RestInterceptor } from './interceptors/rest.interceptor';
     FullScreenLoaderComponent,
     HeaderComponent,
     MenuComponent,
-    UserCardComponent
-  ]
+    UserCardComponent,
+    DeleteUserDialogComponent
+  ],
+  entryComponents: [ DeleteUserDialogComponent ]
 })
 export class CoreModule { }
