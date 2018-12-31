@@ -91,7 +91,7 @@ export class HeaderComponent {
    *
    * @memberof HeaderComponent
    */
-  @Output() userToggled: EventEmitter<void>;
+  @Output() userToggled: EventEmitter<MouseEvent>;
 
   constructor(private router: Router) {
     this.menuToggled = new EventEmitter();
@@ -122,9 +122,10 @@ export class HeaderComponent {
    * Used to emit the {@link userToggled } {@link EventEmitter } 
    *
    * @date 2018-10-30
+   * @param event: The Mouse event executed.
    * @memberof HeaderComponent
    */
-  public toggleUser(): void {
-    this.userToggled.emit();
+  public toggleUser(event: MouseEvent): void {
+    this.userToggled.emit(event);
   }
 }

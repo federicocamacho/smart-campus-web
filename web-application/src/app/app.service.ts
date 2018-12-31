@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HeaderItem, MenuItem } from 'sc-common';
+import { IUser, UserCookie } from './core/models';
+import { CookieService } from 'ngx-cookie-service';
 
 /**
  * Service to handle all app-wide data and event handlers.
@@ -54,12 +56,21 @@ export class AppService {
    * @memberof AppService
    */
   public menuItems: MenuItem[];
+
+  /**
+   * Stores the user logged in.
+   *
+   * @memberof AppService
+   */
+  public user: IUser;
   
-  constructor() {
+  constructor(private cookieService: CookieService) {
     this.isBusyGlobally = false;
     this.isUserCardOpened = false;
     this.isMenuOpened = true;
     this.initializeApp();
+    const cookie = UserCookie.fromJSON(this.cookieService.get('user'));
+    this.user = this.userFromCookie(cookie);
   }
 
   /**
@@ -82,35 +93,23 @@ export class AppService {
       ]),
     ];
   }
-
+  
   /**
-   * Hides the side menu.
+   * Maps a UserCookie into a User.
    *
-   * @date 2018-10-31
-   * @memberof AppService
+   * @date 2018-12-30
+   * @param cookie to be mapped. Nullable.
+   * @returns the user, null if the cookie is null.
+   * @memberof Utils
    */
-  public closeMenu(): void {
-    this.isMenuOpened = false;
-  }
-
-  /**
-   * Triggers a change in the visibility status of the side menu.
-   *
-   * @date 2018-10-31
-   * @memberof AppService
-   */
-  public toggleSideMenu(): void {
-    this.isMenuOpened = !this.isMenuOpened;
-    console.log('Side menu: ' + this.isMenuOpened);
-  }
-
-  /**
-   *Triggers a change in the visibility status of the user profile card.
-   *
-   * @date 2018-10-31
-   * @memberof AppService
-   */
-  public toggleUserCard(): void {
-    this.isUserCardOpened = !this.isUserCardOpened;
+  public userFromCookie(cookie: UserCookie): IUser {
+    if (!cookie) {
+      return null;
+    }
+    return {
+      name: cookie.name,
+      username: cookie.username,
+      email: cookie.email
+    };
   }
 }

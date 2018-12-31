@@ -8,18 +8,25 @@
     [isMenuOpened]="service.isMenuOpened"
     textColor="#20aee3"
     userImgSrc="assets/imgs/tony-stark.jpg"
-    userName="Tony Stark"
-    (menuToggled)="service.toggleSideMenu()"
-    (userToggled)="service.toggleUserCard()">
+    [userName]="service.user?.name"
+    (menuToggled)="toggleSideMenu()"
+    (userToggled)="toggleUserCard($event)">
   </sc-header>
   <sc-menu
     backgroundColor="white"
     iconsColor="#a2a2a2"
     [isOpened]="service.isMenuOpened"
     [menuItems]="service.menuItems"
-    (menuClosed)="service.closeMenu()">
+    (menuClosed)="closeMenu()">
   </sc-menu>
-  <!-- <sc-user-card></sc-user-card> -->
+  <sc-user-card scClickOutside
+    (clickOutside)="closeUserCard($event)"
+    [ngStyle]="{ 'visibility': service.isUserCardOpened ? 'visible' : 'hidden' }"
+    imageUrl="assets/imgs/tony-stark.jpg"
+    [username]="service.user?.username"
+    [email]="service.user?.email"
+    [name]="service.user?.name">
+  </sc-user-card>
 </ng-container>
 <router-outlet></router-outlet>
 <sc-full-screen-loader *ngIf="service.isBusyGlobally"></sc-full-screen-loader>

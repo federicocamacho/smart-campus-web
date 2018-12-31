@@ -8,6 +8,7 @@ import { MatBadgeModule, MatButtonModule, MatIconModule } from '@angular/materia
 import { BadgeDirective } from './directives/badge.directive';
 import { MenuComponent } from './navigation/menu/menu.component';
 import { AnimatedDirective } from './directives/animated.directive';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 
 @NgModule({
   imports: [
@@ -22,12 +23,14 @@ import { AnimatedDirective } from './directives/animated.directive';
     AnimatedDirective,
     BadgeDirective,
     HeaderComponent,
-    MenuComponent
+    MenuComponent,
+    ClickOutsideDirective
   ],
   exports: [
     ScCommonComponent,
     AnimatedDirective,
     BadgeDirective,
+    ClickOutsideDirective,
     HeaderComponent,
     MenuComponent
   ]

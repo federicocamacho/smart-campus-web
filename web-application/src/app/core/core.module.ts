@@ -11,6 +11,7 @@ import { UserCardComponent } from './components/user-card/user-card.component';
 import { RestInterceptor } from './interceptors/rest.interceptor';
 
 import { CustomFormsModule } from 'ngx-custom-validators';
+import { MatIconModule } from '@angular/material';
 
 /**
  * Module which includes Application's main utils and singleton services. This module is only imported by AppModule.
@@ -26,7 +27,8 @@ import { CustomFormsModule } from 'ngx-custom-validators';
     FormsModule,
     CustomFormsModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    MatIconModule //remove this
   ],
   exports: [
     CommonModule,

@@ -8,6 +8,7 @@ import { UserService } from 'src/app/core/api/user.service';
 import { ToastyService } from 'ng2-toasty';
 import { Cleanable, Utils } from 'sc-common';
 import { takeUntil, take } from 'rxjs/operators';
+import { HttpResponse } from '@angular/common/http';
 
 /**
  * Login, Signing and Change password component for the application.
@@ -52,11 +53,11 @@ export class LoginComponent extends Cleanable {
    */
   public validationError: string;
 
-  constructor(private service: AppService, 
-              private cookieService: CookieService, 
-              private router: Router, 
-              private toasty: ToastyService,
-              private userService: UserService) {
+  constructor(private service: AppService,
+    private cookieService: CookieService,
+    private router: Router,
+    private toasty: ToastyService,
+    private userService: UserService) {
     super();
     this.isLogin = true;
     this.login = new LoginInput();
@@ -88,9 +89,9 @@ export class LoginComponent extends Cleanable {
         take(1),
         takeUntil(this.destroyed))
       .subscribe(
-        (user: IUser) => {
+        (res: HttpResponse<IUser>) => {
           this.validationError = null;
-          this.authentication(user.username, user.email, user.name);
+          this.authentication(res);
           this.service.isBusyGlobally = false;
         },
         (err: ApiError) => this.handleAuthenticationError(err)
@@ -109,9 +110,9 @@ export class LoginComponent extends Cleanable {
         take(1),
         takeUntil(this.destroyed))
       .subscribe(
-        (user: IUser) => {
+        (res: HttpResponse<IUser>) => {
           this.validationError = null;
-          this.authentication(user.username, user.email, user.name);
+          this.authentication(res);
           this.service.isBusyGlobally = false;
         },
         (err: ApiError) => this.handleAuthenticationError(err)
@@ -137,17 +138,17 @@ export class LoginComponent extends Cleanable {
 
   /**
    * Creates and stores the cookie for the given user, sets it's timeout 
+   * sets the isLogedIn flag, stores the current user 
    * and navigates when authentication was successful.
    *
    * @date 2018-12-29
    * @private
-   * @param username of the authenticaded user
-   * @param email of the authenticaded user
-   * @param name of the authenticaded user
+   * @param res the {@link HttpResponse} with the given {@link IUser}.
    * @memberof LoginComponent
    */
-  private authentication(username: string, email: string, name: string): void {
-    const userCookie = new UserCookie(username, email, name, 'asdfghjk');
+  private authentication(res: HttpResponse<IUser>): void {
+    const user = res.body;
+    const userCookie = new UserCookie(user.username, user.email, user.name, 'asdfghjk');
 
     // expiration of the cookie is 2 hours.
     const expirationDate = new Date();
@@ -155,6 +156,7 @@ export class LoginComponent extends Cleanable {
 
     this.cookieService.set('user', JSON.stringify(userCookie), expirationDate);
     this.service.isLogedIn = true;
+    this.service.user = user;
     this.router.navigate(['/dashboard']);
   }
 
@@ -178,7 +180,7 @@ export class LoginComponent extends Cleanable {
       this.validationError = err.message;
       this.signing.username = null;
     } else if (err.exception === ApiException.ILLEGAL_ARGUMENT) {
-        this.validationError = err.message;
+      this.validationError = err.message;
     } else {
       this.toasty.error(Utils.buildToastyConfig('ERROR', err.message));
     }

@@ -41,7 +41,10 @@
             <mat-icon>{{ item.iconName }}</mat-icon>
           </button>
         </li>
-        <li class="nav-item user-item" fxLayout="col" style="height: 100%; margin-left: 10px">
+        <li 
+          class="nav-item user-item" 
+          fxLayout="col" style="height: 100%; margin-left: 10px"
+          (click)="toggleUser($event)">
           <div fxLayout="row" fxLayoutAlign="fill center"></div>
           <img [src]="userImgSrc" [alt]="userName" class="user-img" fxLayout="col" />
           <span class="user-name">{{ userName }}</span>
