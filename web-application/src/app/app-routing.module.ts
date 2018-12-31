@@ -1,9 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './main/login/login.component';
+
 import { LoginGuard, AuthGuard } from './core/guards';
-import { HomeComponent } from './main/home/home.component';
-import { NotFoundComponent } from './main/not-found/not-found.component';
+import { 
+  HomeComponent, 
+  LoginComponent,
+  NotFoundComponent,
+  ProfileComponent } from './main';
 
 const routes: Routes = [
   {
@@ -18,10 +21,26 @@ const routes: Routes = [
     canActivate: [ AuthGuard ]
   },
   {
+    path: 'profile',
+    pathMatch: 'full',
+    component: ProfileComponent,
+    canActivate: [ AuthGuard ]
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',
   },
+  {
+    path: 'not-found',
+    pathMatch: 'full',
+    component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '/not-found',
+    pathMatch: 'full'
+  }
   /*
     For other modules use Lazy Loading with:
   {
@@ -30,11 +49,6 @@ const routes: Routes = [
     canActivate: [ AuthGuardService ]
   }
   */
-  {
-    path: 'not-found',
-    pathMatch: 'full',
-    component: NotFoundComponent
-  }
 ];
 
 /**

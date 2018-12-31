@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HeaderItem, MenuItem } from 'sc-common';
-import { IUser, UserCookie } from './core/models';
+
 import { CookieService } from 'ngx-cookie-service';
+
+import { IUser, HeaderItem, MenuItem, UserCookie } from './core';
 
 /**
  * Service to handle all app-wide data and event handlers.
@@ -86,7 +87,7 @@ export class AppService {
     ];
     this.menuItems = [
       new MenuItem(-1, 'Configuración', null, 'settings', 0, [
-        new MenuItem(-2, 'Gateways', 'config/gateways', 'memory', 0, null)
+        new MenuItem(-2, 'Gateways', 'config/gateways', 'memory', 0)
       ]),
       new MenuItem(-3, 'Aplicaciones', null, 'computer', 3, [
         new MenuItem(0, 'Parking', 'applications/parking', 'directions_car', 3)
@@ -112,4 +113,5 @@ export class AppService {
       email: cookie.email
     };
   }
+  
 }

@@ -7,7 +7,7 @@
     iconsColor="#a2a2a2"
     [isMenuOpened]="service.isMenuOpened"
     textColor="#20aee3"
-    userImgSrc="assets/imgs/tony-stark.jpg"
+    userImgSrc="assets/imgs/user.png"
     [userName]="service.user?.name"
     (menuToggled)="toggleSideMenu()"
     (userToggled)="toggleUserCard($event)">
@@ -21,11 +21,14 @@
   </sc-menu>
   <sc-user-card scClickOutside
     (clickOutside)="closeUserCard($event)"
-    [ngStyle]="{ 'visibility': service.isUserCardOpened ? 'visible' : 'hidden' }"
-    imageUrl="assets/imgs/tony-stark.jpg"
+    *ngIf="service.isUserCardOpened"
+    imageUrl="assets/imgs/user.png"
     [username]="service.user?.username"
     [email]="service.user?.email"
-    [name]="service.user?.name">
+    [name]="service.user?.name"
+    (profileClicked)="onProfileClicked()"
+    (deleteClicked)="onDeleteProfileClicked()"
+    (logoutClicked)="onLogoutClicked()">
   </sc-user-card>
 </ng-container>
 <router-outlet></router-outlet>

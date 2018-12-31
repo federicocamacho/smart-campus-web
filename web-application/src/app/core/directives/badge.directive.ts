@@ -1,4 +1,9 @@
-import { Directive, Input, ElementRef, Renderer, OnInit } from '@angular/core';
+import { 
+  Directive, 
+  ElementRef,
+  Input,
+  Renderer,
+  OnInit } from '@angular/core';
 
 /**
  * Transforms an element into a badge (used for labels or notifications).
@@ -28,4 +33,5 @@ export class BadgeDirective implements OnInit {
     this.renderer.setElementStyle(this.elr.nativeElement, 'padding', '3px');
     this.renderer.setElementStyle(this.elr.nativeElement, 'border-radius', '10px');
   }
+
 }

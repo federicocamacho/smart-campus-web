@@ -1,5 +1,5 @@
-import { Subject } from 'rxjs';
 import { OnDestroy } from '@angular/core';
+import { Subject } from 'rxjs';
 
 /**
  * Util class that destroys all {@link takeUntil()} observers in the OnDestroy cycle.

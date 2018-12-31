@@ -1,4 +1,4 @@
-import { Utils } from '../../utils/utils';
+import { Utils } from '../utils/utils';
 
 /**
  * Represents a single option found in the side menu.
@@ -7,15 +7,20 @@ import { Utils } from '../../utils/utils';
  * @export
  */
 export class MenuItem {
-  id: number;
-  icon: string;
-  name: string;
-  path: string;
-  children: MenuItem[];
-  notificationCount: number;
-  isOpened: boolean;
+  public icon: string;
+  public id: number;
+  public isOpened: boolean;
+  public children: MenuItem[];
+  public name: string;
+  public notificationCount: number;
+  public path: string;
 
-  constructor(id?: number, name?: string, path?: string, icon?: string, notCount?: number, children?: MenuItem[]) {
+  constructor(id: number,
+              name: string,
+              path: string,
+              icon: string,
+              notCount: number,
+              children?: MenuItem[]) {
     this.id = id;
     this.name = name;
     this.path = path;
@@ -67,4 +72,5 @@ export class MenuItem {
   toggleOpen(): void {
     this.isOpened = !this.isOpened;
   }
+  
 }

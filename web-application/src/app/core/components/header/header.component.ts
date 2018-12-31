@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { HeaderItem } from './header-item';
+import { HeaderItem } from '../../models/header-item';
 
 /**
  * Customizable Navbar component.
@@ -12,7 +12,7 @@ import { HeaderItem } from './header-item';
 @Component({
   selector: 'sc-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
 
@@ -128,4 +128,5 @@ export class HeaderComponent {
   public toggleUser(event: MouseEvent): void {
     this.userToggled.emit(event);
   }
+
 }

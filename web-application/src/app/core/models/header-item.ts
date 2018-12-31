@@ -5,12 +5,13 @@
  * @export
  */
 export class HeaderItem {
-  id: number;
-  name: string;
-  action: Function;
-  iconName: string;
+  
+  public id: number;
+  public name: string;
+  public action: Function;
+  public iconName: string;
 
-  constructor(id?: number, name?: string, iconName?: string, action?: Function) {
+  constructor(id: number, name: string, iconName: string, action: Function) {
     this.id = id;
     this.name = name;
     this.iconName = iconName;

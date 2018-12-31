@@ -1,17 +1,21 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { CookieService } from 'ngx-cookie-service';
-import { FullScreenLoaderComponent } from './components/full-screen-loader/full-screen-loader.component';
-import { UserCardComponent } from './components/user-card/user-card.component';
-import { RestInterceptor } from './interceptors/rest.interceptor';
-
 import { CustomFormsModule } from 'ngx-custom-validators';
-import { MatIconModule } from '@angular/material';
+
+import { AnimatedDirective, BadgeDirective, ClickOutsideDirective } from './directives';
+import { 
+  HeaderComponent,
+  FullScreenLoaderComponent,
+  MenuComponent,
+  UserCardComponent } from './components';
+import { MaterialModule } from '../material/material.module';
+import { RestInterceptor } from './interceptors/rest.interceptor';
 
 /**
  * Module which includes Application's main utils and singleton services. This module is only imported by AppModule.
@@ -23,20 +27,25 @@ import { MatIconModule } from '@angular/material';
 @NgModule({
   imports: [
     CommonModule,
+    CustomFormsModule,
     FlexLayoutModule,
     FormsModule,
-    CustomFormsModule,
     HttpClientModule,
-    RouterModule,
-    MatIconModule //remove this
+    MaterialModule,
+    RouterModule
   ],
   exports: [
+    AnimatedDirective,
+    BadgeDirective,
+    ClickOutsideDirective,
     CommonModule,
+    CustomFormsModule,
     FlexLayoutModule,
     FormsModule,
-    CustomFormsModule,
     FullScreenLoaderComponent,
+    HeaderComponent,
     HttpClientModule,
+    MenuComponent,
     UserCardComponent
   ],
   providers: [ 
@@ -48,7 +57,12 @@ import { MatIconModule } from '@angular/material';
     }
   ],
   declarations: [
+    AnimatedDirective,
+    BadgeDirective,
+    ClickOutsideDirective,
     FullScreenLoaderComponent,
+    HeaderComponent,
+    MenuComponent,
     UserCardComponent
   ]
 })

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { CoreModule } from '../core.module';
-import { Observable } from 'rxjs';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { RestUtil } from './rest-util';
-import { environment } from 'src/environments/environment';
-import { SigningInput, IUser, LoginInput } from '../models';
+import { Observable } from 'rxjs';
+
+import { CoreModule } from '../core.module';
+import { environment } from '../../../environments/environment';
+import { IUser, LoginInput, RestUtil, SigningInput } from '..';
 
 /**
  * Consumes User related REST Services.
@@ -45,5 +45,5 @@ export class UserService {
     return this.http
       .post<HttpResponse<IUser>>(RestUtil.endpoint(environment.authentication), user, RestUtil.options());
   }
-  
+
 }

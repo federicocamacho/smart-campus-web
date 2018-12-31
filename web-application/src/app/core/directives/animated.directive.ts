@@ -1,4 +1,9 @@
-import { Directive, Input, ElementRef, Renderer, OnInit } from '@angular/core';
+import { 
+  Directive, 
+  ElementRef,
+  Input, 
+  OnInit,
+  Renderer } from '@angular/core';
 
 /**
  * Animates the current element using animate.css styles.
@@ -26,4 +31,5 @@ export class AnimatedDirective implements OnInit {
     this.renderer.setElementClass(this.elr.nativeElement, 'animated', true);
     this.renderer.setElementClass(this.elr.nativeElement, this.animation, true);
   }
+  
 }

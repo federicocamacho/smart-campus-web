@@ -1,10 +1,15 @@
-import { Component, Input, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
+import { 
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Router } from '@angular/router';
 import { map, takeUntil } from 'rxjs/operators';
 
-import { MenuItem } from './menu-item';
 import { Cleanable } from '../../utils/cleanable';
+import { MenuItem } from '../../models/menu-item';
 import { Utils } from '../../utils/utils';
 
 /**
@@ -16,10 +21,10 @@ import { Utils } from '../../utils/utils';
 @Component({
   selector: 'sc-menu',
   templateUrl: './menu.component.html',
-  styleUrls: ['./menu.component.css']
+  styleUrls: ['./menu.component.scss']
 })
 
-export class MenuComponent extends Cleanable implements OnInit, OnDestroy {
+export class MenuComponent extends Cleanable implements OnInit {
 
   /**
    * Navbar's background color as a string (receives HEX and color names).
@@ -104,4 +109,5 @@ export class MenuComponent extends Cleanable implements OnInit, OnDestroy {
 
     this.router.navigate(Utils.getPathArray(item.path));
   }
+  
 }

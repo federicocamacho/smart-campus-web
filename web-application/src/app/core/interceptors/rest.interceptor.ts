@@ -7,9 +7,10 @@ import {
   HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { timeout, tap } from 'rxjs/operators';
-import { RestUtil } from '../api/rest-util';
-import { ApiError } from '../models';
-import { environment } from 'src/environments/environment';
+
+import { ApiError } from '../models/api-error';
+import { environment } from '../../../environments/environment';
+import { RestUtil } from '../utils/rest-util';
 
 /**
  * Http Interceptors that handles general errors by mapping them into API errors.

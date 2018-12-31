@@ -1,17 +1,24 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-
-import { LoginInput, SigningInput, UserCookie, IUser, ApiError, ApiException } from '../../core/models';
-import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
-import { AppService } from '../../app.service';
-import { UserService } from 'src/app/core/api/user.service';
-import { ToastyService } from 'ng2-toasty';
-import { Cleanable, Utils } from 'sc-common';
-import { takeUntil, take } from 'rxjs/operators';
+import { Component } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { takeUntil, take } from 'rxjs/operators';
 
+import { CookieService } from 'ngx-cookie-service';
+import { ToastyService } from 'ng2-toasty';
+
+import { 
+  ApiError,
+  ApiException,
+  IUser,
+  LoginInput,
+  SigningInput,
+  UserCookie } from '../../core';
+import { AppService } from '../../app.service';
+import { Cleanable, Utils } from '../../core';
+import { UserService } from '../../core/api/user.service';
+  
 /**
- * Login, Signing and Change password component for the application.
+ * Login, and Signing component.
  * @date 2018-08-17
  * @export
  * @class LoginComponent
@@ -161,7 +168,7 @@ export class LoginComponent extends Cleanable {
   }
 
   /**
-   * Handles APIError when executing login and signing requests.
+   * Handles an APIError when executing login and signing requests.
    * If the exception is unknown it's treated like an INTERNAl.
    * If the exception is ILLEGAL_ARGUMENT (input validation) a message with the error is displayed.
    * If the exception is USER_EXISTS (already exists when signing, doesn't exist when login) then the

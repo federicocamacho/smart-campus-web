@@ -1,6 +1,7 @@
-import { environment } from 'src/environments/environment.prod';
-import { HttpHeaders, HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { ApiError } from '../models';
+import { HttpHeaders, HttpErrorResponse } from '@angular/common/http';
+
+import { ApiError } from '../models/api-error';
+import { environment } from '../../../environments/environment.prod';
 
 /**
  * Contains all REST (consuming) utility methods.

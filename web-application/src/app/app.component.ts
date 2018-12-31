@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './core/services';
-import { AppService } from './app.service';
+import { Router } from '@angular/router';
+
+import { CookieService } from 'ngx-cookie-service';
 import { ToastyConfig } from 'ng2-toasty';
+
+import { AppService } from './app.service';
+import { AuthService } from './core';
+import { UserService } from './core/api';
 
 /**
  * Application's main Component
@@ -18,9 +23,12 @@ export class AppComponent implements OnInit {
   
   public title: string;
 
-  constructor(private auth: AuthService, 
+  constructor(private auth: AuthService,
+              private cookieService: CookieService,
+              private router: Router,
               public service: AppService,
-              private toastyConfig: ToastyConfig) {
+              private toastyConfig: ToastyConfig,
+              private userService: UserService) {
     this.title = 'Smart Campus';
     this.toastyConfig.theme = 'material';
   }
@@ -72,6 +80,40 @@ export class AppComponent implements OnInit {
     if (this.service.isUserCardOpened) {
       this.service.isUserCardOpened = false; 
     }
+  }
+
+  /**
+   * Navigates to the {@link ProfileComponent}.
+   *
+   * @date 2018-12-31
+   * @memberof AppComponent
+   */
+  public onProfileClicked(): void {
+    this.router.navigate(['/profile']);
+  }
+
+  /**
+   * Deletes the current user.
+   *
+   * @date 2018-12-31
+   * @memberof AppComponent
+   */
+  public onDeleteProfileClicked(): void {
+    // TODO Show a confirmation and then proceed to delete the profile if the user confirme.
+  }
+
+  /**
+   * Proceeds to logout the current user.
+   *
+   * @date 2018-12-31
+   * @memberof AppComponent
+   */
+  public onLogoutClicked(): void {
+      this.service.isUserCardOpened = false;
+      this.cookieService.delete('user');
+      this.service.user = null;
+      this.service.isLogedIn = false;
+      this.router.navigate(['/login']);
   }
 
 }

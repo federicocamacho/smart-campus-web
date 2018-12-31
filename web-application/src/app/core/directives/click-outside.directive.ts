@@ -1,4 +1,9 @@
-import { Directive, ElementRef, Output, EventEmitter, HostListener } from '@angular/core';
+import { 
+    Directive,
+    ElementRef,
+    EventEmitter,
+    HostListener,
+    Output } from '@angular/core';
 
 /**
  * Directive used to know when a click was done outside the current HTML element.
