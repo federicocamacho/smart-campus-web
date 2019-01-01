@@ -25,13 +25,15 @@
                   <mat-icon
                     class="validation-icon"
                     *ngIf="username.errors?.required"
-                    matTooltip="Nombre de usuario requerido">
+                    matTooltip="Nombre de usuario requerido"
+                    matTooltipClass="validation-tooltip">
                     report_problem
                   </mat-icon>
                   <mat-icon
                     class="validation-icon"
                     *ngIf="username.errors?.minlength"
-                    matTooltip="Nombre de usuario debe tener minimo 4 caracteres">
+                    matTooltip="Nombre de usuario debe tener minimo 4 caracteres"
+                    matTooltipClass="validation-tooltip">
                     report_problem
                   </mat-icon>
                 </div>
@@ -48,13 +50,15 @@
                 <mat-icon
                   class="validation-icon"
                   *ngIf="password.errors?.required"
-                  matTooltip="Contraseña requerida">
+                  matTooltip="Contraseña requerida"
+                  matTooltipClass="validation-tooltip">
                   report_problem
                 </mat-icon>
                 <mat-icon
                   class="validation-icon"
                   *ngIf="password.errors?.minlength"
-                  matTooltip="Contraseña debe tener minimo 4 caracteres">
+                  matTooltip="Contraseña debe tener minimo 4 caracteres"
+                  matTooltipClass="validation-tooltip">
                   report_problem
                 </mat-icon>
               </div>
@@ -117,13 +121,15 @@
                   <mat-icon
                     class="validation-icon"
                     *ngIf="newName.errors?.required"
-                    matTooltip="Nombre requerido">
+                    matTooltip="Nombre requerido"
+                    matTooltipClass="validation-tooltip">
                     report_problem
                   </mat-icon>
                   <mat-icon
                     class="validation-icon"
                     *ngIf="newName.errors?.minlength"
-                    matTooltip="Nombre debe tener minimo 8 caracteres">
+                    matTooltip="Nombre debe tener minimo 8 caracteres"
+                    matTooltipClass="validation-tooltip">
                     report_problem
                   </mat-icon>
                 </div>
@@ -140,13 +146,15 @@
                 <mat-icon
                   class="validation-icon"
                   *ngIf="newEmail.errors?.required"
-                  matTooltip="Email requerido">
+                  matTooltip="Email requerido"
+                  matTooltipClass="validation-tooltip">
                   report_problem
                 </mat-icon>
                 <mat-icon
                   class="validation-icon"
                   *ngIf="newEmail.errors?.email"
-                  matTooltip="Email invalido">
+                  matTooltip="Email invalido"
+                  matTooltipClass="validation-tooltip">
                   report_problem
                 </mat-icon>
               </div>
@@ -163,13 +171,15 @@
                 <mat-icon
                   class="validation-icon"
                   *ngIf="newPassword.errors?.required"
-                  matTooltip="Contraseña requerida">
+                  matTooltip="Contraseña requerida"
+                  matTooltipClass="validation-tooltip">
                   report_problem
                 </mat-icon>
                 <mat-icon
                   class="validation-icon"
                   *ngIf="newPassword.errors?.minlength"
-                  matTooltip="Contraseña debe tener minimo 4 caracteres">
+                  matTooltip="Contraseña debe tener minimo 4 caracteres"
+                  matTooltipClass="validation-tooltip">
                   report_problem
                 </mat-icon>
               </div>
@@ -186,7 +196,8 @@
                 <mat-icon
                   class="validation-icon"
                   *ngIf="newPasswordRepeat.errors?.equal"
-                  matTooltip="Las contraseñas no coinciden">
+                  matTooltip="Las contraseñas no coinciden"
+                  matTooltipClass="validation-tooltip">
                   report_problem
                 </mat-icon>
               </div>
