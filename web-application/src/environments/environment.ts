@@ -8,7 +8,7 @@ export const environment = {
   timeout: 50000,
   register: '/users/user',
   authentication: '/users/authentication',
-  deleteUser: '/users/user/name'
+  deleteUser: '/users/user'
 };
 
 // endpoint: 'http://localhost:8090',

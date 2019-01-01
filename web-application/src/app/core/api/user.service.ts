@@ -47,16 +47,16 @@ export class UserService {
   }
 
   /**
-   * Consumes delete user by username REST service.
+   * Consumes delete user by id REST service.
    *
    * @date 2018-12-31
-   * @param username to be deleted.
+   * @param id of the user to be deleted.
    * @returns an Observable with the response.
    * @memberof UserService
    */
-  public deleteUser(username: string): Observable<any> {
+  public deleteUser(id: number): Observable<any> {
     return this.http
-      .delete<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.deleteUser) }/${ username }`,
+      .delete<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.deleteUser) }/${ id }`,
                                       RestUtil.options());
   }
 

@@ -127,8 +127,8 @@ export class AppComponent extends Cleanable implements OnInit {
 
   private onDeleteProfileConfirmed(): void {
     this.service.isBusyGlobally = true;
-    const username = this.service.user.username;
-    this.userService.deleteUser(username)
+    const id = this.service.user.id;
+    this.userService.deleteUser(id)
       .pipe(
         take(1),
         takeUntil(this.destroyed))

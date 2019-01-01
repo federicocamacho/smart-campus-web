@@ -8,17 +8,20 @@ import { Utils } from '../utils/utils';
  * @class UserCookie
  */
 export class UserCookie {
+  
+  public id: number;
+  public email: string;
+  public name: string;
+  public username: string;
+  public token: string;
 
-  constructor(username?: string, email?: string, name?: string, token?: string) {
+  constructor(id: number, username: string, email: string, name: string, token: string) {
+    this.id = id;
     this.username = username;
     this.email = email;
     this.name = name;
     this.token = token;
   }
-  public email: string;
-  public name: string;
-  public username: string;
-  public token: string;
 
   /**
    * Returns a {@link UserCookie} object from a JSON String.
@@ -32,7 +35,7 @@ export class UserCookie {
   public static fromJSON(cookieAsJson: string): UserCookie {
     try {
       const cookie: UserCookie = JSON.parse(cookieAsJson);
-      return new UserCookie(cookie.username, cookie.email, cookie.name, cookie.token);
+      return new UserCookie(cookie.id, cookie.username, cookie.email, cookie.name, cookie.token);
     } catch (e) {
       return null;
     }

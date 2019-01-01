@@ -108,6 +108,7 @@ export class AppService {
       return null;
     }
     return {
+      id: cookie.id,
       name: cookie.name,
       username: cookie.username,
       email: cookie.email
