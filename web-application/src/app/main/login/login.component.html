@@ -6,14 +6,14 @@
     fxLayout="column" fxFlexAlign="center" 
     fxFlex="40" fxFlex.xs="100" fxFlex.gt-lg="20" 
     style="margin: 20px">
-      <div scAnimated="pulse" class="title-container">
+      <div scAnimated="pulse" class="title-container default-shadow">
         <img src="assets/icons/icon.png" alt="Smart Campus" class="brand-img">
         <span class="brand-name">SMART CAMPUS</span>
       </div>
       <!-- LOGIN MODE -->
       <div class="login-wraper" *ngIf="isLogin; else signIn">
         <form class="login-form" #loginForm="ngForm" (ngSubmit)="doLogin()">
-          <div scAnimated="fadeIn" class="border-container box-shadow">
+          <div scAnimated="fadeIn" class="border-container default-shadow">
             <!-- Username field -->
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
@@ -68,7 +68,7 @@
           <div class="validation-error" fxLayout="row" fxLayoutAlign="center center">
             {{ validationError }}
           </div>
-          <div fxLayout="row" fxLayoutAlign="center center">
+          <div fxLayout="row" fxLayoutAlign="center center" class="default-shadow">
             <button mat-flat-button scAnimated="fadeIn"
               class="login-button box-shadow" 
               type="submit"
@@ -86,7 +86,7 @@
       <!-- SIGNIN MODE -->
       <ng-template #signIn class="signing-wraper">
         <form class="login-form" #signingForm="ngForm" (ngSubmit)="doSigning()">
-          <div scAnimated="fadeIn" class="border-container box-shadow">
+          <div scAnimated="fadeIn" class="border-container default-shadow">
             <!-- Username field -->
             <div fxLayout="row" fxLayoutAlign="center center">
               <input 
@@ -208,7 +208,7 @@
           <div class="validation-error" fxLayout="row" fxLayoutAlign="center center">
             <span *ngIf="validationError">{{ validationError }}</span>
           </div>
-          <div fxLayout="row" fxLayoutAlign="center center">
+          <div fxLayout="row" fxLayoutAlign="center center" class="default-shadow">
             <button mat-flat-button scAnimated="fadeIn"
               class="login-button box-shadow"
               [disabled]="signingForm.form.invalid && (signingForm.form.dirty || signingForm.form.touched)" 

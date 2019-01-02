@@ -1,6 +1,6 @@
-<div scAnimated="fadeIn"
-  class="menu-container"
-  [ngStyle]="{'visibility': isOpened ? 'visible' : 'hidden'}">
+<div scAnimated="fadeInLeft"
+  class="menu-container default-shadow"
+  *ngIf="isOpened">
   <div 
     *ngFor="let item of menuItems"
     flexLayout="row wrap" fxFlexFill

@@ -1,4 +1,4 @@
-<header class="top-bar" [ngStyle]="{ 'background-color': backgroundColor, 'color': textColor }">
+<header class="default-shadow" [ngStyle]="{ 'background-color': backgroundColor, 'color': textColor }">
   <nav class="navbar" fxLayout="row" fxLayoutAlign="fill center">
     <div 
       class="navbar-header"
@@ -6,7 +6,7 @@
       (click)="goHome()">
       <a class="navbar-brand" fxLayout="row">
         <img [src]="brandLogoSrc" [alt]="brandName" class="brand-logo" fxLayout="col" />
-        <div 
+        <div scAnimated="fadeInLeft"
           fxLayout="col" fxLayoutAlign="start center" 
           [fxHide]="!isMenuOpened" 
           style="padding-left: 10px;">
