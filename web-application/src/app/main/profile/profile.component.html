@@ -1,3 +1,17 @@
-<p>
-  profile works!
-</p>
+<div class="profile-wraper">
+  <div scAnimated="fadeIn"
+    class="profile-container default-shadow"
+    fxLayout="column" fxLayoutAlign="start center">
+    <div class="img-container">
+      <img src="assets/imgs/user.png" [alt]="service.user?.name" class="user-img"/>
+    </div>
+    <div class="name-container">
+      <h3 class="profile-name margin0">{{ service.user?.name }}</h3>
+      <h4 class="profile-username margin0"><b>{{ username }}</b> - {{ service.user?.email }}</h4>
+    </div>
+  </div>
+  <h3 class="section-title">MIS APLICACIONES</h3>
+  <div scAnimated="fadeIn" class="data-container">
+    <!-- Show applications in cards -->
+  </div>
+</div>
