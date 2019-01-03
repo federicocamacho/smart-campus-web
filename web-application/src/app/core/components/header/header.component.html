@@ -1,13 +1,14 @@
 <header class="default-shadow" [ngStyle]="{ 'background-color': backgroundColor, 'color': textColor }">
-  <nav class="navbar" fxLayout="row" fxLayoutAlign="fill center">
+  <nav class="navbar">
     <div 
       class="navbar-header"
-      fxLayout="col" fxFlexFill [fxFlex]="isMenuOpened ? '255px' : '60px'"
+      fxLayout="col" fxFlexFill
+      [fxFlex]="isMenuOpened ? '255px' : '60px'"
       (click)="goHome()">
-      <a class="navbar-brand" fxLayout="row">
-        <img [src]="brandLogoSrc" [alt]="brandName" class="brand-logo" fxLayout="col" />
+      <a class="navbar-brand" fxLayout="col">
+        <img [src]="brandLogoSrc" fxFlexAlign="center" [alt]="brandName" class="brand-logo"/>
         <div scAnimated="fadeInLeft"
-          fxLayout="col" fxLayoutAlign="start center" 
+          fxFlexAlign="center" 
           [fxHide]="!isMenuOpened" 
           style="padding-left: 10px;">
           <span class="brand-name">
@@ -23,8 +24,6 @@
             <mat-icon>menu</mat-icon>
           </button>
         </li>
-      </ul>
-      <ul class="navbar-nav" fxLayout="row">
         <li class="nav-item" [ngStyle]="{ 'color': iconsColor }" fxLayout="col">
           <button mat-icon-button>
             <mat-icon>search</mat-icon>
@@ -43,10 +42,10 @@
         </li>
         <li 
           class="nav-item user-item" 
-          fxLayout="col" style="height: 100%; margin-left: 10px"
+          fxLayout="col" fxLayoutAlign="center center"
+          style="margin-left: 10px"
           (click)="toggleUser($event)">
-          <div fxLayout="row" fxLayoutAlign="fill center"></div>
-          <img [src]="userImgSrc" [alt]="userName" class="user-img" fxLayout="col" />
+          <img [src]="userImgSrc" [alt]="userName" class="user-img"/>
           <span class="user-name">{{ userName }}</span>
           <mat-icon style="margin: auto">keyboard_arrow_down</mat-icon>
         </li>

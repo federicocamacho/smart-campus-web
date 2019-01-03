@@ -1,36 +1,38 @@
-<ng-container *ngIf="service.isLogedIn">
-  <sc-header
-    backgroundColor="white"
-    brandLogoSrc="assets/icons/icon-72x72.png"
-    [brandName]="title"
-    [headerOptions]="service.headerItems"
-    iconsColor="#a2a2a2"
-    [isMenuOpened]="service.isMenuOpened"
-    textColor="#20aee3"
-    userImgSrc="assets/imgs/user.png"
-    [userName]="service.user?.name"
-    (menuToggled)="toggleSideMenu()"
-    (userToggled)="toggleUserCard($event)">
-  </sc-header>
+<sc-header
+  *ngIf="service.isLogedIn"
+  backgroundColor="white"
+  brandLogoSrc="assets/icons/icon-72x72.png"
+  [brandName]="title"
+  [headerOptions]="service.headerItems"
+  iconsColor="#a2a2a2"
+  [isMenuOpened]="service.isMenuOpened"
+  textColor="#20aee3"
+  userImgSrc="assets/imgs/user.png"
+  [userName]="service.user?.name"
+  (menuToggled)="toggleSideMenu()"
+  (userToggled)="toggleUserCard($event)">
+</sc-header>
+<div fxLayout="col">
   <sc-menu
+    *ngIf="service.isLogedIn"
     backgroundColor="white"
     iconsColor="#a2a2a2"
     [isOpened]="service.isMenuOpened"
     [menuItems]="service.menuItems"
     (menuClosed)="closeMenu()">
   </sc-menu>
-  <sc-user-card scClickOutside
-    (clickOutside)="closeUserCard($event)"
-    *ngIf="service.isUserCardOpened"
-    imageUrl="assets/imgs/user.png"
-    [username]="service.user?.username"
-    [email]="service.user?.email"
-    [name]="service.user?.name"
-    (profileClicked)="onProfileClicked()"
-    (deleteClicked)="onDeleteProfileClicked()"
-    (logoutClicked)="onLogoutClicked()">
-  </sc-user-card>
-</ng-container>
-<router-outlet></router-outlet>
+  <router-outlet></router-outlet>
+</div>
+<sc-user-card scClickOutside
+  *ngIf="service.isUserCardOpened && service.isLogedIn"
+  (clickOutside)="closeUserCard($event)"
+  imageUrl="assets/imgs/user.png"
+  [username]="service.user?.username"
+  [email]="service.user?.email"
+  [name]="service.user?.name"
+  (profileClicked)="onProfileClicked()"
+  (deleteClicked)="onDeleteProfileClicked()"
+  (logoutClicked)="onLogoutClicked()">
+</sc-user-card>
 <sc-full-screen-loader *ngIf="service.isBusyGlobally"></sc-full-screen-loader>
 <ng2-toasty></ng2-toasty>
