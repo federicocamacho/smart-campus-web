@@ -111,7 +111,8 @@ export class AppService {
       id: cookie.id,
       name: cookie.name,
       username: cookie.username,
-      email: cookie.email
+      email: cookie.email,
+      admin: cookie.admin
     };
   }
   

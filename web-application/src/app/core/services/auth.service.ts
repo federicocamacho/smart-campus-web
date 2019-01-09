@@ -27,14 +27,10 @@ export class AuthService {
    */
   public isAuthenticated(): boolean {
     if (this.cookieService.check('user')) {
-      try {
-        const user: UserCookie = UserCookie.fromJSON(this.cookieService.get('user'));
-        return user && user.hasValidToken();
-      } catch (e) {
-        return false;
-      }
+      const user: UserCookie = UserCookie.fromJSON(this.cookieService.get('user'));
+      return user != null;
     }
-
     return false;
   }
+  
 }

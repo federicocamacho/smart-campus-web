@@ -12,6 +12,12 @@ import {
   ProfileComponent } from './';
 import { CoreModule } from '../core/core.module';
 import { MaterialModule } from '../material/material.module';
+import {
+  DeleteUserDialogComponent,
+  HeaderComponent,
+  FullScreenLoaderComponent,
+  MenuComponent,
+  UserCardComponent } from './components';
 
 /**
  * Application's main module (not lazy-loaded) which also includes Login component
@@ -30,10 +36,15 @@ import { MaterialModule } from '../material/material.module';
     MaterialModule
   ],
   declarations: [
+    FullScreenLoaderComponent,
+    HeaderComponent,
     HomeComponent,
     LoginComponent,
+    MenuComponent,
     NotFoundComponent,
-    ProfileComponent
-  ]
+    ProfileComponent,
+    UserCardComponent
+  ],
+  entryComponents: [ DeleteUserDialogComponent ]
 })
 export class MainModule { }

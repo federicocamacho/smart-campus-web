@@ -7,13 +7,10 @@
  * @class LoginInput
  */
 export class LoginInput {
-  public username: string;
   public password: string;
+  public username: string;
 
-  constructor(username?: string, password?: string) {
-    this.username = username;
-    this.password = password;
-  }
+  constructor() {}
 }
 
 /**
@@ -24,18 +21,14 @@ export class LoginInput {
  * @class SigningInput
  */
 export class SigningInput {
+  public admin: boolean;
   public email: string;
   public name: string;
   public password: string;
-  public passwordCheck: string;
   public username: string;
 
-  constructor(username?: string, email?: string, name?: string, password?: string, passwordCheck?: string) {
-    this.username = username;
-    this.password = password;
-    this.passwordCheck = passwordCheck;
-    this.email = email;
-    this.name = name;
+  constructor() {
+    this.admin = false; // no admin user can be created from the platform.
   }
 
 }

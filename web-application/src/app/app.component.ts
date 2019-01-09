@@ -9,7 +9,7 @@ import { ToastyConfig, ToastyService } from 'ng2-toasty';
 
 import { AppService } from './app.service';
 import { ApiError, AuthService, Cleanable, IResponse, Utils } from './core';
-import { DeleteUserDialogComponent } from './core/components';
+import { DeleteUserDialogComponent } from './main/components';
 import { UserService } from './core/api';
 
 /**
@@ -159,11 +159,11 @@ export class AppComponent extends Cleanable implements OnInit {
    * @memberof AppComponent
    */
   public onLogoutClicked(): void {
-      this.service.isUserCardOpened = false;
-      this.cookieService.delete('user');
-      this.service.user = null;
-      this.service.isLogedIn = false;
-      this.router.navigate(['/login']);
+    this.service.isUserCardOpened = false;
+    this.cookieService.delete('user');
+    this.service.user = null;
+    this.service.isLogedIn = false;
+    this.router.navigate(['/login']);
   }
 
 }

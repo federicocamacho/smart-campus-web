@@ -155,7 +155,7 @@ export class LoginComponent extends Cleanable {
    */
   private authentication(res: HttpResponse<IUser>): void {
     const user = res.body;
-    const userCookie = new UserCookie(user.id, user.username, user.email, user.name, 'asdfghjk');
+    const userCookie = new UserCookie(user.id, user.username, user.email, user.name, user.admin);
 
     // expiration of the cookie is 2 hours.
     const expirationDate = new Date();

@@ -1,7 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { HeaderItem } from '../../models/header-item';
+import { HeaderItem } from '../../../core';
 
 /**
  * Customizable Navbar component.

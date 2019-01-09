@@ -8,9 +8,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { map, takeUntil } from 'rxjs/operators';
 
-import { Cleanable } from '../../utils/cleanable';
-import { MenuItem } from '../../models/menu-item';
-import { Utils } from '../../utils/utils';
+import { Cleanable, MenuItem, Utils } from '../../../core/';
 
 /**
  * Sidebar Menu Component

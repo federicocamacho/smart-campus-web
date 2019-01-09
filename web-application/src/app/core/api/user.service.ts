@@ -30,7 +30,7 @@ export class UserService {
    */
   public register(user: SigningInput): Observable<any> {
     return this.http
-      .put<HttpResponse<IUser>>(RestUtil.endpoint(environment.register), user, RestUtil.options());
+      .post<HttpResponse<IUser>>(RestUtil.endpoint(environment.register), user, RestUtil.options());
   }
 
   /**

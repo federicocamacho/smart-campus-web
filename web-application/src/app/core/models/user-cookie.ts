@@ -1,5 +1,3 @@
-import { Utils } from '../utils/utils';
-
 /**
  * Model used to map the authenticated user data stored in the cookie
  *
@@ -13,14 +11,14 @@ export class UserCookie {
   public email: string;
   public name: string;
   public username: string;
-  public token: string;
+  public admin: boolean;
 
-  constructor(id: number, username: string, email: string, name: string, token: string) {
+  constructor(id: number, username: string, email: string, name: string, admin: boolean) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.name = name;
-    this.token = token;
+    this.admin = admin;
   }
 
   /**
@@ -35,21 +33,10 @@ export class UserCookie {
   public static fromJSON(cookieAsJson: string): UserCookie {
     try {
       const cookie: UserCookie = JSON.parse(cookieAsJson);
-      return new UserCookie(cookie.id, cookie.username, cookie.email, cookie.name, cookie.token);
+      return new UserCookie(cookie.id, cookie.username, cookie.email, cookie.name, cookie.admin);
     } catch (e) {
       return null;
     }
  }
-
-  /**
-   * Validates if the token is valid.
-   *
-   * @date 2018-11-17
-   * @returns true if the token is valid, false otherwise.
-   * @memberof UserCookie
-   */
-  public hasValidToken(): boolean {
-    return !Utils.isEmptyString(this.token);
-  }
 
 }

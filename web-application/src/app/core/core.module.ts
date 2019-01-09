@@ -9,14 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { CustomFormsModule } from 'ngx-custom-validators';
 
 import { AnimatedDirective, BadgeDirective, ClickOutsideDirective } from './directives';
-import {
-  DeleteUserDialogComponent,
-  HeaderComponent,
-  FullScreenLoaderComponent,
-  MenuComponent,
-  UserCardComponent } from './components';
-import { MaterialModule } from '../material/material.module';
-import { RestInterceptor } from './interceptors/rest.interceptor';
+import { RestInterceptor } from './services/rest.interceptor';
 
 /**
  * Module which includes Application's main utils and singleton services. This module is only imported by AppModule.
@@ -32,7 +25,6 @@ import { RestInterceptor } from './interceptors/rest.interceptor';
     FlexLayoutModule,
     FormsModule,
     HttpClientModule,
-    MaterialModule,
     RouterModule
   ],
   exports: [
@@ -43,11 +35,7 @@ import { RestInterceptor } from './interceptors/rest.interceptor';
     CustomFormsModule,
     FlexLayoutModule,
     FormsModule,
-    FullScreenLoaderComponent,
-    HeaderComponent,
-    HttpClientModule,
-    MenuComponent,
-    UserCardComponent
+    HttpClientModule
   ],
   providers: [ 
     CookieService, 
@@ -61,12 +49,6 @@ import { RestInterceptor } from './interceptors/rest.interceptor';
     AnimatedDirective,
     BadgeDirective,
     ClickOutsideDirective,
-    FullScreenLoaderComponent,
-    HeaderComponent,
-    MenuComponent,
-    UserCardComponent,
-    DeleteUserDialogComponent
-  ],
-  entryComponents: [ DeleteUserDialogComponent ]
+  ]
 })
 export class CoreModule { }
