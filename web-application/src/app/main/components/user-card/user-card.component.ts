@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'sc-user-card',
@@ -43,7 +43,7 @@ export class UserCardComponent {
   @Output('profileClicked') profileClicked: EventEmitter<void>;
 
   /**
-   * Event emitter that emit's when the see delete profile option is clicked.
+   * Event emitter that emit's when the 'delete profile' option is clicked.
    *
    * @memberof UserCardComponent
    */
@@ -56,6 +56,11 @@ export class UserCardComponent {
    */
   @Output('logoutClicked') logoutClicked: EventEmitter<void>;
 
+  /**
+   * Creates an instance of UserCardComponent.
+   * @date 2019-01-09
+   * @memberof UserCardComponent
+   */
   constructor() {
     this.profileClicked = new EventEmitter();
     this.logoutClicked = new EventEmitter();
@@ -63,7 +68,7 @@ export class UserCardComponent {
   }
 
   /**
-   * Event handler for clicks in the Profile option.
+   * Event handler for Profile option selection.
    *
    * @date 2018-12-31
    * @memberof UserCardComponent
@@ -73,7 +78,7 @@ export class UserCardComponent {
   }
 
   /**
-   * Event handler for clicks in the Delete Profile option.
+   * Event handler for Delete Profile option selection.
    *
    * @date 2018-12-31
    * @memberof UserCardComponent
@@ -83,7 +88,7 @@ export class UserCardComponent {
   }
 
   /**
-   * Event handler for clicks in the Logout option.
+   * Event handler for Logout option selection.
    *
    * @date 2018-12-31
    * @memberof UserCardComponent

@@ -18,6 +18,12 @@ import { IResponse, IUser, LoginInput, RestUtil, SigningInput } from '..';
 })
 export class UserService {
 
+  /**
+   * Creates an instance of UserService.
+   * @date 2019-01-09
+   * @param http {@link HttpClient} to execute HTTP Requests.
+   * @memberof UserService
+   */
   constructor(private http: HttpClient) { }
 
   /**
@@ -56,8 +62,8 @@ export class UserService {
    */
   public deleteUser(id: number): Observable<any> {
     return this.http
-      .delete<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.deleteUser) }/${ id }`,
-                                      RestUtil.options());
+      .delete<HttpResponse<IResponse>>(`${RestUtil.endpoint(environment.deleteUser)}/${id}`,
+        RestUtil.options());
   }
 
 }

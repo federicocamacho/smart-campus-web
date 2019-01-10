@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { AppService } from 'src/app/app.service';
+
+import { AppService } from '../../../app/app.service';
 
 /**
  * User profile component. Path /profile.
@@ -17,8 +18,14 @@ export class ProfileComponent {
 
   public username: string;
 
+  /**
+   * Creates an instance of ProfileComponent.
+   * @date 2019-01-09
+   * @param service Application main service.
+   * @memberof ProfileComponent
+   */
   constructor(private service: AppService) {
-    this.username = '@' + service.user.username;
+    this.username = '@' + this.service.user.username;
   }
 
 }

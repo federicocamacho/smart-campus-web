@@ -12,7 +12,8 @@ import {
   IUser,
   LoginInput,
   SigningInput,
-  UserCookie } from '../../core';
+  UserCookie 
+} from '../../core';
 import { AppService } from '../../app.service';
 import { Cleanable, Utils } from '../../core';
 import { UserService } from '../../core/api/user.service';
@@ -60,11 +61,21 @@ export class LoginComponent extends Cleanable {
    */
   public validationError: string;
 
+  /**
+   * Creates an instance of LoginComponent.
+   * @date 2019-01-09
+   * @param service Application's main service.
+   * @param cookieService Cookie service (used for authentication).
+   * @param router Angular router.
+   * @param toasty Toasty handler.
+   * @param userService Uer API service.
+   * @memberof LoginComponent
+   */
   constructor(private service: AppService,
-    private cookieService: CookieService,
-    private router: Router,
-    private toasty: ToastyService,
-    private userService: UserService) {
+              private cookieService: CookieService,
+              private router: Router,
+              private toasty: ToastyService,
+              private userService: UserService) {
     super();
     this.isLogin = true;
     this.login = new LoginInput();
@@ -101,7 +112,10 @@ export class LoginComponent extends Cleanable {
           this.authentication(res);
           this.service.isBusyGlobally = false;
         },
-        (err: ApiError) => this.handleAuthenticationError(err)
+        (err: ApiError) => {
+          this.handleAuthenticationError(err);
+          this.service.isBusyGlobally = false;
+        }
       );
   }
 
@@ -122,7 +136,10 @@ export class LoginComponent extends Cleanable {
           this.authentication(res);
           this.service.isBusyGlobally = false;
         },
-        (err: ApiError) => this.handleAuthenticationError(err)
+        (err: ApiError) => {
+          this.handleAuthenticationError(err);
+          this.service.isBusyGlobally = false;
+        }
       );
   }
 
@@ -134,7 +151,7 @@ export class LoginComponent extends Cleanable {
    * @param isLogin true if it's login form, false otherwise.
    * @memberof LoginComponent
    */
-  public onUsernameChanged(username: string, isLogin: boolean) {
+  public onUsernameChanged(username: string, isLogin: boolean): void {
     if (isLogin) {
       this.login.username = username;
     } else {
@@ -150,7 +167,7 @@ export class LoginComponent extends Cleanable {
    *
    * @date 2018-12-29
    * @private
-   * @param res the {@link HttpResponse} with the given {@link IUser}.
+   * @param res the {@link HttpResponse} that contains the {@link IUser}.
    * @memberof LoginComponent
    */
   private authentication(res: HttpResponse<IUser>): void {
@@ -158,6 +175,7 @@ export class LoginComponent extends Cleanable {
     const userCookie = new UserCookie(user.id, user.username, user.email, user.name, user.admin);
 
     // expiration of the cookie is 2 hours.
+    // TODO expire angular session when the cookie timesout.
     const expirationDate = new Date();
     expirationDate.setHours(expirationDate.getHours() + 2);
 
@@ -191,7 +209,6 @@ export class LoginComponent extends Cleanable {
     } else {
       this.toasty.error(Utils.buildToastyConfig('ERROR', err.message));
     }
-    this.service.isBusyGlobally = false;
   }
 
 }

@@ -13,5 +13,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./full-screen-loader.component.scss']
 })
 export class FullScreenLoaderComponent {
-  constructor() { }
 }

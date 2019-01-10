@@ -8,7 +8,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ToastyConfig, ToastyService } from 'ng2-toasty';
 
 import { AppService } from './app.service';
-import { ApiError, AuthService, Cleanable, IResponse, Utils } from './core';
+import { ApiError, Cleanable, IResponse, Utils } from './core';
 import { DeleteUserDialogComponent } from './main/components';
 import { UserService } from './core/api';
 
@@ -25,10 +25,21 @@ import { UserService } from './core/api';
 })
 export class AppComponent extends Cleanable implements OnInit {  
   
-  public title: string;
+  public title = 'Smart Campus';
 
-  constructor(private auth: AuthService,
-              private cookieService: CookieService,
+  /**
+   * Creates an instance of AppComponent.
+   * @date 2019-01-09
+   * @param cookieService User Cookie service.
+   * @param dialog Material Dialog reference.
+   * @param router Angular Router.
+   * @param service Application's main service.
+   * @param toastyConfig Toasty Configuration.
+   * @param toastyService Toasty service (handler).
+   * @param userService User API Service.
+   * @memberof AppComponent
+   */
+  constructor(private cookieService: CookieService,
               private dialog: MatDialog,
               private router: Router,
               public service: AppService,
@@ -36,12 +47,19 @@ export class AppComponent extends Cleanable implements OnInit {
               private toastyService: ToastyService,
               private userService: UserService) {
     super();
-    this.title = 'Smart Campus';
     this.toastyConfig.theme = 'material';
   }
 
+  /**
+   * Component's onInit lifecycle that sets the isLogedIn flag.
+   *
+   * @date 2019-01-09
+   * @memberof AppComponent
+   */
   ngOnInit(): void {
-    if (this.auth.isAuthenticated()) { this.service.isLogedIn = true; }
+    if (this.service.isAuthenticated()) {
+      this.service.isLogedIn = true;
+    }
   }
 
   /**
@@ -118,14 +136,17 @@ export class AppComponent extends Cleanable implements OnInit {
       .pipe(
         take(1),
         takeUntil(this.destroyed))
-      .subscribe(result => {
-        if (result) {
-          this.onDeleteProfileConfirmed();
-        }
-      });
+      .subscribe(result => result ? this.deleteProfile() : null);
   }
 
-  private onDeleteProfileConfirmed(): void {
+  /**
+   * Deletes the user profile.
+   *
+   * @date 2019-01-09
+   * @private
+   * @memberof AppComponent
+   */
+  private deleteProfile(): void {
     this.service.isBusyGlobally = true;
     const id = this.service.user.id;
     this.userService.deleteUser(id)
@@ -153,7 +174,8 @@ export class AppComponent extends Cleanable implements OnInit {
   }
 
   /**
-   * Proceeds to logout the current user.
+   * Proceeds to logout the current user, removing it from memory, from the user cookie and
+   * setting the isLogedIn flag to false, also navigates to the login page.
    *
    * @date 2018-12-31
    * @memberof AppComponent

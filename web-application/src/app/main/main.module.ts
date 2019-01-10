@@ -5,19 +5,21 @@ import { FormsModule } from '@angular/forms';
 
 import { CustomFormsModule } from 'ngx-custom-validators';
 
-import { 
-  HomeComponent,
-  LoginComponent,
-  NotFoundComponent,
-  ProfileComponent } from './';
-import { CoreModule } from '../core/core.module';
-import { MaterialModule } from '../material/material.module';
 import {
   DeleteUserDialogComponent,
   HeaderComponent,
   FullScreenLoaderComponent,
   MenuComponent,
-  UserCardComponent } from './components';
+  UserCardComponent
+} from './components';
+import { 
+  HomeComponent,
+  LoginComponent,
+  NotFoundComponent,
+  ProfileComponent 
+} from './';
+import { CoreModule } from '../core/core.module';
+import { MaterialModule } from '../material/material.module';
 
 /**
  * Application's main module (not lazy-loaded) which also includes Login component
@@ -36,6 +38,7 @@ import {
     MaterialModule
   ],
   declarations: [
+    DeleteUserDialogComponent,
     FullScreenLoaderComponent,
     HeaderComponent,
     HomeComponent,
@@ -45,6 +48,16 @@ import {
     ProfileComponent,
     UserCardComponent
   ],
-  entryComponents: [ DeleteUserDialogComponent ]
+  entryComponents: [ DeleteUserDialogComponent ],
+  exports: [
+    FullScreenLoaderComponent,
+    HeaderComponent,
+    HomeComponent,
+    LoginComponent,
+    MenuComponent,
+    NotFoundComponent,
+    ProfileComponent,
+    UserCardComponent
+  ]
 })
 export class MainModule { }

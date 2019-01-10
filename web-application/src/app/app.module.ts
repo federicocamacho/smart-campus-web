@@ -11,6 +11,13 @@ import { CoreModule } from './core/core.module';
 import { MainModule } from './main/main.module';
 import { MaterialModule } from './material/material.module';
 
+/**
+ * Application's main module.
+ *
+ * @date 2019-01-09
+ * @export
+ * @class AppModule
+ */
 @NgModule({
   declarations: [
     AppComponent

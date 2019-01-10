@@ -1,9 +1,10 @@
-import { 
-  Directive, 
+import {
+  Directive,
   ElementRef,
   Input,
-  Renderer,
-  OnInit } from '@angular/core';
+  OnInit,
+  Renderer2
+} from '@angular/core';
 
 /**
  * Transforms an element into a badge (used for labels or notifications).
@@ -23,15 +24,28 @@ export class BadgeDirective implements OnInit {
    */
   @Input('scBadge') color: string;
 
-  constructor(public elr: ElementRef, public renderer: Renderer) {}
+  /**
+   * Creates an instance of BadgeDirective.
+   * @date 2019-01-09
+   * @param elr Reference to the element that has the directive.
+   * @param renderer Angular Renderer.
+   * @memberof BadgeDirective
+   */
+  constructor(public elr: ElementRef, public renderer: Renderer2) { }
 
+  /**
+   * Directive's onInit lifecycle. Adds the proper styling for the element.
+   *
+   * @date 2019-01-09
+   * @memberof BadgeDirective
+   */
   ngOnInit() {
-    this.renderer.setElementStyle(this.elr.nativeElement, 'background-color', this.color);
-    this.renderer.setElementStyle(this.elr.nativeElement, 'color', 'white');
-    this.renderer.setElementStyle(this.elr.nativeElement, 'text-align', 'center');
-    this.renderer.setElementStyle(this.elr.nativeElement, 'font-size', '11px');
-    this.renderer.setElementStyle(this.elr.nativeElement, 'padding', '3px');
-    this.renderer.setElementStyle(this.elr.nativeElement, 'border-radius', '10px');
+    this.renderer.setStyle(this.elr.nativeElement, 'background-color', this.color);
+    this.renderer.setStyle(this.elr.nativeElement, 'color', 'white');
+    this.renderer.setStyle(this.elr.nativeElement, 'text-align', 'center');
+    this.renderer.setStyle(this.elr.nativeElement, 'font-size', '11px');
+    this.renderer.setStyle(this.elr.nativeElement, 'padding', '3px');
+    this.renderer.setStyle(this.elr.nativeElement, 'border-radius', '10px');
   }
 
 }

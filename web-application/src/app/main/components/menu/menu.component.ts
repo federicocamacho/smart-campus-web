@@ -3,7 +3,8 @@ import {
   EventEmitter,
   Input,
   OnInit,
-  Output } from '@angular/core';
+  Output 
+} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import { map, takeUntil } from 'rxjs/operators';
@@ -54,15 +55,30 @@ export class MenuComponent extends Cleanable implements OnInit {
 
   @Output() menuClosed: EventEmitter<void>;
 
+  /**
+   * Creates an instance of MenuComponent.
+   * @date 2019-01-09
+   * @param bpObserver Material's CDK breakpoint observer.
+   * @param router Angular Router.
+   * @memberof MenuComponent
+   */
   constructor(private bpObserver: BreakpointObserver, private router: Router) {
     super();
     this.menuClosed = new EventEmitter();
   }
 
+  /**
+   * Component's onInit lifecycle, used to start device size breakpoint observer.
+   *
+   * @date 2019-01-09
+   * @memberof MenuComponent
+   */
   ngOnInit() {
     this.bpObserver
       .observe([Breakpoints.Small, Breakpoints.XSmall])
-      .pipe(map(value => value.matches), takeUntil(this.destroyed))
+      .pipe(
+        map(value => value.matches),
+        takeUntil(this.destroyed)) // do not use take(1) as multiple values are received.
       .subscribe(isMobile => this.emitIfIsMobile(isMobile));
   }
 

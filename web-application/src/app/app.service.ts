@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CookieService } from 'ngx-cookie-service';
 
-import { IUser, HeaderItem, MenuItem, UserCookie } from './core';
+import { HeaderItem, IUser, MenuItem, UserCookie, Utils } from './core';
 
 /**
  * Service to handle all app-wide data and event handlers.
@@ -36,7 +36,7 @@ export class AppService {
    * @memberof AppService
    */
   public isLogedIn: boolean;
-  
+
   /**
    * Determines whether the user profile is opened or not.
    *
@@ -64,14 +64,20 @@ export class AppService {
    * @memberof AppService
    */
   public user: IUser;
-  
+
+  /**
+   * Creates an instance of AppService.
+   * @date 2019-01-09
+   * @param cookieService User Cookie service.
+   * @memberof AppService
+   */
   constructor(private cookieService: CookieService) {
     this.isBusyGlobally = false;
     this.isUserCardOpened = false;
     this.isMenuOpened = true;
     this.initializeApp();
     const cookie = UserCookie.fromJSON(this.cookieService.get('user'));
-    this.user = this.userFromCookie(cookie);
+    this.user = Utils.userFromCookie(cookie);
   }
 
   /**
@@ -94,26 +100,20 @@ export class AppService {
       ]),
     ];
   }
-  
+
   /**
-   * Maps a UserCookie into a User.
+   * Indicates if the user is authenticated or not checking if the {@link UserCookie} exists.
    *
-   * @date 2018-12-30
-   * @param cookie to be mapped. Nullable.
-   * @returns the user, null if the cookie is null.
-   * @memberof Utils
+   * @date 2019-01-09
+   * @returns true if the user is authenticated, false otherwise.
+   * @memberof AppService
    */
-  public userFromCookie(cookie: UserCookie): IUser {
-    if (!cookie) {
-      return null;
+  public isAuthenticated(): boolean {
+    if (this.cookieService.check('user')) {
+      const user: UserCookie = UserCookie.fromJSON(this.cookieService.get('user'));
+      return user != null;
     }
-    return {
-      id: cookie.id,
-      name: cookie.name,
-      username: cookie.username,
-      email: cookie.email,
-      admin: cookie.admin
-    };
+    return false;
   }
-  
+
 }

@@ -12,7 +12,7 @@ import { AnimatedDirective, BadgeDirective, ClickOutsideDirective } from './dire
 import { RestInterceptor } from './services/rest.interceptor';
 
 /**
- * Module which includes Application's main utils and singleton services. This module is only imported by AppModule.
+ * Module which includes Application's main utils and singleton services.
  *
  * @date 2018-06-28
  * @export

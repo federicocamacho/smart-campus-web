@@ -1,5 +1,7 @@
 import { ToastOptions } from 'ng2-toasty';
 
+import { IUser, UserCookie } from '..';
+
 /**
  * General Utility methods.
  *
@@ -79,6 +81,27 @@ export class Utils {
    */
   public static buildToastyConfig(title: string, msg: string, showClose = true): ToastOptions {
     return { title, msg, showClose, timeout: 5000, theme: 'bootstrap' };
+  }
+
+  /**
+   * Maps a UserCookie into a User.
+   *
+   * @date 2018-12-30
+   * @param cookie to be mapped. Nullable.
+   * @returns the user, null if the cookie is null.
+   * @memberof Utils
+   */
+  public static userFromCookie(cookie: UserCookie): IUser {
+    if (!cookie) {
+      return null;
+    }
+    return {
+      id: cookie.id,
+      name: cookie.name,
+      username: cookie.username,
+      email: cookie.email,
+      admin: cookie.admin
+    };
   }
 
 }

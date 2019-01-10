@@ -1,9 +1,10 @@
-import { 
-  Directive, 
+import {
+  Directive,
   ElementRef,
-  Input, 
+  Input,
   OnInit,
-  Renderer } from '@angular/core';
+  Renderer2
+} from '@angular/core';
 
 /**
  * Animates the current element using animate.css styles.
@@ -24,12 +25,25 @@ export class AnimatedDirective implements OnInit {
    * @memberof AnimatedDirective
    */
   @Input('scAnimated') animation: string;
-  
-  constructor(public elr: ElementRef, public renderer: Renderer) { }
 
+  /**
+   *Creates an instance of AnimatedDirective.
+   * @date 2019-01-09
+   * @param elr Reference to the element that has the directive.
+   * @param renderer Angular Renderer
+   * @memberof AnimatedDirective
+   */
+  constructor(public elr: ElementRef, public renderer: Renderer2) { }
+
+  /**
+   * Directive's onInit lifecycle. Adds the proper css classes required for the animation.
+   *
+   * @date 2019-01-09
+   * @memberof AnimatedDirective
+   */
   ngOnInit() {
-    this.renderer.setElementClass(this.elr.nativeElement, 'animated', true);
-    this.renderer.setElementClass(this.elr.nativeElement, this.animation, true);
+    this.renderer.addClass(this.elr.nativeElement, 'animated');
+    this.renderer.addClass(this.elr.nativeElement, this.animation);
   }
-  
+
 }
