@@ -5,3 +5,4 @@
 dist
 /docs
 /package-lock.json
+/web-application/package-lock.json
