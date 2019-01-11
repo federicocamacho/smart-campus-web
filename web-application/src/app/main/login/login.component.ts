@@ -201,7 +201,8 @@ export class LoginComponent extends Cleanable {
     if (!err.exception) {
       err.exception = ApiException.INTERNAL;
     }
-    if (err.exception === ApiException.USER_EXISTS) {
+    if (err.exception === ApiException.RECORD_EXISTS ||
+        err.exception === ApiException.BAD_CREDENTIALS) {
       this.validationError = err.message;
       this.signing.username = null;
     } else if (err.exception === ApiException.ILLEGAL_ARGUMENT) {

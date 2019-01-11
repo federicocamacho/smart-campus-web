@@ -15,6 +15,8 @@ export class ApiException {
 
   public static ILLEGAL_ARGUMENT = 'IllegalArgumentException';
 
-  public static USER_EXISTS  = 'UserExistsException';
+  public static BAD_CREDENTIALS  = 'BadCredentialsException';
+
+  public static RECORD_EXISTS = 'RecordExistsException';
 
 }

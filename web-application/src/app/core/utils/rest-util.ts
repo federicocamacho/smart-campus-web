@@ -63,7 +63,7 @@ export class RestUtil {
       apiError = ApiError.fromGeneric();
       apiError.exception = error.name;
     }
-    console.error('API ERROR', apiError);
+    console.error('API ERROR', JSON.stringify(apiError));
     return apiError;
   }
   
