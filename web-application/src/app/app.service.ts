@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CookieService } from 'ngx-cookie-service';
 
-import { HeaderItem, IUser, MenuItem, UserCookie, Utils } from './core';
+import { HeaderItem, User, MenuItem, UserCookie, Utils } from './core';
 
 /**
  * Service to handle all app-wide data and event handlers.
@@ -63,7 +63,7 @@ export class AppService {
    *
    * @memberof AppService
    */
-  public user: IUser;
+  public user: User;
 
   /**
    * Creates an instance of AppService.

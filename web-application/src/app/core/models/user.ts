@@ -3,9 +3,9 @@
  *
  * @date 2018-12-27
  * @export
- * @interface IUser
+ * @class User
  */
-export interface IUser {
+export class User {
 
   id: number;
 

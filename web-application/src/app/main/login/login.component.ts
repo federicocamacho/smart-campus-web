@@ -9,7 +9,7 @@ import { ToastyService } from 'ng2-toasty';
 import { 
   ApiError,
   ApiException,
-  IUser,
+  User,
   LoginInput,
   SigningInput,
   UserCookie 
@@ -107,7 +107,7 @@ export class LoginComponent extends Cleanable {
         take(1),
         takeUntil(this.destroyed))
       .subscribe(
-        (res: HttpResponse<IUser>) => {
+        (res: HttpResponse<User>) => {
           this.validationError = null;
           this.authentication(res);
           this.service.isBusyGlobally = false;
@@ -131,7 +131,7 @@ export class LoginComponent extends Cleanable {
         take(1),
         takeUntil(this.destroyed))
       .subscribe(
-        (res: HttpResponse<IUser>) => {
+        (res: HttpResponse<User>) => {
           this.validationError = null;
           this.authentication(res);
           this.service.isBusyGlobally = false;
@@ -167,10 +167,10 @@ export class LoginComponent extends Cleanable {
    *
    * @date 2018-12-29
    * @private
-   * @param res the {@link HttpResponse} that contains the {@link IUser}.
+   * @param res the {@link HttpResponse} that contains the {@link User}.
    * @memberof LoginComponent
    */
-  private authentication(res: HttpResponse<IUser>): void {
+  private authentication(res: HttpResponse<User>): void {
     const user = res.body;
     const userCookie = new UserCookie(user.id, user.username, user.email, user.name, user.admin);
 

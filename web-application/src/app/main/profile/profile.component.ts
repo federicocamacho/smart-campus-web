@@ -24,7 +24,7 @@ export class ProfileComponent {
    * @param service Application main service.
    * @memberof ProfileComponent
    */
-  constructor(private service: AppService) {
+  constructor(public service: AppService) {
     this.username = '@' + this.service.user.username;
   }
 

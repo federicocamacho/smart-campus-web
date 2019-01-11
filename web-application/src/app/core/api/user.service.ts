@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { CoreModule } from '../core.module';
 import { environment } from '../../../environments/environment';
-import { IResponse, IUser, LoginInput, RestUtil, SigningInput } from '..';
+import { IResponse, User, LoginInput, RestUtil, SigningInput } from '..';
 
 /**
  * Consumes User related REST Services.
@@ -36,7 +36,7 @@ export class UserService {
    */
   public register(user: SigningInput): Observable<any> {
     return this.http
-      .post<HttpResponse<IUser>>(RestUtil.endpoint(environment.register), user, RestUtil.options());
+      .post<HttpResponse<User>>(RestUtil.endpoint(environment.register), user, RestUtil.options());
   }
 
   /**
@@ -49,7 +49,7 @@ export class UserService {
    */
   public login(user: LoginInput): Observable<any> {
     return this.http
-      .post<HttpResponse<IUser>>(RestUtil.endpoint(environment.authentication), user, RestUtil.options());
+      .post<HttpResponse<User>>(RestUtil.endpoint(environment.authentication), user, RestUtil.options());
   }
 
   /**
