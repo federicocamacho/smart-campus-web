@@ -62,7 +62,21 @@ export class UserService {
    */
   public deleteUser(id: number): Observable<any> {
     return this.http
-      .delete<HttpResponse<IResponse>>(`${RestUtil.endpoint(environment.deleteUser)}/${id}`,
+      .delete<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.deleteUser) }/${ id }`,
+        RestUtil.options());
+  }
+
+  /**
+   * Consumes the Retrieve user password REST service.
+   *
+   * @date 2019-01-10
+   * @param email of the user whose password is going to be retrieved.
+   * @returns an Observable with the response.
+   * @memberof UserService
+   */
+  public retrievePassword(email: string): Observable<any> {
+    return this.http
+      .get<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.retrievePwd) }/${ email }`,
         RestUtil.options());
   }
 

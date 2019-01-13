@@ -9,13 +9,15 @@ import { ToastyService } from 'ng2-toasty';
 import { 
   ApiError,
   ApiException,
+  FormHandler,
   IUser,
   LoginInput,
   SigningInput,
-  UserCookie 
+  UserCookie,
+  IResponse
 } from '../../core';
 import { AppService } from '../../app.service';
-import { Cleanable, Utils } from '../../core';
+import { Utils } from '../../core';
 import { UserService } from '../../core/api/user.service';
   
 /**
@@ -30,9 +32,10 @@ import { UserService } from '../../core/api/user.service';
   styleUrls: ['./login.component.scss']
 })
 
-export class LoginComponent extends Cleanable {
+export class LoginComponent extends FormHandler {
+
   /**
-   * Includes the fields filled by the user when is loging in.
+   * Contains the fields filled by the user when is loging in.
    *
    * @type {LoginInput}
    * @memberof LoginComponent
@@ -40,19 +43,29 @@ export class LoginComponent extends Cleanable {
   public login: LoginInput;
 
   /**
-   * Determines whether the form is a login form (1) or signing form (0)
+   * Indicates which 'login'page is dislpayed,
+   * 0 = signing
+   * 1 = login
+   * 2 = change password.
    *
    * @memberof LoginComponent
    */
-  public isLogin: boolean;
+  public loginSection: 0 | 1 | 2;
 
   /**
-   * Includes the fields filled by the user to signin.
+   * Contains the fields filled by the user to signin.
    *
    * @type {SigningInput}
    * @memberof LoginComponent
    */
   public signing: SigningInput;
+
+  /**
+   * Contains the email input for retrieving the password.
+   *
+   * @memberof LoginComponent
+   */
+  public email: string;
 
   /**
    * Validation error showed in the forms.
@@ -77,7 +90,7 @@ export class LoginComponent extends Cleanable {
               private toasty: ToastyService,
               private userService: UserService) {
     super();
-    this.isLogin = true;
+    this.loginSection = 1;
     this.login = new LoginInput();
     this.signing = new SigningInput();
   }
@@ -88,11 +101,24 @@ export class LoginComponent extends Cleanable {
    * @date 2018-11-03
    * @memberof LoginComponent
    */
-  public changeLoginOption() {
-    this.isLogin = !this.isLogin;
+  public changeLoginOption(option: 0 | 1 | 2) {
+    this.loginSection = option;
     this.validationError = null;
     this.login = new LoginInput();
     this.signing = new SigningInput();
+    this.email = null;
+  }
+
+  /**
+   * Determines if the given login option is the one displayed.
+   *
+   * @date 2019-01-10
+   * @param option to be evaluated.
+   * @returns true if it's the current option, false otherwise.
+   * @memberof LoginComponent
+   */
+  public isCurrentOption(option: 0 | 1 | 2): boolean {
+    return this.loginSection === option;
   }
 
   /**
@@ -134,6 +160,38 @@ export class LoginComponent extends Cleanable {
         (res: HttpResponse<IUser>) => {
           this.validationError = null;
           this.authentication(res);
+          this.service.isBusyGlobally = false;
+        },
+        (err: ApiError) => {
+          this.handleAuthenticationError(err);
+          this.service.isBusyGlobally = false;
+        }
+      );
+  }
+
+  /**
+   * Executed when the user performs the retrieve password action.
+   *
+   * @date 2019-01-10
+   * @memberof LoginComponent
+   */
+  public doRetrievePassword(): void {
+    this.service.isBusyGlobally = true;
+    this.userService.retrievePassword(this.email)
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(
+        (res: HttpResponse<IResponse>) => {
+          this.validationError = null;
+          if (res.ok) {
+            this.changeLoginOption(1); // set the current view to the login page.
+            this.toasty
+              .success(Utils.buildToastyConfig('CAMBIAR CONTRASEÑA', res.body.message));
+          } else {
+            this.toasty
+              .error(Utils.buildToastyConfig('ERROR CAMBIANDO CONTRASEÑA', res.body.message));
+          }
           this.service.isBusyGlobally = false;
         },
         (err: ApiError) => {

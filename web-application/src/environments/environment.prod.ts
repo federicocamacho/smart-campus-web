@@ -4,7 +4,8 @@ export const environment = {
   timeout: 50000,
   register: '/users/user',
   authentication: '/users/authentication',
-  deleteUser: '/users/user'
+  deleteUser: '/users/user',
+  retrievePwd: '/users/pass'
 };
 
 // endpoint: 'http://localhost:8090',
