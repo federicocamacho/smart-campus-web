@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NgModel, NgForm } from '@angular/forms';
 
 import { CookieService } from 'ngx-cookie-service';
 
@@ -116,4 +117,28 @@ export class AppService {
     return false;
   }
 
+  /**
+   * Determines if the given form (NgForm) is invalid or not.
+   *
+   * @date 2019-01-10
+   * @param form {@link NgForm} to be evaluated.
+   * @returns true if the form is invalid, false otherwise.
+   * @memberof LoginComponent
+   */
+  public isFormInvalid(form: NgForm): boolean {
+    return form.form.invalid && (form.form.dirty || form.form.touched);
+  }
+
+  /**
+   * Determines if the given model (NgModel) is invalid or not.
+   *
+   * @date 2019-01-10
+   * @param model {@link NgModel} to be evaluated.
+   * @returns true if the model is invalid, false otherwise.
+   * @memberof LoginComponent
+   */
+  public isModelInvalid(model: NgModel): boolean {
+    return model.invalid && (model.dirty || model.touched);
+  }
+  
 }

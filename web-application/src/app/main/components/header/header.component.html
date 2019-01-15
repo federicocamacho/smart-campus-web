@@ -7,9 +7,10 @@
       (click)="goHome()">
       <a class="navbar-brand" fxLayout="col">
         <img [src]="brandLogoSrc" fxFlexAlign="center" [alt]="brandName" class="brand-logo"/>
-        <div scAnimated="fadeInLeft"
+        <div scAnimated="fadeIn"
+          class="name-container"
           fxFlexAlign="center" 
-          [fxHide]="!isMenuOpened" 
+          [fxHide]="!isMenuOpened"
           style="padding-left: 10px;">
           <span class="brand-name">
             {{ brandName | uppercase }}
@@ -24,28 +25,14 @@
             <mat-icon>menu</mat-icon>
           </button>
         </li>
-        <li class="nav-item" [ngStyle]="{ 'color': iconsColor }" fxLayout="col">
-          <button mat-icon-button>
-            <mat-icon>search</mat-icon>
-          </button>
-        </li>
       </ul>
       <ul class="navbar-nav nav-right" fxLayout="row">
         <li 
-          class="nav-item"
-          *ngFor="let item of headerOptions"
-          [ngStyle]="{ 'color': iconsColor }"
-          fxLayout="col" fxHide.lt-sm>
-          <button mat-icon-button (click)="item.action">
-            <mat-icon>{{ item.iconName }}</mat-icon>
-          </button>
-        </li>
-        <li 
           class="nav-item user-item" 
           fxLayout="col" fxLayoutAlign="center center"
-          style="margin-left: 10px"
+          style="padding-right: 10px;"
           (click)="toggleUser($event)">
-          <img [src]="userImgSrc" [alt]="userName" class="user-img"/>
+          <img [src]="userImgSrc" [alt]="userName" class="user-img" fxHide.lt-sm/>
           <span class="user-name">{{ userName }}</span>
           <mat-icon style="margin: auto">keyboard_arrow_down</mat-icon>
         </li>

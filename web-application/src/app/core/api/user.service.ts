@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { CoreModule } from '../core.module';
 import { environment } from '../../../environments/environment';
 import { IResponse, IUser, LoginInput, RestUtil, SigningInput } from '..';
+import { UpdateProfileInput, ChangePassInput } from '../models/auth';
 
 /**
  * Consumes User related REST Services.
@@ -31,12 +32,12 @@ export class UserService {
    *
    * @date 2018-12-29
    * @param user to be created.
-   * @returns an Observable with the response.
+   * @returns an {@link Observable} with the response.
    * @memberof UserService
    */
   public register(user: SigningInput): Observable<any> {
     return this.http
-      .post<HttpResponse<IUser>>(RestUtil.endpoint(environment.register), user, RestUtil.options());
+      .post<HttpResponse<IUser>>(RestUtil.endpoint(environment.user), user, RestUtil.options());
   }
 
   /**
@@ -44,7 +45,7 @@ export class UserService {
    *
    * @date 2018-12-29
    * @param user to be authenticated.
-   * @returns an Observable with the response.
+   * @returns an {@link Observable} with the response.
    * @memberof UserService
    */
   public login(user: LoginInput): Observable<any> {
@@ -57,12 +58,12 @@ export class UserService {
    *
    * @date 2018-12-31
    * @param id of the user to be deleted.
-   * @returns an Observable with the response.
+   * @returns an {@link Observable} with the response.
    * @memberof UserService
    */
   public deleteUser(id: number): Observable<any> {
     return this.http
-      .delete<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.deleteUser) }/${ id }`,
+      .delete<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.user) }/${ id }`,
         RestUtil.options());
   }
 
@@ -71,13 +72,43 @@ export class UserService {
    *
    * @date 2019-01-10
    * @param email of the user whose password is going to be retrieved.
-   * @returns an Observable with the response.
+   * @returns an {@link Observable} with the response.
    * @memberof UserService
    */
   public retrievePassword(email: string): Observable<any> {
     return this.http
       .get<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.retrievePwd) }/${ email }`,
         RestUtil.options());
+  }
+
+  /**
+   * Consumes the update profile REST service.
+   *
+   * @date 2019-01-14
+   * @param userId id of the user whose profile is updated.
+   * @param body {@link UpdateProfileInput} updated profile.
+   * @returns an {@link Observable} with the response.
+   * @memberof UserService
+   */
+  public updateProfile(userId: number, body: UpdateProfileInput): Observable<any> {
+    return this.http
+      .put<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.user) }/${ userId }`, body,
+      RestUtil.options());
+  }
+
+  /**
+   * Consumes the update password REST service.
+   *
+   * @date 2019-01-14
+   * @param userId id of the user whose password is updated.
+   * @param body {@link ChangePassInput} updated password.
+   * @returns an {@link Observable} with the response.
+   * @memberof UserService
+   */
+  public changePassword(userId: number, body: ChangePassInput): Observable<any> {
+    return this.http
+      .put<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.updatePwd) }/${ userId }`, body,
+      RestUtil.options());
   }
 
 }

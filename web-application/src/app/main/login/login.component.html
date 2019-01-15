@@ -22,7 +22,7 @@
               type="text" placeholder="Usuario"
               required="true" minlength="4"
               [(ngModel)]="login.username"/>
-            <div  *ngIf="isModelInvalid(username)">
+            <div  *ngIf="service.isModelInvalid(username)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="username.errors?.required"
@@ -47,7 +47,7 @@
               type="password" placeholder="Contraseña"
               required="true" minlength="4"
               [(ngModel)]="login.password"/>
-            <div  *ngIf="isModelInvalid(password)">
+            <div  *ngIf="service.isModelInvalid(password)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="password.errors?.required"
@@ -73,7 +73,7 @@
           <button mat-flat-button scAnimated="fadeIn"
             class="login-button box-shadow" 
             type="submit"
-            [disabled]="isFormInvalid(loginForm)"
+            [disabled]="service.isFormInvalid(loginForm)"
             color="primary" 
             style="color: white">
             Iniciar sesión
@@ -88,11 +88,11 @@
           <!-- Username field -->
           <div fxLayout="row" fxLayoutAlign="center center">
             <input 
-            class="login-input" name="newUsername" #newUsername="ngModel"
-            type="text" placeholder="Usuario"
-            required="true" minlength="4"
-            [ngModel]="signing.username" (ngModelChange)="onUsernameChanged($event, false)" />
-            <div *ngIf="isModelInvalid(newUsername)">
+              class="login-input" name="newUsername" #newUsername="ngModel"
+              type="text" placeholder="Usuario"
+              required="true" minlength="4"
+              [ngModel]="signing.username" (ngModelChange)="onUsernameChanged($event, false)" />
+            <div *ngIf="service.isModelInvalid(newUsername)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="newUsername.errors?.required"
@@ -115,7 +115,7 @@
               type="text" placeholder="Nombre"
               required="true" minlength="8"
               [(ngModel)]="signing.name"/>
-            <div *ngIf="isModelInvalid(newName)">
+            <div *ngIf="service.isModelInvalid(newName)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="newName.errors?.required"
@@ -140,7 +140,7 @@
               type="email" placeholder="Email"
               required="true" ngvemail
               [(ngModel)]="signing.email"/>
-            <div  *ngIf="isModelInvalid(newEmail)">
+            <div  *ngIf="service.isModelInvalid(newEmail)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="newEmail.errors?.required"
@@ -165,7 +165,7 @@
               type="password" placeholder="Contraseña"
               required="true" minlength="4"
               [(ngModel)]="signing.password"/>
-            <div  *ngIf="isModelInvalid(newPassword)">
+            <div  *ngIf="service.isModelInvalid(newPassword)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="newPassword.errors?.required"
@@ -190,7 +190,7 @@
               type="password" placeholder="Repetir Contraseña"
               required="true" minlength="4" [equal]="signing.password"
               [(ngModel)]="signing.passwordCheck" />
-            <div *ngIf="isModelInvalid(newPasswordRepeat)">
+            <div *ngIf="service.isModelInvalid(newPasswordRepeat)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="newPasswordRepeat.errors?.equal"
@@ -208,7 +208,7 @@
         <div fxLayout="row" fxLayoutAlign="center center" class="default-shadow">
           <button mat-flat-button scAnimated="fadeIn"
             class="login-button box-shadow"
-            [disabled]="isFormInvalid(signingForm)" 
+            [disabled]="service.isFormInvalid(signingForm)"
             color="primary"
             style="color: white">
             Registrarse
@@ -227,7 +227,7 @@
               type="email" placeholder="Email"
               required="true" ngvemail
               [(ngModel)]="email"/>
-            <div  *ngIf="isModelInvalid(emailForPass)">
+            <div  *ngIf="service.isModelInvalid(emailForPass)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="emailForPass.errors?.required"
@@ -252,7 +252,7 @@
         <div fxLayout="row" fxLayoutAlign="center center" class="default-shadow">
           <button mat-flat-button scAnimated="fadeIn"
             class="login-button box-shadow"
-            [disabled]="isFormInvalid(changePwdForm)"
+            [disabled]="service.isFormInvalid(changePwdForm)"
             color="primary"
             style="color: white">
             Cambiar contraseña

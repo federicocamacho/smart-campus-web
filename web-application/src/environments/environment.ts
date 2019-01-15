@@ -6,10 +6,10 @@ export const environment = {
   production: false,
   endpoint: 'http://localhost:8090',
   timeout: 50000,
-  register: '/users/user',
+  user: '/users/user',
   authentication: '/users/authentication',
-  deleteUser: '/users/user',
-  retrievePwd: '/users/pass'
+  retrievePwd: '/users/pass',
+  updatePwd: '/users/password'
 };
 
 // endpoint: 'http://localhost:8090',

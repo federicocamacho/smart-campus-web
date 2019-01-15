@@ -4,6 +4,8 @@
     min-height: calc(100vh - 76px);
     border-right: solid 1px #eee;
     font-size: 15px;
+    position: fixed;
+    z-index: 200;
 }
 
 .menu-item-container:hover {

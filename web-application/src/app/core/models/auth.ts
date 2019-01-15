@@ -1,3 +1,5 @@
+import { IUser } from '..';
+
 /**
  * Model used for user's authentication input.
  *
@@ -50,6 +52,43 @@ export class SigningInput {
 }
 
 /**
+ * Model used to update user profile.
+ *
+ * @date 2019-01-14
+ * @export
+ * @class UpdateProfileInput
+ */
+export class UpdateProfileInput {
+
+  public username: string;
+
+  public password: string;
+
+  public email: string;
+
+  public name: string;
+
+  /**
+   *Creates an instance of UpdateProfileInput.
+   * @date 2019-01-14
+   * @memberof UpdateProfileInput
+   */
+  constructor() {}
+
+  /**
+   * Indicates if the input was modified comparing with the passed user.
+   *
+   * @date 2019-01-14
+   * @param user to be compared.
+   * @returns true if the input is different, false otherwise.
+   * @memberof UpdateProfileInput
+   */
+  public hasChanges(user: IUser): boolean {
+    return user.name !== this.name || user.email !== this.email;
+  }
+}
+
+/**
  * Model used for change password input.
  *
  * @date 2019-01-10
@@ -64,9 +103,14 @@ export class ChangePassInput {
 
   /**
    * Creates an instance of ChangePassInput.
-   * @date 2019-01-13
+   * @date 2019-01-14
+   * @param oldPass old password.
+   * @param newPass new password.
    * @memberof ChangePassInput
    */
-  constructor() {}
+  constructor(oldPass: string, newPass: string) {
+    this.oldPass = oldPass;
+    this.newPass = newPass;
+  }
   
 }

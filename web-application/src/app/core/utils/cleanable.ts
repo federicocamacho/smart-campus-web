@@ -14,11 +14,7 @@ export class Cleanable implements OnDestroy {
    *
    * @memberof Cleanable
    */
-  public destroyed:  Subject<void>;
-
-  constructor() {
-    this.destroyed = new Subject();
-  }
+  public destroyed = new Subject();
 
   ngOnDestroy() {
     console.log('Cleaning component...');

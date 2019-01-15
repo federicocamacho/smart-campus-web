@@ -1,8 +1,9 @@
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
-import { takeUntil, take } from 'rxjs/operators';
+import { takeUntil, take, map } from 'rxjs/operators';
 
 import { CookieService } from 'ngx-cookie-service';
 import { ToastyConfig, ToastyService } from 'ng2-toasty';
@@ -27,6 +28,8 @@ export class AppComponent extends Cleanable implements OnInit {
   
   public title = 'Smart Campus';
 
+  public isMobile: boolean;
+
   /**
    * Creates an instance of AppComponent.
    * @date 2019-01-09
@@ -39,13 +42,15 @@ export class AppComponent extends Cleanable implements OnInit {
    * @param userService User API Service.
    * @memberof AppComponent
    */
-  constructor(private cookieService: CookieService,
-              private dialog: MatDialog,
-              private router: Router,
-              public service: AppService,
-              private toastyConfig: ToastyConfig,
-              private toastyService: ToastyService,
-              private userService: UserService) {
+  constructor(
+    private bpObserver: BreakpointObserver,
+    private cookieService: CookieService,
+    private dialog: MatDialog,
+    private router: Router,
+    public service: AppService,
+    private toastyConfig: ToastyConfig,
+    private toastyService: ToastyService,
+    private userService: UserService) {
     super();
     this.toastyConfig.theme = 'material';
   }
@@ -60,6 +65,13 @@ export class AppComponent extends Cleanable implements OnInit {
     if (this.service.isAuthenticated()) {
       this.service.isLogedIn = true;
     }
+
+    this.bpObserver
+      .observe([ Breakpoints.XSmall ])
+      .pipe(
+        map(value => value.matches),
+        takeUntil(this.destroyed)) // do not use take(1) as multiple values are received.
+      .subscribe(isMobile => this.isMobile = isMobile);
   }
 
   /**
@@ -114,7 +126,7 @@ export class AppComponent extends Cleanable implements OnInit {
    * @memberof AppComponent
    */
   public onProfileClicked(): void {
-    this.service.isMenuOpened = false;
+    this.service.isUserCardOpened = false;
     this.router.navigate(['/profile']);
   }
 

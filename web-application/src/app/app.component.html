@@ -21,7 +21,11 @@
     [menuItems]="service.menuItems"
     (menuClosed)="closeMenu()">
   </sc-menu>
-  <router-outlet></router-outlet>
+  <div
+    [ngStyle]="{ 'margin-left': service.isLogedIn && service.isMenuOpened && !isMobile ? '255px' : '0' }"
+    style="width: 100%">
+    <router-outlet></router-outlet>
+  </div>
 </div>
 <sc-user-card scClickOutside
   *ngIf="service.isUserCardOpened && service.isLogedIn"

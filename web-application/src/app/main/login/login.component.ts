@@ -9,7 +9,7 @@ import { ToastyService } from 'ng2-toasty';
 import { 
   ApiError,
   ApiException,
-  FormHandler,
+  Cleanable,
   IUser,
   LoginInput,
   SigningInput,
@@ -32,7 +32,7 @@ import { UserService } from '../../core/api/user.service';
   styleUrls: ['./login.component.scss']
 })
 
-export class LoginComponent extends FormHandler {
+export class LoginComponent extends Cleanable {
 
   /**
    * Contains the fields filled by the user when is loging in.

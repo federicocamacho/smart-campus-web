@@ -1,11 +1,11 @@
 header {
-    position: relative;
     z-index: 50;
     display: block;
     height: 76px;
     max-height: 76px;
-    padding: 0px 15px 0 0;
     align-items: center;
+    position: fixed;
+    width: 100vw
 }
 
 nav {
@@ -34,6 +34,11 @@ li {
     font-size: 15px;
 }
 
+.nav-right {
+    margin: 0;
+    height: 100%;
+}
+
 .brand-logo {
     width: 40px;
     height: 40px;
@@ -54,6 +59,7 @@ li {
 
 .user-item {
     cursor: pointer;
+    padding-left: 10px;
 }
 
 .user-item:hover, .navbar-header:hover {
@@ -72,6 +78,13 @@ li {
 
 @media (max-width: 1279px) {
     .user-name {
+        display: none;
+    }
+}
+
+@media (max-width: 599px) {
+    .right-options,
+    .user-img {
         display: none;
     }
 }
