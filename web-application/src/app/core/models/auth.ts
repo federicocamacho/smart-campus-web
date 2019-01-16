@@ -48,3 +48,25 @@ export class SigningInput {
   }
 
 }
+
+/**
+ * Model used for change password input.
+ *
+ * @date 2019-01-10
+ * @export
+ * @class ChangePassInput
+ */
+export class ChangePassInput {
+
+  public oldPass: string;
+
+  public newPass: string;
+
+  /**
+   * Creates an instance of ChangePassInput.
+   * @date 2019-01-13
+   * @memberof ChangePassInput
+   */
+  constructor() {}
+  
+}
