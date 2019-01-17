@@ -57,8 +57,7 @@ export class RestUtil {
       apiError = ApiError.fromGeneric();
       apiError.message += ` ${ error.error.message }.`;
     } else if (!(error.error instanceof ProgressEvent)) { // API error
-      apiError = error.error;
-      apiError.statusCode = error.status;
+      apiError = new ApiError(error.error.status, error.status, error.error.message, error.error.exception);
     } else { // Http Errors
       apiError = ApiError.fromGeneric();
       apiError.exception = error.name;

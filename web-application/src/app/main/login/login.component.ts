@@ -9,7 +9,6 @@ import { ToastyService } from 'ng2-toasty';
 import { 
   ApiError,
   ApiException,
-  Cleanable,
   LoginInput,
   Response,
   SigningInput,
@@ -17,7 +16,7 @@ import {
   UserCookie,
 } from '../../core';
 import { AppService } from '../../app.service';
-import { Utils } from '../../core';
+import { Cleanable, Utils } from '../../core';
 import { UserService } from '../../core/api/user.service';
   
 /**
@@ -35,7 +34,7 @@ import { UserService } from '../../core/api/user.service';
 export class LoginComponent extends Cleanable {
 
   /**
-   * Contains the fields filled by the user when is loging in.
+   * Includes the fields filled by the user when is loging in.
    *
    * @type {LoginInput}
    * @memberof LoginComponent
@@ -53,7 +52,7 @@ export class LoginComponent extends Cleanable {
   public loginSection: 0 | 1 | 2;
 
   /**
-   * Contains the fields filled by the user to signin.
+   * Includes the fields filled by the user to signin.
    *
    * @type {SigningInput}
    * @memberof LoginComponent
@@ -96,13 +95,14 @@ export class LoginComponent extends Cleanable {
   }
 
   /**
-   * Changes the form to be displayed (login or signin).
+   * Changes the form to be displayed (login, signin or retrieve password).
    *
    * @date 2018-11-03
    * @memberof LoginComponent
    */
   public changeLoginOption(option: 0 | 1 | 2) {
     this.loginSection = option;
+    // clean all inputs and errors
     this.validationError = null;
     this.login = new LoginInput();
     this.signing = new SigningInput();
@@ -185,7 +185,7 @@ export class LoginComponent extends Cleanable {
         (res: HttpResponse<Response>) => {
           this.validationError = null;
           if (res.ok) {
-            this.changeLoginOption(1); // set the current view to the login page.
+            this.changeLoginOption(1); // set the current view to the login page
             this.toasty
               .success(Utils.buildToastyConfig('CAMBIAR CONTRASEÑA', res.body.message));
           } else {
