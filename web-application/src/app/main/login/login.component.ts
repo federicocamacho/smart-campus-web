@@ -10,11 +10,11 @@ import {
   ApiError,
   ApiException,
   Cleanable,
-  IUser,
   LoginInput,
+  Response,
   SigningInput,
+  User,
   UserCookie,
-  IResponse
 } from '../../core';
 import { AppService } from '../../app.service';
 import { Utils } from '../../core';
@@ -133,7 +133,7 @@ export class LoginComponent extends Cleanable {
         take(1),
         takeUntil(this.destroyed))
       .subscribe(
-        (res: HttpResponse<IUser>) => {
+        (res: HttpResponse<User>) => {
           this.validationError = null;
           this.authentication(res);
           this.service.isBusyGlobally = false;
@@ -157,7 +157,7 @@ export class LoginComponent extends Cleanable {
         take(1),
         takeUntil(this.destroyed))
       .subscribe(
-        (res: HttpResponse<IUser>) => {
+        (res: HttpResponse<User>) => {
           this.validationError = null;
           this.authentication(res);
           this.service.isBusyGlobally = false;
@@ -182,7 +182,7 @@ export class LoginComponent extends Cleanable {
         take(1),
         takeUntil(this.destroyed))
       .subscribe(
-        (res: HttpResponse<IResponse>) => {
+        (res: HttpResponse<Response>) => {
           this.validationError = null;
           if (res.ok) {
             this.changeLoginOption(1); // set the current view to the login page.
@@ -225,10 +225,10 @@ export class LoginComponent extends Cleanable {
    *
    * @date 2018-12-29
    * @private
-   * @param res the {@link HttpResponse} that contains the {@link IUser}.
+   * @param res the {@link HttpResponse} that contains the {@link User}.
    * @memberof LoginComponent
    */
-  private authentication(res: HttpResponse<IUser>): void {
+  private authentication(res: HttpResponse<User>): void {
     const user = res.body;
     const userCookie = new UserCookie(user.id, user.username, user.email, user.name, user.admin);
 
@@ -259,11 +259,10 @@ export class LoginComponent extends Cleanable {
     if (!err.exception) {
       err.exception = ApiException.INTERNAL;
     }
-    if (err.exception === ApiException.RECORD_EXISTS ||
-        err.exception === ApiException.BAD_CREDENTIALS) {
+    if (err.is(ApiException.RECORD_EXISTS, ApiException.BAD_CREDENTIALS)) {
       this.validationError = err.message;
       this.signing.username = null;
-    } else if (err.exception === ApiException.ILLEGAL_ARGUMENT) {
+    } else if (err.is(ApiException.ILLEGAL_ARGUMENT)) {
       this.validationError = err.message;
     } else {
       this.toasty.error(Utils.buildToastyConfig('ERROR', err.message));

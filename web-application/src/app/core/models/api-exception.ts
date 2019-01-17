@@ -7,6 +7,8 @@
  */
 export class ApiException {
 
+  public static INVALID_KEY = 'InvalidKeyException';
+
   public static HTTP_ERROR = 'HttpErrorResponse';
 
   public static TIMEOUT = 'RequestTimeout';

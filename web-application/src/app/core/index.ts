@@ -1,13 +1,11 @@
-/* Interfaces exported */
-export { IUser } from './interfaces/user';
-
-/* Classes exported (models) */
+/* Models exported */
 export { ApiError } from './models/api-error';
 export { ApiException } from './models/api-exception';
 export { HeaderItem } from './models/header-item';
-export { IResponse } from './models/response';
+export { Response } from './models/response';
 export { ChangePassInput, LoginInput, SigningInput, UpdateProfileInput } from './models/auth';
 export { MenuItem } from './models/menu-item';
+export { User } from './models/user';
 export { UserCookie } from './models/user-cookie';
 
 /* Utility classes exported */

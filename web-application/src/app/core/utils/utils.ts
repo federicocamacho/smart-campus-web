@@ -1,6 +1,7 @@
 import { ToastOptions } from 'ng2-toasty';
 
-import { IUser, UserCookie } from '..';
+import { User } from '../models/user';
+import { UserCookie } from '../models/user-cookie';
 
 /**
  * General Utility methods.
@@ -91,17 +92,11 @@ export class Utils {
    * @returns the user, null if the cookie is null.
    * @memberof Utils
    */
-  public static userFromCookie(cookie: UserCookie): IUser {
+  public static userFromCookie(cookie: UserCookie): User {
     if (!cookie) {
       return null;
     }
-    return {
-      id: cookie.id,
-      name: cookie.name,
-      username: cookie.username,
-      email: cookie.email,
-      admin: cookie.admin
-    };
+    return new User(cookie.id, cookie.email, cookie.name, cookie.admin, cookie.username);
   }
 
 }

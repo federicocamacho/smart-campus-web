@@ -9,7 +9,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { ToastyConfig, ToastyService } from 'ng2-toasty';
 
 import { AppService } from './app.service';
-import { ApiError, Cleanable, IResponse, Utils } from './core';
+import { ApiError, Cleanable, Response, Utils } from './core';
 import { DeleteUserDialogComponent } from './main/components';
 import { UserService } from './core/api';
 
@@ -166,7 +166,7 @@ export class AppComponent extends Cleanable implements OnInit {
         take(1),
         takeUntil(this.destroyed))
       .subscribe(
-        (res: HttpResponse<IResponse>) => {
+        (res: HttpResponse<Response>) => {
           if (res.ok) {
             this.onLogoutClicked();
             this.toastyService

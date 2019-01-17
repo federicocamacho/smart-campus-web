@@ -1,4 +1,4 @@
-import { IUser } from '..';
+import { User } from '..';
 
 /**
  * Model used for user's authentication input.
@@ -83,7 +83,7 @@ export class UpdateProfileInput {
    * @returns true if the input is different, false otherwise.
    * @memberof UpdateProfileInput
    */
-  public hasChanges(user: IUser): boolean {
+  public hasChanges(user: User): boolean {
     return user.name !== this.name || user.email !== this.email;
   }
 }

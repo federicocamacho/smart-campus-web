@@ -1,12 +1,23 @@
 import { Component } from '@angular/core';
-
-import { AppService } from '../../../app/app.service';
-import { Cleanable, UpdateProfileInput, ChangePassInput, IResponse, ApiError, Utils } from '../../../app/core';
-import { UserService } from '../../../app/core/api';
+import { HttpResponse } from '@angular/common/http';
 import { forkJoin, Observable } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
-import { HttpResponse } from '@angular/common/http';
+
 import { ToastyService } from 'ng2-toasty';
+import { CookieService } from 'ngx-cookie-service';
+
+import { AppService } from '../../../app/app.service';
+import {
+  ApiError,
+  ApiException,
+  ChangePassInput,
+  Cleanable,
+  Response, 
+  UpdateProfileInput,
+  User,
+  UserCookie,
+  Utils } from '../../../app/core';
+import { UserService } from '../../../app/core/api';
 
 /**
  * User profile component. Path /profile.
@@ -39,6 +50,7 @@ export class ProfileComponent extends Cleanable {
    * @memberof ProfileComponent
    */
   constructor(
+    private cookieService: CookieService,
     public service: AppService,
     private toasty: ToastyService,
     public userService: UserService) {
@@ -57,63 +69,161 @@ export class ProfileComponent extends Cleanable {
    */
   public doUpdate(): void {
     this.service.isBusyGlobally = true;
-    const userId = this.service.user.id;
     let update: Observable<any>, change: Observable<any>;
-    if (!this.updateInput.hasChanges(this.service.user)) {
-      update = this.userService.updateProfile(userId, this.updateInput);
+    if (this.updateInput.hasChanges(this.service.user)) {
+      update = this.userService.updateProfile(this.service.user.id, this.updateInput);
     }
     if (this.changePwd) {
-      change = this.userService.changePassword(userId, new ChangePassInput(this.updateInput.password, this.newPwd));
+      change = this.userService.changePassword(
+        this.service.user.id,
+        new ChangePassInput(this.updateInput.password, this.newPwd));
     }
 
     if (update && change) {
-      forkJoin(update, change)
-        .pipe(
-          take(1),
-          takeUntil(this.destroyed))
-        .subscribe(
-          (res: HttpResponse<IResponse>[]) => {
-            this.service.isBusyGlobally = false;
-          },
-          (err: ApiError) => {
-            this.service.isBusyGlobally = false;
-          }
-        );
+      this.updateAndChangePassword(update, change);
     } else if (update) {
-      update
-        .pipe(
-          take(1),
-          takeUntil(this.destroyed))
-        .subscribe(
-          (res: HttpResponse<IResponse>) => {
-            this.service.isBusyGlobally = false;
-          },
-          (err: ApiError) => {
-            this.service.isBusyGlobally = false;
-          }
-        );
+      this.updateProfile(update);
     } else if (change) {
-      change
-        .pipe(
-          take(1),
-          takeUntil(this.destroyed))
-        .subscribe(
-          (res: HttpResponse<IResponse>) => {
-            this.service.isBusyGlobally = false;
-          },
-          (err: ApiError) => {
-            this.service.isBusyGlobally = false;
-          }
-        );
+      this.changePassword(change);
     } else {
-      // no action done.
+      this.toasty.info(Utils.buildToastyConfig('ACTUALIZAR PERFIL', 'EL perfil no fué actualizado, no hay cambios'));
     }
   }
 
-  public handleSuccessfulUpdate(res: HttpResponse<IResponse>): void {
+  /**
+   * Proceeds to execute the HTTP Request to update the user's profile.
+   *
+   * @date 2019-01-16
+   * @private
+   * @param updateObservable Observable for the required request.
+   * @memberof ProfileComponent
+   */
+  private updateProfile(updateObservable: Observable<any>): void {
+    updateObservable
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(
+        (res: HttpResponse<User>) => {
+          this.handleSuccessfulUpdate(res);
+          this.service.isBusyGlobally = false;
+        },
+        (err: ApiError) => {
+          this.handleFailedUpdate(err);
+          this.service.isBusyGlobally = false;
+        }
+      );
+  }
+
+  /**
+   * Proceeds to execute the HTTP Request to change the user's password.
+   *
+   * @date 2019-01-16
+   * @private
+   * @param changeObservable Observable for the required update.
+   * @memberof ProfileComponent
+   */
+  private changePassword(changeObservable: Observable<any>): void {
+    changeObservable
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(
+        (res: HttpResponse<Response>) => {
+          this.handleSuccessfulPwdChange(res);
+          this.service.isBusyGlobally = false;
+        },
+        (err: ApiError) => {
+          this.handleFailedUpdate(err);
+          this.service.isBusyGlobally = false;
+        }
+      );
+  }
+
+  /**
+   * Proceeds to execute the HTTP Request to update the user's profile and password.
+   *
+   * @date 2019-01-16
+   * @private
+   * @param updateObservable Observable for the required update profile request.
+   * @param changeObservable Observable for the required update password request.
+   * @memberof ProfileComponent
+   */
+  private updateAndChangePassword(updateObservable: Observable<any>, changeObservable: Observable<any>): void {
+    forkJoin(updateObservable, changeObservable)
+    .pipe(
+      take(1),
+      takeUntil(this.destroyed))
+    .subscribe(
+      (res: [HttpResponse<User>, HttpResponse<Response>]) => {
+        // handle password update first
+        const changePwdRes: HttpResponse<Response> = res[1];
+        this.handleSuccessfulPwdChange(changePwdRes);
+        // then handle profile update
+        const updateProfileRes: HttpResponse<User> = res[0];
+        this.handleSuccessfulUpdate(updateProfileRes);
+        this.service.isBusyGlobally = false;
+      },
+      (err: ApiError) => {
+        this.handleFailedUpdate(err);
+        this.service.isBusyGlobally = false;
+      }
+    );
+  }
+
+  /**
+   * Handles the {@link HttpResponse} when the user's profile was updated successfully,
+   * setting the in-memory user to the new one and also refreshing the user cookie.
+   *
+   * @date 2019-01-16
+   * @private
+   * @param res HttpResponse that contains the updated {@link User}
+   * @memberof ProfileComponent
+   */
+  private handleSuccessfulUpdate(res: HttpResponse<User>): void {
+    const user = res.body;
+    if (!user) {
+      this.toasty.error(Utils.buildToastyConfig('ACTUALIZAR PERFIL', 'Un error ocurrió actualizando el usuario.'));
+      return;
+    }
+    const userCookie = UserCookie.fromUser(user);
+    const expirationDate = new Date();
+    expirationDate.setHours(expirationDate.getHours() + 2);
+    this.cookieService.set('user', JSON.stringify(userCookie), expirationDate);
+    this.service.user = user;
+    this.toasty.success(Utils.buildToastyConfig('ACTUALIZAR PERFIL', 'Perfil actualizado exitosamente.'));
+  }
+
+  /**
+   * Handles the {@link HttpResponse} when the user's password was changed successfully,
+   *
+   * @date 2019-01-16
+   * @private
+   * @param res HttpResponse to be handled.
+   * @memberof ProfileComponent
+   */
+  private handleSuccessfulPwdChange(res: HttpResponse<Response>): void {
+    const message = Utils.buildToastyConfig('ACTUALIZAR CONTRASEÑA', res.body.message);
     if (res.ok) {
-      this.toasty.success(Utils.buildToastyConfig('ACTUALIZAR PERFIL', res.body.message));
-      //const userCookie = new UserCookie(user.id, user.username, user.email, user.name, user.admin);
+      this.toasty.success(message);
+    } else {
+      this.toasty.error(message);
+    }
+  }
+
+  /**
+   * Handles the {@link ApiError} obtained when the update for user's profile or password failed.
+   *
+   * @date 2019-01-16
+   * @private
+   * @param error to be handled.
+   * @memberof ProfileComponent
+   */
+  private handleFailedUpdate(error: ApiError): void {
+    if (error.is(ApiException.ILLEGAL_ARGUMENT, ApiException.INVALID_KEY)) {
+      this.validationError = error.message;
+    } else {
+      this.toasty.error(Utils.buildToastyConfig('ERROR ACTUALIZANDO PERFIL', error.message));
     }
   }
 

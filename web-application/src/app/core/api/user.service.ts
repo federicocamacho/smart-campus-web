@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { CoreModule } from '../core.module';
 import { environment } from '../../../environments/environment';
-import { IResponse, IUser, LoginInput, RestUtil, SigningInput } from '..';
+import { LoginInput, Response, RestUtil, SigningInput, User } from '..';
 import { UpdateProfileInput, ChangePassInput } from '../models/auth';
 
 /**
@@ -37,7 +37,7 @@ export class UserService {
    */
   public register(user: SigningInput): Observable<any> {
     return this.http
-      .post<HttpResponse<IUser>>(RestUtil.endpoint(environment.user), user, RestUtil.options());
+      .post<HttpResponse<User>>(RestUtil.endpoint(environment.user), user, RestUtil.options());
   }
 
   /**
@@ -50,7 +50,7 @@ export class UserService {
    */
   public login(user: LoginInput): Observable<any> {
     return this.http
-      .post<HttpResponse<IUser>>(RestUtil.endpoint(environment.authentication), user, RestUtil.options());
+      .post<HttpResponse<User>>(RestUtil.endpoint(environment.authentication), user, RestUtil.options());
   }
 
   /**
@@ -63,7 +63,7 @@ export class UserService {
    */
   public deleteUser(id: number): Observable<any> {
     return this.http
-      .delete<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.user) }/${ id }`,
+      .delete<HttpResponse<Response>>(`${ RestUtil.endpoint(environment.user) }/${ id }`,
         RestUtil.options());
   }
 
@@ -77,7 +77,7 @@ export class UserService {
    */
   public retrievePassword(email: string): Observable<any> {
     return this.http
-      .get<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.retrievePwd) }/${ email }`,
+      .get<HttpResponse<Response>>(`${ RestUtil.endpoint(environment.retrievePwd) }/${ email }`,
         RestUtil.options());
   }
 
@@ -92,7 +92,7 @@ export class UserService {
    */
   public updateProfile(userId: number, body: UpdateProfileInput): Observable<any> {
     return this.http
-      .put<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.user) }/${ userId }`, body,
+      .put<HttpResponse<User>>(`${ RestUtil.endpoint(environment.user) }/${ userId }`, body,
       RestUtil.options());
   }
 
@@ -107,7 +107,7 @@ export class UserService {
    */
   public changePassword(userId: number, body: ChangePassInput): Observable<any> {
     return this.http
-      .put<HttpResponse<IResponse>>(`${ RestUtil.endpoint(environment.updatePwd) }/${ userId }`, body,
+      .put<HttpResponse<Response>>(`${ RestUtil.endpoint(environment.updatePwd) }/${ userId }`, body,
       RestUtil.options());
   }
 

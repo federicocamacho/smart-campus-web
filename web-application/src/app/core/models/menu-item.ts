@@ -56,7 +56,7 @@ export class MenuItem {
    * @memberof MenuItem
    */
   public hasIcon(): boolean {
-    return !Utils.isEmptyString(this.icon);
+    return this.icon && this.icon.trim() !== '';
   }
   
   /**

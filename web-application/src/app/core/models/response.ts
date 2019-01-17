@@ -3,9 +3,9 @@
  *
  * @date 2019-01-09
  * @export
- * @interface IResponse
+ * @class Response
  */
-export interface IResponse {
+export class Response {
   
   message: string;
 

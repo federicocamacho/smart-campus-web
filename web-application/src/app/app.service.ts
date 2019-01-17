@@ -3,7 +3,7 @@ import { NgModel, NgForm } from '@angular/forms';
 
 import { CookieService } from 'ngx-cookie-service';
 
-import { HeaderItem, IUser, MenuItem, UserCookie, Utils } from './core';
+import { HeaderItem, MenuItem, UserCookie, User, Utils } from './core';
 
 /**
  * Service to handle all app-wide data and event handlers.
@@ -64,7 +64,7 @@ export class AppService {
    *
    * @memberof AppService
    */
-  public user: IUser;
+  public user: User;
 
   /**
    * Creates an instance of AppService.

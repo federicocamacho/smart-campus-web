@@ -1,3 +1,5 @@
+import { User } from './user';
+
 /**
  * Model used to map the authenticated user data stored in a cookie
  *
@@ -53,4 +55,19 @@ export class UserCookie {
     }
   }
 
+  /**
+   * Transforms the passed user into a user cookie.
+   *
+   * @date 2019-01-16
+   * @static
+   * @param user to be mapped.
+   * @returns the UserCookie.
+   * @memberof UserCookie
+   */
+  public static fromUser(user: User): UserCookie {
+    if (!user) { return null; }
+
+    return new UserCookie(user.id, user.username, user.email, user.name, user.admin);
+  }
+  
 }
