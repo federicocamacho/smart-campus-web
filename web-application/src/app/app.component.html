@@ -33,10 +33,7 @@
   imageUrl="assets/imgs/user.png"
   [username]="service.user?.username"
   [email]="service.user?.email"
-  [name]="service.user?.name"
-  (profileClicked)="onProfileClicked()"
-  (deleteClicked)="onDeleteProfileClicked()"
-  (logoutClicked)="onLogoutClicked()">
+  [name]="service.user?.name">
 </sc-user-card>
 <sc-full-screen-loader *ngIf="service.isBusyGlobally"></sc-full-screen-loader>
 <ng2-toasty></ng2-toasty>

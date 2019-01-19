@@ -1,7 +1,6 @@
 /* Models exported */
 export { ApiError } from './models/api-error';
 export { ApiException } from './models/api-exception';
-export { HeaderItem } from './models/header-item';
 export { Response } from './models/response';
 export { ChangePassInput, LoginInput, SigningInput, UpdateProfileInput } from './models/auth';
 export { MenuItem } from './models/menu-item';
