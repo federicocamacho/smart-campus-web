@@ -6,7 +6,10 @@
     flexLayout="row wrap" fxFlexFill
     [style.color]="iconsColor" style="height: 60px">
     <div flexLayout="col wrap" fxFlexFill>
-      <div class="menu-item-container" flexLayout="row wrap" fxFlexFill (click)="nodeClicked(item)">
+      <div
+        class="menu-item-container"
+        flexLayout="row wrap" fxFlexFill
+        [routerLink]="item.path" routerLinkActive="item-active">
         <div 
           class="menu-icon" 
           flexLayout="col" fxFlex="50px" fxLayoutAlign="center center"
@@ -35,7 +38,7 @@
         <div
           class="menu-item-container"
           *ngFor="let child of item.children"
-          (click)="nodeClicked(child)"
+          [routerLink]="child.path" routerLinkActive="item-active"
           flexLayout="col wrap" fxFlexFill
           [style.color]="iconsColor" style="height: 60px">
           <div flexLayout="row wrap" fxFlexFill style="padding-left: 15px">

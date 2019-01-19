@@ -23,6 +23,7 @@ import {
 } from './';
 import { CoreModule } from '../core/core.module';
 import { MaterialModule } from '../material/material.module';
+import { RouterModule } from '@angular/router';
 
 /**
  * Application's main module (not lazy-loaded) which also includes Login component
@@ -36,6 +37,7 @@ import { MaterialModule } from '../material/material.module';
     CommonModule,
     CoreModule,
     CustomFormsModule,
+    RouterModule,
     FlexLayoutModule,
     FormsModule,
     MaterialModule

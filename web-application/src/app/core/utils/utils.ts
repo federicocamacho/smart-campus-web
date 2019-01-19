@@ -43,22 +43,6 @@ export class Utils {
   }
 
   /**
-   * Transforms a given string into an array of routes (separated by /).
-   *
-   * @date 2018-11-17
-   * @param pathString the path as string.
-   * @returns the obtained array of routes.
-   * @memberof Utils
-   */
-  public static getPathArray(pathString: string): string[] {
-    if (this.isEmptyString(pathString)) {
-      return [];
-    }
-
-    return pathString.trim().split('/');
-  }
-
-  /**
    * Determines whether an array is null/undefined or empty.
    *
    * @date 2018-11-17

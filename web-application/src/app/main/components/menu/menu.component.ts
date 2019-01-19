@@ -122,8 +122,8 @@ export class MenuComponent extends Cleanable implements OnInit {
    * @memberof MenuComponent
    */
   public nodeClicked(item: MenuItem): void {
-    if (!Utils.isEmptyString(item.path)) { 
-      this.router.navigate(Utils.getPathArray(item.path));
+    if (!Utils.isEmptyArray(item.path)) { 
+      this.router.navigate(item.path);
 
     }
   }
