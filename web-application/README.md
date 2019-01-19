@@ -1,6 +1,6 @@
 # WebApplication
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.0.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.2.0.
 
 ## Development server
 
@@ -32,9 +32,7 @@ See [Docs](https://github.com/angular/flex-layout/wiki/API-Documentation)
 Guideline made by [Marthis Garberg](https://itnext.io/choosing-a-highly-scalable-folder-structure-in-angular-d987de65ec7)
 
 ## Generate Docs
-To generate app's docs you need to run `gulp` task `doc` if you want to serve the documentation use the task `doc-serve` and open the browser in `localhost:8080`.
-To do so you need to install globally Gulp using `npm install gulp-cli -g`.
-And then generate the docs running `gulp doc` or `gulp doc-serve`.
+Generate the documentation running `npm run compodoc`.
 Documentation generated using [Compodoc](https://github.com/compodoc/gulp-compodoc)
 
 ## Further help
