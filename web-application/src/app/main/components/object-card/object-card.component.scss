@@ -1,0 +1,49 @@
+.object-card {
+  max-width: 260px;
+  position: relative;
+}
+
+.delete-button {
+  position: absolute;
+  right: 0px;
+  z-index: 2;
+}
+
+.card-container {
+  background-color: white;
+  padding: 30px;
+  max-width: 260px;
+}
+
+.card-container:hover {
+  box-shadow: 0 10px 20px rgba(170, 170, 170, 0.35);
+  -webkit-box-shadow: 0 10px 20px rgba(170, 170, 170, 0.35);
+  -moz-box-shadow: 0 10px 20px rgba(170, 170, 170, 0.35);
+  border-color: rgba(120, 130, 140, 0.13);
+  cursor: pointer;
+}
+
+.card-text-container {
+  background-color: white;
+}
+
+.card-img {
+  margin-bottom: 10px;
+  width: 100px;
+}
+
+.card-container {
+  text-align: left;
+}
+
+.card-title {
+  font-size: 21px;
+  color: #20aee3;
+}
+
+.card-username {
+  font-style: italic;
+  color: #bcc3d3;
+  font-size: 14px;
+  font-weight: 100;
+}
