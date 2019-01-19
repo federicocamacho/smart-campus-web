@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard, LoginGuard } from './core/guards';
 import { 
+  GatewayComponent,
   HomeComponent, 
   LoginComponent,
   NotFoundComponent,
@@ -25,6 +26,12 @@ const routes: Routes = [
     path: 'profile',
     pathMatch: 'full',
     component: ProfileComponent,
+    canActivate: [ AuthGuard ]
+  },
+  {
+    path: 'config/gateways',
+    pathMatch: 'full',
+    component: GatewayComponent,
     canActivate: [ AuthGuard ]
   },
   {

@@ -4,15 +4,17 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
 
 import { CustomFormsModule } from 'ngx-custom-validators';
-
 import {
+  ConfirmDialogComponent,
   DeleteUserDialogComponent,
   HeaderComponent,
   FullScreenLoaderComponent,
   MenuComponent,
+  ObjectCardComponent,
   UserCardComponent
 } from './components';
 import { 
+  GatewayComponent,
   HomeComponent,
   LoginComponent,
   NotFoundComponent,
@@ -46,11 +48,15 @@ import { MaterialModule } from '../material/material.module';
     MenuComponent,
     NotFoundComponent,
     ProfileComponent,
-    UserCardComponent
+    UserCardComponent,
+    GatewayComponent,
+    ObjectCardComponent,
+    ConfirmDialogComponent
   ],
-  entryComponents: [ DeleteUserDialogComponent ],
+  entryComponents: [ DeleteUserDialogComponent, ConfirmDialogComponent ],
   exports: [
     FullScreenLoaderComponent,
+    GatewayComponent,
     HeaderComponent,
     HomeComponent,
     LoginComponent,
