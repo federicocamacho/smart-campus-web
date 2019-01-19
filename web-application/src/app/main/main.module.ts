@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ngx-custom-validators';
 import {
   ConfirmDialogComponent,
-  DeleteUserDialogComponent,
   HeaderComponent,
   FullScreenLoaderComponent,
   MenuComponent,
@@ -47,7 +46,6 @@ import { RouterModule } from '@angular/router';
   declarations: [
     ApplicationComponent,
     ApplicationsComponent,
-    DeleteUserDialogComponent,
     FullScreenLoaderComponent,
     HeaderComponent,
     HomeComponent,
@@ -62,7 +60,7 @@ import { RouterModule } from '@angular/router';
     SectionTitleComponent,
     UserCardComponent
   ],
-  entryComponents: [ DeleteUserDialogComponent, ConfirmDialogComponent ],
+  entryComponents: [ ConfirmDialogComponent ],
   exports: [
     FullScreenLoaderComponent,
     GatewayComponent,

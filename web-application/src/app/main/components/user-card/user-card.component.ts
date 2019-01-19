@@ -9,7 +9,8 @@ import { ToastyService } from 'ng2-toasty';
 
 import { ApiError, Cleanable, Response, Utils } from './../../../core';
 import { AppService } from './../../../../app/app.service';
-import { DeleteUserDialogComponent } from './../delete-user-dialog/delete-user-dialog.component';
+import { ConfirmDialogComponent } from './../confirm-dialog/confirm-dialog.component';
+import { DialogData } from '../confirm-dialog/dialog-data';
 import { UserService } from './../../../core/api';
 
 @Component({
@@ -76,9 +77,12 @@ export class UserCardComponent extends Cleanable {
    */
   public onDeleteClicked(): void {
     this.service.isUserCardOpened = false;
-    const deleteDialog = this.dialog.open(DeleteUserDialogComponent, {
+    const deleteDialog = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
-      data: { username: this.username }
+      data: new DialogData(
+        'Eliminar usuario',
+        `Está seguro que desea eliminar el usuario ${ this.username }`,
+        this.username)
     });
 
     deleteDialog.afterClosed()
