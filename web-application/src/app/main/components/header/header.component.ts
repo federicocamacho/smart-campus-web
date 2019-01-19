@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { HeaderItem } from '../../../core';
-
 /**
  * Customizable Navbar component.
  *
@@ -36,13 +34,6 @@ export class HeaderComponent {
    * @memberof HeaderComponent
    */
   @Input() brandName: string;
-
-  /**
-   * Item's displayed in the navbar, used to execute actions.
-   *
-   * @memberof HeaderComponent
-   */
-  @Input() headerOptions: HeaderItem[];
 
   /**
    * Navbar icons' color (Material Design Icons) (receives HEX and color names).

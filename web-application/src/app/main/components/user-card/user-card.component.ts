@@ -9,7 +9,7 @@ import { ToastyService } from 'ng2-toasty';
 
 import { ApiError, Cleanable, Response, Utils } from './../../../core';
 import { AppService } from './../../../../app/app.service';
-import { DeleteUserDialogComponent } from '..';
+import { DeleteUserDialogComponent } from './../delete-user-dialog/delete-user-dialog.component';
 import { UserService } from './../../../core/api';
 
 @Component({
