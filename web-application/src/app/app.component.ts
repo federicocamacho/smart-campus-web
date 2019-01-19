@@ -138,7 +138,6 @@ export class AppComponent extends Cleanable implements OnInit {
    */
   public onDeleteProfileClicked(): void {
     this.service.isUserCardOpened = false;
-    // this.service.isBusyGlobally = true;
     const deleteDialog = this.dialog.open(DeleteUserDialogComponent, {
       width: '350px',
       data: { username: this.service.user.username }

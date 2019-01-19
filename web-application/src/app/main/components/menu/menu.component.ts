@@ -104,7 +104,7 @@ export class MenuComponent extends Cleanable implements OnInit {
    * @memberof MenuComponent
    */
   public parentNodeClicked(item: MenuItem): void {
-    if (item.hasChildren()) {
+    if (item.hasChildren() && Utils.isEmptyString(item.path)) {
       item.toggleOpen();
     } else if (!Utils.isEmptyString(item.path)) {
       this.router.navigate(Utils.getPathArray(item.path));

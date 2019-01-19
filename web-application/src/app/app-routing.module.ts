@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard, LoginGuard } from './core/guards';
-import { 
+import {
+  ApplicationsComponent,
   HomeComponent, 
   LoginComponent,
   NotFoundComponent,
@@ -25,6 +26,12 @@ const routes: Routes = [
     path: 'profile',
     pathMatch: 'full',
     component: ProfileComponent,
+    canActivate: [ AuthGuard ]
+  },
+  {
+    path: 'applications',
+    pathMatch: 'full',
+    component: ApplicationsComponent,
     canActivate: [ AuthGuard ]
   },
   {
