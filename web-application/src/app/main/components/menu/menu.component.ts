@@ -53,6 +53,11 @@ export class MenuComponent extends Cleanable implements OnInit {
    */
   @Input() menuItems: MenuItem[];
 
+  /**
+   * Emits any time the menu is closed from inside.
+   *
+   * @memberof MenuComponent
+   */
   @Output() menuClosed: EventEmitter<void>;
 
   /**
@@ -97,31 +102,30 @@ export class MenuComponent extends Cleanable implements OnInit {
   }
 
   /**
-   * Executed when a parent {@link MenuItem} is clicked.
+   * Opens/closes the parent {@link MenuItem} if has any children.
    *
-   * @date 2018-11-17
-   * @param item the {@link MenuItem} clicked.
+   * @date 2019-01-19
+   * @param item to be opened/closed.
    * @memberof MenuComponent
    */
-  public parentNodeClicked(item: MenuItem): void {
+  public parentNodeToggled(item: MenuItem): void {
     if (item.hasChildren()) {
       item.toggleOpen();
-    } else if (!Utils.isEmptyString(item.path)) {
-      this.router.navigate(Utils.getPathArray(item.path));
     }
   }
 
   /**
-   * Executed when a children {@link MenuItem} (leaf node) is clicked.
+   * Executed when a {@link MenuItem} (leaf or parent node) is clicked.
    *
    * @date 2018-11-17
    * @param item the {@link MenuItem} clicked.
    * @memberof MenuComponent
    */
-  public childrenNodeClicked(item: MenuItem): void {
-    if (Utils.isEmptyString(item.path)) { return; }
+  public nodeClicked(item: MenuItem): void {
+    if (!Utils.isEmptyString(item.path)) { 
+      this.router.navigate(Utils.getPathArray(item.path));
 
-    this.router.navigate(Utils.getPathArray(item.path));
+    }
   }
-  
+
 }

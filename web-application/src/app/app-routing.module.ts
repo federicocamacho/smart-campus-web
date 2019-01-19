@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard, LoginGuard } from './core/guards';
-import { 
+import {
+  ApplicationsComponent,
   GatewayComponent,
   HomeComponent, 
   LoginComponent,
@@ -32,6 +33,12 @@ const routes: Routes = [
     path: 'config/gateways',
     pathMatch: 'full',
     component: GatewayComponent,
+    canActivate: [ AuthGuard ]
+  },
+  {
+    path: 'applications',
+    pathMatch: 'full',
+    component: ApplicationsComponent,
     canActivate: [ AuthGuard ]
   },
   {

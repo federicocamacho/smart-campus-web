@@ -1,5 +1,3 @@
-import { Utils } from '../utils/utils';
-
 /**
  * Represents a single option found in the side menu.
  *
@@ -18,8 +16,6 @@ export class MenuItem {
 
   public name: string;
 
-  public notificationCount: number;
-
   public path: string;
 
   /**
@@ -29,45 +25,27 @@ export class MenuItem {
    * @param name of the item.
    * @param path of the item page's.
    * @param icon of the item. Use material icons names.
-   * @param notCount amount of notifications.
    * @param [children] an array of {@link MenuItem} that are children nodes.
    * @memberof MenuItem
    */
-  constructor(id: number,
-              name: string,
-              path: string,
-              icon: string,
-              notCount: number,
-              children?: MenuItem[]) {
+  constructor(id: number, name: string, path: string, icon: string, children?: MenuItem[]) {
     this.id = id;
     this.name = name;
     this.path = path;
     this.icon = icon;
-    this.notificationCount = notCount;
     this.isOpened = false;
     this.children = children;
   }
   
   /**
-   * Check if the item has an icon.
+   * Checks if the item has an icon.
    *
    * @date 2018-11-04
-   * @returns true if the icon is present, false otherwise
+   * @returns true if the icon is present, false otherwise.
    * @memberof MenuItem
    */
   public hasIcon(): boolean {
     return this.icon && this.icon.trim() !== '';
-  }
-  
-  /**
-   * Checks if the item has notifications
-   *
-   * @date 2018-11-04
-   * @returns true if there's at least one notification, false otherwise
-   * @memberof MenuItem
-   */
-  public hasNotifications(): boolean {
-    return this.notificationCount && this.notificationCount > 0;
   }
 
   /**

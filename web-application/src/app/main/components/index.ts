@@ -4,4 +4,5 @@ export { FullScreenLoaderComponent } from './full-screen-loader/full-screen-load
 export { HeaderComponent } from './header/header.component';
 export { MenuComponent } from './menu/menu.component';
 export { ObjectCardComponent } from './object-card/object-card.component';
+export { SectionTitleComponent } from './section-title/section-title.component';
 export { UserCardComponent } from './user-card/user-card.component';

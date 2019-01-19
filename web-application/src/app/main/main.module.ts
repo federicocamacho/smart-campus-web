@@ -10,10 +10,13 @@ import {
   HeaderComponent,
   FullScreenLoaderComponent,
   MenuComponent,
+  SectionTitleComponent,
   ObjectCardComponent,
   UserCardComponent
 } from './components';
 import { 
+  ApplicationComponent,
+  ApplicationsComponent,
   GatewayComponent,
   HomeComponent,
   LoginComponent,
@@ -40,6 +43,8 @@ import { MaterialModule } from '../material/material.module';
     MaterialModule
   ],
   declarations: [
+    ApplicationComponent,
+    ApplicationsComponent,
     DeleteUserDialogComponent,
     FullScreenLoaderComponent,
     HeaderComponent,
@@ -51,7 +56,9 @@ import { MaterialModule } from '../material/material.module';
     UserCardComponent,
     GatewayComponent,
     ObjectCardComponent,
-    ConfirmDialogComponent
+    ConfirmDialogComponent,
+    SectionTitleComponent,
+    UserCardComponent
   ],
   entryComponents: [ DeleteUserDialogComponent, ConfirmDialogComponent ],
   exports: [
@@ -63,6 +70,7 @@ import { MaterialModule } from '../material/material.module';
     MenuComponent,
     NotFoundComponent,
     ProfileComponent,
+    SectionTitleComponent,
     UserCardComponent
   ]
 })
