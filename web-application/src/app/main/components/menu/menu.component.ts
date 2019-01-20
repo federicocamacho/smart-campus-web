@@ -79,6 +79,7 @@ export class MenuComponent extends Cleanable implements OnInit {
    * @memberof MenuComponent
    */
   ngOnInit() {
+    console.log(this.menuItems);
     this.bpObserver
       .observe([Breakpoints.Small, Breakpoints.XSmall])
       .pipe(

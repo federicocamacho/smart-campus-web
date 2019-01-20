@@ -2,6 +2,7 @@
   <sc-section-title
     [title]="'Gateways'"
     [description]="'Gestionar gateways'"
+    (create)="createGateway()"
   ></sc-section-title>
   <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start">
     <ng-container *ngFor="let gateway of gateways; index as i">

@@ -43,4 +43,13 @@ export class GatewayComponent implements OnInit {
     console.log(this.gateways[index].name);
   }
 
+  /**
+   * Opens the view to create a gateway.
+   *
+   * @memberof GatewayComponent
+   */
+  public createGateway(): void {
+    console.log('Crear gateway');
+  }
+
 }
