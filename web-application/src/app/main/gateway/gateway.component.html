@@ -1,9 +1,21 @@
-<div class="page-wraper" fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="flex-start" fxLayout.lt-sm="column">
-  <sc-object-card
-    [imagePath]="'assets/imgs/cpu.png'"
-    [title]="'Gateway 1'"
-    [description]="'Controla la temperatura de LP.'"
-    [dialogTitle]="'Eliminar gateway'"
-    [dialogQuestion]="'Está seguro que desea eliminar el gateway Gateway 1?'"
-  ></sc-object-card>
+<div class="page-wraper">
+  <sc-section-title
+    [title]="'Gateways'"
+    [description]="'Gestionar gateways'"
+  ></sc-section-title>
+  <div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start">
+    <ng-container *ngFor="let gateway of gateways; index as i">
+      <sc-object-card
+        [imagePath]="'assets/imgs/cpu.png'"
+        [title]="gateway.name"
+        [description]="gateway.description"
+        [dialogTitle]="'Eliminar gateway'"
+        [dialogQuestion]="
+          '¿Está seguro que desea eliminar el gateway ' + gateway.name + ' ?'
+        "
+        (delete)="deleteGateway(i)"
+        (cardClicked)="updateGateway(i)"
+      ></sc-object-card>
+    </ng-container>
+  </div>
 </div>

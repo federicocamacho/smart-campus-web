@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { take, takeUntil } from 'rxjs/operators';
@@ -17,7 +17,7 @@ import { Cleanable } from 'src/app/core';
   templateUrl: './object-card.component.html',
   styleUrls: ['./object-card.component.scss']
 })
-export class ObjectCardComponent extends Cleanable implements OnInit  {
+export class ObjectCardComponent extends Cleanable {
 
   /**
    * Indicates the image's path to be displayed in the card.
@@ -65,13 +65,17 @@ export class ObjectCardComponent extends Cleanable implements OnInit  {
    *
    * @memberof ObjectCardComponent
    */
-  @Output() delete = new EventEmitter<{}>();
+  @Output() delete = new EventEmitter();
+
+  /**
+   * Emits the event when the card is clicked.
+   *
+   * @memberof ObjectCardComponent
+   */
+  @Output() cardClicked = new EventEmitter();
 
   constructor(private dialog: MatDialog) {
     super();
-  }
-
-  ngOnInit() {
   }
 
   /**
@@ -90,7 +94,6 @@ export class ObjectCardComponent extends Cleanable implements OnInit  {
       .pipe(
         take(1),
         takeUntil(this.destroyed))
-      .subscribe(result => result ? console.log('Affirmative response!') : null);
+      .subscribe(result => result ? this.delete.emit() : null);
   }
-
 }
