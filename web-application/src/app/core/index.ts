@@ -7,6 +7,7 @@ export { ChangePassInput, LoginInput, SigningInput, UpdateProfileInput } from '.
 export { MenuItem } from './models/menu-item';
 export { User } from './models/user';
 export { UserCookie } from './models/user-cookie';
+export { Gateway } from './models/gateway';
 
 /* Utility classes exported */
 export { Cleanable } from './utils/cleanable';

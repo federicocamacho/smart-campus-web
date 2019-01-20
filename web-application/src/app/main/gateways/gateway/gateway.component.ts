@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GatewayComponent implements OnInit {
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
   }

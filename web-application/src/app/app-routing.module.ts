@@ -5,6 +5,7 @@ import { AuthGuard, LoginGuard } from './core/guards';
 import {
   ApplicationsComponent,
   GatewayComponent,
+  GatewaysComponent,
   HomeComponent, 
   LoginComponent,
   NotFoundComponent,
@@ -31,6 +32,12 @@ const routes: Routes = [
   },
   {
     path: 'config/gateways',
+    pathMatch: 'full',
+    component: GatewaysComponent,
+    canActivate: [ AuthGuard ]
+  },
+  {
+    path: 'config/gateway/:id',
     pathMatch: 'full',
     component: GatewayComponent,
     canActivate: [ AuthGuard ]
