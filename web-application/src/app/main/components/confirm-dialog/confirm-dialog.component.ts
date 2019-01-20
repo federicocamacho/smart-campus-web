@@ -1,6 +1,8 @@
 import { Component, Inject} from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
+import { DialogData } from './dialog-data';
+
 /**
  * Reusable component to show a confirmation dialog.
  *
@@ -21,5 +23,5 @@ export class ConfirmDialogComponent {
    * @memberof ConfirmDialogComponent
    */
   constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>, 
-    @Inject(MAT_DIALOG_DATA) public data: { title: string, question: string }) { }
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 }

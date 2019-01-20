@@ -6,7 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ngx-custom-validators';
 import {
   ConfirmDialogComponent,
-  DeleteUserDialogComponent,
   HeaderComponent,
   FullScreenLoaderComponent,
   MenuComponent,
@@ -25,6 +24,7 @@ import {
 } from './';
 import { CoreModule } from '../core/core.module';
 import { MaterialModule } from '../material/material.module';
+import { RouterModule } from '@angular/router';
 
 /**
  * Application's main module (not lazy-loaded) which also includes Login component
@@ -38,6 +38,7 @@ import { MaterialModule } from '../material/material.module';
     CommonModule,
     CoreModule,
     CustomFormsModule,
+    RouterModule,
     FlexLayoutModule,
     FormsModule,
     MaterialModule
@@ -45,7 +46,6 @@ import { MaterialModule } from '../material/material.module';
   declarations: [
     ApplicationComponent,
     ApplicationsComponent,
-    DeleteUserDialogComponent,
     FullScreenLoaderComponent,
     HeaderComponent,
     HomeComponent,
@@ -60,7 +60,7 @@ import { MaterialModule } from '../material/material.module';
     SectionTitleComponent,
     UserCardComponent
   ],
-  entryComponents: [ DeleteUserDialogComponent, ConfirmDialogComponent ],
+  entryComponents: [ ConfirmDialogComponent ],
   exports: [
     FullScreenLoaderComponent,
     GatewayComponent,

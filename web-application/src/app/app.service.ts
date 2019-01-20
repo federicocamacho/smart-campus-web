@@ -82,11 +82,11 @@ export class AppService {
    */
   public initializeApp(): void {
     this.menuItems = [
-      new MenuItem(-1, 'Configuración', null, 'settings', [
-        new MenuItem(-2, 'Gateways', 'config/gateways', 'memory')
+      new MenuItem(-1, 'Configuración', ['/dashboard'], 'settings', [
+        new MenuItem(-2, 'Gateways', ['/config', '/gateways'], 'memory')
       ]),
-      new MenuItem(-3, 'Aplicaciones', '/applications', 'computer', [
-        new MenuItem(0, 'Parking', 'applications/parking', 'directions_car')
+      new MenuItem(-3, 'Aplicaciones', ['/applications'], 'computer', [
+        new MenuItem(0, 'Parking', ['/applications', '/parking'], 'directions_car')
       ]),
     ];
   }

@@ -16,7 +16,7 @@ export class MenuItem {
 
   public name: string;
 
-  public path: string;
+  public path: string[];
 
   /**
    * Creates an instance of MenuItem.
@@ -28,7 +28,7 @@ export class MenuItem {
    * @param [children] an array of {@link MenuItem} that are children nodes.
    * @memberof MenuItem
    */
-  constructor(id: number, name: string, path: string, icon: string, children?: MenuItem[]) {
+  constructor(id: number, name: string, path: string[], icon: string, children?: MenuItem[]) {
     this.id = id;
     this.name = name;
     this.path = path;
