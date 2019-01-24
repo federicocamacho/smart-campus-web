@@ -2,65 +2,9 @@
   class="menu-container default-shadow"
   *ngIf="isOpened">
   <div
-    *ngFor="let item of menuItems"
-    flexLayout="row wrap" fxFlexFill
-    [style.color]="iconsColor" style="height: 60px">
-    <div flexLayout="col wrap" fxFlexFill>
-      <div
-        class="menu-item-container"
-        flexLayout="row wrap" fxFlexFill
-        [routerLink]="item.path" routerLinkActive="item-active">
-        <div 
-          class="menu-icon" 
-          flexLayout="col" fxFlex="50px" fxLayoutAlign="center center"
-          style="height: 60px">
-          <mat-icon style="font-size: 27px; padding: 5px;">{{ item.hasIcon() ? item.icon : '' }}</mat-icon>
-        </div>
-        <div 
-          class="menu-option-name"
-          flexLayout="col" fxFlex="150px" fxLayoutAlign="start center"
-          style="height: 60px">
-          {{ item.name }}
-        </div>
-        <div 
-          class="menu-icon"
-          (click)="parentNodeToggled(item); $event.stopPropagation();"
-          flexLayout="col" fxFlex="15px" fxLayoutAlign="end center"
-          style="height: 60px; margin: auto">
-          <mat-icon *ngIf="item.hasChildren()" style="font-size: 23px">
-            {{ item.isOpened ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
-          </mat-icon>
-        </div>
-      </div>
-      <div scAnimated="fadeIn"
-        *ngIf="item.isOpened"
-        flexLayout="row wrap" fxFlexFill>
-        <div
-          class="menu-item-container"
-          *ngFor="let child of item.children"
-          [routerLink]="child.path" routerLinkActive="item-active"
-          flexLayout="col wrap" fxFlexFill
-          [style.color]="iconsColor" style="height: 60px">
-          <div flexLayout="row wrap" fxFlexFill style="padding-left: 15px">
-            <div 
-              class="menu-icon" 
-              flexLayout="col" fxFlex="50px" fxLayoutAlign="center center"
-              style="height: 60px">
-              <mat-icon style="font-size: 27px">{{ child.icon }}</mat-icon>
-            </div>
-            <div 
-              class="menu-option-name"
-              flexLayout="col" fxFlex="150px" fxLayoutAlign="start center"
-              style="height: 60px">
-              {{ child.name }}
-            </div>
-            <div 
-              class="menu-icon"
-              flexLayout="col" fxFlex="15px" fxLayoutAlign="center center"
-              style="height: 60px"></div>
-          </div>
-        </div>
-      </div>
-    </div>
+    class="menu-items"
+    flexLayout="column"
+    [style.color]="iconsColor">
+    <sc-menu-tree *ngFor="let item of menu.items" [item]="item"></sc-menu-tree>
   </div>
 </div>

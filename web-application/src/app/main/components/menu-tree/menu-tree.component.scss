@@ -1,0 +1,54 @@
+.menu-container {
+    background-color: white;
+    width: 255px;
+    min-height: calc(100vh - 76px);
+    border-right: solid 1px #eee;
+    font-size: 15px;
+    position: fixed;
+    z-index: 200;
+}
+
+.menu-item-container {
+    height: 50px;
+}
+
+.menu-item-container:hover {
+    background-color: #eee;
+    cursor: pointer;
+}
+
+.menu-item-container:hover * {
+    color: #20aee3;
+}
+
+.item-active {
+    background-color: #eee;
+    font-style: italic;
+    color: #20aee3;
+    outline: 0;
+}
+
+.menu-item-name,
+.menu-icon-right,
+.menu-icon-left {
+    position: absolute;
+    height: 50px;
+}
+
+.menu-icon-right {
+    right: 5px;
+    margin: auto;
+    margin-top: 15px;
+}
+
+.menu-icon-left {
+    width: 40px;
+    margin-top: 13px;
+}
+
+.menu-item-name {
+    margin-top: 17px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

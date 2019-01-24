@@ -29,19 +29,17 @@ export class SectionTitleComponent {
   @Input('description') description: string;
 
   /**
+   * Create button label.
+   *
+   * @memberof SectionTitleComponent
+   */
+  @Input('createLabel') createLabel: string;
+
+  /**
    * Emits any time the 'Create' button is selected.
    *
    * @memberof SectionTitleComponent
    */
   @Output('create') create = new EventEmitter();
-
-  /**
-   * Create button click handler.
-   *
-   * @date 2019-01-19
-   * @memberof SectionTitleComponent
-   */
-  public onCreate(): void {
-    this.create.emit();
-  }
+  
 }

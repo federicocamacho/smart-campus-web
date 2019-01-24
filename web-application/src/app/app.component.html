@@ -1,38 +1,38 @@
 <sc-header
-  *ngIf="service.isLogedIn"
+  *ngIf="appService.isLogedIn"
   backgroundColor="white"
   brandLogoSrc="assets/icons/icon-72x72.png"
   [brandName]="title"
   iconsColor="#a2a2a2"
-  [isMenuOpened]="service.isMenuOpened"
+  [isMenuOpened]="appService.isMenuOpened"
   textColor="#20aee3"
   userImgSrc="assets/imgs/user.png"
-  [userName]="service.user?.name"
+  [userName]="appService.user?.name"
   (menuToggled)="toggleSideMenu()"
   (userToggled)="toggleUserCard($event)">
 </sc-header>
 <div fxLayout="col">
   <sc-menu
-    *ngIf="service.isLogedIn"
+    *ngIf="appService.isLogedIn"
     backgroundColor="white"
     iconsColor="#a2a2a2"
-    [isOpened]="service.isMenuOpened"
-    [menuItems]="service.menuItems"
+    [isOpened]="appService.isMenuOpened"
+    [menu]="appService.menu"
     (menuClosed)="closeMenu()">
   </sc-menu>
   <div
-    [ngStyle]="{ 'margin-left': service.isLogedIn && service.isMenuOpened && !isMobile ? '255px' : '0' }"
+    [ngStyle]="{ 'margin-left': appService.isLogedIn && appService.isMenuOpened && !isMobile ? '255px' : '0' }"
     style="width: 100%">
     <router-outlet></router-outlet>
   </div>
 </div>
 <sc-user-card scClickOutside
-  [ngStyle]="{ 'visibility': service.isUserCardOpened && service.isLogedIn ? 'visible' : 'hidden' }"
+  [ngStyle]="{ 'visibility': appService.isUserCardOpened && appService.isLogedIn ? 'visible' : 'hidden' }"
   (clickOutside)="closeUserCard($event)"
   imageUrl="assets/imgs/user.png"
-  [username]="service.user?.username"
-  [email]="service.user?.email"
-  [name]="service.user?.name">
+  [username]="appService.user?.username"
+  [email]="appService.user?.email"
+  [name]="appService.user?.name">
 </sc-user-card>
-<sc-full-screen-loader *ngIf="service.isBusyGlobally"></sc-full-screen-loader>
+<sc-full-screen-loader *ngIf="appService.isBusyGlobally"></sc-full-screen-loader>
 <ng2-toasty></ng2-toasty>

@@ -1,3 +1,10 @@
+/**
+ * Represents the Application object.
+ *
+ * @date 2019-01-20
+ * @export
+ * @class Application
+ */
 export class Application {
 
   /**
@@ -37,11 +44,11 @@ export class Application {
    * @param idUser that owns the of the Application.
    * @memberof Application
    */
-  constructor(id: number, name: string, description: string, idUser: number) {
+  constructor(id?: number, name?: string, description?: string, idUser?: number) {
     this.idApplication = id;
     this.name = name;
     this.description = description;
     this.idUser = idUser;
   }
-  
+
 }

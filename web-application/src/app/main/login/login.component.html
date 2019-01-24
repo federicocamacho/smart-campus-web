@@ -22,7 +22,7 @@
               type="text" placeholder="Usuario"
               required="true" minlength="4"
               [(ngModel)]="login.username"/>
-            <div  *ngIf="service.isModelInvalid(username)">
+            <div  *ngIf="appService.isModelInvalid(username)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="username.errors?.required"
@@ -47,7 +47,7 @@
               type="password" placeholder="Contraseña"
               required="true" minlength="4"
               [(ngModel)]="login.password"/>
-            <div  *ngIf="service.isModelInvalid(password)">
+            <div  *ngIf="appService.isModelInvalid(password)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="password.errors?.required"
@@ -73,7 +73,7 @@
           <button mat-flat-button scAnimated="fadeIn"
             class="login-button box-shadow" 
             type="submit"
-            [disabled]="service.isFormInvalid(loginForm)"
+            [disabled]="appService.isFormInvalid(loginForm)"
             color="primary" 
             style="color: white">
             Iniciar sesión
@@ -92,7 +92,7 @@
               type="text" placeholder="Usuario"
               required="true" minlength="4"
               [ngModel]="signing.username" (ngModelChange)="onUsernameChanged($event, false)" />
-            <div *ngIf="service.isModelInvalid(newUsername)">
+            <div *ngIf="appService.isModelInvalid(newUsername)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="newUsername.errors?.required"
@@ -115,7 +115,7 @@
               type="text" placeholder="Nombre"
               required="true" minlength="8"
               [(ngModel)]="signing.name"/>
-            <div *ngIf="service.isModelInvalid(newName)">
+            <div *ngIf="appService.isModelInvalid(newName)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="newName.errors?.required"
@@ -140,7 +140,7 @@
               type="email" placeholder="Email"
               required="true" ngvemail
               [(ngModel)]="signing.email"/>
-            <div  *ngIf="service.isModelInvalid(newEmail)">
+            <div  *ngIf="appService.isModelInvalid(newEmail)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="newEmail.errors?.required"
@@ -165,7 +165,7 @@
               type="password" placeholder="Contraseña"
               required="true" minlength="4"
               [(ngModel)]="signing.password"/>
-            <div  *ngIf="service.isModelInvalid(newPassword)">
+            <div  *ngIf="appService.isModelInvalid(newPassword)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="newPassword.errors?.required"
@@ -190,7 +190,7 @@
               type="password" placeholder="Repetir Contraseña"
               required="true" minlength="4" [equal]="signing.password"
               [(ngModel)]="signing.passwordCheck" />
-            <div *ngIf="service.isModelInvalid(newPasswordRepeat)">
+            <div *ngIf="appService.isModelInvalid(newPasswordRepeat)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="newPasswordRepeat.errors?.equal"
@@ -208,7 +208,7 @@
         <div fxLayout="row" fxLayoutAlign="center center" class="default-shadow">
           <button mat-flat-button scAnimated="fadeIn"
             class="login-button box-shadow"
-            [disabled]="service.isFormInvalid(signingForm)"
+            [disabled]="appService.isFormInvalid(signingForm)"
             color="primary"
             style="color: white">
             Registrarse
@@ -227,7 +227,7 @@
               type="email" placeholder="Email"
               required="true" ngvemail
               [(ngModel)]="email"/>
-            <div  *ngIf="service.isModelInvalid(emailForPass)">
+            <div  *ngIf="appService.isModelInvalid(emailForPass)">
               <mat-icon
                 class="validation-icon"
                 *ngIf="emailForPass.errors?.required"
@@ -252,7 +252,7 @@
         <div fxLayout="row" fxLayoutAlign="center center" class="default-shadow">
           <button mat-flat-button scAnimated="fadeIn"
             class="login-button box-shadow"
-            [disabled]="service.isFormInvalid(changePwdForm)"
+            [disabled]="appService.isFormInvalid(changePwdForm)"
             color="primary"
             style="color: white">
             Cambiar contraseña

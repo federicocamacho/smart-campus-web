@@ -10,7 +10,7 @@ export class MenuItem {
 
   public id: number;
 
-  public isOpened: boolean;
+  public isExpanded: boolean;
 
   public children: MenuItem[];
 
@@ -18,23 +18,35 @@ export class MenuItem {
 
   public path: string[];
 
+  public level: number;
+
   /**
    * Creates an instance of MenuItem.
    * @date 2019-01-09
    * @param id of the item.
    * @param name of the item.
    * @param path of the item page's.
+   * @param level of the item in the structure.
    * @param icon of the item. Use material icons names.
    * @param [children] an array of {@link MenuItem} that are children nodes.
    * @memberof MenuItem
    */
-  constructor(id: number, name: string, path: string[], icon: string, children?: MenuItem[]) {
+  constructor(
+    id: number,
+    name: string,
+    path: string[],
+    icon: string,
+    level: number,
+    children?: MenuItem[],
+    isExpanded = false) {
     this.id = id;
     this.name = name;
     this.path = path;
     this.icon = icon;
-    this.isOpened = false;
+    this.level = level;
+    this.isExpanded = false;
     this.children = children;
+    this.isExpanded = isExpanded;
   }
   
   /**
@@ -65,8 +77,77 @@ export class MenuItem {
    * @date 2018-11-17
    * @memberof MenuItem
    */
-  public toggleOpen(): void {
-    this.isOpened = !this.isOpened;
+  public toggleExpand(): void {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  /**
+   * Collapses the current node.
+   *
+   * @date 2019-01-22
+   * @memberof TreeNode
+   */
+  public collapse(): void {
+    this.isExpanded = false;
+  }
+
+  /**
+   * Expands the current node.
+   *
+   * @date 2019-01-22
+   * @memberof TreeNode
+   */
+  public expand(): void {
+    this.isExpanded = true;
+  }
+
+  /**
+   * Collapses all the children nodes.
+   *
+   * @date 2019-01-22
+   * @memberof TreeNode
+   */
+  public collapseChildren(): void {
+    if (this.children === null) { return; }
+
+    this.collapse();
+
+    if (this.children.length > 0) {
+      this.children.forEach(children => children.collapseChildren());
+    }
+    
+  }
+
+  /**
+   * Expands all the children nodes.
+   *
+   * @date 2019-01-22
+   * @memberof TreeNode
+   */
+  public expandChildren(): void {
+    if (this.children === null) { return; }
+    
+    this.expand();
+
+    if (this.children.length > 0) {
+      this.children.forEach(children => children.expandChildren());
+    }
+  }
+
+  /**
+   * Toggles the expand state for all children nodes.
+   *
+   * @date 2019-01-22
+   * @memberof TreeNode
+   */
+  public toggleChildren(): void {
+    if (this.children === null) { return; }
+    
+    this.toggleExpand();
+
+    if (this.children.length > 0) {
+      this.children.forEach(children => children.toggleChildren());
+    }
   }
   
 }

@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { Application, RestUtil } from '..';
 import { CoreModule } from '../core.module';
 import { environment } from './../../../environments/environment';
-import { RestUtil } from '..';
 
 /**
  * Consumes Application related REST Services.
@@ -17,6 +17,13 @@ import { RestUtil } from '..';
   providedIn: CoreModule
 })
 export class ApplicationService {
+
+  /**
+   * Stores the User's application.
+   *
+   * @memberof ApplicationService
+   */
+  public applications: Application[];
 
   /**
    * Creates an instance of UserService.
@@ -36,7 +43,20 @@ export class ApplicationService {
    */
   public getApplicationsByUser(userId: number): Observable<any> {
     return this.http
-      .get(`${ RestUtil.endpoint(environment.user) }/${ userId }`, RestUtil.options());
+      .get(`${ RestUtil.endpoint(environment.applicationsByUserId) }/${ userId }`, RestUtil.options());
+  }
+
+  /**
+   * Consumes the Get Application by Id REST Service.
+   *
+   * @date 2019-01-20
+   * @param appId of the {@link Application}.
+   * @returns an {@link Observable} with the response.
+   * @memberof ApplicationService
+   */
+  public getApplicationById(appId: number): Observable<any> {
+    return this.http
+      .get(`${ RestUtil.endpoint(environment.application) }/${ appId }`, RestUtil.options());
   }
   
 }

@@ -3,13 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard, LoginGuard } from './core/guards';
 import {
+  ApplicationComponent,
   ApplicationsComponent,
   GatewayComponent,
   GatewaysComponent,
   HomeComponent, 
   LoginComponent,
   NotFoundComponent,
-  ProfileComponent 
+  ProfileComponent
 } from './main';
 
 const routes: Routes = [
@@ -46,6 +47,12 @@ const routes: Routes = [
     path: 'applications',
     pathMatch: 'full',
     component: ApplicationsComponent,
+    canActivate: [ AuthGuard ]
+  },
+  {
+    path: 'applications/:id',
+    pathMatch: 'full',
+    component: ApplicationComponent,
     canActivate: [ AuthGuard ]
   },
   {

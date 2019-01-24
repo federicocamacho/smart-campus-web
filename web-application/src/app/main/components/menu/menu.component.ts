@@ -6,10 +6,9 @@ import {
   Output 
 } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Router } from '@angular/router';
 import { map, takeUntil } from 'rxjs/operators';
 
-import { Cleanable, MenuItem, Utils } from '../../../core/';
+import { Cleanable, MenuTree } from '../../../core/';
 
 /**
  * Sidebar Menu Component
@@ -51,7 +50,7 @@ export class MenuComponent extends Cleanable implements OnInit {
    *
    * @memberof MenuComponent
    */
-  @Input() menuItems: MenuItem[];
+  @Input() menu: MenuTree;
 
   /**
    * Emits any time the menu is closed from inside.
@@ -64,10 +63,9 @@ export class MenuComponent extends Cleanable implements OnInit {
    * Creates an instance of MenuComponent.
    * @date 2019-01-09
    * @param bpObserver Material's CDK breakpoint observer.
-   * @param router Angular Router.
    * @memberof MenuComponent
    */
-  constructor(private bpObserver: BreakpointObserver, private router: Router) {
+  constructor(private bpObserver: BreakpointObserver) {
     super();
     this.menuClosed = new EventEmitter();
   }
@@ -79,7 +77,6 @@ export class MenuComponent extends Cleanable implements OnInit {
    * @memberof MenuComponent
    */
   ngOnInit() {
-    console.log(this.menuItems);
     this.bpObserver
       .observe([Breakpoints.Small, Breakpoints.XSmall])
       .pipe(
@@ -99,33 +96,6 @@ export class MenuComponent extends Cleanable implements OnInit {
   public emitIfIsMobile(isMobile: boolean): void {
     if (isMobile) {
       this.menuClosed.next();
-    }
-  }
-
-  /**
-   * Opens/closes the parent {@link MenuItem} if has any children.
-   *
-   * @date 2019-01-19
-   * @param item to be opened/closed.
-   * @memberof MenuComponent
-   */
-  public parentNodeToggled(item: MenuItem): void {
-    if (item.hasChildren()) {
-      item.toggleOpen();
-    }
-  }
-
-  /**
-   * Executed when a {@link MenuItem} (leaf or parent node) is clicked.
-   *
-   * @date 2018-11-17
-   * @param item the {@link MenuItem} clicked.
-   * @memberof MenuComponent
-   */
-  public nodeClicked(item: MenuItem): void {
-    if (!Utils.isEmptyArray(item.path)) { 
-      this.router.navigate(item.path);
-
     }
   }
 
