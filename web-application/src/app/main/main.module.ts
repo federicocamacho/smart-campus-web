@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 import { CustomFormsModule } from 'ngx-custom-validators';
 import {
@@ -25,7 +26,7 @@ import {
 } from './';
 import { CoreModule } from '../core/core.module';
 import { MaterialModule } from '../material/material.module';
-import { RouterModule } from '@angular/router';
+import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
 
 /**
  * Application's main module (not lazy-loaded) which also includes Login component
@@ -60,7 +61,8 @@ import { RouterModule } from '@angular/router';
     ObjectCardComponent,
     ConfirmDialogComponent,
     SectionTitleComponent,
-    UserCardComponent
+    UserCardComponent,
+    MenuTreeComponent
   ],
   entryComponents: [ ConfirmDialogComponent ],
   exports: [

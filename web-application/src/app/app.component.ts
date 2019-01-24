@@ -5,7 +5,7 @@ import { takeUntil, map } from 'rxjs/operators';
 import { ToastyConfig } from 'ng2-toasty';
 
 import { AppService } from './app.service';
-import { Cleanable, } from './core';
+import { Cleanable } from './core';
 
 /**
  * Application's main Component
@@ -34,7 +34,7 @@ export class AppComponent extends Cleanable implements OnInit {
    */
   constructor(
     private bpObserver: BreakpointObserver,
-    public service: AppService,
+    public appService: AppService,
     private toastyConfig: ToastyConfig) {
     super();
     this.toastyConfig.theme = 'material';
@@ -48,8 +48,8 @@ export class AppComponent extends Cleanable implements OnInit {
    * @memberof AppComponent
    */
   ngOnInit(): void {
-    if (this.service.isAuthenticated()) {
-      this.service.isLogedIn = true;
+    if (this.appService.isAuthenticated()) {
+      this.appService.isLogedIn = true;
     }
 
     this.bpObserver
@@ -67,7 +67,7 @@ export class AppComponent extends Cleanable implements OnInit {
    * @memberof AppService
    */
   public toggleSideMenu(): void {
-    this.service.isMenuOpened = !this.service.isMenuOpened;
+    this.appService.isMenuOpened = !this.appService.isMenuOpened;
   }
 
   /**
@@ -78,7 +78,7 @@ export class AppComponent extends Cleanable implements OnInit {
    * @memberof AppService
    */
   public toggleUserCard(event: Event): void {
-    this.service.isUserCardOpened = !this.service.isUserCardOpened;
+    this.appService.isUserCardOpened = !this.appService.isUserCardOpened;
     event.stopPropagation();
   }
   
@@ -89,7 +89,7 @@ export class AppComponent extends Cleanable implements OnInit {
    * @memberof AppService
    */
   public closeMenu(): void {
-    this.service.isMenuOpened = false;
+    this.appService.isMenuOpened = false;
   }
 
   /**
@@ -100,8 +100,8 @@ export class AppComponent extends Cleanable implements OnInit {
    * @memberof AppComponent
    */
   public closeUserCard(event: Event): void {
-    if (this.service.isUserCardOpened) {
-      this.service.isUserCardOpened = false; 
+    if (this.appService.isUserCardOpened) {
+      this.appService.isUserCardOpened = false; 
     }
   }
 

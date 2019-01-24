@@ -1,9 +1,24 @@
+import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgModel, NgForm } from '@angular/forms';
+import { take, takeUntil } from 'rxjs/operators';
 
 import { CookieService } from 'ngx-cookie-service';
+import { ToastyService } from 'ng2-toasty';
 
-import { MenuItem, UserCookie, User, Utils } from './core';
+import { 
+  ApiError,
+  ApiException,
+  Application,
+  Cleanable,
+  MenuItem,
+  MenuTree,
+  MenuType,
+  User,
+  UserCookie,
+  Utils  } from './core';
+import { forkJoin } from 'rxjs';
+import { ApplicationService } from './core/api';
 
 /**
  * Service to handle all app-wide data and event handlers.
@@ -14,7 +29,7 @@ import { MenuItem, UserCookie, User, Utils } from './core';
 @Injectable({
   providedIn: 'root'
 })
-export class AppService {
+export class AppService extends Cleanable {
 
   /**
    * Represents if there's an operation in progress that should block the user interaction.
@@ -50,7 +65,7 @@ export class AppService {
    *
    * @memberof AppService
    */
-  public menuItems: MenuItem[];
+  public menu = new MenuTree();
 
   /**
    * Stores the user logged in.
@@ -62,33 +77,81 @@ export class AppService {
   /**
    * Creates an instance of AppService.
    * @date 2019-01-09
+   * @param applicationService Applications API service.
    * @param cookieService User Cookie service.
+   * @param toastyService Toasty service.
    * @memberof AppService
    */
-  constructor(private cookieService: CookieService) {
+  constructor(
+    private applicationService: ApplicationService,
+    private cookieService: CookieService,
+    private toastyService: ToastyService) {
+    super();
     this.isBusyGlobally = false;
     this.isUserCardOpened = false;
     this.isMenuOpened = true;
+    if (this.isAuthenticated()) {
+      const cookie = UserCookie.fromJSON(this.cookieService.get('user'));
+      this.user = Utils.userFromCookie(cookie);
+    }
     this.initializeApp();
-    const cookie = UserCookie.fromJSON(this.cookieService.get('user'));
-    this.user = Utils.userFromCookie(cookie);
   }
 
   /**
-   * Creates all navbar items and menu items.
+   * Creates all menu items creating the default one if the user is not loged in
+   * or requesting all the required objects to populate it if the user is loged in.
    *
    * @date 2018-10-31
    * @memberof AppService
    */
   public initializeApp(): void {
-    this.menuItems = [
-      new MenuItem(-1, 'Configuración', ['/dashboard'], 'settings', [
-        new MenuItem(-2, 'Gateways', ['/config', 'gateways'], 'memory')
-      ]),
-      new MenuItem(-3, 'Aplicaciones', ['/applications'], 'computer', [
-        new MenuItem(0, 'Parking', ['/applications', 'parking'], 'directions_car')
-      ])
+    this.menu.items = [
+      new MenuItem(0, MenuType.APPLICATIONS, ['/applications'], 'computer', 1, null)
     ];
+
+    if (this.isAuthenticated()) {
+      this.initializeMenuForUser(this.user.id);
+    }
+  }
+
+  private initializeMenuForUser(userId: number): void {
+    forkJoin(
+      this.applicationService.getApplicationsByUser(userId))
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(
+        (res: [HttpResponse<Application[]>]) => {
+          this.populateApplications(res[0].body);
+          this.isBusyGlobally = false;
+        },
+        (err: [ApiError]) => {
+          if (err[0].is(ApiException.INTERNAL)) {
+            this.toastyService.error(Utils.buildToastyConfig(
+              'ERROR OBTENIENDO APLICACIONES', err[0].message));
+          }
+          this.isBusyGlobally = false;
+        }
+      );
+  }
+
+  private populateApplications(applications: Application[]) {
+    this.applicationService.applications = applications;
+    if (!Utils.isEmptyArray(applications)) {
+      const applicationsMenu = this.menu.items.find(item => item.name === MenuType.APPLICATIONS);
+      const applicationsAsMenuItems = applications
+        .map(application => new MenuItem(
+          application.idApplication,
+          application.name,
+          [ '/applications', application.idApplication.toString() ],
+          'cloud_queue', 2,
+          [
+            new MenuItem(0, 'test', [ '/as/test' ], null, 2, null),
+            new MenuItem(0, 'test', [ '/as/test' ], null, 2, null),
+          ]));
+      applicationsMenu.children = applicationsAsMenuItems;
+      console.log(this.menu);
+    }
   }
 
   /**

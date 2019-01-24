@@ -76,14 +76,14 @@ export class LoginComponent extends Cleanable {
   /**
    * Creates an instance of LoginComponent.
    * @date 2019-01-09
-   * @param service Application's main service.
+   * @param appService Application's main service.
    * @param cookieService Cookie service (used for authentication).
    * @param router Angular router.
    * @param toasty Toasty handler.
    * @param userService Uer API service.
    * @memberof LoginComponent
    */
-  constructor(private service: AppService,
+  constructor(private appService: AppService,
               private cookieService: CookieService,
               private router: Router,
               private toasty: ToastyService,
@@ -127,7 +127,7 @@ export class LoginComponent extends Cleanable {
    * @memberof LoginComponent
    */
   public doLogin(): void {
-    this.service.isBusyGlobally = true;
+    this.appService.isBusyGlobally = true;
     this.userService.login(this.login)
       .pipe(
         take(1),
@@ -136,11 +136,11 @@ export class LoginComponent extends Cleanable {
         (res: HttpResponse<User>) => {
           this.validationError = null;
           this.authentication(res);
-          this.service.isBusyGlobally = false;
+          this.appService.isBusyGlobally = false;
         },
         (err: ApiError) => {
           this.handleAuthenticationError(err);
-          this.service.isBusyGlobally = false;
+          this.appService.isBusyGlobally = false;
         }
       );
   }
@@ -151,7 +151,7 @@ export class LoginComponent extends Cleanable {
    * @memberof LoginComponent
    */
   public doSigning(): void {
-    this.service.isBusyGlobally = true;
+    this.appService.isBusyGlobally = true;
     this.userService.register(this.signing)
       .pipe(
         take(1),
@@ -160,11 +160,11 @@ export class LoginComponent extends Cleanable {
         (res: HttpResponse<User>) => {
           this.validationError = null;
           this.authentication(res);
-          this.service.isBusyGlobally = false;
+          this.appService.isBusyGlobally = false;
         },
         (err: ApiError) => {
           this.handleAuthenticationError(err);
-          this.service.isBusyGlobally = false;
+          this.appService.isBusyGlobally = false;
         }
       );
   }
@@ -176,7 +176,7 @@ export class LoginComponent extends Cleanable {
    * @memberof LoginComponent
    */
   public doRetrievePassword(): void {
-    this.service.isBusyGlobally = true;
+    this.appService.isBusyGlobally = true;
     this.userService.retrievePassword(this.email)
       .pipe(
         take(1),
@@ -192,11 +192,11 @@ export class LoginComponent extends Cleanable {
             this.toasty
               .error(Utils.buildToastyConfig('ERROR CAMBIANDO CONTRASEÑA', res.body.message));
           }
-          this.service.isBusyGlobally = false;
+          this.appService.isBusyGlobally = false;
         },
         (err: ApiError) => {
           this.handleAuthenticationError(err);
-          this.service.isBusyGlobally = false;
+          this.appService.isBusyGlobally = false;
         }
       );
   }
@@ -238,8 +238,9 @@ export class LoginComponent extends Cleanable {
     expirationDate.setHours(expirationDate.getHours() + 2);
 
     this.cookieService.set('user', JSON.stringify(userCookie), expirationDate);
-    this.service.isLogedIn = true;
-    this.service.user = user;
+    this.appService.isLogedIn = true;
+    this.appService.user = user;
+    this.appService.initializeApp();
     this.router.navigate(['/dashboard']);
   }
 

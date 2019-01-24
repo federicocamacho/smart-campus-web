@@ -5,7 +5,9 @@ export const environment = {
   user: '/users/user',
   authentication: '/users/authentication',
   retrievePwd: '/users/pass',
-  updatePwd: '/users/password'
+  updatePwd: '/users/password',
+  application: '/applications/application',
+  applicationsByUserId: '/applications/user'
 };
 
 // endpoint: 'http://localhost:8090',
