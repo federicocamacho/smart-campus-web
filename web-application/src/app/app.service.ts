@@ -115,7 +115,7 @@ export class AppService {
    * @memberof LoginComponent
    */
   public isFormInvalid(form: NgForm): boolean {
-    return form.form.invalid && (form.form.dirty || form.form.touched);
+    return form.form.invalid;
   }
 
   /**
