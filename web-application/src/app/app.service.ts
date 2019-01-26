@@ -1,5 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { NgModel, NgForm } from '@angular/forms';
 import { forkJoin } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -26,7 +26,7 @@ import { Utils } from './core/utils/utils';
 @Injectable({
   providedIn: 'root'
 })
-export class AppService extends Cleanable implements OnInit {
+export class AppService extends Cleanable {
 
   /**
    * Represents if there's an operation in progress that should block the user interaction.
@@ -90,21 +90,6 @@ export class AppService extends Cleanable implements OnInit {
   }
 
   /**
-   * Component's lifecycle onInit.
-   * Initializes the user-related session variables and side menu.
-   *
-   * @date 2019-01-25
-   * @memberof AppService
-   */
-  ngOnInit() {
-    if (this.isAuthenticated()) {
-      const cookie = UserCookie.fromJSON(this.cookieService.get('user'));
-      this.user = Utils.userFromCookie(cookie);
-      this.initializeMenuForUser(this.user.id);
-    }
-  }
-
-  /**
    * Initializes the side menu for the curren user, retrieving it's applications.
    *
    * @date 2019-01-25
@@ -112,20 +97,19 @@ export class AppService extends Cleanable implements OnInit {
    * @memberof AppService
    */
   public initializeMenuForUser(userId: number): void {
-    forkJoin(
-      this.applicationService.getApplicationsByUser(userId))
+    this.applicationService.getApplicationsByUser(userId)
       .pipe(
         take(1),
         takeUntil(this.destroyed))
       .subscribe(
-        (res: [HttpResponse<Application[]>]) => {
-          const applications = res[0].body;
+        (res: HttpResponse<Application[]>) => {
+          const applications = res.body;
           this.applicationService.applications = applications;
-          Utils.populateApplications(applications);
+          this.menu.items.push(Utils.populateApplications(applications));
           this.isBusyGlobally = false;
         },
-        (err: [ApiError]) => {
-          if (err[0].is(ApiException.INTERNAL)) {
+        (err: ApiError) => {
+          if (err.is(ApiException.INTERNAL)) {
             this.toastyService.error(Utils.buildToastyConfig(
               'ERROR OBTENIENDO APLICACIONES', err[0].message));
           }

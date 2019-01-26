@@ -54,19 +54,19 @@ export class UserCardComponent extends Cleanable {
   /**
    * Creates an instance of UserCardComponent.
    * @date 2019-01-19
+   * @param appService Main Application Service.
    * @param cookie Cookie service.
    * @param dialog Material Dialog reference.
    * @param router Angular Router.
-   * @param service Main Application Service.
    * @param toasty Toasty Service.
    * @param userService User API service.
    * @memberof UserCardComponent
    */
   constructor(
+    private appService: AppService,
     private cookie: CookieService,
     private dialog: MatDialog,
     private router: Router,
-    private service: AppService,
     private toasty: ToastyService, 
     private userService: UserService) {
     super();
@@ -79,7 +79,7 @@ export class UserCardComponent extends Cleanable {
    * @memberof UserCardComponent
    */
   public onDeleteClicked(): void {
-    this.service.isUserCardOpened = false;
+    this.appService.isUserCardOpened = false;
     const deleteDialog = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
       data: new DialogData(
@@ -102,7 +102,7 @@ export class UserCardComponent extends Cleanable {
    * @memberof AppComponent
    */
   public onProfileClicked(): void {
-    this.service.isUserCardOpened = false;
+    this.appService.isUserCardOpened = false;
     this.router.navigate(['/profile']);
   }
 
@@ -114,8 +114,8 @@ export class UserCardComponent extends Cleanable {
    * @memberof AppComponent
    */
   private deleteProfile(): void {
-    this.service.isBusyGlobally = true;
-    const id = this.service.user.id;
+    this.appService.isBusyGlobally = true;
+    const id = this.appService.user.id;
     this.userService.deleteUser(id)
       .pipe(
         take(1),
@@ -130,12 +130,12 @@ export class UserCardComponent extends Cleanable {
             this.toasty
               .error(Utils.buildToastyConfig('ERROR ELIMINANDO USUARIO', res.body.message));
           }
-          this.service.isBusyGlobally = false;
+          this.appService.isBusyGlobally = false;
         },
         (err: ApiError) => {
           this.toasty
             .error(Utils.buildToastyConfig('ERROR ELIMINANDO USUARIO', err.message));
-          this.service.isBusyGlobally = false;
+          this.appService.isBusyGlobally = false;
         }
       );
   }
@@ -147,10 +147,11 @@ export class UserCardComponent extends Cleanable {
    * @memberof UserCardComponent
    */
   public onLogoutClicked(): void {
-    this.service.isUserCardOpened = false;
+    this.appService.isUserCardOpened = false;
     this.cookie.delete('user');
-    this.service.user = null;
-    this.service.isLogedIn = false;
+    this.appService.user = null;
+    this.appService.isLogedIn = false;
+    this.appService.menu.items = [];
     this.router.navigate(['/login']);
   }
 

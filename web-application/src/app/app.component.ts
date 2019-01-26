@@ -6,6 +6,9 @@ import { ToastyConfig } from 'ng2-toasty';
 
 import { AppService } from './app.service';
 import { Cleanable } from './core/utils/cleanable';
+import { CookieService } from 'ngx-cookie-service';
+import { UserCookie } from './core/models/user-cookie';
+import { Utils } from './core/utils/utils';
 
 /**
  * Application's main Component
@@ -27,14 +30,16 @@ export class AppComponent extends Cleanable implements OnInit {
   /**
    * Creates an instance of AppComponent.
    * @date 2019-01-19
+   * @param appService Application's main service.
    * @param bpObserver to notify the GUI when it's a mobile device.
-   * @param service Application's main service.
+   * @param cookie Cookie service.
    * @param toastyConfig Toasty configurator.
    * @memberof AppComponent
    */
   constructor(
-    private bpObserver: BreakpointObserver,
     public appService: AppService,
+    private bpObserver: BreakpointObserver,
+    private cookie: CookieService,
     private toastyConfig: ToastyConfig) {
     super();
     this.toastyConfig.theme = 'material';
@@ -50,6 +55,9 @@ export class AppComponent extends Cleanable implements OnInit {
   ngOnInit(): void {
     if (this.appService.isAuthenticated()) {
       this.appService.isLogedIn = true;
+      const cookie = UserCookie.fromJSON(this.cookie.get('user'));
+      this.appService.user = Utils.userFromCookie(cookie);
+      this.appService.initializeMenuForUser(this.appService.user.id);
     }
 
     this.bpObserver
