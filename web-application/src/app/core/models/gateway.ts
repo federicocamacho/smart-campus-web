@@ -1,3 +1,5 @@
+import { Property } from './property';
+
 /**
  * Represents the Gateway object.
  *
@@ -38,19 +40,22 @@ export class Gateway {
      */
     public endpoint: string;
 
+    public properties: Property[] = [];
+
     /**
      *Creates an instance of Gateway.
-
-     * @param {string} id 
-     * @param {string} name
-     * @param {string} description
-     * @param {string} endpoint
+     * @param {string} [id='']
+     * @param {string} [name='']
+     * @param {string} [description='']
+     * @param {string} [endpoint='']
+     * @param {Property[]} [properties=[]]
      * @memberof Gateway
      */
-    constructor(id: string, name: string, description: string, endpoint: string) {
+    constructor(id: string = '', name: string = '', description: string = '', endpoint: string = '', properties: Property[] = []) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.endpoint = endpoint;
+        this.properties = properties;
     }
 }

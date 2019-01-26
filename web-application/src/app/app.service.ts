@@ -158,7 +158,7 @@ export class AppService extends Cleanable implements OnInit {
    * @memberof LoginComponent
    */
   public isFormInvalid(form: NgForm): boolean {
-    return form.form.invalid && (form.form.dirty || form.form.touched);
+    return form.form.invalid;
   }
 
   /**
