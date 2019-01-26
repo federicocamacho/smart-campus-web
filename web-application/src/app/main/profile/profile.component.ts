@@ -6,18 +6,16 @@ import { take, takeUntil } from 'rxjs/operators';
 import { ToastyService } from 'ng2-toasty';
 import { CookieService } from 'ngx-cookie-service';
 
+import { ApiError } from '../../core/models/api-error';
+import { ApiException } from '../../core/utils/api-exception';
 import { AppService } from '../../../app/app.service';
-import {
-  ApiError,
-  ApiException,
-  ChangePassInput,
-  Cleanable,
-  Response, 
-  UpdateProfileInput,
-  User,
-  UserCookie,
-  Utils } from '../../../app/core';
-import { UserService } from '../../../app/core/api';
+import { ChangePassInput, UpdateProfileInput } from '../../core/models/auth';
+import { Cleanable } from '../../core/utils/cleanable';
+import { Response } from '../../core/models/response';
+import { User } from '../../core/models/user';
+import { UserCookie } from '../../core/models/user-cookie';
+import { UserService } from '../../../app/core/api/user.service';
+import { Utils } from '../../../app/core/utils/utils';
 
 /**
  * User profile component. Path /profile.

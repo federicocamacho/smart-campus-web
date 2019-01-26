@@ -2,9 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Application, RestUtil } from '..';
+import { Application } from '../models/application';
 import { CoreModule } from '../core.module';
 import { environment } from './../../../environments/environment';
+import { RestUtil } from '../utils/rest-util';
 
 /**
  * Consumes Application related REST Services.

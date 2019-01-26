@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
-  MatAutocompleteModule,
-  MatBadgeModule,
   MatButtonModule,
   MatCardModule,
   MatCheckboxModule,
@@ -11,21 +9,17 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatListModule,
-  MatMenuModule,
-  MatSidenavModule,
-  MatProgressSpinnerModule,
-  MatToolbarModule,
+  MatStepperModule,
   MatTooltipModule } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import {ToastyModule} from 'ng2-toasty';
+
+import { ToastyModule } from 'ng2-toasty';
 
 @NgModule({
   imports: [
     CommonModule,
     FlexLayoutModule,
     FormsModule,
-    MatAutocompleteModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -33,18 +27,12 @@ import {ToastyModule} from 'ng2-toasty';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
-    MatSidenavModule,
-    MatToolbarModule,
+    MatStepperModule,
     MatTooltipModule,
     ToastyModule.forRoot()
   ],
   declarations: [],
   exports: [
-    MatAutocompleteModule,
-    MatBadgeModule,
     MatButtonModule,
     MatCardModule,
     MatCheckboxModule,
@@ -52,13 +40,9 @@ import {ToastyModule} from 'ng2-toasty';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatProgressSpinnerModule,
-    MatSidenavModule,
-    MatToolbarModule,
+    MatStepperModule,
     MatTooltipModule,
     ToastyModule
   ]
 })
-export class MaterialModule { }
+export class LibrariesModule { }

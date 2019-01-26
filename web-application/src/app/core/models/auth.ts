@@ -1,4 +1,4 @@
-import { User } from '..';
+import { User } from './user';
 
 /**
  * Model used for user's authentication input.

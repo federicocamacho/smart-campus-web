@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { MenuItem, Utils } from '../../../../app/core';
+import { MenuItem } from '../../../../app/core/models/menu-item';
+import { Utils } from '../../../../app/core/utils/utils';
 
 @Component({
   selector: 'sc-menu-tree',
@@ -33,10 +34,8 @@ export class MenuTreeComponent {
    * @memberof MenuComponent
    */
   public nodeToggled(item: MenuItem): void {
-    console.log('toggle', item.isExpanded);
     if (item.hasChildren()) {
       item.toggleExpand();
-      console.log('toggled', item.isExpanded);
     }
   }
 

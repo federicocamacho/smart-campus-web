@@ -6,18 +6,16 @@ import { takeUntil, take } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastyService } from 'ng2-toasty';
 
-import { 
-  ApiError,
-  ApiException,
-  LoginInput,
-  Response,
-  SigningInput,
-  User,
-  UserCookie,
-} from '../../core';
+import { ApiException } from '../../core/utils/api-exception';
+import { ApiError } from '../../core/models/api-error';
 import { AppService } from '../../app.service';
-import { Cleanable, Utils } from '../../core';
+import { Cleanable } from '../../core/utils/cleanable';
+import { LoginInput, SigningInput } from '../../core/models/auth';
+import { Response } from '../../core/models/response';
+import { User } from '../../core/models/user';
+import { UserCookie } from '../../core/models/user-cookie';
 import { UserService } from '../../core/api/user.service';
+import { Utils } from '../../core/utils/utils';
   
 /**
  * Login, and Signing component.
@@ -240,7 +238,7 @@ export class LoginComponent extends Cleanable {
     this.cookieService.set('user', JSON.stringify(userCookie), expirationDate);
     this.appService.isLogedIn = true;
     this.appService.user = user;
-    this.appService.initializeApp();
+    this.appService.initializeMenuForUser(user.id);
     this.router.navigate(['/dashboard']);
   }
 

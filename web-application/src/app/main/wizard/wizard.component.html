@@ -1,0 +1,88 @@
+<div class="page-wraper default-shadow">
+  <div *ngIf="isMobile; else horizontalStepper">
+    <mat-vertical-stepper
+      (selectionChange)="onSelectionChanged($event)"
+      [selectedIndex]="selectedIndex"
+      style="background-color: #f4f6f9">
+      <!-- APPLICATION STEP -->
+      <mat-step>
+        <ng-template matStepLabel>Aplicación</ng-template>
+        <sc-application></sc-application>
+        <sc-wizard-btns
+          isSaveVisible="true"
+          isFirst="true"
+          (save)="onSectionSaved(0)">
+        </sc-wizard-btns>
+      </mat-step>
+      <!-- GATEWAYS STEP -->
+      <mat-step>
+        <ng-template matStepLabel>Gateways</ng-template>
+        <sc-gateways></sc-gateways>
+        <sc-wizard-btns
+          isSaveVisible="true"
+          (save)="onSectionSaved(1)">
+        </sc-wizard-btns>
+      </mat-step>
+      <!-- DEVICES STEP -->
+      <mat-step>
+        <ng-template matStepLabel>Dispositivos</ng-template>
+        <sc-wizard-btns
+          isSaveVisible="true"
+          (save)="onSectionSaved(2)">
+        </sc-wizard-btns>
+      </mat-step>
+      <!-- PROCESSES STEP -->
+      <mat-step>
+        <ng-template matStepLabel>Procesos</ng-template>
+        <sc-wizard-btns
+          isSaveVisible="true"
+          isLast="true"
+          (save)="onSectionSaved(3)">
+        </sc-wizard-btns>
+      </mat-step>
+    </mat-vertical-stepper>
+  </div>
+  <ng-template #horizontalStepper>
+    <mat-horizontal-stepper
+      (selectionChange)="onSelectionChanged($event)"
+      [selectedIndex]="selectedIndex"
+      style="background-color: #f4f6f9">
+      <!-- APPLICATION STEP -->
+      <mat-step>
+        <ng-template matStepLabel>Aplicación</ng-template>
+        <sc-application></sc-application>
+        <sc-wizard-btns
+          isSaveVisible="true"
+          isFirst="true"
+          (save)="onSectionSaved(0)">
+        </sc-wizard-btns>
+      </mat-step>
+      <!-- GATEWAYS STEP -->
+      <mat-step>
+        <ng-template matStepLabel>Gateways</ng-template>
+        <sc-gateways></sc-gateways>
+        <sc-wizard-btns
+          isSaveVisible="true"
+          (save)="onSectionSaved(1)">
+        </sc-wizard-btns>
+      </mat-step>
+      <!-- DEVICES STEP -->
+      <mat-step>
+        <ng-template matStepLabel>Dispositivos</ng-template>
+        <sc-wizard-btns
+          isSaveVisible="true"
+          (save)="onSectionSaved(2)">
+        </sc-wizard-btns>
+      </mat-step>
+      <!-- PROCESSES STEP -->
+      <mat-step>
+        <ng-template matStepLabel>Procesos</ng-template>
+        <sc-wizard-btns
+          isSaveVisible="true"
+          isLast="true"
+          (save)="onSectionSaved(2)">
+        </sc-wizard-btns>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </ng-template>
+</div>

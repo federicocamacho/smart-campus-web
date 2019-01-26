@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { ChangePassInput, LoginInput, SigningInput, UpdateProfileInput } from '../models/auth';
 import { CoreModule } from '../core.module';
 import { environment } from '../../../environments/environment';
-import { LoginInput, Response, RestUtil, SigningInput, User } from '..';
-import { UpdateProfileInput, ChangePassInput } from '../models/auth';
+import { RestUtil } from '../utils/rest-util';
+import { User } from '../models/user';
 
 /**
  * Consumes User related REST Services.

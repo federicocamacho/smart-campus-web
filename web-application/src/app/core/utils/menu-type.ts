@@ -1,5 +1,5 @@
 /**
- * Stores the App default application options.
+ * Stores the App default application options for the side menu.
  *
  * @date 2019-01-20
  * @export
@@ -8,7 +8,11 @@
 export class MenuType {
   
   public static APPLICATIONS = 'Aplicaciones';
-  public static CONFIGURATION = 'Configuración';
+
   public static GATEWAYS = 'Gateways';
+
+  public static DEVICES = 'Dispositivos';
+  
+  public static PROCESSES = 'Procesos';
 
 }

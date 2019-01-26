@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { Cleanable, Application, ApiError, ApiException, Utils } from '../../../core';
-import { takeUntil, take } from 'rxjs/operators';
-import { ApplicationService } from 'src/app/core/api';
 import { HttpResponse } from '@angular/common/http';
-import { AppService } from 'src/app/app.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { takeUntil, take } from 'rxjs/operators';
+
 import { ToastyService } from 'ng2-toasty';
+
+import { ApiError } from 'src/app/core/models/api-error';
+import { Application } from 'src/app/core/models/application';
+import { ApplicationService } from '../../../core/api/application.service';
+import { Cleanable } from 'src/app/core/utils/cleanable';
+import { Utils } from '../../../core/utils/utils';
 
 @Component({
   selector: 'sc-application',
@@ -22,13 +26,11 @@ export class ApplicationComponent extends Cleanable implements OnInit {
   public application: Application;
 
   constructor(
-    private appService: AppService,
     private applicationService: ApplicationService,
     private route: ActivatedRoute,
     private router: Router,
     private toasty: ToastyService) {
     super();
-    this.appService.isBusyGlobally = true;
   }
   
   ngOnInit(): void {
@@ -46,11 +48,9 @@ export class ApplicationComponent extends Cleanable implements OnInit {
           .subscribe(
             (res: HttpResponse<Application>) => {
               this.application = { ...res.body };
-              this.appService.isBusyGlobally = false;
             },
             (err: ApiError) => {
               this.toasty.error(Utils.buildToastyConfig('ERROR OBTENIENDO APLICACIÓN', err.message));
-              this.appService.isBusyGlobally = false;
             }
           );
       } else {

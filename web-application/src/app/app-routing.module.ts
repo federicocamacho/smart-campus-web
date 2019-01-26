@@ -1,17 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { AuthGuard, LoginGuard } from './core/guards';
-import {
-  ApplicationComponent,
-  ApplicationsComponent,
-  GatewayComponent,
-  GatewaysComponent,
-  HomeComponent, 
-  LoginComponent,
-  NotFoundComponent,
-  ProfileComponent
-} from './main';
+import { ApplicationsComponent } from './main/applications/applications.component';
+import { AuthGuard } from './core/guards/auth.guard';
+import { GatewayComponent } from './main/gateways/gateway/gateway.component';
+import { GatewaysComponent } from './main/gateways/gateways.component';
+import { HomeComponent } from './main/home/home.component';
+import { LoginGuard } from './core/guards/login.guard';
+import { LoginComponent } from './main/login/login.component';
+import { NotFoundComponent } from './main/not-found/not-found.component';
+import { ProfileComponent } from './main/profile/profile.component';
+import { WizardComponent } from './main/wizard/wizard.component';
 
 const routes: Routes = [
   {
@@ -52,7 +51,7 @@ const routes: Routes = [
   {
     path: 'applications/:id',
     pathMatch: 'full',
-    component: ApplicationComponent,
+    component: WizardComponent,
     canActivate: [ AuthGuard ]
   },
   {

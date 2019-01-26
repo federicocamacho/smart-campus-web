@@ -1,8 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 import { take, takeUntil } from 'rxjs/operators';
-import { Cleanable } from 'src/app/core';
+
+import { Cleanable } from '../../../core/utils/cleanable';
+import { ConfirmDialogComponent } from '../confirm-dialog/confirm-dialog.component';
 
 /**
  * Represents the cards with the information about gateways, applications, devices, etc.

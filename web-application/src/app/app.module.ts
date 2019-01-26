@@ -8,8 +8,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { environment } from '../environments/environment';
 
 import { CoreModule } from './core/core.module';
+import { LibrariesModule } from './libraries/libraries.module';
 import { MainModule } from './main/main.module';
-import { MaterialModule } from './material/material.module';
 
 /**
  * Application's main module.
@@ -27,8 +27,8 @@ import { MaterialModule } from './material/material.module';
     BrowserModule,
     BrowserAnimationsModule,
     CoreModule,
+    LibrariesModule,
     MainModule,
-    MaterialModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   bootstrap: [AppComponent]

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Gateway } from '../../core/index';
 import { Router } from '@angular/router';
+
+import { Gateway } from '../../core/models/gateway';
 
 @Component({
   selector: 'sc-gateways',

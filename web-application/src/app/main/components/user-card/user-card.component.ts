@@ -7,11 +7,14 @@ import { take, takeUntil } from 'rxjs/operators';
 import { CookieService } from 'ngx-cookie-service';
 import { ToastyService } from 'ng2-toasty';
 
-import { ApiError, Cleanable, Response, Utils } from './../../../core';
 import { AppService } from './../../../../app/app.service';
+import { ApiError } from 'src/app/core/models/api-error';
+import { Cleanable } from 'src/app/core/utils/cleanable';
 import { ConfirmDialogComponent } from './../confirm-dialog/confirm-dialog.component';
 import { DialogData } from '../confirm-dialog/dialog-data';
-import { UserService } from './../../../core/api';
+import { Response } from './../../../core/models/response';
+import { Utils } from './../../../core/utils/utils';
+import { UserService } from './../../../core/api/user.service';
 
 @Component({
   selector: 'sc-user-card',

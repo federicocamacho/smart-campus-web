@@ -5,7 +5,7 @@ import { takeUntil, map } from 'rxjs/operators';
 import { ToastyConfig } from 'ng2-toasty';
 
 import { AppService } from './app.service';
-import { Cleanable } from './core';
+import { Cleanable } from './core/utils/cleanable';
 
 /**
  * Application's main Component

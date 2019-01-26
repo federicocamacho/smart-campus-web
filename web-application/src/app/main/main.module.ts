@@ -5,28 +5,27 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { CustomFormsModule } from 'ngx-custom-validators';
-import {
-  ConfirmDialogComponent,
-  HeaderComponent,
-  FullScreenLoaderComponent,
-  MenuComponent,
-  SectionTitleComponent,
-  ObjectCardComponent,
-  UserCardComponent
-} from './components';
-import { 
-  ApplicationComponent,
-  ApplicationsComponent,
-  GatewayComponent,
-  GatewaysComponent,
-  HomeComponent,
-  LoginComponent,
-  NotFoundComponent,
-  ProfileComponent 
-} from './';
+
+import { ApplicationComponent } from './applications/application/application.component';
+import { ApplicationsComponent } from './applications/applications.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { CoreModule } from '../core/core.module';
-import { MaterialModule } from '../material/material.module';
+import { FullScreenLoaderComponent } from './components/full-screen-loader/full-screen-loader.component';
+import { GatewayComponent } from './gateways/gateway/gateway.component';
+import { GatewaysComponent } from './gateways/gateways.component';
+import { HeaderComponent } from './components/header/header.component';
+import { HomeComponent } from './home/home.component';
+import { LibrariesModule } from '../libraries/libraries.module';
+import { LoginComponent } from './login/login.component';
+import { MenuComponent } from './components/menu/menu.component';
 import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ObjectCardComponent } from './components/object-card/object-card.component';
+import { ProfileComponent } from './profile/profile.component';
+import { SectionTitleComponent } from './components/section-title/section-title.component';
+import { UserCardComponent } from './components/user-card/user-card.component';
+import { WizardBtnsComponent } from './wizard/wizard-btns/wizard-btns.component';
+import { WizardComponent } from './wizard/wizard.component';
 
 /**
  * Application's main module (not lazy-loaded) which also includes Login component
@@ -43,11 +42,12 @@ import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
     RouterModule,
     FlexLayoutModule,
     FormsModule,
-    MaterialModule
+    LibrariesModule
   ],
   declarations: [
     ApplicationComponent,
     ApplicationsComponent,
+    ConfirmDialogComponent,
     FullScreenLoaderComponent,
     GatewayComponent,
     GatewaysComponent,
@@ -55,17 +55,21 @@ import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
     HomeComponent,
     LoginComponent,
     MenuComponent,
+    MenuTreeComponent,
     NotFoundComponent,
-    ProfileComponent,
-    UserCardComponent,
     ObjectCardComponent,
-    ConfirmDialogComponent,
+    ProfileComponent,
     SectionTitleComponent,
     UserCardComponent,
-    MenuTreeComponent
+    UserCardComponent,
+    WizardComponent,
+    WizardBtnsComponent
   ],
   entryComponents: [ ConfirmDialogComponent ],
   exports: [
+    ApplicationComponent,
+    ApplicationsComponent,
+    ConfirmDialogComponent,
     FullScreenLoaderComponent,
     GatewayComponent,
     GatewaysComponent,
@@ -73,10 +77,12 @@ import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
     HomeComponent,
     LoginComponent,
     MenuComponent,
+    MenuTreeComponent,
     NotFoundComponent,
     ProfileComponent,
     SectionTitleComponent,
-    UserCardComponent
+    UserCardComponent,
+    WizardComponent
   ]
 })
 export class MainModule { }

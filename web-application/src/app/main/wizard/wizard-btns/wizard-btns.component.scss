@@ -1,0 +1,12 @@
+.btn-container{
+    float: right;
+    button {
+        margin-right: 5px;
+        margin-bottom: 5px;
+
+        mat-icon {
+            font-size: 18px;
+            padding-top: 5px;
+        }
+    }
+}

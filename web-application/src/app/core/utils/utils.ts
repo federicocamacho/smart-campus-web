@@ -1,5 +1,8 @@
 import { ToastOptions } from 'ng2-toasty';
 
+import { Application } from '../models/application';
+import { MenuItem } from '../models/menu-item';
+import { MenuType } from '../utils/menu-type';
 import { User } from '../models/user';
 import { UserCookie } from '../models/user-cookie';
 
@@ -81,6 +84,49 @@ export class Utils {
       return null;
     }
     return new User(cookie.id, cookie.email, cookie.name, cookie.admin, cookie.username);
+  }
+
+    /**
+   * Fills the 'Applications' menu section with the given applications.
+   *
+   * @date 2019-01-25
+   * @private
+   * @param applications to be added into the menu.
+   * @returns the calculated {@link MenuItem} with the mapped applications.
+   * @memberof AppService
+   */
+  public static populateApplications(applications: Application[]): MenuItem {
+    const applicationsMenu = new MenuItem(0, MenuType.APPLICATIONS, ['/applications'], 'computer', 1, null);
+    if (!this.isEmptyArray(applications)) {
+      const applicationsAsMenuItems = applications
+        .map(application => new MenuItem(
+          application.idApplication,
+          application.name,
+          [ '/applications', application.idApplication.toString() ],
+          'cloud_queue', 2, this.getApplicationSubMenu(application)
+        ));
+      applicationsMenu.children = applicationsAsMenuItems;
+      return applicationsMenu;
+    }
+  }
+
+  
+  /**
+   * Creates the submenu for the respective application.
+   *
+   * @date 2019-01-25
+   * @private
+   * @param application parent of the submenu to be calculated.
+   * @returns the {@link MenuItem[]} with the respective children for the application.
+   * @memberof AppService
+   */
+  public static getApplicationSubMenu(application: Application): MenuItem[] {
+    const path = [ '/application', application.idApplication.toString() ];
+    return [
+      new MenuItem(0, MenuType.GATEWAYS, [ ...path, 'gateways' ], null, 3, null),
+      new MenuItem(0, MenuType.DEVICES, [ ...path, 'devices' ], null, 3, null),
+      new MenuItem(0, MenuType.PROCESSES, [ ...path, 'processes' ], null, 3, null),
+    ];
   }
 
 }

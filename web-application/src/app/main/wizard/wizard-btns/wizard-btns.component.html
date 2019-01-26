@@ -1,0 +1,13 @@
+<div class="btn-container">
+  <button mat-stroked-button matStepperPrevious *ngIf="!isFirst">
+    <mat-icon>keyboard_arrow_left</mat-icon> Anterior
+  </button>
+  <button mat-stroked-button matStepperNext *ngIf="!isLast">
+    <mat-icon>keyboard_arrow_right</mat-icon> Siguiente
+  </button>
+  <button mat-stroked-button color="primary" 
+    *ngIf="isSaveVisible"
+    (click)="save.emit()">
+    <mat-icon>save</mat-icon> Guardar
+  </button>
+</div>

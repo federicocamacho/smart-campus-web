@@ -8,7 +8,8 @@ import { RouterModule } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { CustomFormsModule } from 'ngx-custom-validators';
 
-import { AnimatedDirective, BadgeDirective, ClickOutsideDirective } from './directives';
+import { AnimatedDirective } from './directives/animated.directive';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { RestInterceptor } from './services/rest.interceptor';
 
 /**
@@ -29,7 +30,6 @@ import { RestInterceptor } from './services/rest.interceptor';
   ],
   exports: [
     AnimatedDirective,
-    BadgeDirective,
     ClickOutsideDirective,
     CommonModule,
     CustomFormsModule,
@@ -47,7 +47,6 @@ import { RestInterceptor } from './services/rest.interceptor';
   ],
   declarations: [
     AnimatedDirective,
-    BadgeDirective,
     ClickOutsideDirective,
   ]
 })

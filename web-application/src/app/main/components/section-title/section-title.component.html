@@ -1,11 +1,11 @@
 <div scAnimated="fadeIn"
   class="title-container"
-  fxLayout="row" fxLayoutAlign="start center">
-  <div>
+  fxLayout="row wrap" fxLayoutAlign="end center">
+  <div fxFlex>
     <h3 class="section-title margin0">{{ title | uppercase }}</h3>
     <h4 class="section-description margin0">{{ description }}</h4>
   </div>
-  <div class="section-right">
-    <button mat-raised-button color="primary" (click)="create.emit()">{{ createLabel }}</button>
+  <div fxFlex="15" fxFlex.xs="25">
+    <button fxFlexFill mat-raised-button color="primary" (click)="create.emit()">{{ createLabel }}</button>
   </div>
 </div>
