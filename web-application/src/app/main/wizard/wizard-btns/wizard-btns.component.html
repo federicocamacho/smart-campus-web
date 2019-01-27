@@ -7,7 +7,7 @@
     <span class="btn-name">Anterior</span>
   </button>
   <button mat-stroked-button
-    *ngIf="section !== length - 1"
+    *ngIf="section !== (length - 1)"
     (click)="next.emit()"
     matTooltip="Los cambios se perderán si no son guardados previamente.">
     <mat-icon>keyboard_arrow_right</mat-icon>

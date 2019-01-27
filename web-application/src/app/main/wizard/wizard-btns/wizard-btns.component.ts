@@ -18,7 +18,7 @@ export class WizardBtnsComponent {
 
   @Input('section') section: number;
 
-  @Input('length') length: boolean;
+  @Input('length') length: number;
 
   @Output('save') save = new EventEmitter();
 

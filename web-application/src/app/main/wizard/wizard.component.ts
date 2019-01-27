@@ -34,7 +34,7 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
   constructor(
     private bpObserver: BreakpointObserver,
     private route: ActivatedRoute,
-    private wizard: WizardService) {
+    public wizard: WizardService) {
     super();
   }
 
@@ -91,10 +91,9 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
    * Triggered when the current section is saved.
    *
    * @date 2019-01-25
-   * @param stepIndex index of the section that was saved.
    * @memberof WizardComponent
    */
-  public onSectionSaved(stepIndex: number): void {
+  public onSectionSaved(): void {
     // TODO: Implement this
   }
 
