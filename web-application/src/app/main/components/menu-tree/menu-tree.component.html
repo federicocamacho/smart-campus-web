@@ -1,7 +1,11 @@
 <div
   scAnimated="fadeIn" flexLayout="row"
   class="menu-item-container"
-  [ngStyle]="{ 'padding-left': getCssOffset() }"
+  [ngStyle]="{ 
+    'padding-left': (15 * (this.item.level - 1)) + 'px',
+    'height': (50 - 5 * this.item.level) + 'px',
+    'font-size': this.item.level < 3 ? '15px' : '14px'
+  }"
   [routerLink]="item.path" routerLinkActive="item-active" 
   [routerLinkActiveOptions]="{ exact: true }">
   <div
@@ -18,7 +22,7 @@
     {{ item.name }}
   </div>
   <div 
-    class="menu-icon-right" fxFlex="35px"
+    class="menu-icon-right" fxFlex="50px"
     (click)="nodeToggled(); $event.stopPropagation();">
     <mat-icon *ngIf="item.hasChildren()" style="font-size: 23px">
       {{ item.isExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}

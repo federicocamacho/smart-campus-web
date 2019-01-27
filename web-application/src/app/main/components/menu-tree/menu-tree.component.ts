@@ -38,15 +38,4 @@ export class MenuTreeComponent {
     }
   }
 
-  /**
-   * Calculates the padding-left style used for styling different tree levels.
-   *
-   * @date 2019-01-27
-   * @returns the offset as px suffixed string.
-   * @memberof MenuTreeComponent
-   */
-  public getCssOffset(): string {
-    return (15 * (this.item.level - 1)) + 'px';
-  }
-
 }
