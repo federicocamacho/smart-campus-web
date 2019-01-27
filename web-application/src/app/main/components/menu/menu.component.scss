@@ -6,6 +6,7 @@
     font-size: 15px;
     position: fixed;
     z-index: 200;
+    overflow-y: auto;
 }
 
 .menu-item-container:hover {
@@ -15,4 +16,8 @@
 
 .menu-item-container:hover * {
     color: #20aee3;
+}
+
+sc-menu-tree {
+    width: 100%;
 }

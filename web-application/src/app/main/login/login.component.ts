@@ -231,7 +231,7 @@ export class LoginComponent extends Cleanable {
     const userCookie = new UserCookie(user.id, user.username, user.email, user.name, user.admin);
 
     // expiration of the cookie is 2 hours.
-    // TODO expire angular session when the cookie timesout.
+    // TODO: expire angular session when the cookie timesout.
     const expirationDate = new Date();
     expirationDate.setHours(expirationDate.getHours() + 2);
 

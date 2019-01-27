@@ -1,3 +1,4 @@
+import { ActivatedRoute, NavigationExtras, Params, } from '@angular/router';
 import { ToastOptions } from 'ng2-toasty';
 
 import { Application } from '../models/application';
@@ -102,14 +103,14 @@ export class Utils {
         .map(application => new MenuItem(
           application.idApplication,
           application.name,
-          [ '/applications', application.idApplication.toString() ],
+          [ '/applications', application.idApplication.toString(), MenuType.getPath(MenuType.APPLICATION) ],
           'cloud_queue', 2, this.getApplicationSubMenu(application)
         ));
       applicationsMenu.children = applicationsAsMenuItems;
+      console.log(applicationsMenu);
       return applicationsMenu;
     }
   }
-
   
   /**
    * Creates the submenu for the respective application.
@@ -121,12 +122,26 @@ export class Utils {
    * @memberof AppService
    */
   public static getApplicationSubMenu(application: Application): MenuItem[] {
-    const path = [ '/application', application.idApplication.toString() ];
+    const path = [ '/applications', application.idApplication.toString() ];
     return [
-      new MenuItem(0, MenuType.GATEWAYS, [ ...path, 'gateways' ], null, 3, null),
-      new MenuItem(0, MenuType.DEVICES, [ ...path, 'devices' ], null, 3, null),
-      new MenuItem(0, MenuType.PROCESSES, [ ...path, 'processes' ], null, 3, null),
+      new MenuItem(0, MenuType.GATEWAYS, [ ...path, MenuType.getPath(MenuType.GATEWAYS) ], null, 3, null),
+      new MenuItem(0, MenuType.DEVICES, [ ...path, MenuType.getPath(MenuType.DEVICES) ], null, 3, null),
+      new MenuItem(0, MenuType.PROCESSES, [ ...path, MenuType.getPath(MenuType.PROCESSES) ], null, 3, null),
     ];
+  }
+
+  /**
+   * Sets the query params configuration for the given params.
+   *
+   * @date 2019-01-26
+   * @static
+   * @param queryParams to be used as query params.
+   * @param relativeTo route to add it's parameters.
+   * @returns the {@link NavigationExtras}.
+   * @memberof Utils
+   */
+  public static queryParams(queryParams: Params, relativeTo: ActivatedRoute): NavigationExtras {
+    return { relativeTo, queryParams, queryParamsHandling: 'merge' };
   }
 
 }

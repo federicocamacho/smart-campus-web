@@ -94,10 +94,11 @@ export class AppService extends Cleanable {
    *
    * @date 2019-01-25
    * @param userId id of the user currently logged in.
+   * @param [page=0] number of the page to be retrieved (Pageable REST service).
    * @memberof AppService
    */
-  public initializeMenuForUser(userId: number): void {
-    this.applicationService.getApplicationsByUser(userId)
+  public initializeMenuForUser(userId: number, page: number = 0): void {
+    this.applicationService.getApplicationsByUser(userId, page)
       .pipe(
         take(1),
         takeUntil(this.destroyed))

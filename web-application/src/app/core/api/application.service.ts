@@ -39,12 +39,14 @@ export class ApplicationService {
    *
    * @date 2019-01-19
    * @param userId of the {@link User} to find it's Applications.
+   * @param page to be retrieved (Pageable REST service).
    * @returns an {@link Observable} with the response.
    * @memberof ApplicationService
    */
-  public getApplicationsByUser(userId: number): Observable<any> {
+  public getApplicationsByUser(userId: number, page: number): Observable<any> {
     return this.http
-      .get(`${ RestUtil.endpoint(environment.applicationsByUserId) }/${ userId }`, RestUtil.options());
+      .get(`${ RestUtil.endpoint(environment.applicationsByUserId) }/${ userId }?${ RestUtil.pageable(page, 20) }`,
+        RestUtil.options());
   }
 
   /**

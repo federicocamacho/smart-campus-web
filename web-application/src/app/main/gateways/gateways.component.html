@@ -1,19 +1,20 @@
 <sc-section-title
   title="Gateways"
-  description="Gestionar gateways"
+  description="Gestionar gateways de la aplicación"
   createLabel="Crear"
   (create)="createGateway()"
 ></sc-section-title>
-<div fxLayout="row wrap" fxLayoutGap="25px" fxLayoutAlign="start">
+<div
+  class="cards-container default-shadow"
+  fxLayout="row wrap"
+  fxLayoutAlign="space-evenly center">
   <ng-container *ngFor="let gateway of gateways; index as i">
     <sc-object-card
       imagePath="assets/imgs/cpu.png"
       [title]="gateway.name"
       [description]="gateway.description"
       dialogTitle="Eliminar gateway"
-      [dialogQuestion]="
-        '¿Está seguro que desea eliminar el gateway ' + gateway.name + ' ?'
-      "
+      [dialogQuestion]="'¿Está seguro que desea eliminar el gateway ' + gateway.name + ' ?'"
       (delete)="deleteGateway(i)"
       (cardClicked)="updateGateway(i)"
     ></sc-object-card>

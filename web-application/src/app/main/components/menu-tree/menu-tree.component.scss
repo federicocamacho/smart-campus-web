@@ -4,8 +4,8 @@
     min-height: calc(100vh - 76px);
     border-right: solid 1px #eee;
     font-size: 15px;
-    position: fixed;
     z-index: 200;
+    width: 100%;
 }
 
 .menu-item-container {
@@ -28,27 +28,22 @@
     outline: 0;
 }
 
+.menu-icon-left,
 .menu-item-name,
-.menu-icon-right,
-.menu-icon-left {
-    position: absolute;
-    height: 50px;
-}
-
 .menu-icon-right {
-    right: 5px;
     margin: auto;
-    margin-top: 15px;
 }
 
 .menu-icon-left {
-    width: 40px;
-    margin-top: 13px;
+    padding-left: 5px;
 }
 
 .menu-item-name {
-    margin-top: 17px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.menu-icon-right {
+    text-align: center;
 }

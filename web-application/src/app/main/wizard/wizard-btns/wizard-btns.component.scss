@@ -1,5 +1,11 @@
 .btn-container{
-    float: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    padding: 10px 40px;
+    background-color: white;
+    position: fixed;
     button {
         margin-right: 5px;
         margin-bottom: 5px;
@@ -8,5 +14,15 @@
             font-size: 18px;
             padding-top: 5px;
         }
+    }
+}
+
+@media (max-width: 599px) {
+    .btn-container {
+        padding: 10px;
+    }
+
+    .btn-name {
+        display: none;
     }
 }

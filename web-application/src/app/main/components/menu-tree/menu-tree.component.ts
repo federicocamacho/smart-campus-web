@@ -30,63 +30,23 @@ export class MenuTreeComponent {
    * Opens/closes the {@link MenuItem} if has any children.
    *
    * @date 2019-01-19
-   * @param item to be opened/closed.
    * @memberof MenuComponent
    */
-  public nodeToggled(item: MenuItem): void {
-    if (item.hasChildren()) {
-      item.toggleExpand();
+  public nodeToggled(): void {
+    if (this.item.hasChildren()) {
+      this.item.toggleExpand();
     }
   }
 
   /**
-   * Executed when a {@link MenuItem} (leaf or parent node) is clicked.
+   * Calculates the padding-left style used for styling different tree levels.
    *
-   * @date 2018-11-17
-   * @param item the {@link MenuItem} clicked.
-   * @memberof MenuComponent
-   */
-  public nodeClicked(item: MenuItem): void {
-    if (!Utils.isEmptyArray(item.path)) { 
-      this.router.navigate(item.path);
-
-    }
-  }
-
-  /**
-   * Calculates the offset (in pixels) used as 'left'property for the item's name.
-   *
-   * @date 2019-01-23
-   * @param item {@link MenuItem} which offset is calculated.
-   * @returns the string with the required offset in pixels.
+   * @date 2019-01-27
+   * @returns the offset as px suffixed string.
    * @memberof MenuTreeComponent
    */
-  public textCssOffset(item: MenuItem): string {
-    return 50 + 20 * (item.level - 1) + 'px';
-  }
-
-  /**
-   * Calculates the width (in pixels) for the item's name.
-   *
-   * @date 2019-01-23
-   * @param item {@link MenuItem} which width is calculated.
-   * @returns the string with the required offset in pixels.
-   * @memberof MenuTreeComponent
-   */
-  public textCssWidth(item: MenuItem): string {
-    return (255 - (50 + 20 * (item.level - 1)) - 30) + 'px';
-  }
-
-  /**
-   * Calculates the offset (in pixels) used as 'left'property for the item's icon.
-   *
-   * @date 2019-01-23
-   * @param item {@link MenuItem} which offset is calculated.
-   * @returns the string with the required offset in pixels.
-   * @memberof MenuTreeComponent
-   */
-  public iconCssOffset(item: MenuItem): string {
-    return 5 + 15 * (item.level - 1) + 'px';
+  public getCssOffset(): string {
+    return (15 * (this.item.level - 1)) + 'px';
   }
 
 }

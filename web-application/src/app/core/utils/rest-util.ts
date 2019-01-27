@@ -65,5 +65,29 @@ export class RestUtil {
     console.error('API ERROR', JSON.stringify(apiError));
     return apiError;
   }
+
+  /**
+   * Returns the URL string for the Pageable query params.
+   *
+   * @date 2019-01-26
+   * @static
+   * @param page to be retrieved.
+   * @param count amount of records to be retrieved.
+   * @returns the query string, not including the '?' char. If both arguments are null
+   * then the empty string is returned.
+   * @memberof RestUtil
+   */
+  public static pageable(page: number, count: number): string {
+    let query = '';
+    if (!page && !count) {
+      return query;
+    } else if (page) {
+      query += `page=${ page }&`;
+    }
+    if (count) {
+      query += `count=${ count }`;
+    }
+    return query;
+  }
   
 }

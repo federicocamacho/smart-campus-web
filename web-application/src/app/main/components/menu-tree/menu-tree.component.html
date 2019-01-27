@@ -1,25 +1,25 @@
 <div
   scAnimated="fadeIn" flexLayout="row"
   class="menu-item-container"
+  [ngStyle]="{ 'padding-left': getCssOffset() }"
   [routerLink]="item.path" routerLinkActive="item-active" 
   [routerLinkActiveOptions]="{ exact: true }">
-  <div 
+  <div
     class="menu-icon-left"
-    *ngIf="item.hasIcon()"
-    [ngStyle]="{ 'left': iconCssOffset(item) }">
+    fxFlex="50px"
+    *ngIf="item.hasIcon()">
     <mat-icon
       style="font-size: 27px; padding: 0 5px;">
       {{ item.icon }}
     </mat-icon>
   </div>
   <div 
-    class="menu-item-name"
-    [ngStyle]="{ 'left' : textCssOffset(item), 'width': textCssWidth(item) }">
+    class="menu-item-name" fxFlex>
     {{ item.name }}
   </div>
   <div 
-    class="menu-icon-right"
-    (click)="nodeToggled(item); $event.stopPropagation();">
+    class="menu-icon-right" fxFlex="35px"
+    (click)="nodeToggled(); $event.stopPropagation();">
     <mat-icon *ngIf="item.hasChildren()" style="font-size: 23px">
       {{ item.isExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
     </mat-icon>

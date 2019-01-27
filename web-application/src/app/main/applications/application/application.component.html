@@ -4,3 +4,25 @@
   createLabel="Crear"
   (create)="onCreate()">
 </sc-section-title>
+<!-- CREATE or UPDATE APPLICATION FORM -->
+<form class="application-form" #updateGateway="ngForm" (ngSubmit)="doUpdate()">
+<!-- NAME -->
+  <mat-form-field appearance="outline" fxLayout="column">
+    <mat-label>Nombre de la aplicación.</mat-label>
+    <input matInput
+      name="name" #name="ngModel"
+      type="text" placeholder="Nombre" required
+      [(ngModel)]="wizard.application.name"/>
+    <mat-error *ngIf="name.invalid"> Nombre requerido.</mat-error>
+  </mat-form-field>
+  <!-- DESCRIPTION -->
+  <mat-form-field appearance="outline" fxLayout="column">
+    <mat-label>Descripción de la aplicación.</mat-label>
+    <input matInput
+      name="description" #description="ngModel"
+      type="text" placeholder="Descripción" required
+      [(ngModel)]="wizard.application.description" />
+    <mat-error *ngIf="description.invalid"> Este campo es requerido.</mat-error>
+  </mat-form-field>
+</form>
+  
