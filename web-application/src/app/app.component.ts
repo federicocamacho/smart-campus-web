@@ -61,7 +61,7 @@ export class AppComponent extends Cleanable implements OnInit {
     }
 
     this.bpObserver
-      .observe([ Breakpoints.XSmall ])
+      .observe([ Breakpoints.XSmall, Breakpoints.Small ])
       .pipe(
         map(value => value.matches),
         takeUntil(this.destroyed)) // do not use take(1) as multiple values are received.

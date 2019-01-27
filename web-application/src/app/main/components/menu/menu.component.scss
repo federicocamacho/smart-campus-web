@@ -9,6 +9,12 @@
     overflow-y: auto;
 }
 
+@media (max-width: 599px) {
+    .menu-container {
+        width: 100%;
+    }
+}
+
 .menu-item-container:hover {
     background-color: #eee;
     cursor: pointer;

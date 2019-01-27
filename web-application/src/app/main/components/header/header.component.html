@@ -1,15 +1,13 @@
 <header class="default-shadow" [ngStyle]="{ 'background-color': backgroundColor, 'color': textColor }">
-  <nav class="navbar">
+  <nav class="navbar" fxLayout="row" fxFlexFill>
     <div 
       class="navbar-header"
-      fxLayout="col" fxFlexFill
       [fxFlex]="isMenuOpened ? '255px' : '60px'"
       (click)="goHome()">
-      <a class="navbar-brand" fxLayout="col">
-        <img [src]="brandLogoSrc" fxFlexAlign="center" [alt]="brandName" class="brand-logo"/>
+      <a class="navbar-brand" fxLayout="row" fxFlexFill fxLayoutAlign="start center">
+        <img [src]="brandLogoSrc" [alt]="brandName" class="brand-logo"/>
         <div scAnimated="fadeIn"
           class="name-container"
-          fxFlexAlign="center" 
           [fxHide]="!isMenuOpened"
           style="padding-left: 10px;">
           <span class="brand-name">
@@ -18,23 +16,23 @@
         </div>
       </a>
     </div>
-    <div class="navbar-collapse" fxLayout="col">
-      <ul class="navbar-nav" fxLayout="row">
-        <li class="nav-item" [ngStyle]="{ 'color': iconsColor }" fxLayout="col">
+    <div class="navbar-collapse" fxFlex>
+      <ul class="navbar-nav" fxLayout="row" fxLayoutAlign="start stretch">
+        <li fxFlex fxHide.gt-xs></li>
+        <li class="nav-item" [ngStyle]="{ 'color': iconsColor }" fxFlex="50px">
           <button mat-icon-button (click)="toggleMenu()">
             <mat-icon>menu</mat-icon>
           </button>
         </li>
-      </ul>
-      <ul class="navbar-nav nav-right" fxLayout="row">
+        <li fxFlex fxHide.lt-sm></li>
         <li 
-          class="nav-item user-item" 
-          fxLayout="col" fxLayoutAlign="center center"
+          class="nav-item user-item"
+          fxLayout="row" fxLayoutAlign="end stretch"
           style="padding-right: 10px;"
           (click)="toggleUser($event)">
-          <img [src]="userImgSrc" [alt]="userName" class="user-img" fxHide.lt-sm/>
-          <span class="user-name">{{ userName }}</span>
-          <mat-icon style="margin: auto">keyboard_arrow_down</mat-icon>
+          <img [src]="userImgSrc" [alt]="userName" class="user-img" fxHide.lt-sm fxFlex="35px" />
+          <span class="user-name" fxFlex>{{ userName }}</span>
+          <mat-icon style="margin: auto" fxFlex="30px">keyboard_arrow_down</mat-icon>
         </li>
       </ul>
     </div>
