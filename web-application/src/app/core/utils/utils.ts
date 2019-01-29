@@ -93,31 +93,35 @@ export class Utils {
    * @date 2019-01-25
    * @private
    * @param applications to be added into the menu.
+   * @param [parent] the menu item parent if exists.
    * @returns the calculated {@link MenuItem} array with the mapped applications.
    * @memberof AppService
    */
-  public static populateApplications(applications: Application[]): MenuItem[] {
-    const applicationsMenu = new MenuItem(0, MenuType.APPLICATIONS, ['/applications'], 'computer', 1, null, [], true);
-    const menu = [ applicationsMenu ];
+  public static populateApplications(applications: Application[], parent?: MenuItem): MenuItem[] {
+    if (!parent) {
+      parent = new MenuItem(0, MenuType.APPLICATIONS, ['/applications'], 'computer', 1, null, [], true);
+    }
+    const menu = [ parent ];
     if (!this.isEmptyArray(applications)) {
       for (const application of applications) {
         const appAsMenu = new MenuItem(
           application.idApplication,
           application.name,
           [ '/applications', application.idApplication.toString(), MenuType.getPath(MenuType.APPLICATION) ],
-          'cloud_queue', 2, applicationsMenu, null);
+          'cloud_queue', 2, parent, null);
         menu.push(appAsMenu);
         const subMenus = this.getApplicationSubMenu(appAsMenu);
         appAsMenu.children = subMenus;
         for (const subMenu of subMenus) {
           menu.push(subMenu);
         }
-        applicationsMenu.children.push(appAsMenu);
+        parent.children.push(appAsMenu);
         for (const subMenu of appAsMenu.children) {
           subMenu.parent = appAsMenu;
         }
-      }      return menu;
+      }
     }
+    return menu;
   }
   
   /**

@@ -1,13 +1,19 @@
-<cdk-virtual-scroll-viewport scAnimated="fadeIn"
-  class="menu-container default-shadow" itemSize="50">
+<cdk-virtual-scroll-viewport
+  scAnimated="fadeIn"
+  itemSize="50"
+  infiniteScroll
+  [infiniteScrollDistance]="2"
+  [infiniteScrollThrottle]="50"
+  (scrolled)="onLoadMore()"
+  [scrollWindow]="false"
+  class="menu-container default-shadow">
   <div
     class="menu-items"
-    [ngStyle]="{ 'width': isMobile ? '100%' : '280px' }"
     [style.color]="iconsColor"
     *cdkVirtualFor="let item of menu.getVisible()">
     <sc-menu-tree
       scAnimated="fadeIn"
-      *ngIf="!item.parent || item.parent.isExpanded"
+      [isMobile]="isMobile"
       [item]="item"></sc-menu-tree>
   </div>
 </cdk-virtual-scroll-viewport>

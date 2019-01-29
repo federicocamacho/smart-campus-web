@@ -1,18 +1,17 @@
 import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NgModel, NgForm } from '@angular/forms';
-import { forkJoin } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { CookieService } from 'ngx-cookie-service';
 import { ToastyService } from 'ng2-toasty';
 
 import { ApiError } from './core/models/api-error';
-import { ApiException } from './core/utils/api-exception';
 import { Application } from './core/models/application';
 import { ApplicationService } from './core/api/application.service';
 import { Cleanable } from './core/utils/cleanable';
 import { MenuTree } from './core/models/menu-tree';
+import { MenuType } from './core/utils/menu-type';
 import { User } from './core/models/user';
 import { UserCookie } from './core/models/user-cookie';
 import { Utils } from './core/utils/utils';
@@ -90,14 +89,14 @@ export class AppService extends Cleanable {
   }
 
   /**
-   * Initializes the side menu for the curren user, retrieving it's applications.
+   * Populates the side menu for the curren user, retrieving it's applications for the respective page.
    *
    * @date 2019-01-25
    * @param userId id of the user currently logged in.
    * @param [page=0] number of the page to be retrieved (Pageable REST service).
    * @memberof AppService
    */
-  public initializeMenuForUser(userId: number, page: number = 0): void {
+  public populateMenu(userId: number, page: number = 0): void {
     this.applicationService.getApplicationsByUser(userId, page)
       .pipe(
         take(1),
@@ -106,14 +105,28 @@ export class AppService extends Cleanable {
         (res: HttpResponse<Application[]>) => {
           const applications = res.body;
           this.applicationService.applications = applications;
-          this.menu.items = Utils.populateApplications(applications);
+          if (page === 0) {
+            this.menu.items = Utils.populateApplications(applications);
+          } else if (!Utils.isEmptyArray(applications)) {
+            const items = Utils.populateApplications(applications, this.menu.items[0]);
+            // the menu was loaded before at least once so the items must be concatenated.
+            // find the index of the next parent item that's not 'Applications' to insert the items before it.
+            const nextParentIndex = this.menu.items
+              .findIndex(item => item.level === 1 && item.name !== MenuType.APPLICATIONS);
+            // if no other parent was found, then insert the items at the end.
+            const newIndex = nextParentIndex === -1 ? this.menu.items.length : nextParentIndex - 1;
+            // remove the duplicated 'Applications' item before inserting.
+            items.shift();
+            // insert the items in the position needed.
+            this.menu.items.splice(newIndex, 0, ...items);
+          }
+          console.log(this.menu.items);
+          this.menu.lastPageLoaded = page;
           this.isBusyGlobally = false;
         },
         (err: ApiError) => {
-          if (err.is(ApiException.INTERNAL)) {
-            this.toastyService.error(Utils.buildToastyConfig(
-              'ERROR OBTENIENDO APLICACIONES', err[0].message));
-          }
+          this.toastyService.error(Utils.buildToastyConfig(
+            'ERROR OBTENIENDO APLICACIONES', err[0].message));
           this.isBusyGlobally = false;
         }
       );

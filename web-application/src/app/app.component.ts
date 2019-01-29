@@ -57,7 +57,7 @@ export class AppComponent extends Cleanable implements OnInit {
       this.appService.isLogedIn = true;
       const cookie = UserCookie.fromJSON(this.cookie.get('user'));
       this.appService.user = Utils.userFromCookie(cookie);
-      this.appService.initializeMenuForUser(this.appService.user.id);
+      this.appService.populateMenu(this.appService.user.id);
     }
 
     this.bpObserver

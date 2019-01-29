@@ -10,6 +10,13 @@ import { MenuItem } from '../../../core/models/menu-item';
 export class MenuTreeComponent {
 
   /**
+   * Indicates whether the device is a mobile or not.
+   *
+   * @memberof MenuTreeComponent
+   */
+  @Input() isMobile: boolean;
+
+  /**
    * Stores the current menu item.
    *
    * @memberof MenuTreeComponent

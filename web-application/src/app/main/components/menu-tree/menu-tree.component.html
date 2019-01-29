@@ -1,14 +1,16 @@
 <div
   scAnimated="fadeIn"
   class="menu-item-container"
-  [ngStyle]="{ 
-    'padding-left': (15 * (item.level - 1)) + 'px',
+  [ngStyle]="{
     'height': '50px',
+    'width': isMobile ? '100%' : '280px',
     'font-size': item.level < 3 ? '15px' : '14px'
   }"
   [routerLink]="item.path" routerLinkActive="item-active" 
   [routerLinkActiveOptions]="{ exact: true }">
-  <div flexLayout="row" fxFlexFill>
+  <div
+    flexLayout="row" fxFlexFill
+    [ngStyle]="{ 'padding-left': (15 * (item.level - 1)) + 'px' }">
     <div
       class="menu-icon-left"
       fxFlex="50px"

@@ -238,7 +238,7 @@ export class LoginComponent extends Cleanable {
     this.cookieService.set('user', JSON.stringify(userCookie), expirationDate);
     this.appService.isLogedIn = true;
     this.appService.user = user;
-    this.appService.initializeMenuForUser(user.id);
+    this.appService.populateMenu(user.id);
     this.router.navigate(['/dashboard']);
   }
 

@@ -10,6 +10,7 @@ import { map, takeUntil } from 'rxjs/operators';
 
 import { Cleanable } from 'src/app/core/utils/cleanable';
 import { MenuTree } from 'src/app/core/models/menu-tree';
+import { AppService } from 'src/app/app.service';
 
 
 /**
@@ -71,10 +72,13 @@ export class MenuComponent extends Cleanable implements OnInit {
   /**
    * Creates an instance of MenuComponent.
    * @date 2019-01-09
+   * @param appService: Application's main service.
    * @param bpObserver Material's CDK breakpoint observer.
    * @memberof MenuComponent
    */
-  constructor(private bpObserver: BreakpointObserver) {
+  constructor(
+    private appService: AppService,
+    private bpObserver: BreakpointObserver) {
     super();
     this.menuClosed = new EventEmitter();
   }
@@ -87,7 +91,7 @@ export class MenuComponent extends Cleanable implements OnInit {
    */
   ngOnInit() {
     this.bpObserver
-      .observe([Breakpoints.Small, Breakpoints.XSmall])
+      .observe([Breakpoints.XSmall])
       .pipe(
         map(value => value.matches),
         takeUntil(this.destroyed)) // do not use take(1) as multiple values are received.
@@ -109,8 +113,15 @@ export class MenuComponent extends Cleanable implements OnInit {
     this.isMobile = isMobile;
   }
 
-  public onScroll(): void {
-    console.log('onscroll');
+  /**
+   * Trigerred when lazy loading is executed in the menu, retrieves the next page of 'Applications'.
+   *
+   * @date 2019-01-28
+   * @memberof MenuComponent
+   */
+  public onLoadMore(): void {
+    const pageToLoad = this.menu.lastPageLoaded + 1;
+    this.appService.populateMenu(this.appService.user.id, pageToLoad);
   }
 
 }
