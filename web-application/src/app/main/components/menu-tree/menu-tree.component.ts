@@ -1,8 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { MenuItem } from '../../../../app/core/models/menu-item';
-import { Utils } from '../../../../app/core/utils/utils';
+import { MenuItem } from '../../../core/models/menu-item';
 
 @Component({
   selector: 'sc-menu-tree',
@@ -19,23 +17,13 @@ export class MenuTreeComponent {
   @Input() item: MenuItem;
 
   /**
-   * Creates an instance of MenuTreeComponent.
-   * @date 2019-01-23
-   * @param router Angular Router.
-   * @memberof MenuTreeComponent
-   */
-  constructor(private router: Router) {}
-
-  /**
    * Opens/closes the {@link MenuItem} if has any children.
    *
    * @date 2019-01-19
    * @memberof MenuComponent
    */
   public nodeToggled(): void {
-    if (this.item.hasChildren()) {
-      this.item.toggleExpand();
-    }
+    this.item.toggleExpand();
   }
 
 }

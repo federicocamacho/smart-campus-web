@@ -93,22 +93,30 @@ export class Utils {
    * @date 2019-01-25
    * @private
    * @param applications to be added into the menu.
-   * @returns the calculated {@link MenuItem} with the mapped applications.
+   * @returns the calculated {@link MenuItem} array with the mapped applications.
    * @memberof AppService
    */
-  public static populateApplications(applications: Application[]): MenuItem {
-    const applicationsMenu = new MenuItem(0, MenuType.APPLICATIONS, ['/applications'], 'computer', 1, null);
+  public static populateApplications(applications: Application[]): MenuItem[] {
+    const applicationsMenu = new MenuItem(0, MenuType.APPLICATIONS, ['/applications'], 'computer', 1, null, [], true);
+    const menu = [ applicationsMenu ];
     if (!this.isEmptyArray(applications)) {
-      const applicationsAsMenuItems = applications
-        .map(application => new MenuItem(
+      for (const application of applications) {
+        const appAsMenu = new MenuItem(
           application.idApplication,
           application.name,
           [ '/applications', application.idApplication.toString(), MenuType.getPath(MenuType.APPLICATION) ],
-          'cloud_queue', 2, this.getApplicationSubMenu(application)
-        ));
-      applicationsMenu.children = applicationsAsMenuItems;
-      console.log(applicationsMenu);
-      return applicationsMenu;
+          'cloud_queue', 2, applicationsMenu, null);
+        menu.push(appAsMenu);
+        const subMenus = this.getApplicationSubMenu(appAsMenu);
+        appAsMenu.children = subMenus;
+        for (const subMenu of subMenus) {
+          menu.push(subMenu);
+        }
+        applicationsMenu.children.push(appAsMenu);
+        for (const subMenu of appAsMenu.children) {
+          subMenu.parent = appAsMenu;
+        }
+      }      return menu;
     }
   }
   
@@ -121,12 +129,11 @@ export class Utils {
    * @returns the {@link MenuItem[]} with the respective children for the application.
    * @memberof AppService
    */
-  public static getApplicationSubMenu(application: Application): MenuItem[] {
-    const path = [ '/applications', application.idApplication.toString() ];
+  public static getApplicationSubMenu(application: MenuItem): MenuItem[] {
     return [
-      new MenuItem(0, MenuType.GATEWAYS, [ ...path, MenuType.getPath(MenuType.GATEWAYS) ], null, 3, null),
-      new MenuItem(0, MenuType.DEVICES, [ ...path, MenuType.getPath(MenuType.DEVICES) ], null, 3, null),
-      new MenuItem(0, MenuType.PROCESSES, [ ...path, MenuType.getPath(MenuType.PROCESSES) ], null, 3, null),
+      new MenuItem(0, MenuType.GATEWAYS, [ ...application.path, MenuType.getPath(MenuType.GATEWAYS) ], null, 3, application),
+      new MenuItem(0, MenuType.DEVICES, [ ...application.path, MenuType.getPath(MenuType.DEVICES) ], null, 3, application),
+      new MenuItem(0, MenuType.PROCESSES, [ ...application.path, MenuType.getPath(MenuType.PROCESSES) ], null, 3, application),
     ];
   }
 

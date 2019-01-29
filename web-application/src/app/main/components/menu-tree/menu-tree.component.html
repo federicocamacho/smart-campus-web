@@ -1,36 +1,33 @@
 <div
-  scAnimated="fadeIn" flexLayout="row"
+  scAnimated="fadeIn"
   class="menu-item-container"
   [ngStyle]="{ 
-    'padding-left': (15 * (this.item.level - 1)) + 'px',
-    'height': (50 - 5 * this.item.level) + 'px',
-    'font-size': this.item.level < 3 ? '15px' : '14px'
+    'padding-left': (15 * (item.level - 1)) + 'px',
+    'height': '50px',
+    'font-size': item.level < 3 ? '15px' : '14px'
   }"
   [routerLink]="item.path" routerLinkActive="item-active" 
   [routerLinkActiveOptions]="{ exact: true }">
-  <div
-    class="menu-icon-left"
-    fxFlex="50px"
-    *ngIf="item.hasIcon()">
-    <mat-icon
-      style="font-size: 27px; padding: 0 5px;">
-      {{ item.icon }}
-    </mat-icon>
+  <div flexLayout="row" fxFlexFill>
+    <div
+      class="menu-icon-left"
+      fxFlex="50px"
+      *ngIf="item.hasIcon()">
+      <mat-icon
+        style="font-size: 27px; padding: 0 5px;">
+        {{ item.icon }}
+      </mat-icon>
+    </div>
+    <div 
+      class="menu-item-name" fxFlex>
+      {{ item.name }}
+    </div>
+    <div 
+      class="menu-icon-right" fxFlex="50px"
+      (click)="nodeToggled(); $event.stopPropagation();">
+      <mat-icon *ngIf="item.hasChildren()" style="font-size: 23px">
+        {{ item.isExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
+      </mat-icon>
+    </div>
   </div>
-  <div 
-    class="menu-item-name" fxFlex>
-    {{ item.name }}
-  </div>
-  <div 
-    class="menu-icon-right" fxFlex="50px"
-    (click)="nodeToggled(); $event.stopPropagation();">
-    <mat-icon *ngIf="item.hasChildren()" style="font-size: 23px">
-      {{ item.isExpanded ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}
-    </mat-icon>
-  </div>
-</div>
-<div scAnimated="fadeIn"
-  class="menu-children"
-  *ngIf="item.isExpanded && item.hasChildren()">
-  <sc-menu-tree *ngFor="let child of item.children" [item]=child></sc-menu-tree>
 </div>

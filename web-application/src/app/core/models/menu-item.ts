@@ -14,6 +14,8 @@ export class MenuItem {
 
   public children: MenuItem[];
 
+  public parent: MenuItem;
+
   public name: string;
 
   public path: string[];
@@ -28,6 +30,7 @@ export class MenuItem {
    * @param path of the item page's.
    * @param level of the item in the structure.
    * @param icon of the item. Use material icons names.
+   * @param [parent] reference to the parent {@link MenuItem}.
    * @param [children] an array of {@link MenuItem} that are children nodes.
    * @memberof MenuItem
    */
@@ -37,6 +40,7 @@ export class MenuItem {
     path: string[],
     icon: string,
     level: number,
+    parent?: MenuItem,
     children?: MenuItem[],
     isExpanded = false) {
     this.id = id;
@@ -44,7 +48,7 @@ export class MenuItem {
     this.path = path;
     this.icon = icon;
     this.level = level;
-    this.isExpanded = false;
+    this.parent = parent;
     this.children = children;
     this.isExpanded = isExpanded;
   }
@@ -99,55 +103,6 @@ export class MenuItem {
    */
   public expand(): void {
     this.isExpanded = true;
-  }
-
-  /**
-   * Collapses all the children nodes.
-   *
-   * @date 2019-01-22
-   * @memberof TreeNode
-   */
-  public collapseChildren(): void {
-    if (this.children === null) { return; }
-
-    this.collapse();
-
-    if (this.children.length > 0) {
-      this.children.forEach(children => children.collapseChildren());
-    }
-    
-  }
-
-  /**
-   * Expands all the children nodes.
-   *
-   * @date 2019-01-22
-   * @memberof TreeNode
-   */
-  public expandChildren(): void {
-    if (this.children === null) { return; }
-    
-    this.expand();
-
-    if (this.children.length > 0) {
-      this.children.forEach(children => children.expandChildren());
-    }
-  }
-
-  /**
-   * Toggles the expand state for all children nodes.
-   *
-   * @date 2019-01-22
-   * @memberof TreeNode
-   */
-  public toggleChildren(): void {
-    if (this.children === null) { return; }
-    
-    this.toggleExpand();
-
-    if (this.children.length > 0) {
-      this.children.forEach(children => children.toggleChildren());
-    }
   }
   
 }

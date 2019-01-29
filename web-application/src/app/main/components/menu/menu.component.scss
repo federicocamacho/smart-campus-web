@@ -1,13 +1,13 @@
 .menu-container {
     background-color: white;
     width: 280px;
-    min-height: calc(100vh - 76px);
-    max-height: calc(100vh - 76px);
+    height: calc(100vh - 76px);
     border-right: solid 1px #eee;
     font-size: 15px;
     position: fixed;
     z-index: 200;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 @media (max-width: 599px) {

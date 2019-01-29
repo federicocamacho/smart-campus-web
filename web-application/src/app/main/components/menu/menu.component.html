@@ -1,10 +1,13 @@
-<div scAnimated="fadeIn"
-  class="menu-container default-shadow">
+<cdk-virtual-scroll-viewport scAnimated="fadeIn"
+  class="menu-container default-shadow" itemSize="50">
   <div
     class="menu-items"
-    flexLayout="column"
-    fxLayoutAlign="start stretch"
-    [style.color]="iconsColor">
-    <sc-menu-tree *ngFor="let item of menu.items" [item]="item"></sc-menu-tree>
+    [ngStyle]="{ 'width': isMobile ? '100%' : '280px' }"
+    [style.color]="iconsColor"
+    *cdkVirtualFor="let item of menu.getVisible()">
+    <sc-menu-tree
+      scAnimated="fadeIn"
+      *ngIf="!item.parent || item.parent.isExpanded"
+      [item]="item"></sc-menu-tree>
   </div>
-</div>
+</cdk-virtual-scroll-viewport>

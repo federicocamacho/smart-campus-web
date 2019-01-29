@@ -106,7 +106,7 @@ export class AppService extends Cleanable {
         (res: HttpResponse<Application[]>) => {
           const applications = res.body;
           this.applicationService.applications = applications;
-          this.menu.items.push(Utils.populateApplications(applications));
+          this.menu.items = Utils.populateApplications(applications);
           this.isBusyGlobally = false;
         },
         (err: ApiError) => {

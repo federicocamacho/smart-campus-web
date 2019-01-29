@@ -41,11 +41,18 @@ export class MenuComponent extends Cleanable implements OnInit {
   @Input() iconsColor: string;
 
   /**
-   * Indicates wether the menu is opened or not.
+   * Indicates whether the menu is opened or not.
    *
    * @memberof MenuComponent
    */
   @Input() isOpened: boolean;
+
+  /**
+   * Indicates whether the device is a mobile or not.
+   *
+   * @memberof MenuComponent
+   */
+  public isMobile: boolean;
 
   /**
    * Items to be showed as options in the Side menu.
@@ -99,6 +106,11 @@ export class MenuComponent extends Cleanable implements OnInit {
     if (isMobile) {
       this.menuClosed.next();
     }
+    this.isMobile = isMobile;
+  }
+
+  public onScroll(): void {
+    console.log('onscroll');
   }
 
 }
