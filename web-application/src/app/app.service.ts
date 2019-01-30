@@ -55,6 +55,13 @@ export class AppService extends Cleanable {
    * @memberof AppService
    */
   public isMenuOpened: boolean;
+  
+  /**
+   * Indicates the last page loaded of the menu (applications).
+   *
+   * @memberof MenuTree
+   */
+  public lastMenuPageLoaded: number;
 
   /**
    * Stores all the side menu elements.
@@ -73,12 +80,14 @@ export class AppService extends Cleanable {
   /**
    * Creates an instance of AppService.
    * @date 2019-01-09
+   * @param appService: Application's main Service.
    * @param applicationService Applications API service.
    * @param cookieService User Cookie service.
    * @param toastyService Toasty service.
    * @memberof AppService
    */
   constructor(
+    private appService: AppService,
     private applicationService: ApplicationService,
     private cookieService: CookieService,
     private toastyService: ToastyService) {
@@ -86,6 +95,7 @@ export class AppService extends Cleanable {
     this.isBusyGlobally = false;
     this.isUserCardOpened = false;
     this.isMenuOpened = true;
+    this.lastMenuPageLoaded = -1; // nothing loaded yet.
   }
 
   /**
@@ -104,7 +114,7 @@ export class AppService extends Cleanable {
       .subscribe(
         (res: HttpResponse<Application[]>) => {
           const applications = res.body;
-          this.applicationService.applications = applications;
+          this.applicationService.applications = [ ...this.applicationService.applications, ...applications ];
           if (page === 0) {
             this.menu.items = Utils.populateApplications(applications);
           } else if (!Utils.isEmptyArray(applications)) {
@@ -120,8 +130,7 @@ export class AppService extends Cleanable {
             // insert the items in the position needed.
             this.menu.items.splice(newIndex, 0, ...items);
           }
-          console.log(this.menu.items);
-          this.menu.lastPageLoaded = page;
+          this.lastMenuPageLoaded = page;
           this.isBusyGlobally = false;
         },
         (err: ApiError) => {

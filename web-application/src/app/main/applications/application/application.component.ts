@@ -13,20 +13,11 @@ export class ApplicationComponent extends Cleanable {
   /**
    * Creates an instance of ApplicationComponent.
    * @date 2019-01-26
-   * @param wizard {@link WizardService}.
+   * @param wizard Wizard main service.
    * @memberof ApplicationComponent
    */
   constructor(public wizard: WizardService) {
     super();
   }
-    
-  /**
-   * Executed when an application is created.
-   *
-   * @date 2019-01-26
-   * @memberof ApplicationComponent
-   */
-  public onCreate(): void {
-    this.wizard.navigate(0, 0);
-  }
+
 }

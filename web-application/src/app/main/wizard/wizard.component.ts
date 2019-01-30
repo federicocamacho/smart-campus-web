@@ -58,16 +58,14 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
         takeUntil(this.destroyed))
       .subscribe(paramMap => {
         const newId = Number(paramMap.get('id'));
-        if (this.wizard.id !== newId) {
+        if (this.wizard.id !== newId || this.wizard.id === 0) {
           // The opened application changed.
           this.wizard.id = newId;
           this.clearOnChange();
         }
         const newIndex = MenuType.getIndexFromPath(paramMap.get('section'));
-        console.log(this.wizard.selectedIndex, newIndex);
         if (this.wizard.selectedIndex !== newIndex) {
           // The section changed.
-          console.log('section change');
           this.wizard.selectedIndex = newIndex;
           this.clearOnChange();
         }

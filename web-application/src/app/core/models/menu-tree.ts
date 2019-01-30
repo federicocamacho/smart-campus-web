@@ -17,20 +17,12 @@ export class MenuTree {
   public items: MenuItem[];
 
   /**
-   * Indicates the last page loaded (using lazy loading).
-   *
-   * @memberof MenuTree
-   */
-  public lastPageLoaded: number;
-
-  /**
    * Creates an instance of MenuTree.
    * @date 2019-01-25
    * @memberof MenuTree
    */
   constructor() {
     this.items = [];
-    this.lastPageLoaded = -1; // nothing loaded yet.
   }
 
   /**

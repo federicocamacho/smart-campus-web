@@ -1,7 +1,30 @@
-<div class="page-wrapper">
- <sc-section-title
-    title="Aplicaciones"
-    description="Gestionar los casos de uso"
-    createLabel="Crear">
-</sc-section-title>
+<div class="page-wrapper top-margin">
+    <sc-section-title
+        title="Aplicaciones"
+        description="Gestionar los casos de uso"
+        createVisible="true"
+        (create)="createApplication()">
+    </sc-section-title>
+    <div
+        class="cards-container default-shadow"
+        fxLayout="row wrap"
+        fxLayoutAlign="space-evenly center"
+        infiniteScroll
+        [infiniteScrollDistance]="0.002"
+        [infiniteScrollThrottle]="500"
+        (scrolled)="onLoadMore()"
+        [scrollWindow]="true">
+        <ng-container *ngFor="let application of applicationService.applications; index as i">
+            <sc-object-card
+                imagePath="assets/imgs/cpu.png"
+                [title]="application?.name"
+                [description]="application?.description"
+                dialogTitle="Eliminar aplicación"
+                [dialogQuestion]="'¿Está seguro que desea eliminar la aplicación ' + application?.name + ' ?'"
+                (delete)="deleteApplication(application.idApplication)"
+                (cardClicked)="openApplication(application.idApplication)">
+            </sc-object-card>
+        </ng-container>
+    </div>
+  
 </div>

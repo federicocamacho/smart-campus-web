@@ -1,8 +1,7 @@
 <sc-section-title 
   title="Aplicación"
   description="Gestionar el caso de uso"
-  createLabel="Crear"
-  (create)="onCreate()">
+  [createVisible]="false">
 </sc-section-title>
 <!-- CREATE or UPDATE APPLICATION FORM -->
 <form class="application-form" #updateGateway="ngForm">

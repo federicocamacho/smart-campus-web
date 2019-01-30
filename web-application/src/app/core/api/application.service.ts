@@ -24,7 +24,7 @@ export class ApplicationService {
    *
    * @memberof ApplicationService
    */
-  public applications: Application[];
+  public applications: Application[] = [];
 
   /**
    * Creates an instance of UserService.

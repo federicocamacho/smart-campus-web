@@ -120,7 +120,7 @@ export class MenuComponent extends Cleanable implements OnInit {
    * @memberof MenuComponent
    */
   public onLoadMore(): void {
-    const pageToLoad = this.menu.lastPageLoaded + 1;
+    const pageToLoad = this.appService.lastMenuPageLoaded + 1;
     this.appService.populateMenu(this.appService.user.id, pageToLoad);
   }
 

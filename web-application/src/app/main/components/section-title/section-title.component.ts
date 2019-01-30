@@ -33,7 +33,7 @@ export class SectionTitleComponent {
    *
    * @memberof SectionTitleComponent
    */
-  @Input('createLabel') createLabel: string;
+  @Input('createVisible') createVisible: boolean;
 
   /**
    * Emits any time the 'Create' button is selected.

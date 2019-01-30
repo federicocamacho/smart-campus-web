@@ -1,5 +1,6 @@
 .object-card {
   max-width: 260px;
+  width: 260px;
   position: relative;
 }
 
@@ -40,6 +41,19 @@
 .card-title {
   font-size: 21px;
   color: #20aee3;
+}
+
+.card-name,
+.card-username {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  width: calc(100%);
+}
+
+.card-text-container {
+  width: calc(100%); // for overflow
 }
 
 .card-username {

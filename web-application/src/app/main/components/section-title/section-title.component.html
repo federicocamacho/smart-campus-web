@@ -5,7 +5,7 @@
     <h3 class="section-title margin0">{{ title | uppercase }}</h3>
     <h4 class="section-description margin0">{{ description }}</h4>
   </div>
-  <div fxFlex="15" fxFlex.xs="25">
-    <button fxFlexFill mat-raised-button color="primary" (click)="create.emit()">{{ createLabel }}</button>
+  <div fxFlex="15" fxFlex.xs="25" *ngIf="createVisible">
+    <button fxFlexFill mat-raised-button color="primary" (click)="create.emit()">CREAR</button>
   </div>
 </div>
