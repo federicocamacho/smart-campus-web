@@ -1,13 +1,19 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
-import { map, takeUntil } from 'rxjs/operators';
+import { map, takeUntil, take } from 'rxjs/operators';
 
-import { Cleanable } from '../../core/utils/cleanable';
-import { MenuType } from '../../core/utils/menu-type';
-import { WizardService } from '../../core/services/wizard.service';
+import { ApiError } from 'src/app/core/models/api-error';
 import { Application } from 'src/app/core/models/application';
+import { ApplicationService } from 'src/app/core/api/application.service';
+import { AppService } from 'src/app/app.service';
+import { Cleanable } from '../../core/utils/cleanable';
+import { HttpResponse } from '@angular/common/http';
+import { MenuType } from '../../core/utils/menu-type';
+import { ToastyService } from 'ng2-toasty';
+import { Utils } from 'src/app/core/utils/utils';
+import { WizardService } from '../../core/services/wizard.service';
 
 @Component({
   selector: 'sc-wizard',
@@ -26,14 +32,19 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
   /**
    * Creates an instance of WizardComponent.
    * @date 2019-01-25
+   * @param appService Application's main service.
+   * @param applicationService Applications (entity) service.
    * @param bpObserver Breakpoint Observer to monitor the device's width.
    * @param route Angular Activated Route.
    * @param wizard {@link WizardService}.
    * @memberof WizardComponent
    */
   constructor(
+    private appService: AppService,
+    private applicationService: ApplicationService,
     private bpObserver: BreakpointObserver,
     private route: ActivatedRoute,
+    private toasty: ToastyService,
     public wizard: WizardService) {
     super();
   }
@@ -62,6 +73,9 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
           // The opened application changed.
           this.wizard.id = newId;
           this.clearOnChange();
+          if (this.wizard.id !== 0) {
+            this.getApplicationById(newId);
+          }
         }
         const newIndex = MenuType.getIndexFromPath(paramMap.get('section'));
         if (this.wizard.selectedIndex !== newIndex) {
@@ -92,7 +106,26 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
    * @memberof WizardComponent
    */
   public onSectionSaved(): void {
-    // TODO: Implement this
+    this.appService.isBusyGlobally = true;
+    const application = this.wizard.application;
+    switch (this.wizard.selectedIndex) {
+      case 0:
+        if (!application || Utils.anyIsEmptyString(application.name, application.description)) {
+          return;
+        }
+        application.idUser = this.appService.user.id;
+        if (this.wizard.id === 0) {
+          // Create the application
+          application.idApplication = null;
+          this.createApplication(application);
+        } else {
+          // TODO: Update the application.
+        }
+        break;
+      default:
+        // TODO: Implement all other cases.
+        break;
+    }
   }
 
   /**
@@ -112,6 +145,7 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
    * @memberof WizardComponent
    */
   public onPrev(): void {
+    this.appService.isBusyGlobally = true;
     this.wizard.navigate((this.wizard.selectedIndex - 1) % 4);
   }
 
@@ -122,6 +156,7 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
    * @memberof WizardComponent
    */
   public onNext(): void {
+    this.appService.isBusyGlobally = true;
     this.wizard.navigate((this.wizard.selectedIndex + 1) % 4);
   }
 
@@ -134,6 +169,61 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
    */
   public onSelectionChanged(event: StepperSelectionEvent): void {
     this.wizard.navigate(event.selectedIndex);
+  }
+
+  /**
+   * Creates an application in the wizard section.
+   *
+   * @date 2019-01-30
+   * @param application to be created.
+   * @memberof WizardComponent
+   */
+  public createApplication(application: Application): void {
+    this.applicationService.createApplication(application)
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(
+        (res: HttpResponse<Application>) => {
+          this.toasty.success(Utils.buildToastyConfig('APLICACIÓN',
+            `Aplicación ${ application.name } creada satisfactoriamente`));
+          const applicationCreated = res.body;
+          this.applicationService.applications.push(applicationCreated);
+          const newItem = this.appService.menu.mapApplicationsToMenuItems([ applicationCreated ]);
+          this.appService.menu.insertForType(MenuType.APPLICATIONS, newItem);
+          this.appService.isBusyGlobally = false;
+        },
+        (err: ApiError) => {
+          this.toasty.error(Utils.buildToastyConfig('APPLICACIÓN',
+            `Ocurrió un error creando la aplicación ${ application.name }: ${ err.message }`));
+          this.appService.isBusyGlobally = false;
+        }
+      );
+  }
+
+    /**
+   * Retrieves the application for the given id. Required when initializing the application section.
+   *
+   * @date 2019-01-30
+   * @param id of the application to be retrieved.
+   * @memberof WizardService
+   */
+  public getApplicationById(id: number): void {
+    this.applicationService.getApplicationById(id)
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(
+        (res: HttpResponse<Application>) => {
+          this.wizard.application = res.body;
+          this.appService.isBusyGlobally = false;
+        },
+        (err: ApiError) => {
+          this.toasty.error(Utils.buildToastyConfig('Aplicación', 
+            `La aplicación no pudo ser obtenida: ${ err.message }`));
+          this.appService.isBusyGlobally = false;
+        }
+      );
   }
   
 }

@@ -80,14 +80,12 @@ export class AppService extends Cleanable {
   /**
    * Creates an instance of AppService.
    * @date 2019-01-09
-   * @param appService: Application's main Service.
    * @param applicationService Applications API service.
    * @param cookieService User Cookie service.
    * @param toastyService Toasty service.
    * @memberof AppService
    */
   constructor(
-    private appService: AppService,
     private applicationService: ApplicationService,
     private cookieService: CookieService,
     private toastyService: ToastyService) {
@@ -119,16 +117,10 @@ export class AppService extends Cleanable {
             this.menu.items = Utils.populateApplications(applications);
           } else if (!Utils.isEmptyArray(applications)) {
             const items = Utils.populateApplications(applications, this.menu.items[0]);
-            // the menu was loaded before at least once so the items must be concatenated.
-            // find the index of the next parent item that's not 'Applications' to insert the items before it.
-            const nextParentIndex = this.menu.items
-              .findIndex(item => item.level === 1 && item.name !== MenuType.APPLICATIONS);
-            // if no other parent was found, then insert the items at the end.
-            const newIndex = nextParentIndex === -1 ? this.menu.items.length : nextParentIndex - 1;
             // remove the duplicated 'Applications' item before inserting.
             items.shift();
             // insert the items in the position needed.
-            this.menu.items.splice(newIndex, 0, ...items);
+            this.menu.insertForType(MenuType.APPLICATION, items);
           }
           this.lastMenuPageLoaded = page;
           this.isBusyGlobally = false;

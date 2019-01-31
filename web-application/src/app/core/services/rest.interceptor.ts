@@ -50,6 +50,8 @@ export class RestInterceptor implements HttpInterceptor {
             throw(RestUtil.handleError(err));
           } else if (err instanceof Error) {
             throw(ApiError.timeoutError());
+          } else {
+            throw(ApiError.fromGeneric());
           }
       })
     );

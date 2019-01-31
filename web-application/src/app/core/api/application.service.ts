@@ -61,5 +61,32 @@ export class ApplicationService {
     return this.http
       .get(`${ RestUtil.endpoint(environment.application) }/${ appId }`, RestUtil.options());
   }
+
+  /**
+   * Consumes the Create Application REST Service.
+   *
+   * @date 2019-01-30
+   * @param application to be created. Not null.
+   * @returns an {@link Observable} with the response.
+   * @memberof ApplicationService
+   */
+  public createApplication(application: Application): Observable<any> {
+    return this.http
+      .post(RestUtil.endpoint(environment.application), application, RestUtil.options());
+  }
+
+  /**
+   * Consumes the Update Application REST Service.
+   *
+   * @date 2019-01-30
+   * @param appId id of the application to be updated. Not null.
+   * @param application to be updated. Not null.
+   * @returns an {@link Observable} with the response.
+   * @memberof ApplicationService
+   */
+  public updateApplication(appId: number, application: Application): Observable<any> {
+    return this.http
+      .put(`${ RestUtil.endpoint(environment.application) }/${ appId }`, application, RestUtil.options());
+  }
   
 }

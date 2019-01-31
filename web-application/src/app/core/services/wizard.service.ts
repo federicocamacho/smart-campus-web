@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-
-import { CoreModule } from '../core.module';
-import { Application } from '../models/application';
 import { Router } from '@angular/router';
+
+import { Application } from '../models/application';
+import { CoreModule } from '../core.module';
 import { MenuType } from '../utils/menu-type';
 
 /**
