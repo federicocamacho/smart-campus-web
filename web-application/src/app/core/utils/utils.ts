@@ -134,10 +134,12 @@ export class Utils {
    * @memberof AppService
    */
   public static getApplicationSubMenu(application: MenuItem): MenuItem[] {
+    const path = [ ...application.path ];
+    path.pop();
     return [
-      new MenuItem(0, MenuType.GATEWAYS, [ ...application.path, MenuType.getPath(MenuType.GATEWAYS) ], null, 3, application),
-      new MenuItem(0, MenuType.DEVICES, [ ...application.path, MenuType.getPath(MenuType.DEVICES) ], null, 3, application),
-      new MenuItem(0, MenuType.PROCESSES, [ ...application.path, MenuType.getPath(MenuType.PROCESSES) ], null, 3, application),
+      new MenuItem(0, MenuType.GATEWAYS, [ ...path, MenuType.getPath(MenuType.GATEWAYS) ], null, 3, application),
+      new MenuItem(0, MenuType.DEVICES, [ ...path, MenuType.getPath(MenuType.DEVICES) ], null, 3, application),
+      new MenuItem(0, MenuType.PROCESSES, [ ...path, MenuType.getPath(MenuType.PROCESSES) ], null, 3, application),
     ];
   }
 

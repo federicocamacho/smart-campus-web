@@ -1,18 +1,19 @@
 import { ActivatedRoute } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HttpResponse } from '@angular/common/http';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { map, takeUntil, take } from 'rxjs/operators';
 
-import { ApiError } from 'src/app/core/models/api-error';
-import { Application } from 'src/app/core/models/application';
-import { ApplicationService } from 'src/app/core/api/application.service';
-import { AppService } from 'src/app/app.service';
-import { Cleanable } from '../../core/utils/cleanable';
-import { HttpResponse } from '@angular/common/http';
-import { MenuType } from '../../core/utils/menu-type';
 import { ToastyService } from 'ng2-toasty';
-import { Utils } from 'src/app/core/utils/utils';
+
+import { ApiError } from '../../core/models/api-error';
+import { Application } from '../../core/models/application';
+import { ApplicationService } from '../../core/api/application.service';
+import { AppService } from '../../app.service';
+import { Cleanable } from '../../core/utils/cleanable';
+import { MenuType } from '../../core/utils/menu-type';
+import { Utils } from '../../core/utils/utils';
 import { WizardService } from '../../core/services/wizard.service';
 
 @Component({
