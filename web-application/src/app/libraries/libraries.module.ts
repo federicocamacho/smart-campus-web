@@ -11,7 +11,9 @@ import {
   MatIconModule,
   MatInputModule,
   MatStepperModule,
-  MatTooltipModule } from '@angular/material';
+  MatTooltipModule, 
+  MatTableModule,
+  MatPaginatorModule} from '@angular/material';
 import { PlatformModule } from '@angular/cdk/platform';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
@@ -31,10 +33,13 @@ import { ToastyModule } from 'ng2-toasty';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatPaginatorModule,
     MatStepperModule,
+    MatTableModule,
     MatTooltipModule,
     PlatformModule,
     ScrollingModule,
+
     ToastyModule.forRoot()
   ],
   declarations: [],
@@ -47,7 +52,9 @@ import { ToastyModule } from 'ng2-toasty';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatPaginatorModule,
     MatStepperModule,
+    MatTableModule,
     MatTooltipModule,
     PlatformModule,
     ScrollingModule,
