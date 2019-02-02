@@ -12,7 +12,7 @@ import { Gateway } from '../../../core/models/gateway';
 })
 export class GatewayComponent implements OnInit {
 
-  public displayedColumns: string[] = ['Tipo', 'Nombre', 'Descripción'];
+  public displayedColumns: string[] = ['type', 'name', 'description'];
 
   public dataSource: MatTableDataSource<Property>;
 
