@@ -31,7 +31,7 @@ export class ApplicationsComponent {
    * @memberof ApplicationsComponent
    */
   public createApplication(): void {
-    this.wizard.navigate(0, 0);
+    this.wizard.navigate(0);
   }
 
   /**
@@ -53,7 +53,7 @@ export class ApplicationsComponent {
    * @memberof ApplicationsComponent
    */
   public openApplication(appId: number): void {
-    this.wizard.navigate(0, appId);
+    this.wizard.navigate(appId);
   }
 
   /**

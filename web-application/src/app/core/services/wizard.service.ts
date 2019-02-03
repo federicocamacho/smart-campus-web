@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 
 import { Application } from '../models/application';
 import { CoreModule } from '../core.module';
-import { MenuType } from '../utils/menu-type';
+import { Utils } from '../utils/utils';
 
 /**
  * Service to store all the information and general functions in Wizard section.
@@ -31,14 +31,19 @@ export class WizardService {
    */
   public application: Application;
 
-  
   /**
-   * Stores the selected step (index) to keep the state when chaning between
-   * vertical and horizontal stepper (due responsive).
+   * Indicates if the previous step in the wizard is currently accessible.
    *
-   * @memberof WizardComponent
+   * @memberof WizardService
    */
-  public selectedIndex: number;
+  public isPrevEnabled: boolean;
+
+  /**
+   * Indicates if the next step in the wizard is currently accessible.
+   *
+   * @memberof WizardService
+   */
+  public isNextEnabled: boolean;
 
   /**
    * Creates an instance of WizardService.
@@ -47,25 +52,97 @@ export class WizardService {
    * @memberof WizardService
    */
   constructor(private router: Router) {
-    this.selectedIndex = 0;
     this.application = new Application();
+    this.isPrevEnabled = true;
   }
 
   /**
    * Navigate in the wizard.
    *
    * @date 2019-01-26
-   * @param index of the section.
    * @param [id=this.id] id of the application, the default is the current one.
    * @memberof WizardService
    */
-  public navigate(index: number, id: number = this.id): void {
+  public navigate(id: number = this.id): void {
     this.router.navigate(
-      [ 'applications', id.toString(), MenuType.getPathFromIndex(index) ],
+      [ 'applications', id.toString() ],
       {
         replaceUrl: true
       }
     );
   }
 
+  /**
+   * Returns the cached object (if found) for the given type.
+   *
+   * @date 2019-02-03
+   * @param type of the object to be retrieved.
+   * @returns the object if it's cached, null otherwise.
+   * @memberof WizardService
+   */
+  public get(type: CacheType): any {
+    switch (type) {
+      case 'APPLICATION':
+        return this.getCachedApplication();
+      default:
+        // TODO: Implement all other cases.
+        return null;
+    }
+  }
+
+  /**
+   * Retrieves the application cached (in memory or local storage) if exists.
+   *
+   * @date 2019-02-03
+   * @private
+   * @returns the application cached if exists, null otherwise or if a parse exception occurrs.
+   * @memberof WizardService
+   */
+  private getCachedApplication(): Application {
+    if (this.application) {
+      return this.application;
+    }
+    const applicationJSON = localStorage.getItem('APPLICATION');
+    if (!Utils.isEmptyString(applicationJSON)) {
+      try {
+        const application = JSON.parse(applicationJSON);
+        return new Application(application.id, application.name, application.description, application.idUser);
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Caches the given object for the given type.
+   *
+   * @date 2019-02-03
+   * @param type {@link CacheType} of the object to be cached.
+   * @param data to be cached.
+   * @memberof WizardService
+   */
+  public cache(type: CacheType, data: any): void {
+    switch (type) {
+      case 'APPLICATION':
+        this.application = data;
+        break;
+    }
+    localStorage.setItem(type, JSON.stringify(data));
+  }
+
+  /**
+   * Removes all elements from wizard cache.
+   *
+   * @date 2019-02-03
+   * @memberof WizardService
+   */
+  public clearCache(): void {
+    this.application = new Application();
+    localStorage.removeItem('APPLICATION');
+    // TODO: Clear all other items.
+  }
+
 }
+
+export type CacheType = 'APPLICATION' | 'GATEWAY' | 'SENSOR' | 'PROCESS';

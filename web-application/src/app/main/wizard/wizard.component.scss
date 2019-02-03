@@ -4,3 +4,8 @@
         margin-top: 106px;
     }
 }
+
+::ng-deep .mat-horizontal-stepper-header,
+::ng-deep .mat-vertical-stepper-header {
+    pointer-events: none !important;
+}

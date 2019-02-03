@@ -84,14 +84,10 @@ export class MenuTree {
         const appAsMenu = new MenuItem(
           application.idApplication,
           application.name,
-          [ ...applicationsParent.path, application.idApplication.toString(), MenuType.getPath(MenuType.APPLICATION) ],
+          [ ...applicationsParent.path, application.idApplication.toString() ],
           'cloud_queue', 2, applicationsParent, null);
         items.push(appAsMenu);
-        const subMenus = Utils.getApplicationSubMenu(appAsMenu);
-        appAsMenu.children = subMenus;
-        for (const subMenu of subMenus) {
-          items.push(subMenu);
-        }
+        applicationsParent.children.push(appAsMenu);
       }
     }
     return items;

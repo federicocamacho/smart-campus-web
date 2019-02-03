@@ -47,12 +47,12 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private toasty: ToastyService,
     public wizard: WizardService) {
-    super();
+    super(); 
   }
 
   /**
-   * Component's lifecycle onInit method, used to observe the device's width
-   * and parameters to execute all REST services required for the section.
+   * Component's lifecycle onInit method, used to observe the device's width.
+   * And retrieve from cache/api the required object.
    *
    * @date 2019-01-25
    * @memberof WizardComponent
@@ -64,28 +64,21 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
         map(value => value.matches),
         takeUntil(this.destroyed))
       .subscribe(isMobile => this.isMobile = isMobile);
-    
-    this.route.paramMap
-      .pipe(
-        takeUntil(this.destroyed))
-      .subscribe(paramMap => {
-        const newId = Number(paramMap.get('id'));
-        if (this.wizard.id !== newId || this.wizard.id === 0) {
-          // The opened application changed.
-          this.wizard.id = newId;
-          this.clearOnChange();
-          if (this.wizard.id !== 0) {
-            this.getApplicationById(newId);
-            return;
+
+      this.route.paramMap
+        .pipe(
+          takeUntil(this.destroyed))
+        .subscribe(paramMap => {
+          const newId = Number(paramMap.get('id'));
+          if (this.wizard.id !== newId || this.wizard.id === 0) {
+            // The opened application changed or is 'create' mode.
+            this.wizard.id = newId;
+            this.wizard.clearCache();
           }
-        }
-        const newIndex = MenuType.getIndexFromPath(paramMap.get('section'));
-        if (this.wizard.selectedIndex !== newIndex) {
-          // The section changed.
-          this.wizard.selectedIndex = newIndex;
-        }
-        this.appService.isBusyGlobally = false;
-      });
+          this.clearOnChange();
+          this.getApplication(newId);
+
+        });
   }
 
   /**
@@ -97,8 +90,8 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
   ngOnDestroy() {
     super.ngOnDestroy();
     this.clearOnChange();
+    // this.wizard.clearCache();
     this.wizard.id = null;
-    this.wizard.selectedIndex = null;
   }
 
   /**
@@ -107,10 +100,10 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
    * @date 2019-01-25
    * @memberof WizardComponent
    */
-  public onSectionSaved(): void {
+  public onSectionSaved(index: number): void {
     this.appService.isBusyGlobally = true;
     const application = this.wizard.application;
-    switch (this.wizard.selectedIndex) {
+    switch (index) {
       case 0:
         if (!application || Utils.anyIsEmptyString(application.name, application.description)) {
           return;
@@ -141,28 +134,6 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
   }
 
   /**
-   * Triggered when pressing the 'Previous' button.
-   *
-   * @date 2019-01-27
-   * @memberof WizardComponent
-   */
-  public onPrev(): void {
-    this.appService.isBusyGlobally = true;
-    this.wizard.navigate((this.wizard.selectedIndex - 1) % 4);
-  }
-
-  /**
-   * Triggered when pressing the 'Next' button.
-   *
-   * @date 2019-01-27
-   * @memberof WizardComponent
-   */
-  public onNext(): void {
-    this.appService.isBusyGlobally = true;
-    this.wizard.navigate((this.wizard.selectedIndex + 1) % 4);
-  }
-
-  /**
    * Event handler used when changing the section opened.
    *
    * @date 2019-01-27
@@ -170,7 +141,48 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
    * @memberof WizardComponent
    */
   public onSelectionChanged(event: StepperSelectionEvent): void {
-    this.wizard.navigate(event.selectedIndex);
+    console.log('selection changed', event.previouslySelectedIndex, event.selectedIndex);
+    switch (event.selectedIndex) {
+      case 0:
+        this.getApplication(this.wizard.id);
+        break;
+      default:
+        // TODO: Implement other steps.
+        this.wizard.isPrevEnabled = true;
+        this.wizard.isNextEnabled = false;
+        break;
+    }
+  }
+
+  private getApplication(id: number): void {
+    const application = this.wizard.get('APPLICATION');
+    if (application) {
+      this.wizard.isNextEnabled = true;
+    } else if (this.wizard.id !== 0) {
+      this.getApplicationById(id);
+    } else {
+      this.wizard.isNextEnabled = false;
+    }
+  }
+
+  private getApplicationById(id: number): void {
+    this.applicationService.getApplicationById(id)
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(
+        (res: HttpResponse<Application>) => {
+          this.wizard.cache('APPLICATION', res.body);
+          this.appService.isBusyGlobally = false;
+          this.wizard.isNextEnabled = true;
+        },
+        (err: ApiError) => {
+          this.toasty.error(Utils.buildToastyConfig('Aplicación', 
+            `La aplicación no pudo ser obtenida: ${ err.message }`));
+          this.appService.isBusyGlobally = false;
+          this.wizard.isNextEnabled = false;
+        }
+      );
   }
 
   /**
@@ -193,39 +205,15 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
           this.applicationService.applications.push(applicationCreated);
           const newItem = this.appService.menu.mapApplicationsToMenuItems([ applicationCreated ]);
           this.appService.menu.insertForType(MenuType.APPLICATIONS, newItem);
+          this.wizard.isNextEnabled = true;
           this.appService.isBusyGlobally = false;
         },
         (err: ApiError) => {
           this.toasty.error(Utils.buildToastyConfig('APPLICACIÓN',
             `Ocurrió un error creando la aplicación ${ application.name }: ${ err.message }`));
+          this.wizard.isNextEnabled = false;
           this.appService.isBusyGlobally = false;
         }
       );
   }
-
-    /**
-   * Retrieves the application for the given id. Required when initializing the application section.
-   *
-   * @date 2019-01-30
-   * @param id of the application to be retrieved.
-   * @memberof WizardService
-   */
-  public getApplicationById(id: number): void {
-    this.applicationService.getApplicationById(id)
-      .pipe(
-        take(1),
-        takeUntil(this.destroyed))
-      .subscribe(
-        (res: HttpResponse<Application>) => {
-          this.wizard.application = res.body;
-          this.appService.isBusyGlobally = false;
-        },
-        (err: ApiError) => {
-          this.toasty.error(Utils.buildToastyConfig('Aplicación', 
-            `La aplicación no pudo ser obtenida: ${ err.message }`));
-          this.appService.isBusyGlobally = false;
-        }
-      );
-  }
-  
 }

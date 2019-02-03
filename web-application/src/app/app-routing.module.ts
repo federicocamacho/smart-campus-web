@@ -49,7 +49,7 @@ const routes: Routes = [
     canActivate: [ AuthGuard ]
   },
   {
-    path: 'applications/:id/:section',
+    path: 'applications/:id',
     pathMatch: 'full',
     component: WizardComponent,
     canActivate: [ AuthGuard ]

@@ -16,14 +16,10 @@ export class WizardBtnsComponent {
 
   @Input('isSaveVisible') isSaveVisible: boolean;
 
-  @Input('section') section: number;
+  @Input('isPrevEnabled') isPrevEnabled: boolean;
 
-  @Input('length') length: number;
-
+  @Input('isNextEnabled') isNextEnabled: boolean;
+  
   @Output('save') save = new EventEmitter();
-
-  @Output('next') next = new EventEmitter();
-
-  @Output('prev') prev = new EventEmitter();
-
+  
 }
