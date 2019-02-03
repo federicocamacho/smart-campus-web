@@ -20,7 +20,7 @@
     [menu]="appService.menu"
     (menuClosed)="closeMenu()">
   </sc-menu>
-  <div fxFlex [fxHide.xs]="appService.isMenuOpened" style="overflow-x: hidden">
+  <div fxFlex style="overflow-x: hidden">
     <router-outlet></router-outlet>
   </div>
 </div>
