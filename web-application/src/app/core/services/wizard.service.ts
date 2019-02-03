@@ -99,7 +99,7 @@ export class WizardService {
    * @memberof WizardService
    */
   private getCachedApplication(): Application {
-    if (this.application) {
+    if (this.application && this.application.idApplication) {
       return this.application;
     }
     const applicationJSON = localStorage.getItem('APPLICATION');
@@ -132,15 +132,18 @@ export class WizardService {
   }
 
   /**
-   * Removes all elements from wizard cache.
-   *
+   * Removes all elements from wizard cache if the current app id is different than the one stored.
+   * @param currentAppId the id of the application that's opened.
    * @date 2019-02-03
    * @memberof WizardService
    */
-  public clearCache(): void {
-    this.application = new Application();
-    localStorage.removeItem('APPLICATION');
-    // TODO: Clear all other items.
+  public clearCache(currentAppId: number): void {
+    const application: Application = this.get('APPLICATION');
+    if (!application || application.idApplication !== currentAppId) {
+      this.application = new Application();
+      localStorage.removeItem('APPLICATION');
+      // TODO: Clear all other items.
+    }
   }
 
 }

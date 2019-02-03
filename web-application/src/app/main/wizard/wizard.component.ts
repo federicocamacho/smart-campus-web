@@ -73,7 +73,7 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
           if (this.wizard.id !== newId || this.wizard.id === 0) {
             // The opened application changed or is 'create' mode.
             this.wizard.id = newId;
-            this.wizard.clearCache();
+            this.wizard.clearCache(newId);
           }
           this.clearOnChange();
           this.getApplication(newId);
