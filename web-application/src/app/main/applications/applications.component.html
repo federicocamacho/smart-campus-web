@@ -6,15 +6,10 @@
         (create)="createApplication()">
     </sc-section-title>
     <div
-        class="cards-container default-shadow"
+        class="cards-container"
         fxLayout="row wrap"
-        fxLayoutAlign="space-evenly center"
-        infiniteScroll
-        [infiniteScrollDistance]="0.002"
-        [infiniteScrollThrottle]="500"
-        (scrolled)="onLoadMore()"
-        [scrollWindow]="true">
-        <ng-container *ngFor="let application of applicationService.applications; index as i">
+        fxLayoutAlign="space-evenly center">
+        <ng-container *ngFor="let application of appService.applications; index as i">
             <sc-object-card
                 imagePath="assets/imgs/cpu.png"
                 [title]="application?.name"

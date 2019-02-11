@@ -97,10 +97,7 @@ export class Utils {
    * @memberof AppService
    */
   public static populateApplications(applications: Application[], parent?: MenuItem): MenuItem[] {
-    if (!parent) {
-      parent = new MenuItem(0, MenuType.APPLICATIONS, ['/applications'], 'computer', 1, null, [], true);
-    }
-    const menu = [ parent ];
+    const menu = [];
     if (!this.isEmptyArray(applications)) {
       for (const application of applications) {
         const appAsMenu = new MenuItem(

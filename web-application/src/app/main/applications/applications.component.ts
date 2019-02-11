@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 
 import { AppService } from '../../app.service';
-import { ApplicationService } from 'src/app/core/api/application.service';
 import { WizardService } from '../../core/services/wizard.service';
 
 @Component({
@@ -15,13 +14,11 @@ export class ApplicationsComponent {
    * Creates an instance of ApplicationsComponent.
    * @date 2019-01-29
    * @param appService Application's main service.
-   * @param applicationService Applications (entity) service.
    * @param wizard Wizard main service.
    * @memberof ApplicationsComponent
    */
   constructor(
-    private appService: AppService,
-    public applicationService: ApplicationService,
+    public appService: AppService,
     private wizard: WizardService) { }
 
   /**
@@ -54,17 +51,6 @@ export class ApplicationsComponent {
    */
   public openApplication(appId: number): void {
     this.wizard.navigate(appId);
-  }
-
-  /**
-   * Trigerred when lazy loading is executed in the applications list, retrieves the next page of 'Applications'.
-   *
-   * @date 2019-01-28
-   * @memberof MenuComponent
-   */
-  public onLoadMore(): void {
-    const pageToLoad = this.appService.lastMenuPageLoaded + 1;
-    this.appService.populateMenu(this.appService.user.id, pageToLoad);
   }
 
 }

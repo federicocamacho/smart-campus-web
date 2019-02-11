@@ -25,7 +25,8 @@
   </div>
 </div>
 <sc-user-card scClickOutside
-  [ngStyle]="{ 'visibility': appService.isUserCardOpened && appService.isLogedIn ? 'visible' : 'hidden' }"
+  *ngIf="appService.isLogedIn"
+  [ngStyle]="{ 'visibility': appService.isUserCardOpened ? 'visible' : 'hidden' }"
   (clickOutside)="closeUserCard($event)"
   imageUrl="assets/imgs/user.png"
   [username]="appService.user?.username"

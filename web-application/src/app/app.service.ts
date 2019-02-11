@@ -15,6 +15,7 @@ import { MenuType } from './core/utils/menu-type';
 import { User } from './core/models/user';
 import { UserCookie } from './core/models/user-cookie';
 import { Utils } from './core/utils/utils';
+import { MenuItem } from './core/models/menu-item';
 
 /**
  * Service to handle all app-wide data and event handlers.
@@ -26,6 +27,13 @@ import { Utils } from './core/utils/utils';
   providedIn: 'root'
 })
 export class AppService extends Cleanable {
+
+  /**
+   * Stores the User's application.
+   *
+   * @memberof ApplicationService
+   */
+  public applications: Application[] = [];
 
   /**
    * Represents if there's an operation in progress that should block the user interaction.
@@ -55,13 +63,6 @@ export class AppService extends Cleanable {
    * @memberof AppService
    */
   public isMenuOpened: boolean;
-  
-  /**
-   * Indicates the last page loaded of the menu (applications).
-   *
-   * @memberof MenuTree
-   */
-  public lastMenuPageLoaded: number;
 
   /**
    * Stores all the side menu elements.
@@ -93,7 +94,6 @@ export class AppService extends Cleanable {
     this.isBusyGlobally = false;
     this.isUserCardOpened = false;
     this.isMenuOpened = true;
-    this.lastMenuPageLoaded = -1; // nothing loaded yet.
   }
 
   /**
@@ -101,28 +101,20 @@ export class AppService extends Cleanable {
    *
    * @date 2019-01-25
    * @param userId id of the user currently logged in.
-   * @param [page=0] number of the page to be retrieved (Pageable REST service).
    * @memberof AppService
    */
-  public populateMenu(userId: number, page: number = 0): void {
-    this.applicationService.getApplicationsByUser(userId, page)
+  public populateMenu(userId: number): void {
+    const parent = new MenuItem(0, MenuType.APPLICATIONS, ['/applications'], 'computer', 1, null, [], true);
+    this.menu.items = [ parent ];
+    this.applicationService.getApplicationsByUser(userId)
       .pipe(
         take(1),
         takeUntil(this.destroyed))
       .subscribe(
         (res: HttpResponse<Application[]>) => {
           const applications = res.body;
-          this.applicationService.applications = [ ...this.applicationService.applications, ...applications ];
-          if (page === 0) {
-            this.menu.items = Utils.populateApplications(applications);
-          } else if (!Utils.isEmptyArray(applications)) {
-            const items = Utils.populateApplications(applications, this.menu.items[0]);
-            // remove the duplicated 'Applications' item before inserting.
-            items.shift();
-            // insert the items in the position needed.
-            this.menu.insertForType(MenuType.APPLICATION, items);
-          }
-          this.lastMenuPageLoaded = page;
+          this.menu.items = [ ...this.menu.items, ...Utils.populateApplications(applications, parent) ];
+          this.applications = res.body;
           this.isBusyGlobally = false;
         },
         (err: ApiError) => {

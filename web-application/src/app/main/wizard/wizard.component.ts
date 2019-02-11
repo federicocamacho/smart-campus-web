@@ -1,7 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
+import { MatStepper } from '@angular/material';
 import { StepperSelectionEvent } from '@angular/cdk/stepper';
 import { map, takeUntil, take } from 'rxjs/operators';
 
@@ -29,6 +30,10 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
    * @memberof WizardComponent
    */
   public isMobile: boolean;
+
+  @ViewChild('horizontalStepper') horizontalStepper: MatStepper;
+
+  @ViewChild('verticalStepper') verticalStepper: MatStepper;
 
   /**
    * Creates an instance of WizardComponent.
@@ -202,7 +207,7 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
           this.toasty.success(Utils.buildToastyConfig('APLICACIÓN',
             `Aplicación ${ application.name } creada satisfactoriamente`));
           const applicationCreated = res.body;
-          this.applicationService.applications.push(applicationCreated);
+          this.appService.applications.push(applicationCreated);
           const newItem = this.appService.menu.mapApplicationsToMenuItems([ applicationCreated ]);
           this.appService.menu.insertForType(MenuType.APPLICATIONS, newItem);
           this.wizard.isNextEnabled = true;
@@ -216,4 +221,44 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
         }
       );
   }
+
+  public updateApplication(application: Application): void {
+    this.applicationService.updateApplication(application.idApplication, application)
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(
+        (res: HttpResponse<Application>) => {
+          this.toasty.success(Utils.buildToastyConfig('APLICACIÓN',
+            `Aplicación ${ application.name } actualizada satisfactoriamente`));
+        },
+        (err: ApiError) => {
+          // TODO: Implement this.
+        }
+      );
+  }
+
+  private getActivatedStepper(): MatStepper {
+    if (this.horizontalStepper) {
+      return this.horizontalStepper;
+    }
+    if (this.verticalStepper) {
+      return this.verticalStepper;
+    }
+    
+    return null;
+  }
+
+  public onPrevious(): void {
+    this.getActivatedStepper().previous();
+  }
+
+  public onNext(): void {
+    this.getActivatedStepper().next();
+  }
+
+  public toStep(step: number): void {
+    this.getActivatedStepper().selectedIndex = step;
+  }
+
 }

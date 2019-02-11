@@ -1,11 +1,13 @@
 <div class="btn-container default-shadow" flexLayout="row" fxLayoutAlign="end center">
-  <button mat-stroked-button matStepperPrevious
+  <button mat-stroked-button
+    (click)="previous.emit()"
     [disabled]="!isPrevEnabled"
     matTooltip="Los cambios se perderán si no son guardados previamente.">
     <mat-icon>keyboard_arrow_left</mat-icon>
     <span class="btn-name">Anterior</span>
   </button>
-  <button mat-stroked-button matStepperNext
+  <button mat-stroked-button
+    (click)="next.emit()"
     [disabled]="!isNextEnabled"
     matTooltip="Los cambios se perderán si no son guardados previamente.">
     <mat-icon>keyboard_arrow_right</mat-icon>

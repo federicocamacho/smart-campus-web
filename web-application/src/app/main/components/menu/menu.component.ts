@@ -113,15 +113,4 @@ export class MenuComponent extends Cleanable implements OnInit {
     this.isMobile = isMobile;
   }
 
-  /**
-   * Trigerred when lazy loading is executed in the menu, retrieves the next page of 'Applications'.
-   *
-   * @date 2019-01-28
-   * @memberof MenuComponent
-   */
-  public onLoadMore(): void {
-    const pageToLoad = this.appService.lastMenuPageLoaded + 1;
-    this.appService.populateMenu(this.appService.user.id, pageToLoad);
-  }
-
 }

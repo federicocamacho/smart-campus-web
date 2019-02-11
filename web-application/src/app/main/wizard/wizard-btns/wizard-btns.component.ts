@@ -21,5 +21,9 @@ export class WizardBtnsComponent {
   @Input('isNextEnabled') isNextEnabled: boolean;
   
   @Output('save') save = new EventEmitter();
+
+  @Output('previous') previous = new EventEmitter();
+
+  @Output('next') next = new EventEmitter();
   
 }
