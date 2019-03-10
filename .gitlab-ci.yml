@@ -1,3 +1,9 @@
+image: trion/ng-cli-karma
+
+cache:
+  paths:
+    - web-application/node_modules/
+
 stages:
     - build
     - test
@@ -5,14 +11,15 @@ stages:
 build:
     stage: build
     script:
-        - echo "building"
-        - mkdir build
-        - touch build/info.txt
+        - cd web-application
+        - rm package-lock.json
+        - npm install
+        - ./node_modules/@angular/cli/bin/ng build --aot --prod
     artifacts:
         paths:
-            - build/
+            - web-application/
 test:
     stage: test
     script:
         - echo "Testing"
-        - test -f "build/info.txt"
+        - test -f "web-application/node_modules/dist/index.html"
