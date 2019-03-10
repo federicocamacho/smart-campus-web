@@ -19,7 +19,6 @@ dockerBuilder:
     stage: dockerBuilder
     script:
         - echo "Building docker image"
-        - systemctl start docker
         - cd web-application
         - mv dist/web-application .
         - rm -rf dist
