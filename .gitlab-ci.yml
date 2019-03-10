@@ -30,6 +30,7 @@ dockerBuilder:
         - mv dist/web-application .
         - rm -rf dist
         - mv web-application dist
+        - service docker start
         - dt=$(date '+%Y%m%d%H%M%S');
         - docker login -u josedrojasa -p Hollowichigo428
         - docker build . -t josedrojasa/thesis-front:"$dt"
