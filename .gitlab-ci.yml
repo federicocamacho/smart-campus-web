@@ -9,7 +9,7 @@ build:
         - mkdir build
         - touch build/info.txt
 test:
-    state: test
+    stage: test
     script:
         - echo "Testing"
         - test -f "build/info.txt"
