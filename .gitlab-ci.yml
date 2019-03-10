@@ -28,6 +28,6 @@ dockerBuilder:
         - echo "Building docker image"
         - cd web-application
         - dt=$(date '+%Y%m%d%H%M%S');
-        - docker login -u josedrojasa -p Holllowichigo428
+        - docker login -u josedrojasa -p Hollowichigo428
         - docker build . -t josedrojasa/thesis-front:"$dt"
         - docker push josedrojasa/thesis-front:"$dt"
