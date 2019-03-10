@@ -1,11 +1,10 @@
-image: trion/ng-cli-karma
-
 stages:
     - build
     - test
     - dockerBuilder
     
 build:
+    image: trion/ng-cli-karma
     stage: build
     script:
         - cd web-application
@@ -20,8 +19,6 @@ test:
     script:
         - echo "Testing"
         - test -f "web-application/dist/web-application/index.html"
-        
-image: docker:stable
 
 dockerBuilder:
     stage: dockerBuilder
