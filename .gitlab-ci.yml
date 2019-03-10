@@ -19,6 +19,7 @@ dockerBuilder:
     stage: dockerBuilder
     script:
         - echo "Building docker image"
+        - dockerd
         - cd web-application
         - mv dist/web-application .
         - rm -rf dist
