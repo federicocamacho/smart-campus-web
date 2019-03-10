@@ -3,6 +3,7 @@ image: trion/ng-cli-karma
 stages:
     - build
     - test
+    - dockerBuilder
     
 build:
     stage: build
@@ -10,11 +11,24 @@ build:
         - cd web-application
         - npm install
         - ./node_modules/@angular/cli/bin/ng build --aot --prod
+        - rm -rf node_modules
     artifacts:
         paths:
-            - web-application/dist/
+            - web-application/
 test:
     stage: test
     script:
         - echo "Testing"
-        - test -f "web-application/dist/index.html"
+        - test -f "web-application/dist/web-application/index.html"
+        
+image: docker:stable
+
+dockerBuilder:
+    stage: dockerBuilder
+    script:
+        - echo "Building docker image"
+        - cd web-application
+        - dt=$(date '+%Y%m%d%H%M%S');
+        - docker login -u josedrojasa -p Holllowichigo428
+        - docker build . -t josedrojasa/thesis-front:"$dt"
+        - docker push josedrojasa/thesis-front:"$dt"
