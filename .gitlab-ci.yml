@@ -12,9 +12,9 @@ build:
         - ./node_modules/@angular/cli/bin/ng build --aot --prod
     artifacts:
         paths:
-            - web-application/
+            - web-application/dist/
 test:
     stage: test
     script:
         - echo "Testing"
-        - test -f "web-application/node_modules/dist/index.html"
+        - test -f "web-application/dist/index.html"
