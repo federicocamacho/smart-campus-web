@@ -1,6 +1,9 @@
 stages:
     - build
     - dockerBuilder
+    
+services:
+  - docker:dind
    
 build:
     image: trion/ng-cli-karma
