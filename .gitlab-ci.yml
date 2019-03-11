@@ -41,7 +41,7 @@ deploy:
         - curl -L https://git.io/getLatestIstio | sh -
         - deployment1=$(cat deployment/deployment_1.yaml)
         - deployment2=$(cat deployment/deployment_2.yaml)
-        - version=$(cat version/version)
+        - version=$(cat deployment/version)
         - echo -n "$deployment1" > deployment.yaml
         - echo "$version" >> deployment.yaml
         - echo "$deployment2" >> deployment.yaml
