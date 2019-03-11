@@ -14,6 +14,8 @@ build:
         - npm install
         - ./node_modules/@angular/cli/bin/ng build --aot --prod
         - rm -rf node_modules
+        - dt=$(date '+%Y%m%d%H%M%S');
+        - echo -n "$dt" > ../deployment/version
     artifacts:
         paths:
             - web-application/
@@ -25,16 +27,10 @@ publish:
     script:
         - echo "Building docker image"
         - cd web-application
-        - dt=$(date '+%Y%m%d%H%M%S');
-        - mkdir version
-        - touch version/version
-        - echo -n "$dt" > version/version
+        - version=$(cat deployment/version)
         - docker login -u josedrojasa -p Hollowichigo428
-        - docker build . -t josedrojasa/thesis-front:"$dt"
-        - docker push josedrojasa/thesis-front:"$dt"
-    artifacts:
-        paths:
-            - version/ 
+        - docker build . -t josedrojasa/thesis-front:"$version"
+        - docker push josedrojasa/thesis-front:"$version"
 
 deploy:
     image: openshift/origin-cli
