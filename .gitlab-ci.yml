@@ -1,6 +1,6 @@
 stages:
     - build
-    - dockerBuilder
+    - publish
     
 services:
   - docker:dind
@@ -17,9 +17,9 @@ build:
         paths:
             - web-application/
 
-dockerBuilder:
+publish:
     image: docker:latest
-    stage: dockerBuilder
+    stage: publish
     script:
         - echo "Building docker image"
         - cd web-application
