@@ -27,6 +27,7 @@ publish:
         - cd web-application
         - dt=$(date '+%Y%m%d%H%M%S');
         - mkdir version
+        - touch version/version
         - echo -n "$dt" > version/version
         - docker login -u josedrojasa -p Hollowichigo428
         - docker build . -t josedrojasa/thesis-front:"$dt"
