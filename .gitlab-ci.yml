@@ -1,6 +1,7 @@
 stages:
     - build
     - publish
+    - deploy
     
 services:
   - docker:dind
@@ -27,3 +28,19 @@ publish:
         - docker login -u josedrojasa -p Hollowichigo428
         - docker build . -t josedrojasa/thesis-front:"$dt"
         - docker push josedrojasa/thesis-front:"$dt"
+
+deploy:
+    image: openshift/origin-cli
+    stage: deploy
+    script:
+        - oc login "https://serveo.net:8443" --token="eyJhbGciOiJSUzI1NiIsImtpZCI6IiJ9.eyJpc3MiOiJrdWJlcm5ldGVzL3NlcnZpY2VhY2NvdW50Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9uYW1lc3BhY2UiOiJpb3QtZnJvbnQiLCJrdWJlcm5ldGVzLmlvL3NlcnZpY2VhY2NvdW50L3NlY3JldC5uYW1lIjoiZ2l0bGFiLWNpLXRva2VuLXBucDU2Iiwia3ViZXJuZXRlcy5pby9zZXJ2aWNlYWNjb3VudC9zZXJ2aWNlLWFjY291bnQubmFtZSI6ImdpdGxhYi1jaSIsImt1YmVybmV0ZXMuaW8vc2VydmljZWFjY291bnQvc2VydmljZS1hY2NvdW50LnVpZCI6Ijc5NGU2NDJlLTQzYTgtMTFlOS04NWIzLTUyNTQwMDEwZTEwYyIsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDppb3QtZnJvbnQ6Z2l0bGFiLWNpIn0.ID2XPmzHQhmX26_Cfc7liujupLDNuev9oOamSbw2U8JtxHTBR9ZIFxdj_Na6N4xqWQw5rRPXgB6uKTRkqFaAyitcO2IpIGarxWK-uM6YlSanPL_yjW0k1Fx8RHl5OR_jPb1bidCLG4qJg2luJO8LibYoN4Hu5GJ3KuQbgwikaNXEC0xEHtV77ol4DljPQuxicJN895eoN0CSdBxZy3WgoD3OcKmueeIf3HroOTnIrennRNbGdTmY2VtYV-Xd1kG5soENAXj-r8VZfKZXh0Hhbj1wo8cEpgQvy4B6OP-45nV0Lrx7MMsaZbrb7PDodcfiZ9U4B7XGwWU_FtQ3NHfg5A" --insecure-skip-tls-verify
+        - oc project iot-front
+        - curl -L https://git.io/getLatestIstio | sh -
+        - deployment1=$(cat deployment_1.yaml)
+        - deployment2=$(cat deployment_2.yaml)
+        - version=$(cat version)
+        - echo -n "$deployment1" > deployment.yaml
+        - echo "$version" >> deployment.yaml
+        - echo "$deployment2" >> deployment.yaml
+        - ./istio-1.0.6/bin/istioctl kube-inject -f deployment.yaml > deployment-envoy.yaml
+        - oc replace -f deployment.yaml
