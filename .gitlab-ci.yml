@@ -18,6 +18,7 @@ build:
             - web-application/
 
 dockerBuilder:
+    image: docker:latest
     stage: dockerBuilder
     script:
         - echo "Building docker image"
