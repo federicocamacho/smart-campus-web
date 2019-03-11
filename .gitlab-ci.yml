@@ -26,13 +26,14 @@ publish:
         - echo "Building docker image"
         - cd web-application
         - dt=$(date '+%Y%m%d%H%M%S');
-        - echo -n "$dt" > deployment/version
+        - mkdir version
+        - echo -n "$dt" > version/version
         - docker login -u josedrojasa -p Hollowichigo428
         - docker build . -t josedrojasa/thesis-front:"$dt"
         - docker push josedrojasa/thesis-front:"$dt"
     artifacts:
         paths:
-            - deployment/ 
+            - version/ 
 
 deploy:
     image: openshift/origin-cli
@@ -43,7 +44,7 @@ deploy:
         - curl -L https://git.io/getLatestIstio | sh -
         - deployment1=$(cat deployment/deployment_1.yaml)
         - deployment2=$(cat deployment/deployment_2.yaml)
-        - version=$(cat deployment/version)
+        - version=$(cat version/version)
         - echo -n "$deployment1" > deployment.yaml
         - echo "$version" >> deployment.yaml
         - echo "$deployment2" >> deployment.yaml
