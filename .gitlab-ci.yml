@@ -31,7 +31,8 @@ publish:
         - docker build . -t josedrojasa/thesis-front:"$dt"
         - docker push josedrojasa/thesis-front:"$dt"
     artifacts:
-        - deployment/ 
+        paths:
+            - deployment/ 
 
 deploy:
     image: openshift/origin-cli
