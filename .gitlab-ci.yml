@@ -45,5 +45,5 @@ deploy:
         - echo -n "$deployment1" > deployment.yaml
         - echo "$version" >> deployment.yaml
         - echo "$deployment2" >> deployment.yaml
-        - ./istio-1.0.6/bin/istioctl kube-inject -f deployment.yaml > deployment-envoy.yaml
+  #      - ./istio-1.0.6/bin/istioctl kube-inject -f deployment.yaml > deployment-envoy.yaml
         - oc replace -f deployment.yaml
