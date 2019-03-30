@@ -1,8 +1,7 @@
 .vs
-/web-application/node_modules
-/web-application/.vscode
 /workspace
 dist
 /docs
-/package-lock.json
-/web-application/package-lock.json
+package-lock.json
+node_modules
+.vscode
