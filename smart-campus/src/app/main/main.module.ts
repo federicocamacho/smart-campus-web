@@ -8,6 +8,7 @@ import { DashboardTemplateComponent } from './templates/dashboard-template/dashb
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MaterialModule } from '../libs/material.module';
 import { AppRoutingModule } from '../app-routing.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AppRoutingModule } from '../app-routing.module';
   imports: [
     AppRoutingModule,
     CommonModule,
-    MaterialModule
+    MaterialModule,
+    SharedModule
   ]
 })
 export class MainModule { }
