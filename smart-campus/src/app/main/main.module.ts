@@ -7,6 +7,7 @@ import { PasswordRecoveryComponent } from './components/password-recovery/passwo
 import { DashboardTemplateComponent } from './templates/dashboard-template/dashboard-template.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MaterialModule } from '../libs/material.module';
+import { AppRoutingModule } from '../app-routing.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { MaterialModule } from '../libs/material.module';
     NotFoundComponent
   ],
   imports: [
+    AppRoutingModule,
     CommonModule,
     MaterialModule
   ]

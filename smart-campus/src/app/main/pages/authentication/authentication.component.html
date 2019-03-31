@@ -10,10 +10,6 @@
       <img src="assets/icons/icon.png" alt="Smart Campus" class="brand-img">
       <span class="brand-name">SMART CAMPUS</span>
     </div>
-    <div [ngSwitch]="loginSection">
-        <div *ngSwitchCase="'LOGIN'">
-          <sc-login></sc-login>
-        </div>
-    </div>
+    <router-outlet></router-outlet>
   </div>
 </div>
