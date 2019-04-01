@@ -22,7 +22,7 @@ export class User {
    * @param email of the user.
    * @param admin indicates if the user is an administrator or not.
    */
-  constructor(id: number, name: string, username: string, email: string, admin: boolean) {
+  constructor(id?: number, name?: string, username?: string, email?: string, admin?: boolean) {
     this.id = id;
     this.email = email;
     this.name = name;

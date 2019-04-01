@@ -1,3 +1,67 @@
-<p>
-  login works!
-</p>
+<form class="login-form" #loginForm="ngForm" (ngSubmit)="doLogin()">
+  <div scAnimated="fadeIn" class="border-container default-shadow">
+    <!-- Username field -->
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <input 
+        class="login-input" name="username" #username="ngModel"
+        type="text" placeholder="Usuario"
+        required="true" minlength="4"
+        [(ngModel)]="login.username"/>
+      <div  *ngIf="appService.isModelInvalid(username)">
+        <mat-icon
+          class="validation-icon"
+          *ngIf="username.errors?.required"
+          matTooltip="Nombre de usuario requerido"
+          matTooltipClass="validation-tooltip">
+          report_problem
+        </mat-icon>
+        <mat-icon
+          class="validation-icon"
+          *ngIf="username.errors?.minlength"
+          matTooltip="Nombre de usuario debe tener minimo 4 caracteres"
+          matTooltipClass="validation-tooltip">
+          report_problem
+        </mat-icon>
+      </div>
+    </div>
+    <hr class="login-line">
+    <!-- Password field -->
+    <div fxLayout="row" fxLayoutAlign="center center">
+      <input 
+        class="login-input" name="password" #password="ngModel"
+        type="password" placeholder="Contraseña"
+        required="true" minlength="4"
+        [(ngModel)]="login.password"/>
+      <div  *ngIf="appService.isModelInvalid(password)">
+        <mat-icon
+          class="validation-icon"
+          *ngIf="password.errors?.required"
+          matTooltip="Contraseña requerida"
+          matTooltipClass="validation-tooltip">
+          report_problem
+        </mat-icon>
+        <mat-icon
+          class="validation-icon"
+          *ngIf="password.errors?.minlength"
+          matTooltip="Contraseña debe tener minimo 4 caracteres"
+          matTooltipClass="validation-tooltip">
+          report_problem
+        </mat-icon>
+      </div>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="center center" class="default-shadow">
+    <button mat-flat-button scAnimated="fadeIn"
+      class="login-button box-shadow" 
+      type="submit"
+      [disabled]="appService.isFormInvalid(loginForm)"
+      color="primary" 
+      style="color: white">
+      Iniciar sesión
+    </button>
+  </div>
+</form>
+<div fxLayout="row login-links" fxLayoutAlign="center center"  style="margin-top: 8px;" >
+  <a class="login-link" [routerLink]="['/signin']">Registrarse</a>
+  <a class="login-link" [routerLink]="['/password']">Olvidaste tu Contraseña</a>
+</div>

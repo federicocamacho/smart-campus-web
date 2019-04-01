@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  adminService: 'http://localhost:8090'
 };

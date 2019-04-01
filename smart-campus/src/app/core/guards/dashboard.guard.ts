@@ -11,7 +11,7 @@ export class DashboardGuard implements CanActivate {
   constructor(private appService: AppService, private router: Router) {}
 
   canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
-      if (this.appService.user) {
+      if (this.appService.isUserAuthenticated()) {
         return true;
       }
 
