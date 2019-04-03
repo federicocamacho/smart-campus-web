@@ -12,7 +12,7 @@ export class Application {
    *
    * @memberof Application
    */
-  public idApplication: number;
+  public id: number;
 
   /**
    * Application name.
@@ -26,7 +26,7 @@ export class Application {
    *
    * @memberof Application
    */
-  public idUser: number;
+  public userId: number;
 
   /**
    * Applciation description
@@ -41,14 +41,14 @@ export class Application {
    * @param id of the Application.
    * @param name of the Application.
    * @param description of the Application.
-   * @param idUser that owns the of the Application.
+   * @param userId that owns the of the Application.
    * @memberof Application
    */
-  constructor(id?: number, name?: string, description?: string, idUser?: number) {
-    this.idApplication = id;
+  constructor(id?: number, name?: string, description?: string, userId?: number) {
+    this.id = id;
     this.name = name;
     this.description = description;
-    this.idUser = idUser;
+    this.userId = userId;
   }
 
 }

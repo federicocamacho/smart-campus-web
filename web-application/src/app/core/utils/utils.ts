@@ -101,9 +101,9 @@ export class Utils {
     if (!this.isEmptyArray(applications)) {
       for (const application of applications) {
         const appAsMenu = new MenuItem(
-          application.idApplication,
+          application.id,
           application.name,
-          [ '/applications', application.idApplication.toString() ],
+          [ '/applications', application.id.toString() ],
           'cloud_queue', 2, parent, null);
         menu.push(appAsMenu);
         parent.children.push(appAsMenu);

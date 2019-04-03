@@ -33,4 +33,17 @@ export class UserService {
     return this.http.get<ApiResponse>(`${environment.adminService}/users/pass/${email}`, Util.options());
   }
 
+  /**
+   * Consumes delete user by id REST service.
+   *
+   * @date 2018-12-31
+   * @param id of the user to be deleted.
+   * @returns an {@link Observable} with the response.
+   */
+  public deleteUser(id: number): Observable<ApiResponse> {
+    return this.http
+      .delete<ApiResponse>(`${environment.adminService}/users/user/${ id }`,
+      Util.options());
+  }
+
 }

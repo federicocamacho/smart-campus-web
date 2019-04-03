@@ -1,3 +1,42 @@
-<p>
-  dashboard-template works!
-</p>
+<header class="default-shadow">
+  <nav class="navbar" fxLayout="row" fxFlexFill>
+    <div
+      class="navbar-header"
+      (click)="goHome()">
+      <a class="navbar-brand" fxLayout="row" fxFlexFill fxLayoutAlign="start center">
+        <img src="assets/icons/icon-96x96.png" alt="Smart Campus Logo" class="brand-logo"/>
+        <div scAnimated="fadeIn" fxFlex
+          class="name-container"
+          fxHide.lt-sm
+          style="padding-left: 10px;">
+          <span class="brand-name">
+            SMART CAMPUS
+          </span>
+        </div>
+      </a>
+    </div>
+    <div class="navbar-collapse" fxFlex>
+      <ul class="navbar-nav" fxLayout="row" fxLayoutAlign="start stretch">
+        <li fxFlex fxHide.gt-xs></li>
+        <li fxFlex fxHide.lt-sm></li>
+        <li
+          class="nav-item user-item"
+          fxLayout="row" fxLayoutAlign="end stretch"
+          style="padding-right: 10px;"
+          (click)="dashboardService.isUserCardOpened = !isUserCardOpened">
+          <img [src]="userImgSrc" [alt]="userName" class="user-img" fxHide.lt-sm fxFlex="35px" />
+          <span class="user-name" fxFlex>{{ userName }}</span>
+          <mat-icon style="margin: auto" fxFlex="30px">keyboard_arrow_down</mat-icon>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<sc-user-card scClickOutside
+  [ngStyle]="{ 'visibility': isUserCardOpened ? 'visible' : 'hidden' }"
+  (clickOutside)="closeUserCard($event)"
+  imageUrl="assets/imgs/user.png"
+  [username]="appService.user?.username"
+  [email]="appService.user?.email"
+  [name]="appService.user?.name">
+</sc-user-card>

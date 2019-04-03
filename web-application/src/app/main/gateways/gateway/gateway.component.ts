@@ -12,7 +12,7 @@ import { Gateway } from '../../../core/models/gateway';
 })
 export class GatewayComponent implements OnInit {
 
-  public displayedColumns: string[] = ['type', 'name', 'description'];
+  public displayedColumns: string[] = ['type', 'name', 'description', 'action'];
 
   public dataSource: MatTableDataSource<Property>;
 
@@ -35,7 +35,21 @@ export class GatewayComponent implements OnInit {
 
   ngOnInit() {
     this.dataSource.paginator = this.paginator;
-    
   }
 
+  public createProperty(): void {
+    this.gateway.properties.push(new Property('', '', 'CONFIG'));
+    this.dataSource = new MatTableDataSource(this.gateway.properties);
+    this.dataSource.paginator = this.paginator;
+    setTimeout(() => this.dataSource.paginator.lastPage());
+  }
+
+  public deleteProperty(index: number): void {
+    this.gateway.properties.splice(index, 1);
+    this.dataSource = new MatTableDataSource(this.gateway.properties);
+    this.dataSource.paginator = this.paginator;
+    if (this.gateway.properties.length % this.dataSource.paginator.pageSize === 0) {
+      this.dataSource.paginator.previousPage();
+    }
+  }
 }

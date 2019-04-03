@@ -9,6 +9,7 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MaterialModule } from '../libs/material.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { UserCardComponent } from './components/user-card/user-card.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { SharedModule } from '../shared/shared.module';
     SigninComponent,
     PasswordRecoveryComponent,
     DashboardTemplateComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    UserCardComponent
   ],
   imports: [
     AppRoutingModule,

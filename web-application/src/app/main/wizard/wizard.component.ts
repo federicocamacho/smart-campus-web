@@ -113,10 +113,10 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
         if (!application || Utils.anyIsEmptyString(application.name, application.description)) {
           return;
         }
-        application.idUser = this.appService.user.id;
+        application.userId = this.appService.user.id;
         if (this.wizard.id === 0) {
           // Create the application
-          application.idApplication = null;
+          application.id = null;
           this.createApplication(application);
         } else {
           // TODO: Update the application.
@@ -223,7 +223,7 @@ export class WizardComponent extends Cleanable implements OnInit, OnDestroy {
   }
 
   public updateApplication(application: Application): void {
-    this.applicationService.updateApplication(application.idApplication, application)
+    this.applicationService.updateApplication(application.id, application)
       .pipe(
         take(1),
         takeUntil(this.destroyed))

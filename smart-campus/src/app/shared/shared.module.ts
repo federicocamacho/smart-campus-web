@@ -8,11 +8,14 @@ import { CustomFormsModule } from 'ngx-custom-validators';
 
 import { AnimatedDirective } from './directives/animated.directive';
 import { LoaderComponent } from './components/loader/loader.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { MaterialModule } from '../libs/material.module';
 
 @NgModule({
   declarations: [
     AnimatedDirective,
-    LoaderComponent
+    LoaderComponent,
+    ConfirmDialogComponent
   ],
   imports: [
     CommonModule,
@@ -20,9 +23,11 @@ import { LoaderComponent } from './components/loader/loader.component';
     FlexLayoutModule,
     FormsModule,
     HttpClientModule,
+    MaterialModule
   ],
   exports: [
     AnimatedDirective,
+    ConfirmDialogComponent,
     CustomFormsModule,
     FlexLayoutModule,
     FormsModule,

@@ -99,14 +99,14 @@ export class WizardService {
    * @memberof WizardService
    */
   private getCachedApplication(): Application {
-    if (this.application && this.application.idApplication) {
+    if (this.application && this.application.id) {
       return this.application;
     }
     const applicationJSON = localStorage.getItem('APPLICATION');
     if (!Utils.isEmptyString(applicationJSON)) {
       try {
         const application = JSON.parse(applicationJSON);
-        return new Application(application.id, application.name, application.description, application.idUser);
+        return new Application(application.id, application.name, application.description, application.userId);
       } catch {
         return null;
       }
@@ -139,7 +139,7 @@ export class WizardService {
    */
   public clearCache(currentAppId: number): void {
     const application: Application = this.get('APPLICATION');
-    if (!application || application.idApplication !== currentAppId) {
+    if (!application || application.id !== currentAppId) {
       this.application = new Application();
       localStorage.removeItem('APPLICATION');
       // TODO: Clear all other items.
