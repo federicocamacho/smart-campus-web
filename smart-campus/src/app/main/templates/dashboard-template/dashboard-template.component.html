@@ -4,25 +4,23 @@
       class="navbar-header"
       (click)="goHome()">
       <a class="navbar-brand" fxLayout="row" fxFlexFill fxLayoutAlign="start center">
-        <img src="assets/icons/icon-96x96.png" alt="Smart Campus Logo" class="brand-logo"/>
+        <img src="assets/icons/icon.png" alt="Smart Campus Logo" class="brand-logo"/>
         <div scAnimated="fadeIn" fxFlex
           class="name-container"
           fxHide.lt-sm
           style="padding-left: 10px;">
-          <span class="brand-name">
-            SMART CAMPUS
-          </span>
+          <span class="brand-name">SMART CAMPUS</span>
         </div>
       </a>
     </div>
     <div class="navbar-collapse" fxFlex>
-      <ul class="navbar-nav" fxLayout="row" fxLayoutAlign="end stretch">
+      <ul class="navbar-nav" fxLayout="row" fxLayoutAlign="end center">
         <li
           class="nav-item user-item"
           fxLayout="row" fxLayoutAlign="end stretch"
           style="padding-right: 10px;"
-          (click)="dashboardService.isUserCardOpened = !dashboardService.isUserCardOpened">
-          <img src="assets/imgs/user.png" [alt]="userName" class="user-img" fxHide.lt-sm fxFlex="35px" />
+          (click)="toggleUserCard($event)">
+          <img src="assets/imgs/user.png" [alt]="userName" class="user-img" fxFlex="35px" />
           <span class="user-name" fxFlex>{{ appService.user?.name }}</span>
           <mat-icon style="margin: auto" fxFlex="30px">keyboard_arrow_down</mat-icon>
         </li>
@@ -30,9 +28,10 @@
     </div>
   </nav>
 </header>
-<sc-user-card scClickOutside
+<sc-user-card 
+  scClickOutside scAnimated="fadeInDownBig"
   [ngStyle]="{ 'visibility': dashboardService.isUserCardOpened ? 'visible' : 'hidden' }"
-  (clickOutside)="dashboardService.isUserCardOpened = false"
+  (clickOutside)="closeUserCard()"
   imageUrl="assets/imgs/user.png"
   [username]="appService.user?.username"
   [email]="appService.user?.email"

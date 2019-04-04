@@ -10,12 +10,14 @@ import { AnimatedDirective } from './directives/animated.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { MaterialModule } from '../libs/material.module';
+import { ClickOutsideDirective } from './directives/click-outside.directive';
 
 @NgModule({
   declarations: [
     AnimatedDirective,
-    LoaderComponent,
-    ConfirmDialogComponent
+    ClickOutsideDirective,
+    ConfirmDialogComponent,
+    LoaderComponent
   ],
   imports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { MaterialModule } from '../libs/material.module';
   ],
   exports: [
     AnimatedDirective,
+    ClickOutsideDirective,
     ConfirmDialogComponent,
     CustomFormsModule,
     FlexLayoutModule,

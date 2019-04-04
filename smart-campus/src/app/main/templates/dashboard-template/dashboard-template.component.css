@@ -80,10 +80,3 @@ li {
       display: none;
   }
 }
-
-@media (max-width: 599px) {
-  .right-options,
-  .user-img {
-      display: none;
-  }
-}

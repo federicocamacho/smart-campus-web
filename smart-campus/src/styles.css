@@ -15,6 +15,13 @@ sc-loader {
     top: 0;
 }
 
+.default-shadow {
+    box-shadow: 0 3px 12px rgba(0,0,0,.05);
+    -webkit-box-shadow: 0 3px 12px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 3px 12px rgba(0,0,0,.05);
+    border-color: rgba(120,130,140,.13);
+}
+
 .border-container {
     border: 3.5px solid #ececec;
     padding: 10px 6px;

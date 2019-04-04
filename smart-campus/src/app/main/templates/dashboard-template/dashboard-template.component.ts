@@ -33,4 +33,15 @@ export class DashboardTemplateComponent {
   public goHome(): void {
     this.router.navigate(['/dashboard']);
   }
+
+  public toggleUserCard(event: Event): void {
+    this.dashboardService.isUserCardOpened = !this.dashboardService.isUserCardOpened;
+    event.stopPropagation();
+  }
+
+  public closeUserCard(): void {
+    if (this.dashboardService.isUserCardOpened) {
+      this.dashboardService.isUserCardOpened = false;
+    }
+  }
 }
