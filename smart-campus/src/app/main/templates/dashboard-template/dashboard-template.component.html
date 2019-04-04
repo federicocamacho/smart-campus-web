@@ -27,9 +27,7 @@
       </ul>
     </div>
   </nav>
-</header>
-<sc-section-card></sc-section-card>
-<sc-user-card
+</header><sc-user-card
   scClickOutside scAnimated="fadeInDownBig"
   [ngStyle]="{ 'visibility': dashboardService.isUserCardOpened ? 'visible' : 'hidden' }"
   (clickOutside)="closeUserCard()"
@@ -39,5 +37,6 @@
   [name]="appService.user?.name">
 </sc-user-card>
 <div class="page-wrapper">
+  <sc-section-card [title]="'Aplicaciones'" [description]="'Gestiona tus aplicaciones'" [url]="'/dashboard/applications'"></sc-section-card>
   <router-outlet></router-outlet>
 </div>

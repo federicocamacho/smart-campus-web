@@ -1,12 +1,14 @@
-<div class="card">
+<div class="card" (click)="redirectToUrl()">
   <div class="card-body">
     <div class="d-flex p-10 no-block">
       <div class="align-slef-center">
-        <h2 class="m-b-0">234</h2>
-        <h6 class="text-muted m-b-0">New Clients</h6>
+        <h2 class="vertical-margin-0">{{ title }}</h2>
+        <h6 class="text-muted vertical-margin-0">{{ description }}</h6>
       </div>
       <div class="align-self-center display-6 ml-auto">
-        <i class="text-success icon-Target-Market"></i>
+          <i class="material-icons section-icon">
+              apps
+          </i>
       </div>
     </div>
   </div>

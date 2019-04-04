@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'sc-section-card',
@@ -30,4 +31,16 @@ export class SectionCardComponent {
    *
    */
   @Input() url: string;
+
+  constructor(private router: Router) {
+
+  }
+
+  /**
+   * Redirects to the passed url.
+   *
+   */
+  public redirectToUrl(): void {
+    this.router.navigate([this.url]);
+  }
 }
