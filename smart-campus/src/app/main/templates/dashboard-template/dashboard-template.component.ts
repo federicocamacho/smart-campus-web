@@ -21,7 +21,7 @@ export class DashboardTemplateComponent {
    * @date 2019-01-09
    * @param router Angular Router.
    */
-  constructor(private router: Router, private appService: AppService, public dashboardService: DashboardService) {
+  constructor(private router: Router, public appService: AppService, public dashboardService: DashboardService) {
     appService.isBusy = false;
   }
 

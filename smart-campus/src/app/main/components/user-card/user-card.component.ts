@@ -1,15 +1,15 @@
-import { ApiResponse } from 'src/app/shared/models/api-response';
-import { DashboardService } from './../../../core/services/dashboard.service';
 import { Component, Input } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { AppService } from './../../../../app/app.service';
-import { Subscribable } from 'src/app/shared/utils/subscribable';
+import { ApiResponse } from 'src/app/shared/models/api-response';
+import { AppService } from 'src/app/app.service';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data';
+import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
@@ -39,11 +39,11 @@ export class UserCardComponent extends Subscribable {
 
   /**
    * Creates an instance of UserCardComponent.
-   * @param {AppService} appService - Contains the global attributes for the whole application
-   * @param {DashboardService} dashboardService - Contains useful attributes and methods for the dashboard.
-   * @param {MatDialog} dialog - Handles the materialize modal.
-   * @param {Router} router - Allows to navigate using url.
-   * @param {UserService} userService - Contains the attributes and methods to handle users.
+   * @param appService - Contains the global attributes for the whole application
+   * @param dashboardService - Contains useful attributes and methods for the dashboard.
+   * @param dialog - Handles the materialize modal.
+   * @param router - Allows to navigate using url.
+   * @param userService - Contains the attributes and methods to handle users.
    */
   constructor(
     private appService: AppService,
@@ -119,6 +119,8 @@ export class UserCardComponent extends Subscribable {
   public onLogoutClicked(): void {
     this.dashboardService.isUserCardOpened = false;
     this.appService.user = null;
+    sessionStorage.clear();
+    console.log('login out');
     this.router.navigate(['/login']);
   }
 

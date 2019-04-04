@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
-import { NgModel, NgForm } from '@angular/forms';
-
-import { User } from './shared/models/user';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ApiError } from './shared/models/api-error';
-import { Util } from './shared/utils/util';
+import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import { NgModel, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+
+import { ApiError } from './shared/models/api-error';
+import { User } from './shared/models/user';
+import { Util } from './shared/utils/util';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +26,8 @@ export class AppService {
       return true;
     }
     try {
-      const user: User = JSON.parse(sessionStorage.getItem('user'));
-      return user !== null;
+      this.user = JSON.parse(sessionStorage.getItem('user'));
+      return this.user !== null;
     } catch (error) {
       return false;
     }

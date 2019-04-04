@@ -16,16 +16,14 @@
       </a>
     </div>
     <div class="navbar-collapse" fxFlex>
-      <ul class="navbar-nav" fxLayout="row" fxLayoutAlign="start stretch">
-        <li fxFlex fxHide.gt-xs></li>
-        <li fxFlex fxHide.lt-sm></li>
+      <ul class="navbar-nav" fxLayout="row" fxLayoutAlign="end stretch">
         <li
           class="nav-item user-item"
           fxLayout="row" fxLayoutAlign="end stretch"
           style="padding-right: 10px;"
-          (click)="dashboardService.isUserCardOpened = !isUserCardOpened">
-          <img [src]="userImgSrc" [alt]="userName" class="user-img" fxHide.lt-sm fxFlex="35px" />
-          <span class="user-name" fxFlex>{{ userName }}</span>
+          (click)="dashboardService.isUserCardOpened = !dashboardService.isUserCardOpened">
+          <img src="assets/imgs/user.png" [alt]="userName" class="user-img" fxHide.lt-sm fxFlex="35px" />
+          <span class="user-name" fxFlex>{{ appService.user?.name }}</span>
           <mat-icon style="margin: auto" fxFlex="30px">keyboard_arrow_down</mat-icon>
         </li>
       </ul>
@@ -33,8 +31,8 @@
   </nav>
 </header>
 <sc-user-card scClickOutside
-  [ngStyle]="{ 'visibility': isUserCardOpened ? 'visible' : 'hidden' }"
-  (clickOutside)="closeUserCard($event)"
+  [ngStyle]="{ 'visibility': dashboardService.isUserCardOpened ? 'visible' : 'hidden' }"
+  (clickOutside)="dashboardService.isUserCardOpened = false"
   imageUrl="assets/imgs/user.png"
   [username]="appService.user?.username"
   [email]="appService.user?.email"

@@ -25,6 +25,9 @@ import { MaterialModule } from '../libs/material.module';
     HttpClientModule,
     MaterialModule
   ],
+  entryComponents: [
+    ConfirmDialogComponent
+  ],
   exports: [
     AnimatedDirective,
     ConfirmDialogComponent,
