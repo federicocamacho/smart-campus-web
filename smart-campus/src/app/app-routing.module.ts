@@ -8,6 +8,8 @@ import { AuthenticationGuard } from './core/guards/authentication.guard';
 import { DashboardTemplateComponent } from './main/templates/dashboard-template/dashboard-template.component';
 import { DashboardGuard } from './core/guards/dashboard.guard';
 import { NotFoundComponent } from './main/pages/not-found/not-found.component';
+import { ApplicationsComponent } from './main/pages/applications/applications.component';
+import { ApplicationComponent } from './main/pages/applications/application/application.component';
 
 const routes: Routes = [
   {
@@ -37,7 +39,17 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardTemplateComponent,
-    children: [ ],
+    children: [
+      {
+        path: 'applications',
+        component: ApplicationsComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'applications/:id',
+        component: ApplicationComponent
+      }
+    ],
     canActivate: [ DashboardGuard ]
   },
   {
