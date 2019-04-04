@@ -80,3 +80,8 @@ li {
       display: none;
   }
 }
+
+.page-wrapper {
+  margin: 40px;
+  margin-top: 106px;
+}
