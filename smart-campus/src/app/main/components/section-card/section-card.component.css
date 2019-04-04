@@ -1,0 +1,33 @@
+.card {
+  border: 0;
+  border-radius: 4px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+  margin-bottom: 30px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  background-color: white;
+  background-clip: border-box;
+}
+
+.card-body {
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+.p-10 {
+  padding: 10px;
+}
+
+.d-flex {
+  display: flex !important;
+}
+
+.m-b-0 {
+  margin-bottom: 0;
+}
+
+.text-muted {
+  color: #bcc3d3 !important;
+}

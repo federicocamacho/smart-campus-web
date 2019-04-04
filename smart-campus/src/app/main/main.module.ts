@@ -10,6 +10,7 @@ import { MaterialModule } from '../libs/material.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { UserCardComponent } from './components/user-card/user-card.component';
+import { SectionCardComponent } from './components/section-card/section-card.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { UserCardComponent } from './components/user-card/user-card.component';
     PasswordRecoveryComponent,
     DashboardTemplateComponent,
     NotFoundComponent,
-    UserCardComponent
+    UserCardComponent,
+    SectionCardComponent
   ],
   imports: [
     AppRoutingModule,
