@@ -1,12 +1,20 @@
 <header class="default-shadow">
   <nav class="navbar" fxLayout="row" fxFlexFill>
-    <div class="navbar-header" (click)="goHome()">
+    <div fxFlex="20"></div>
+    <div fxFlex="60" class="navbar-header" (click)="goHome()">
       <a
         class="navbar-brand"
         fxLayout="row"
         fxFlexFill
-        fxLayoutAlign="start center"
+        fxLayoutAlign="center center"
       >
+        <div
+          scAnimated="fadeIn"
+          class="name-container"
+          fxHide.lt-sm
+        >
+          <span class="brand-name">SMART</span>
+        </div>
         <img
           src="assets/icons/icon.png"
           alt="Smart Campus Logo"
@@ -14,12 +22,10 @@
         />
         <div
           scAnimated="fadeIn"
-          fxFlex
           class="name-container"
           fxHide.lt-sm
-          style="padding-left: 10px;"
         >
-          <span class="brand-name">SMART CAMPUS</span>
+          <span class="brand-name">CAMPUS</span>
         </div>
       </a>
     </div>
