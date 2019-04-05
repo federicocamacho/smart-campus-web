@@ -1,13 +1,13 @@
 <div class="card" (click)="redirectToUrl()">
   <div class="card-body">
     <div class="d-flex p-10 no-block">
-      <div class="align-slef-center">
-        <h2 class="vertical-margin-0">{{ title }}</h2>
+      <div class="align-slef-center card-text">
+        <h3 class="vertical-margin-0">{{ title }}</h3>
         <h6 class="text-muted vertical-margin-0">{{ description }}</h6>
       </div>
       <div class="align-self-center display-6 ml-auto">
-          <i class="material-icons section-icon">
-              apps
+          <i class="material-icons section-icon" [ngStyle]="{'color': cardColor}">
+              {{ materialIconName }}
           </i>
       </div>
     </div>
@@ -17,7 +17,8 @@
       aria-valuemax="100"
       aria-valuemin="0"
       aria-valuenow="50"
-      class="progress-bar bg-success"
+      class="progress-bar"
+      [ngStyle]="{'background-color': cardColor}"
       role="progressbar"
       style="width:70%; height:3px;"
     >

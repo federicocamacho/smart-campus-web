@@ -1,14 +1,24 @@
 <header class="default-shadow">
   <nav class="navbar" fxLayout="row" fxFlexFill>
-    <div
-      class="navbar-header"
-      (click)="goHome()">
-      <a class="navbar-brand" fxLayout="row" fxFlexFill fxLayoutAlign="start center">
-        <img src="assets/icons/icon.png" alt="Smart Campus Logo" class="brand-logo"/>
-        <div scAnimated="fadeIn" fxFlex
+    <div class="navbar-header" (click)="goHome()">
+      <a
+        class="navbar-brand"
+        fxLayout="row"
+        fxFlexFill
+        fxLayoutAlign="start center"
+      >
+        <img
+          src="assets/icons/icon.png"
+          alt="Smart Campus Logo"
+          class="brand-logo"
+        />
+        <div
+          scAnimated="fadeIn"
+          fxFlex
           class="name-container"
           fxHide.lt-sm
-          style="padding-left: 10px;">
+          style="padding-left: 10px;"
+        >
           <span class="brand-name">SMART CAMPUS</span>
         </div>
       </a>
@@ -17,26 +27,76 @@
       <ul class="navbar-nav" fxLayout="row" fxLayoutAlign="end center">
         <li
           class="nav-item user-item"
-          fxLayout="row" fxLayoutAlign="end stretch"
+          fxLayout="row"
+          fxLayoutAlign="end stretch"
           style="padding-right: 10px;"
-          (click)="toggleUserCard($event)">
-          <img src="assets/imgs/user.png" [alt]="userName" class="user-img" fxFlex="35px" />
+          (click)="toggleUserCard($event)"
+        >
+          <img
+            src="assets/imgs/user.png"
+            [alt]="userName"
+            class="user-img"
+            fxFlex="35px"
+          />
           <span class="user-name" fxFlex>{{ appService.user?.name }}</span>
-          <mat-icon style="margin: auto" fxFlex="30px">keyboard_arrow_down</mat-icon>
+          <mat-icon style="margin: auto" fxFlex="30px"
+            >keyboard_arrow_down</mat-icon
+          >
         </li>
       </ul>
     </div>
   </nav>
-</header><sc-user-card
-  scClickOutside scAnimated="fadeInDownBig"
-  [ngStyle]="{ 'visibility': dashboardService.isUserCardOpened ? 'visible' : 'hidden' }"
+</header>
+<sc-user-card
+  scClickOutside
+  scAnimated="fadeInDownBig"
+  [ngStyle]="{
+    visibility: dashboardService.isUserCardOpened ? 'visible' : 'hidden'
+  }"
   (clickOutside)="closeUserCard()"
   imageUrl="assets/imgs/user.png"
   [username]="appService.user?.username"
   [email]="appService.user?.email"
-  [name]="appService.user?.name">
+  [name]="appService.user?.name"
+>
 </sc-user-card>
 <div class="page-wrapper">
-  <sc-section-card [title]="'Aplicaciones'" [description]="'Gestiona tus aplicaciones'" [url]="'/dashboard/applications'"></sc-section-card>
+  <div fxLayout="row wrap" fxLayoutAlign="space-evenly center" fxLayoutGap="20px">
+    <sc-section-card
+      [title]="'Aplicaciones'"
+      [description]="'Gestiona tus apps'"
+      [url]="'/dashboard/applications'"
+      [materialIconName]="'apps'"
+      [cardColor]="'#24d2b5'"
+    ></sc-section-card>
+    <sc-section-card
+      [title]="'Gateways'"
+      [description]="'Gestiona tus gateways'"
+      [url]="'/dashboard/gateways'"
+      [materialIconName]="'business'"
+      [cardColor]="'#007bff'"
+    ></sc-section-card>
+    <sc-section-card
+      [title]="'Procesos'"
+      [description]="'Gestiona tus procesos'"
+      [url]="'/dashboard/processes'"
+      [materialIconName]="'widgets'"
+      [cardColor]="'#ff5c6c'"
+    ></sc-section-card>
+    <sc-section-card
+      [title]="'Dispositivos'"
+      [description]="'Gestiona tus dispositivos'"
+      [url]="'/dashboard/devices'"
+      [materialIconName]="'device_hub'"
+      [cardColor]="'#6772e5'"
+    ></sc-section-card>
+    <sc-section-card
+      [title]="'Usuarios'"
+      [description]="'Gestiona los usuarios'"
+      [url]="'/dashboard/applications'"
+      [materialIconName]="'supervised_user_circle'"
+      [cardColor]="'#000'"
+    ></sc-section-card>
+  </div>
   <router-outlet></router-outlet>
 </div>
