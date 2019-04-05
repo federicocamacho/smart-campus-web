@@ -21,7 +21,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class ApplicationsComponent extends Subscribable implements OnInit {
 
-  public displayedApplicationsColumns = [ 'name', 'description' ];
+  public displayedApplicationsColumns = [ 'name', 'description', 'actions' ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -45,6 +45,7 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
   ngOnInit() {
     this.applicationService.applications.paginator = this.paginator;
     this.applicationService.applications.sort = this.sort;
+    this.applicationService.applications.sortingDataAccessor = (data, attribute) => data[attribute];
     this.getApplications();
   }
 
@@ -57,6 +58,10 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
     this.router.navigate([ '0' ], { relativeTo: this.activatedRoute });
   }
 
+  public deleteApplication(index: number): void {
+
+  }
+
   /**
    * Retrieves the application for the user logged in.
    *
@@ -66,13 +71,11 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
     if (!this.appService.isUserAuthenticated()) {
       return;
     }
-    this.appService.isBusy = true;
     this.applicationService.getApplicationsForUser(this.appService.user.id)
     .pipe(take(1), takeUntil(this.destroyed))
     .subscribe(
       (applications: Application[]) => {
         this.applicationService.applications.data = applications;
-        this.appService.isBusy = false;
       },
       (err: HttpErrorResponse) => this.appService.handleGenericError(err));
   }

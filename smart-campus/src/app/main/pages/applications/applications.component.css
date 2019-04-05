@@ -23,3 +23,18 @@
         font-size: 14px;
     }
 }
+
+::ng-deep .mat-sort-header-container {
+    display:flex;
+    justify-content:center;
+    color: #22aee3;
+    font-size: 14px;
+}
+
+.mat-header-cell {
+    border-bottom-width: 2px;
+}
+
+.mat-row:hover {
+    background-color: #f6f6f6;
+}
