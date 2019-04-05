@@ -24,7 +24,7 @@ export class SectionCardComponent {
    * Receives the card image's source.
    *
    */
-  @Input() imgSrc: string;
+  @Input() materialIconName: string;
 
   /**
    * Receives the card's url.
@@ -32,9 +32,17 @@ export class SectionCardComponent {
    */
   @Input() url: string;
 
-  constructor(private router: Router) {
+  /**
+   * Receives the progress and icon's color.
+   *
+   */
+  @Input() cardColor: string;
 
-  }
+  /**
+   * Creates an instance of SectionCardComponent.
+   * @param router
+   */
+  constructor(private router: Router) {}
 
   /**
    * Redirects to the passed url.

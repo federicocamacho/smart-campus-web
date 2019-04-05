@@ -9,10 +9,14 @@
   word-wrap: break-word;
   background-color: white;
   background-clip: border-box;
+  transition: all 0.3s;
+  top: 0px;
 }
 
 .card:hover {
   cursor: pointer;
+  top: -10px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
 }
 
 .card-body {
@@ -38,7 +42,6 @@
 }
 
 .section-icon {
-  color: #24d2b5;
   font-size: 36px;
 }
 
@@ -71,8 +74,5 @@
   transition: width .6s ease;
 }
 
-.bg-success {
-  background-color: #24d2b5!important;
-}
 
 
