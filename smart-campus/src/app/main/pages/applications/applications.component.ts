@@ -1,12 +1,13 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ApplicationService } from 'src/app/core/services/application.service';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
-import { Subscribable } from 'src/app/shared/utils/subscribable';
-import { AppService } from 'src/app/app.service';
-import { take, takeUntil } from 'rxjs/operators';
-import { Application } from 'src/app/shared/models/application';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
+import { take, takeUntil } from 'rxjs/operators';
+
+import { Application } from 'src/app/shared/models/application';
+import { ApplicationService } from 'src/app/core/services/application.service';
+import { AppService } from 'src/app/app.service';
+import { Subscribable } from 'src/app/shared/utils/subscribable';
 
 /**
  * Page to manage all the user's applications.
@@ -22,6 +23,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ApplicationsComponent extends Subscribable implements OnInit {
 
   public displayedApplicationsColumns = [ 'name', 'description', 'actions' ];
+
+  public applicationsDataSource: MatTableDataSource<Application>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -39,13 +42,13 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
     public applicationService: ApplicationService,
     private router: Router) {
       super();
-      this.applicationService.applications = new MatTableDataSource();
+      this.applicationsDataSource = new MatTableDataSource();
   }
 
   ngOnInit() {
-    this.applicationService.applications.paginator = this.paginator;
-    this.applicationService.applications.sort = this.sort;
-    this.applicationService.applications.sortingDataAccessor = (data, attribute) => data[attribute];
+    this.applicationsDataSource.paginator = this.paginator;
+    this.applicationsDataSource.sort = this.sort;
+    this.applicationsDataSource.sortingDataAccessor = (data, attribute) => data[attribute];
     this.getApplications();
   }
 
@@ -58,8 +61,30 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
     this.router.navigate([ '0' ], { relativeTo: this.activatedRoute });
   }
 
-  public deleteApplication(index: number): void {
+  /**
+   * Triggered when pressing "Delete" application button.
+   *
+   * @date 2019-04-04
+   * @param id - id of the application to be deleted.
+   */
+  public deleteApplication(id: number): void {
+    // TODO: Call REST Service.
+    this.applicationService.applications.splice(this.applicationService.applications.findIndex(application => application.id === id), 1);
+    this.applicationsDataSource = new MatTableDataSource(this.applicationService.applications);
+    this.applicationsDataSource.paginator = this.paginator;
+    if (this.applicationService.applications.length % this.applicationsDataSource.paginator.pageSize === 0) {
+      this.applicationsDataSource.paginator.previousPage();
+    }
+  }
 
+  /**
+   * Triggered when pressing "Edit" application button.
+   *
+   * @date 2019-04-04
+   * @param id - id of the application to be edited.
+   */
+  public editApplication(id: number): void {
+    this.router.navigate([ id ], { relativeTo: this.activatedRoute });
   }
 
   /**
@@ -68,14 +93,12 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
    * @date 2019-04-04
    */
   private getApplications(): void {
-    if (!this.appService.isUserAuthenticated()) {
-      return;
-    }
     this.applicationService.getApplicationsForUser(this.appService.user.id)
     .pipe(take(1), takeUntil(this.destroyed))
     .subscribe(
       (applications: Application[]) => {
-        this.applicationService.applications.data = applications;
+        this.applicationService.applications = applications;
+        this.applicationsDataSource.data = applications;
       },
       (err: HttpErrorResponse) => this.appService.handleGenericError(err));
   }

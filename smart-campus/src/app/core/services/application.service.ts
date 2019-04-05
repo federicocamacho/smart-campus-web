@@ -19,10 +19,10 @@ import { MatTableDataSource } from '@angular/material';
 export class ApplicationService {
 
   /**
-   * Stores the applications that belong to the user (if logged in) as a Material Data source.
+   * Stores the applications that belong to the user (if logged in).
    *
    */
-  public applications: MatTableDataSource<Application>;
+  public applications: Application[];
 
   constructor(private http: HttpClient) { }
 
