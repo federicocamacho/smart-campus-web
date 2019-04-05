@@ -13,6 +13,8 @@ import { UserCardComponent } from './components/user-card/user-card.component';
 import { SectionCardComponent } from './components/section-card/section-card.component';
 import { ApplicationsComponent } from './pages/applications/applications.component';
 import { ApplicationComponent } from './pages/applications/application/application.component';
+import { GatewaysComponent } from './pages/gateways/gateways.component';
+import { GatewayComponent } from './pages/gateways/gateway/gateway.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { ApplicationComponent } from './pages/applications/application/applicati
     UserCardComponent,
     SectionCardComponent,
     ApplicationsComponent,
-    ApplicationComponent
+    ApplicationComponent,
+    GatewaysComponent,
+    GatewayComponent
   ],
   imports: [
     AppRoutingModule,
