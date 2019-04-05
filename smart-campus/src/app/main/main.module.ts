@@ -10,6 +10,7 @@ import { MaterialModule } from '../libs/material.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { UserCardComponent } from './components/user-card/user-card.component';
+import { SectionCardComponent } from './components/section-card/section-card.component';
 import { ApplicationsComponent } from './pages/applications/applications.component';
 import { ApplicationComponent } from './pages/applications/application/application.component';
 
@@ -22,6 +23,7 @@ import { ApplicationComponent } from './pages/applications/application/applicati
     DashboardTemplateComponent,
     NotFoundComponent,
     UserCardComponent,
+    SectionCardComponent,
     ApplicationsComponent,
     ApplicationComponent
   ],
