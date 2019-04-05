@@ -1,3 +1,19 @@
-<p>
-  applications works!
-</p>
+<div
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+  class="section-title-container">
+    <div>
+      <h1 class="section-title">Aplicaciones</h1>
+      <h4 class=section-subtitle>Gestiona tus aplicaciones.</h4>
+    </div>
+    <button 
+      mat-raised-button color="primary" fxHide.xs
+      (click)="createApplication()">
+      <mat-icon style="font-size: 20px">add</mat-icon>Crear nueva
+    </button>
+    <button
+      mat-mini-fab color="primary" fxHide.gt-xs
+      (click)="createApplication()">
+      <mat-icon style="font-size: 20px">add</mat-icon>
+    </button>     
+</div>
