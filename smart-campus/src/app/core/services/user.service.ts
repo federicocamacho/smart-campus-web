@@ -20,17 +20,37 @@ import { ApiResponse } from 'src/app/shared/models/api-response';
 export class UserService {
 
   constructor(private http: HttpClient) { }
-
+/**
+ * Authenticates the user.
+ *
+ * @date 2019-04-04
+ * @param user - user to be authenticated.
+ * @returns an Observable wrapping the User object containing the information about the logged in user.
+ */
   public login(user: User): Observable<User> {
-    return this.http.post<User>(`${environment.adminService}/users/authentication`, user, Util.options());
+    return this.http.post<User>(`${ environment.adminService }/users/authentication`, user, Util.options());
   }
 
+  /**
+   * Creates a new User.
+   *
+   * @date 2019-04-04
+   * @param user- user to be created.
+   * @returns an Observable wrapping the User object containing the information about the created in user.
+   */
   public signin(user: User): Observable<User> {
-    return this.http.post<User>(`${environment.adminService}/users/user`, user, Util.options());
+    return this.http.post<User>(`${ environment.adminService }/users/user`, user, Util.options());
   }
 
+  /**
+   * Recovers the password for a user with a given email address.
+   *
+   * @date 2019-04-04
+   * @param email - email of the user that desires to change its password.
+   * @returns an ApiResponse that indicates if the operation was successful or not.
+   */
   public recoverPassword(email: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${environment.adminService}/users/pass/${email}`, Util.options());
+    return this.http.get<ApiResponse>(`${ environment.adminService }/users/pass/${ email }`, Util.options());
   }
 
   /**
