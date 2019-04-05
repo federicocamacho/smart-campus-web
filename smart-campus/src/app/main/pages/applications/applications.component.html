@@ -33,10 +33,14 @@
 
     <!-- Actions Column -->
     <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element; let i = index" style="width: 17%;">
-        <button mat-icon-button style="color: rgb(36, 210, 181)"><mat-icon>edit</mat-icon></button>
-        <button mat-icon-button style="color: red"><mat-icon>delete</mat-icon></button>
+      <th mat-header-cell *matHeaderCellDef style="width: 85px;"></th>
+      <td mat-cell *matCellDef="let element; let i = index" class="actions-cell">
+        <button mat-icon-button
+          style="color: rgb(36, 210, 181)"
+          (click)="createApplication()"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button
+          style="color: red"
+          (click)="deleteApplication(i)"><mat-icon>delete</mat-icon></button>
       </td>
     </ng-container>
 
