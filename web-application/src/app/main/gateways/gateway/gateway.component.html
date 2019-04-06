@@ -50,38 +50,14 @@
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Nombre </th>
             <td mat-cell *matCellDef="let element; let i = index"> 
-                <span class="mobile-label">Nombre:</span>
-                <mat-form-field appearance="outline" fxLayout="column">
-                    <input
-                      matInput
-                      name="propertyNameField{{i}}"
-                      #name="ngModel"
-                      type="text"
-                      placeholder="Nombre"
-                      required
-                      [(ngModel)]="element.name"
-                    />
-                    <mat-error *ngIf="name.invalid"> Este campo es requerido.</mat-error>
-                  </mat-form-field>
+                <span class="mobile-label">Nombre:</span> {{ element.name }}
             </td>
           </ng-container>
     
           <ng-container matColumnDef="description">
             <th mat-header-cell *matHeaderCellDef> Valor</th>
-            <td mat-cell *matCellDef="let element; let i = index"> 
-                <span class="mobile-label">Valor:</span>
-              <mat-form-field appearance="outline" fxLayout="column">
-                  <input
-                    matInput
-                    name="propertyDescriptionField{{i}}"
-                    #name="ngModel"
-                    type="text"
-                    placeholder="Descripción o valor"
-                    required
-                    [(ngModel)]="element.description"
-                  />
-                  <mat-error *ngIf="name.invalid"> Este campo es requerido.</mat-error>
-                </mat-form-field>
+            <td mat-cell *matCellDef="let element"> 
+                <span class="mobile-label">Valor:</span>{{element.description}}
           </td>
           </ng-container>
 

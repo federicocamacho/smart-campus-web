@@ -14,7 +14,7 @@ export const environment = {
   applicationsByUserId: '/applications/user'
 };
 
-// endpoint: 'http://localhost:8090',
+//endpoint: 'http://localhost:8090'
 // endpoint: 'https://apiuisiot.serveo.net',
 
 /*
