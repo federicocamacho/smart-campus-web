@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GatewaysByApplicationComponent implements OnInit {
 
+  public displayedColumns = [ 'name', 'description', 'ip', 'alive', 'actions' ];
+
   constructor() { }
 
   ngOnInit() {

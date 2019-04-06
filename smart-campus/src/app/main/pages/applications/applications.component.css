@@ -25,6 +25,10 @@
   display: none;
 }
 
+.mobile-action {
+  display: none;
+}
+
 @media screen and (max-width: 599px) {
   .section-title {
     font-size: 23px;
@@ -37,10 +41,18 @@
   .mobile-label {
     min-width: 80px;
     display: inline-block;
-
     text-align: right;
     margin-right: 8px;
     color: #22aee3;
+  }
+
+  .desktop-action {
+    display: none;
+  }
+
+  .mobile-action {
+    display: inline-block;
+    font-size: 12px;
   }
 
   .mat-header-row {
@@ -54,10 +66,19 @@
     display: flex;
   }
 
+  .generic-table {
+    border-spacing: 0px 10px;
+    background-color: unset;
+  }
+
   tr {
-    border-bottom-width: 1px;
-    border-bottom-style: solid;
-    border-bottom-color: rgba(0,0,0,0.12);
+    margin-bottom: 20px;
+    border-radius: 4px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.05);
+    -webkit-box-shadow: 0 3px 12px rgba(0,0,0,.05);
+    -moz-box-shadow: 0 3px 12px rgba(0,0,0,.05);
+    border-color: rgba(120,130,140,.13);
+    background-color: white;
   }
 
   tr.mat-row {
@@ -81,5 +102,12 @@
   .actions-cell {
     text-align: center;
     width: 100%;
+    margin-top: 10px;
+    margin-bottom: 0px !important;
+    }
+
+  .edit-mobile-action {
+    margin-right: 15px;
+    color: rgb(36, 210, 181);
   }
 }

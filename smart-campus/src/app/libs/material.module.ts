@@ -13,8 +13,10 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatSelectModule
+  MatSelectModule,
+  MatPaginatorIntl
 } from '@angular/material';
+import { getSpanishPaginatorIntl } from 'src/spanish-paginator-intl';
 
 @NgModule({
   declarations: [],
@@ -48,6 +50,9 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatSortModule
+  ],
+  providers: [
+    { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }
   ]
 })
 export class MaterialModule { }

@@ -10,6 +10,8 @@ import { DashboardGuard } from './core/guards/dashboard.guard';
 import { NotFoundComponent } from './main/pages/not-found/not-found.component';
 import { ApplicationsComponent } from './main/pages/applications/applications.component';
 import { ApplicationComponent } from './main/pages/applications/application/application.component';
+import { GatewaysComponent } from './main/pages/gateways/gateways.component';
+import { GatewayComponent } from './main/pages/gateways/gateway/gateway.component';
 
 const routes: Routes = [
   {
@@ -48,6 +50,15 @@ const routes: Routes = [
       {
         path: 'applications/:id',
         component: ApplicationComponent
+      },
+      {
+        path: 'gateways',
+        component: GatewaysComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'gateways/:id',
+        component: GatewayComponent
       }
     ],
     canActivate: [ DashboardGuard ]
