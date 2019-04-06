@@ -15,6 +15,7 @@ import { ApplicationsComponent } from './pages/applications/applications.compone
 import { ApplicationComponent } from './pages/applications/application/application.component';
 import { GatewaysComponent } from './pages/gateways/gateways.component';
 import { GatewayComponent } from './pages/gateways/gateway/gateway.component';
+import { GatewaysByApplicationComponent } from './components/gateways-by-application/gateways-by-application.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { GatewayComponent } from './pages/gateways/gateway/gateway.component';
     ApplicationsComponent,
     ApplicationComponent,
     GatewaysComponent,
-    GatewayComponent
+    GatewayComponent,
+    GatewaysByApplicationComponent
   ],
   imports: [
     AppRoutingModule,

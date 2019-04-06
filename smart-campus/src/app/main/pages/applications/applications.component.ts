@@ -27,9 +27,9 @@ import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data
 })
 export class ApplicationsComponent extends Subscribable implements OnInit {
 
-  public displayedApplicationsColumns = [ 'name', 'description', 'actions' ];
+  public displayedColumns = [ 'name', 'description', 'actions' ];
 
-  public applicationsDataSource: MatTableDataSource<Application>;
+  public dataSource: MatTableDataSource<Application>;
 
   public filterType: ApplicationsFilter = 'NONE';
 
@@ -52,14 +52,14 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
     private dialog: MatDialog,
     private router: Router) {
       super();
-      this.applicationsDataSource = new MatTableDataSource();
+      this.dataSource = new MatTableDataSource();
   }
 
   ngOnInit() {
-    this.applicationsDataSource.paginator = this.paginator;
-    this.applicationsDataSource.sort = this.sort;
-    this.applicationsDataSource.sortingDataAccessor = (data, attribute) => data[attribute];
-    this.applicationsDataSource.filterPredicate = (data: Application, filter: string) => {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+    this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
+    this.dataSource.filterPredicate = (data: Application, filter: string) => {
       if (this.filterType === 'NAME') {
         return Util.stringContains(data.name, filter);
       } else {
@@ -113,10 +113,10 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
         (res: ApiResponse) => {
           this.applicationService.applications.splice(
             this.applicationService.applications.findIndex(application => application.id === id), 1);
-          this.applicationsDataSource = new MatTableDataSource(this.applicationService.applications);
-          this.applicationsDataSource.paginator = this.paginator;
-          if (this.applicationService.applications.length % this.applicationsDataSource.paginator.pageSize === 0) {
-            this.applicationsDataSource.paginator.previousPage();
+          this.dataSource = new MatTableDataSource(this.applicationService.applications);
+          this.dataSource.paginator = this.paginator;
+          if (this.applicationService.applications.length % this.dataSource.paginator.pageSize === 0) {
+            this.dataSource.paginator.previousPage();
           }
         },
         (err: HttpErrorResponse) => this.appService.handleGenericError(err)
@@ -144,7 +144,7 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
     .subscribe(
       (applications: Application[]) => {
         this.applicationService.applications = applications;
-        this.applicationsDataSource.data = applications;
+        this.dataSource.data = applications;
       },
       (err: HttpErrorResponse) => this.appService.handleGenericError(err));
   }
@@ -155,7 +155,7 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
    * @date 2019-04-05
    */
   public applyFilter(): void {
-    this.applicationsDataSource.filter = this.filterValue;
+    this.dataSource.filter = this.filterValue;
   }
 
 }

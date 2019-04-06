@@ -20,6 +20,7 @@ export class ConfirmDialogComponent {
    * @param dialogRef reference to the dialog.
    * @param data to be passed to the dialog.
    */
-  constructor(public dialogRef: MatDialogRef<ConfirmDialogComponent>,
+  constructor(
+    public dialogRef: MatDialogRef<ConfirmDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 }

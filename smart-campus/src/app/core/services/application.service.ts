@@ -2,12 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { ApiResponse } from 'src/app/shared/models/api-response';
 import { Application } from 'src/app/shared/models/application';
 import { CoreModule } from 'src/app/core/core.module';
 import { environment } from 'src/environments/environment';
 import { Util } from 'src/app/shared/utils/util';
-import { MatTableDataSource } from '@angular/material';
-import { ApiResponse } from 'src/app/shared/models/api-response';
+
 /**
  * Service to manage applications.
  *
@@ -25,6 +25,11 @@ export class ApplicationService {
    */
   public applications: Application[];
 
+  /**
+   * Creates an instance of ApplicationService.
+   * @date 2019-04-06
+   * @param http - Angular's HTTP client.
+   */
   constructor(private http: HttpClient) { }
 
   /**
@@ -36,6 +41,17 @@ export class ApplicationService {
    */
   public getApplicationsForUser(userId: number): Observable<Application[]> {
     return this.http.get<Application[]>(`${ environment.adminService }/applications/user/${ userId }`, Util.options());
+  }
+
+  /**
+   * Retrieves the application identified by its id.
+   *
+   * @date 2019-04-06
+   * @param applicationId - id of the Application.
+   * @returns the Application.
+   */
+  public getApplication(applicationId: number): Observable<Application> {
+    return this.http.get<Application>(`${ environment.adminService }/applications/application/${ applicationId }`, Util.options());
   }
 
   /**

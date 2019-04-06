@@ -19,7 +19,7 @@ export class Application {
    * @param description of the Application.
    * @param userId of the owner of the Application.
    */
-  constructor(id: number, name: string, description: string, userId: number) {
+  constructor(id?: number, name?: string, description?: string, userId?: number) {
     this.id = id;
     this.name = name;
     this.description = description;
