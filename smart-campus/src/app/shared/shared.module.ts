@@ -17,7 +17,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     AnimatedDirective,
     ClickOutsideDirective,
     ConfirmDialogComponent,
-    LoaderComponent
+    LoaderComponent,
   ],
   imports: [
     CommonModule,

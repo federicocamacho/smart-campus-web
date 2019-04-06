@@ -26,4 +26,8 @@ export class Util {
     };
   }
 
+  public static stringContains(value: string, other: string): boolean {
+    return value.toLowerCase().includes(other.trim().toLowerCase());
+  }
+
 }

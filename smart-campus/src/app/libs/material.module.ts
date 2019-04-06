@@ -9,11 +9,11 @@ import {
   MatIconModule,
   MatInputModule,
   MatSnackBarModule,
-  MatStepperModule,
   MatTooltipModule,
   MatTableModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule,
+  MatSelectModule
 } from '@angular/material';
 
 @NgModule({
@@ -27,8 +27,8 @@ import {
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatSelectModule,
     MatSnackBarModule,
-    MatStepperModule,
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
@@ -42,8 +42,8 @@ import {
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatSelectModule,
     MatSnackBarModule,
-    MatStepperModule,
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,

@@ -7,6 +7,7 @@ import { CoreModule } from 'src/app/core/core.module';
 import { environment } from 'src/environments/environment';
 import { Util } from 'src/app/shared/utils/util';
 import { MatTableDataSource } from '@angular/material';
+import { ApiResponse } from 'src/app/shared/models/api-response';
 /**
  * Service to manage applications.
  *
@@ -35,6 +36,17 @@ export class ApplicationService {
    */
   public getApplicationsForUser(userId: number): Observable<Application[]> {
     return this.http.get<Application[]>(`${ environment.adminService }/applications/user/${ userId }`, Util.options());
+  }
+
+  /**
+   * Deletes the application identified by the given id.
+   *
+   * @date 2019-04-05
+   * @param applicationId - id of the Application to be removed.
+   * @returns an ApiResponse indicating if the operation succeeded or not.
+   */
+  public deleteApplication(applicationId: number): Observable<ApiResponse> {
+    return this.http.delete<ApiResponse>(`${ environment.adminService }/applications/application/${ applicationId }`, Util.options());
   }
 
 }

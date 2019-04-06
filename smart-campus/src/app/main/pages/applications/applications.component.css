@@ -42,3 +42,7 @@
 .actions-cell {
     text-align: right;
 }
+
+.filter-container {
+    margin-top: 40px;
+}
