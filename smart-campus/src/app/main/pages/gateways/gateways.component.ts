@@ -11,6 +11,7 @@ import { ApiResponse } from 'src/app/shared/models/api-response';
 import { GatewayService } from 'src/app/core/services/gateway.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DataTable } from 'src/app/shared/utils/data-table';
+import { Util } from 'src/app/shared/utils/util';
 
 @Component({
   selector: 'sc-gateways',
@@ -99,15 +100,25 @@ export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implem
     .pipe(take(1), takeUntil(this.destroyed))
     .subscribe(
       (gateways: Gateway[]) => {
+        console.log(gateways);
         this.gatewayService.gateways = gateways;
+        console.log(gateways[0].alive);
         this.dataSource.data = gateways;
       },
       (err: HttpErrorResponse) => this.appService.handleGenericError(err));
   }
 
   protected filterPredicate: (data: Gateway, filter: string) => boolean = (data: Gateway, filter: string) => {
-    // TODO: Impement this like for real.
-    return true;
+    switch (this.filterType) {
+      case 'DESCRIPTION':
+        return Util.stringContains(data.description, filter);
+      case 'IP':
+        return Util.stringContains(data.ip, filter);
+      case 'IS_ALIVE':
+        return data.alive === (filter === 'true');
+      case 'NONE':
+        return true;
+    }
   }
 
 }
