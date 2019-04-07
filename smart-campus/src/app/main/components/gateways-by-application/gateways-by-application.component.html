@@ -64,14 +64,16 @@
         </td>
     </ng-container>
 
-    <!-- IP Column -->
+    <!-- Alive Column -->
     <ng-container matColumnDef="alive">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Estado </th>
-      <td mat-cell *matCellDef="let row">
-        <div fxLayout="row">
-          <span class="mobile-label">Estado:</span>
-          <span>{{ row.alive }}</span>
-        </div>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado</th>
+        <td mat-cell *matCellDef="let row">
+          <div fxLayout="row" fxLayoutAlign="center">
+            <span class="mobile-label">Estado:</span>
+            <span>
+              <i class="material-icons" [ngStyle]="{'color' : (row.alive ? 'green' : 'red')}">fiber_manual_record</i>
+            </span>
+          </div>
         </td>
     </ng-container>
 
