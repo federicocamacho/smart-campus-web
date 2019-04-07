@@ -45,7 +45,7 @@
     fxFlex="30%"
     fxFlex.sm="50%"
     fxFlex.xs="100%"
-    *ngIf="filterType !== 'NONE' && filterType !== 'IS_ALIVE'"
+    *ngIf="filterType !== 'NONE' && filterType !== 'IS_ALIVE' && filterType !== 'APPLICATION'"
   >
     <input
       matInput
@@ -66,12 +66,19 @@
     </button>
   </mat-form-field>
   <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%" *ngIf="filterType === 'IS_ALIVE'">
-      <mat-label>Estado:</mat-label>
-      <mat-select [(value)]="filterValue">
+      <mat-label>Valor:</mat-label>
+      <mat-select [(value)]="filterValue" (selectionChange)="applyFilter()">
         <mat-option value="true">Activo</mat-option>
         <mat-option value="false">Inactivo</mat-option>
       </mat-select>
   </mat-form-field>
+
+  <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%" *ngIf="filterType === 'APPLICATION'">
+    <mat-label>Valor:</mat-label>
+    <mat-select [(value)]="filterValue" (selectionChange)="applyFilter()">
+      <mat-option *ngFor="let item of applicationsSelect" [value]="item.id">{{ item.name }}</mat-option>
+    </mat-select>
+</mat-form-field>
 </div>
 <div scAnimated="fadeIn" class="table-container">
   <table

@@ -22,7 +22,11 @@ export abstract class DataTable<T, U> extends Subscribable {
     this.dataSource = new MatTableDataSource();
   }
 
-  initDataTable() {
+  /**
+   * Inits all the configurations for the data table.
+   *
+   */
+  public initDataTable(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
