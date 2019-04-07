@@ -114,12 +114,6 @@ input.login-input.ng-invalid.ng-touched::placeholder {
 }
 
 /*********** TABLE STYLES ****************/
-.generic-table ::ng-deep .mat-sort-header-container {
-  display: flex;
-  justify-content: center;
-  color: #22aee3;
-  font-size: 14px;
-}
 
 .generic-table .mat-header-cell {
   border-bottom-width: 2px;

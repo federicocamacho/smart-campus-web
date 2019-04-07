@@ -1,18 +1,18 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { Application } from 'src/app/shared/models/application';
 import { ApplicationService } from 'src/app/core/services/application.service';
 import { AppService } from 'src/app/app.service';
-import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { ApplicationsFilter } from 'src/app/shared/models/types';
 import { Util } from 'src/app/shared/utils/util';
 import { ApiResponse } from 'src/app/shared/models/api-response';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data';
+import { DataTable } from 'src/app/shared/utils/data-table';
 
 /**
  * Page to manage all the user's applications.
@@ -25,18 +25,7 @@ import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data
   templateUrl: './applications.component.html',
   styleUrls: ['./applications.component.css']
 })
-export class ApplicationsComponent extends Subscribable implements OnInit {
-
-  public displayedColumns = [ 'name', 'description', 'actions' ];
-
-  public dataSource: MatTableDataSource<Application>;
-
-  public filterType: ApplicationsFilter = 'NONE';
-
-  public filterValue = '';
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+export class ApplicationsComponent extends DataTable<Application, ApplicationsFilter> implements OnInit {
 
   /**
    * Creates an instance of ApplicationsComponent.
@@ -46,36 +35,18 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
    * @param router - Angular router.
    */
   constructor(
-    private activatedRoute: ActivatedRoute,
+    protected activatedRoute: ActivatedRoute,
     private appService: AppService,
     public applicationService: ApplicationService,
     private dialog: MatDialog,
-    private router: Router) {
-      super();
-      this.dataSource = new MatTableDataSource();
+    protected router: Router) {
+      super(activatedRoute, router);
+      this.displayedColumns = [ 'name', 'description', 'actions' ];
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
-    this.dataSource.filterPredicate = (data: Application, filter: string) => {
-      if (this.filterType === 'NAME') {
-        return Util.stringContains(data.name, filter);
-      } else {
-        return Util.stringContains(data.description, filter);
-      }
-    };
+    super.ngOnInit();
     this.getApplications();
-  }
-
-  /**
-   * Triggered when pressing "Create app" button.
-   *
-   * @date 2019-04-03
-   */
-  public createApplication(): void {
-    this.router.navigate([ '0' ], { relativeTo: this.activatedRoute });
   }
 
   /**
@@ -84,7 +55,7 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
    * @date 2019-04-04
    * @param id - id of the application to be deleted.
    */
-  public onDeleteApplication(id: number, name: string): void {
+  public onDeleteRecord(id: number, name: string): void {
     const deleteDialog = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
       data: new DialogData(
@@ -124,16 +95,6 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
   }
 
   /**
-   * Triggered when pressing "Edit" application button.
-   *
-   * @date 2019-04-04
-   * @param id - id of the application to be edited.
-   */
-  public onEditApplication(id: number): void {
-    this.router.navigate([ id ], { relativeTo: this.activatedRoute });
-  }
-
-  /**
    * Retrieves the application for the user logged in.
    *
    * @date 2019-04-04
@@ -149,13 +110,12 @@ export class ApplicationsComponent extends Subscribable implements OnInit {
       (err: HttpErrorResponse) => this.appService.handleGenericError(err));
   }
 
-  /**
-   * Applies the Filter definition for the current datasource using as value the content of filterValue.
-   *
-   * @date 2019-04-05
-   */
-  public applyFilter(): void {
-    this.dataSource.filter = this.filterValue;
+  protected filterPredicate: (data: Application, filter: string) => boolean = (data: Application, filter: string) => {
+    if (this.filterType === 'NAME') {
+      return Util.stringContains(data.name, filter);
+    } else {
+      return Util.stringContains(data.description, filter);
+    }
   }
 
 }
