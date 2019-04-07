@@ -21,7 +21,7 @@ import { ApplicationService } from 'src/app/core/services/application.service';
 })
 export class GatewaysComponent extends Subscribable implements OnInit {
 
-  public displayedColumns = [ 'name', 'description', 'ip', 'is_alive' ];
+  public displayedColumns = [ 'name', 'description', 'ip', 'alive', 'actions'];
 
   public dataSource: MatTableDataSource<Gateway>;
 
@@ -55,13 +55,24 @@ export class GatewaysComponent extends Subscribable implements OnInit {
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
     this.dataSource.filterPredicate = (data: Gateway, filter: string) => {
-      if (this.filterType === 'NAME') {
-        return Util.stringContains(data.name, filter);
-      } else {
-        return Util.stringContains(data.description, filter);
-      }
+     return this.filterTable(data, filter);
     };
     this.getGateways();
+  }
+
+  /**
+   * Filters the records based on the filter type and value.
+   *
+   * @param data
+   * @param filter
+   * @returns
+   */
+  private filterTable(data: Gateway, filter: string): boolean {
+    switch (this.filterType) {
+      case 'NAME': return Util.stringContains(data.name, filter);
+      case 'DESCRIPTION': return Util.stringContains(data.description, filter);
+      case 'IP': return Util.stringContains(data.ip, filter);
+    }
   }
 
   /**
@@ -138,7 +149,9 @@ export class GatewaysComponent extends Subscribable implements OnInit {
     .pipe(take(1), takeUntil(this.destroyed))
     .subscribe(
       (gateways: Gateway[]) => {
+        console.log(gateways);
         this.gatewayService.gateways = gateways;
+        console.log(gateways[0].alive);
         this.dataSource.data = gateways;
       },
       (err: HttpErrorResponse) => this.appService.handleGenericError(err));
