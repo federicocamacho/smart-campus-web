@@ -39,29 +39,43 @@ export class ApplicationComponent extends Subscribable implements OnInit {
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
         (application: Application) => this.application = application,
-        (err: HttpErrorResponse) => this.appService.handleGenericError(err)
-      );
+        (err: HttpErrorResponse) => {
+          this.appService.handleGenericError(err);
+          this.router.navigate([ '..' ], { relativeTo: this.activatedRoute });
+        });
   }
 
   public saveOrUpdateApplication(): void {
     if (this.applicationId) {
-      this.createApplication();
-    } else {
       this.updateApplication();
+    } else {
+      this.createApplication();
     }
   }
 
   private createApplication(): void {
+    this.application.userId = this.appService.user.id;
     this.applicationService.createApplication(this.application)
     .pipe(take(1), takeUntil(this.destroyed))
     .subscribe(
-      (application: Application) => this.router.navigate([ '..' ], { relativeTo: this.activatedRoute }),
+      (application: Application) => {
+        this.router.navigate([ '..' ], { relativeTo: this.activatedRoute });
+        this.appService.showSnack('Aplicación creada correctamente.');
+      },
       (err: HttpErrorResponse) => this.appService.handleGenericError(err)
     );
   }
 
   private updateApplication(): void {
-
+    this.applicationService.updateApplication(this.application)
+    .pipe(take(1), takeUntil(this.destroyed))
+    .subscribe(
+      (application: Application) => {
+        this.application = application;
+        this.appService.showSnack('Aplicación actualizada correctamente.');
+      },
+      (err: HttpErrorResponse) => this.appService.handleGenericError(err)
+    );
   }
 
 }

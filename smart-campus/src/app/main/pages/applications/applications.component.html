@@ -101,17 +101,17 @@
         class="actions-cell"
       >
         <button
-          class="desktop-action"
           mat-icon-button
+          matTooltip="Editar"
+          class="desktop-action"
           style="color: rgb(36, 210, 181)"
           (click)="onEditRecord(element.id)"
         >
           <mat-icon>edit</mat-icon>
         </button>
         <button
-          class="mobile-action edit-mobile-action"
           mat-stroked-button
-          mat-button
+          class="mobile-action edit-mobile-action"
           color="primary"
           (click)="onEditRecord(element.id)"
         >
@@ -119,6 +119,7 @@
         </button>
         <button
           mat-icon-button
+          matTooltip="Eliminar"
           class="desktop-action"
           style="color: red;"
           (click)="onDeleteRecord(element.id, element.name)"

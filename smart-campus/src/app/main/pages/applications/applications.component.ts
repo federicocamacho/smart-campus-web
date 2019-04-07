@@ -82,6 +82,7 @@ export class ApplicationsComponent extends DataTable<Application, ApplicationsFi
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
         (res: ApiResponse) => {
+          this.appService.showSnack('Aplicación eliminada correctamente.');
           this.applicationService.applications.splice(
             this.applicationService.applications.findIndex(application => application.id === id), 1);
           this.dataSource = new MatTableDataSource(this.applicationService.applications);

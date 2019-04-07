@@ -7,6 +7,7 @@ import { Application } from 'src/app/shared/models/application';
 import { CoreModule } from 'src/app/core/core.module';
 import { environment } from 'src/environments/environment';
 import { Util } from 'src/app/shared/utils/util';
+import { GatewayAssignment } from 'src/app/shared/models/gateway-assignment';
 
 /**
  * Service to manage applications.
@@ -73,7 +74,8 @@ export class ApplicationService {
    * @returns the Application with the information as it was saved.
    */
   public updateApplication(application: Application): Observable<Application> {
-    return this.http.put<Application>(`${ environment.adminService }/applications/application`, application, Util.options());
+    return this.http.put<Application>(`${ environment.adminService }/applications/application/${ application.id }`,
+      application, Util.options());
   }
 
   /**
@@ -85,6 +87,21 @@ export class ApplicationService {
    */
   public deleteApplication(applicationId: number): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(`${ environment.adminService }/applications/application/${ applicationId }`, Util.options());
+  }
+
+  /**
+   * Assigns or unassigns the gateway to the application.
+   *
+   * @date 2019-04-07
+   * @param applicationId - id of the Application.
+   * @param gatewayId - id of the Gateway.
+   * @param assign - true to assign the gateway, false to unassign it.
+   * @returns an ApiResponse indicating if the operation succeeded or not.
+   */
+  public assignGatewayToApplication(applicationId: number, gatewayId: number, assign: boolean): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(
+      `${ environment.adminService }/applications/application/gateway/${ assign }`,
+      new GatewayAssignment(gatewayId, applicationId), Util.options());
   }
 
 }
