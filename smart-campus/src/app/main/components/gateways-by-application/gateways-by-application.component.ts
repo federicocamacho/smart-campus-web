@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
 
-import { GatewaysFilter } from 'src/app/shared/models/types';
 import { DataTable } from 'src/app/shared/utils/data-table';
 import { Gateway } from 'src/app/shared/models/gateway';
-import { MatTableDataSource } from '@angular/material';
+import { GatewaysFilter } from 'src/app/shared/models/types';
 import { Util } from 'src/app/shared/utils/util';
 
 @Component({
@@ -31,14 +31,11 @@ export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysF
 
   protected filterPredicate: (data: Gateway, filter: string) => boolean = (data: Gateway, filter: string) => {
     switch (this.filterType) {
-      case 'DESCRIPTION':
-        return Util.stringContains(data.description, filter);
-      case 'IP':
-        return Util.stringContains(data.ip, filter);
-      case 'IS_ALIVE':
-        return data.alive === (filter === 'true');
-      case 'NONE':
-        return true;
+      case 'NAME': return Util.stringContains(data.name, filter);
+      case 'DESCRIPTION': return Util.stringContains(data.description, filter);
+      case 'IP': return Util.stringContains(data.ip, filter);
+      case 'IS_ALIVE': return data.alive === (filter === 'true');
+      default: return true;
     }
   }
 

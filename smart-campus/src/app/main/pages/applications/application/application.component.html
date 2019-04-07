@@ -45,7 +45,10 @@
     </div>
   </div>
 </form>
-<div class="application-card default-shadow" style="margin-top: 30px; color: #20aee3">
+<div
+  *ngIf="applicationId"
+  class="application-card default-shadow"
+  style="margin-top: 30px; color: #20aee3">
   <h4>Gateways Asignados:</h4>
   <sc-gateways-by-application
     [gateways]="application.gateways"

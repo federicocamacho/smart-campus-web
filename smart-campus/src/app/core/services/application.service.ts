@@ -55,6 +55,28 @@ export class ApplicationService {
   }
 
   /**
+   * Creates a new application.
+   *
+   * @date 2019-04-07
+   * @param application - Application to be created.
+   * @returns the Application with its id after creation.
+   */
+  public createApplication(application: Application): Observable<Application> {
+    return this.http.post<Application>(`${ environment.adminService }/applications/application`, application, Util.options());
+  }
+
+  /**
+   * Updates an existing application.
+   *
+   * @date 2019-04-07
+   * @param application - Application to be updated.
+   * @returns the Application with the information as it was saved.
+   */
+  public updateApplication(application: Application): Observable<Application> {
+    return this.http.put<Application>(`${ environment.adminService }/applications/application`, application, Util.options());
+  }
+
+  /**
    * Deletes the application identified by the given id.
    *
    * @date 2019-04-05

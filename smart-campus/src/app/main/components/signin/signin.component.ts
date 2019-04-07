@@ -16,6 +16,8 @@ export class SigninComponent extends Subscribable {
 
   public signin: User = new User();
 
+  public passwordCheck: string;
+
   constructor(public appService: AppService, private userService: UserService) {
     super();
   }
