@@ -11,7 +11,7 @@
     mat-raised-button
     color="primary"
     fxHide.xs
-    (click)="createApplication()"
+    (click)="onCreateRecord()"
   >
     <mat-icon style="font-size: 20px">add</mat-icon>Crear nueva
   </button>
@@ -19,7 +19,7 @@
     mat-mini-fab
     color="primary"
     fxHide.gt-xs
-    (click)="createApplication()"
+    (click)="onCreateRecord()"
   >
     <mat-icon style="font-size: 20px">add</mat-icon>
   </button>
@@ -104,7 +104,7 @@
           class="desktop-action"
           mat-icon-button
           style="color: rgb(36, 210, 181)"
-          (click)="onEditApplication(element.id)"
+          (click)="onEditRecord(element.id)"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -113,7 +113,7 @@
           mat-stroked-button
           mat-button
           color="primary"
-          (click)="onEditApplication(element.id)"
+          (click)="onEditRecord(element.id)"
         >
           <mat-icon style="margin-right: 3px;">edit</mat-icon>Editar
         </button>
@@ -121,7 +121,7 @@
           mat-icon-button
           class="desktop-action"
           style="color: red;"
-          (click)="onDeleteApplication(element.id, element.name)"
+          (click)="onDeleteRecord(element.id, element.name)"
         >
           <mat-icon>delete</mat-icon>
         </button>
@@ -130,7 +130,7 @@
           mat-stroked-button
           mat-button
           color="warn"
-          (click)="onDeleteApplication(element.id, element.name)"
+          (click)="onDeleteRecord(element.id, element.name)"
         >
           <mat-icon>delete</mat-icon> Eliminar
         </button>
