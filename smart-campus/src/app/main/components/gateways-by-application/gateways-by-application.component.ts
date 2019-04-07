@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { MatTableDataSource } from '@angular/material';
 
-import { GatewaysFilter } from 'src/app/shared/models/types';
 import { DataTable } from 'src/app/shared/utils/data-table';
 import { Gateway } from 'src/app/shared/models/gateway';
-import { MatTableDataSource } from '@angular/material';
+import { GatewaysFilter } from 'src/app/shared/models/types';
 import { Util } from 'src/app/shared/utils/util';
 
 @Component({

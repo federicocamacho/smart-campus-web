@@ -104,7 +104,7 @@
         class="login-input" name="newPasswordRepeat" #newPasswordRepeat="ngModel"
         type="password" placeholder="Repetir Contraseña"
         required="true" minlength="4" [equal]="signin.password"
-        [(ngModel)]="signin.passwordCheck" />
+        [(ngModel)]="passwordCheck" />
       <div *ngIf="appService.isModelInvalid(newPasswordRepeat)">
         <mat-icon
           class="validation-icon"

@@ -10,9 +10,8 @@
     </mat-select>
   </mat-form-field>
   <mat-form-field fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="100%" *ngIf="filterType !== 'NONE' && filterType !== 'IS_ALIVE'">
-    <input
-      matInput type="text"
-      placeholder="Valor:"
+    <input matInput
+      type="text" placeholder="Valor:"
       (keyup)="applyFilter()"
       [(ngModel)]="filterValue">
     <button mat-button matSuffix mat-icon-button
@@ -30,7 +29,9 @@
     </mat-select>
   </mat-form-field>
 </div>
-<div scAnimated="fadeIn" class="table-container default-shadow">
+<div
+  scAnimated="fadeIn"
+  class="table-container default-shadow">
   <table mat-table matSort class="generic-table" [dataSource]="dataSource" style="width: 100%">
     <!-- Name Column -->
     <ng-container matColumnDef="name">

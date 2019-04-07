@@ -1,4 +1,4 @@
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntil, take } from 'rxjs/operators';
@@ -21,13 +21,14 @@ export class ApplicationComponent extends Subscribable implements OnInit {
   constructor(
     public appService: AppService,
     private applicationService: ApplicationService,
-    private route: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private router: Router) {
       super();
       this.application = new Application();
     }
 
   ngOnInit() {
-    this.applicationId = Number(this.route.snapshot.params.id);
+    this.applicationId = Number(this.activatedRoute.snapshot.params.id);
     if (this.applicationId) {
       this.getApplication();
     }
@@ -51,7 +52,12 @@ export class ApplicationComponent extends Subscribable implements OnInit {
   }
 
   private createApplication(): void {
-
+    this.applicationService.createApplication(this.application)
+    .pipe(take(1), takeUntil(this.destroyed))
+    .subscribe(
+      (application: Application) => this.router.navigate([ '..' ], { relativeTo: this.activatedRoute }),
+      (err: HttpErrorResponse) => this.appService.handleGenericError(err)
+    );
   }
 
   private updateApplication(): void {
