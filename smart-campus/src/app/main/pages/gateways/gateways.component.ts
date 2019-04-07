@@ -12,6 +12,7 @@ import { GatewayService } from 'src/app/core/services/gateway.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { DataTable } from 'src/app/shared/utils/data-table';
 import { Util } from 'src/app/shared/utils/util';
+import { Application } from 'src/app/shared/models/application';
 
 @Component({
   selector: 'sc-gateways',
@@ -21,6 +22,8 @@ import { Util } from 'src/app/shared/utils/util';
 export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implements OnInit {
 
   public dataSource: MatTableDataSource<Gateway>;
+
+  public applicationsSelect: Application[];
 
   /**
    * Creates an instance of GatewaysComponent.
@@ -38,6 +41,7 @@ export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implem
     protected router: Router) {
       super(activatedRoute, router);
       this.displayedColumns = [ 'name', 'description', 'ip', 'alive', 'actions' ];
+      this.applicationsSelect = [];
   }
 
   ngOnInit() {
@@ -100,10 +104,9 @@ export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implem
     .pipe(take(1), takeUntil(this.destroyed))
     .subscribe(
       (gateways: Gateway[]) => {
-        console.log(gateways);
         this.gatewayService.gateways = gateways;
-        console.log(gateways[0].alive);
         this.dataSource.data = gateways;
+        this.buildApplicationsSelect();
       },
       (err: HttpErrorResponse) => this.appService.handleGenericError(err));
   }
@@ -118,9 +121,32 @@ export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implem
         return Util.stringContains(data.ip, filter);
       case 'IS_ALIVE':
         return data.alive === (filter === 'true');
+      case 'APPLICATION': {
+        return data.applications.some(application => application.id === Number(filter));
+      }
       case 'NONE':
         return true;
     }
   }
 
+  /**
+   * Builds the list of selectable applications for the filter.
+   *
+   */
+  private buildApplicationsSelect(): void {
+    if (!this.gatewayService.gateways) {
+      return;
+    }
+    for (const gateway of this.gatewayService.gateways) {
+      if (!gateway.applications) {
+        continue;
+      }
+
+      for (const application of gateway.applications) {
+        if (!this.applicationsSelect.find(applicationSelect => applicationSelect.id === application.id)) {
+          this.applicationsSelect.push(application);
+        }
+      }
+    }
+  }
 }

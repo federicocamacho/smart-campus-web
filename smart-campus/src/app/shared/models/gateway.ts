@@ -1,6 +1,7 @@
 import { GatewayProperty } from './gateway-property';
 import { Device } from './device';
 import { Process } from './process';
+import { Application } from './application';
 
 export class Gateway {
 
@@ -11,7 +12,7 @@ export class Gateway {
   public properties: GatewayProperty[];
   public devices: Device[];
   public processes: Process[];
-  public applicationId: number;
+  public applications: Application[];
   public alive: boolean;
 
   constructor(
@@ -19,7 +20,7 @@ export class Gateway {
     name: string,
     description: string,
     ip: string,
-    applicationId: number,
+    applications: Application[],
     alive: boolean,
     properties: GatewayProperty[] = [],
     devices: Device[] = [],
@@ -28,7 +29,7 @@ export class Gateway {
       this.name = name;
       this.description = description;
       this.ip = ip;
-      this.applicationId = applicationId;
+      this.applications = applications;
       this.alive = alive;
       this.properties = properties;
       this.devices = devices;
