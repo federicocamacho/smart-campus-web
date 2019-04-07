@@ -1,3 +1,5 @@
+import { Gateway } from './gateway';
+
 /**
  * Represents an Application.
  *
@@ -10,6 +12,7 @@ export class Application {
   public name: string;
   public userId: number;
   public description: string;
+  public gateways: Gateway[];
 
   /**
    * Creates an instance of Application.

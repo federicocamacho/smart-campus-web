@@ -1,36 +1,25 @@
 import { GatewaysFilter } from './../../../shared/models/types';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource, MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { Component, OnInit } from '@angular/core';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { Gateway } from 'src/app/shared/models/gateway';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
-import { Subscribable } from 'src/app/shared/utils/subscribable';
-import { Util } from 'src/app/shared/utils/util';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data';
 import { take, takeUntil } from 'rxjs/operators';
 import { ApiResponse } from 'src/app/shared/models/api-response';
 import { GatewayService } from 'src/app/core/services/gateway.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ApplicationService } from 'src/app/core/services/application.service';
+import { DataTable } from 'src/app/shared/utils/data-table';
 
 @Component({
   selector: 'sc-gateways',
   templateUrl: './gateways.component.html',
   styleUrls: ['./gateways.component.css']
 })
-export class GatewaysComponent extends Subscribable implements OnInit {
-
-  public displayedColumns = [ 'name', 'description', 'ip', 'is_alive' ];
+export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implements OnInit {
 
   public dataSource: MatTableDataSource<Gateway>;
-
-  public filterType: GatewaysFilter = 'NONE';
-
-  public filterValue = '';
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   /**
    * Creates an instance of GatewaysComponent.
@@ -41,36 +30,18 @@ export class GatewaysComponent extends Subscribable implements OnInit {
    * @param router
    */
   constructor(
-    private activatedRoute: ActivatedRoute,
+    protected activatedRoute: ActivatedRoute,
     private appService: AppService,
     public gatewayService: GatewayService,
     private dialog: MatDialog,
-    private router: Router) {
-      super();
-      this.dataSource = new MatTableDataSource();
+    protected router: Router) {
+      super(activatedRoute, router);
+      this.displayedColumns = [ 'name', 'description' ];
   }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
-    this.dataSource.filterPredicate = (data: Gateway, filter: string) => {
-      if (this.filterType === 'NAME') {
-        return Util.stringContains(data.name, filter);
-      } else {
-        return Util.stringContains(data.description, filter);
-      }
-    };
+    super.ngOnInit();
     this.getGateways();
-  }
-
-  /**
-   * Triggered when pressing "Create new" button.
-   *
-   * @date 2019-04-03
-   */
-  public createRecord(): void {
-    this.router.navigate([ '0' ], { relativeTo: this.activatedRoute });
   }
 
   /**
@@ -119,16 +90,6 @@ export class GatewaysComponent extends Subscribable implements OnInit {
   }
 
   /**
-   * Triggered when pressing "Edit" gateway button.
-   *
-   * @date 2019-04-04
-   * @param id - id of the gateway to be edited.
-   */
-  public onEditRecord(id: number): void {
-    this.router.navigate([ id ], { relativeTo: this.activatedRoute });
-  }
-
-  /**
    * Retrieves the gateway for the user logged in.
    *
    * @date 2019-04-04
@@ -144,13 +105,9 @@ export class GatewaysComponent extends Subscribable implements OnInit {
       (err: HttpErrorResponse) => this.appService.handleGenericError(err));
   }
 
-  /**
-   * Applies the Filter definition for the current datasource using as value the content of filterValue.
-   *
-   * @date 2019-04-05
-   */
-  public applyFilter(): void {
-    this.dataSource.filter = this.filterValue;
+  protected filterPredicate: (data: Gateway, filter: string) => boolean = (data: Gateway, filter: string) => {
+    // TODO: Impement this like for real.
+    return true;
   }
 
 }

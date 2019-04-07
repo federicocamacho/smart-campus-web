@@ -11,7 +11,7 @@
     mat-raised-button
     color="primary"
     fxHide.xs
-    (click)="createRecord()"
+    (click)="onCreateRecord()"
   >
     <mat-icon style="font-size: 20px">add</mat-icon>Crear nuevo
   </button>
@@ -19,7 +19,7 @@
     mat-mini-fab
     color="primary"
     fxHide.gt-xs
-    (click)="createRecord()"
+    (click)="onCreateRecord()"
   >
     <mat-icon style="font-size: 20px">add</mat-icon>
   </button>
@@ -32,7 +32,7 @@
 >
   <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%">
     <mat-label>Filtrar por:</mat-label>
-    <mat-select [(value)]="filterType">
+    <mat-select [(value)]="filterType" (selectionChange)="onFilterTypeChange($event.value)">
       <mat-option value="NONE">Ninguno</mat-option>
       <mat-option value="NAME">Nombre</mat-option>
       <mat-option value="DESCRIPTION">Descripción</mat-option>

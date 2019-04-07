@@ -1,7 +1,7 @@
 <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" class="filter-container">
   <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%">
     <mat-label>Filtrar por:</mat-label>
-    <mat-select [(value)]="filterType">
+    <mat-select [value]="filterType" (selectionChange)="onFilterTypeChange($event.value)">
       <mat-option value="NONE">Ninguno</mat-option>
       <mat-option value="NAME">Nombre</mat-option>
       <mat-option value="DESCRIPTION">Descripción</mat-option>
@@ -9,7 +9,7 @@
       <mat-option value="IS_ALIVE">Estado</mat-option>
     </mat-select>
   </mat-form-field>
-  <mat-form-field fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="100%" *ngIf="filterType !== 'NONE'">
+  <mat-form-field fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="100%" *ngIf="filterType !== 'NONE' && filterType !== 'IS_ALIVE'">
     <input
       matInput type="text"
       placeholder="Valor:"
@@ -22,9 +22,16 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
+  <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%" *ngIf="filterType === 'IS_ALIVE'">
+    <mat-label>Estado:</mat-label>
+    <mat-select [value]="filterValue" (selectionChange)="filterValue = $event.value; applyFilter()">
+      <mat-option value="true">Activo</mat-option>
+      <mat-option value="false">Inactivo</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 <div scAnimated="fadeIn" class="table-container default-shadow">
-  <table mat-table [dataSource]="dataSource" matSort style="width: 100%">
+  <table mat-table matSort class="generic-table" [dataSource]="dataSource" style="width: 100%">
     <!-- Name Column -->
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
@@ -77,9 +84,9 @@
         class="actions-cell"
       >
         <button
-          class="desktop-action"
+          class="desktop-action unassign-action"
           mat-icon-button
-          style="color: rgb(36, 210, 181)"
+          style="color: #eea51b"
           (click)="onEditRecord(element.id)"
         >
           <mat-icon>link_off</mat-icon>

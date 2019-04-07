@@ -47,5 +47,8 @@
 </form>
 <div class="application-card default-shadow" style="margin-top: 30px; color: #20aee3">
   <h4>Gateways Asignados:</h4>
-  <sc-gateways-by-application [gateways]="[]"></sc-gateways-by-application>
+  <sc-gateways-by-application
+    [gateways]="application.gateways"
+    [applicationId]="applicationId">
+  </sc-gateways-by-application>
 </div>

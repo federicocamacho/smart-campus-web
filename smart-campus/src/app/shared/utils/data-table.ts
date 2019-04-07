@@ -48,6 +48,12 @@ export abstract class DataTable<T, U> extends Subscribable implements OnInit {
     this.router.navigate([ id ], { relativeTo: this.activatedRoute });
   }
 
+  public onFilterTypeChange(newFilterType: U): void {
+    this.filterValue = '';
+    this.applyFilter();
+    this.filterType = newFilterType;
+  }
+
   /**
    * Applies the Filter definition for the current datasource using as value the content of filterValue.
    *
