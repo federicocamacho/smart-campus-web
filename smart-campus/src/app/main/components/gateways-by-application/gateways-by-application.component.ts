@@ -21,6 +21,10 @@ export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysF
     this.displayedColumns = [ 'name', 'description', 'ip', 'alive', 'actions' ];
   }
 
+  ngOnInit() {
+    super.initDataTable();
+  }
+
   ngOnChanges() {
     this.dataSource = new MatTableDataSource(this.gateways);
   }
