@@ -2,9 +2,9 @@
 @import './theme.min.css';
 
 html, body { height: 100%; }
-body { 
+body {
     margin: 0;
-    font-family: "Montserrat", sans-serif; 
+    font-family: "Montserrat", sans-serif;
 }
 
 .mat-app-background {
@@ -111,4 +111,111 @@ input.login-input.ng-invalid.ng-touched::placeholder {
     margin-top: 5px;
     font-weight: 400;
     font-size: 15px;
+}
+
+/*********** TABLE STYLES ****************/
+.generic-table ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+  color: #22aee3;
+  font-size: 14px;
+}
+
+.generic-table .mat-header-cell {
+  border-bottom-width: 2px;
+}
+
+.generic-table .mat-row:hover {
+  background-color: #f6f6f6;
+}
+
+.generic-table .actions-cell {
+  text-align: right;
+}
+
+.generic-table .filter-container {
+  margin-top: 40px;
+}
+
+.generic-table .mobile-label {
+  display: none;
+}
+
+.generic-table .mobile-action {
+  display: none;
+}
+
+@media screen and (max-width: 599px) {
+  .generic-table .mobile-label {
+    min-width: 80px;
+    display: inline-block;
+    text-align: right;
+    margin-right: 8px;
+    color: #22aee3;
+  }
+
+  .generic-table .desktop-action {
+    display: none;
+  }
+
+  .generic-table .mobile-action {
+    display: inline-block;
+    font-size: 12px;
+  }
+
+  .generic-table .mat-header-row {
+    display: none;
+  }
+
+  .generic-table .mat-row {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 12px;
+    display: flex;
+  }
+
+  .generic-table {
+    border-spacing: 0px 10px;
+    background-color: unset;
+  }
+
+  .generic-table tr {
+    margin-bottom: 20px;
+    border-radius: 4px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    -webkit-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    -moz-box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    border-color: rgba(120, 130, 140, 0.13);
+    background-color: white;
+  }
+
+  .generic-table tr.mat-row {
+    height: unset;
+  }
+
+  .generic-table td.mat-cell {
+    border-bottom: none;
+    margin-bottom: 8px;
+  }
+
+  .generic-table td > mat-form-field {
+    padding-top: 0px;
+    padding-right: 0px;
+  }
+
+  .generic-table td.mat-cell:first-of-type {
+    padding-left: 0px;
+  }
+
+  .generic-table .actions-cell {
+    text-align: center;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 0px !important;
+  }
+
+  .generic-table .edit-mobile-action {
+    margin-right: 15px;
+    color: rgb(36, 210, 181);
+  }
 }
