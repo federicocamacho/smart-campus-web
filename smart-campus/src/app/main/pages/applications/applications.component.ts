@@ -45,7 +45,7 @@ export class ApplicationsComponent extends DataTable<Application, ApplicationsFi
   }
 
   ngOnInit() {
-    super.ngOnInit();
+    super.initDataTable();
     this.getApplications();
   }
 

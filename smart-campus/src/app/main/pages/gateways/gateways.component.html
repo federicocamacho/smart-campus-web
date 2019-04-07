@@ -67,7 +67,7 @@
   </mat-form-field>
   <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%" *ngIf="filterType === 'IS_ALIVE'">
       <mat-label>Estado:</mat-label>
-      <mat-select [(value)]="filterType">
+      <mat-select [(value)]="filterValue">
         <mat-option value="true">Activo</mat-option>
         <mat-option value="false">Inactivo</mat-option>
       </mat-select>

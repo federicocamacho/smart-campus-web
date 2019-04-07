@@ -1,9 +1,9 @@
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
-import { ViewChild, OnInit } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { Subscribable } from './subscribable';
 import { Router, ActivatedRoute } from '@angular/router';
 
-export abstract class DataTable<T, U> extends Subscribable implements OnInit {
+export abstract class DataTable<T, U> extends Subscribable {
 
   public displayedColumns: string[];
   public dataSource: MatTableDataSource<T>;
@@ -22,7 +22,7 @@ export abstract class DataTable<T, U> extends Subscribable implements OnInit {
     this.dataSource = new MatTableDataSource();
   }
 
-  ngOnInit() {
+  initDataTable() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
