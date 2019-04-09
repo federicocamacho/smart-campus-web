@@ -12,6 +12,7 @@ import { ApplicationService } from 'src/app/core/services/application.service';
 import { ApiResponse } from 'src/app/shared/models/api-response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppService } from 'src/app/app.service';
+import { GatewaySelectionDialogComponent } from '../gateway-selection-dialog/gateway-selection-dialog.component';
 
 @Component({
   selector: 'sc-gateways-by-application',
@@ -23,7 +24,10 @@ export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysF
   @Input() gateways: Gateway[];
   @Input() applicationId: number;
 
-  constructor(private appService: AppService, private applicationService: ApplicationService, private dialog: MatDialog) {
+  constructor(
+    private appService: AppService,
+    private applicationService: ApplicationService,
+    private dialog: MatDialog) {
     super(null, null);
     this.displayedColumns = [ 'name', 'description', 'ip', 'alive', 'actions' ];
   }
@@ -36,8 +40,17 @@ export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysF
     this.dataSource = new MatTableDataSource(this.gateways);
   }
 
-  public onAssignGateway(gateway: Gateway): void {
+  public onAssignGateway(): void {
+    const assignDialog = this.dialog.open(GatewaySelectionDialogComponent, {
+      width: '500px',
+      data: this.gateways
+    });
 
+    assignDialog.afterClosed()
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe((gateway: Gateway) => gateway ? this.assignGateway(gateway.id, true, gateway) : null);
   }
 
   public onUnassignGateway(gateway: Gateway): void {
@@ -56,11 +69,19 @@ export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysF
       .subscribe(result => result ? this.assignGateway(result, false) : null);
   }
 
-  private assignGateway(gatewayId: number, assign: boolean): void {
+  private assignGateway(gatewayId: number, assign: boolean, gateway?: Gateway): void {
     this.applicationService.assignGatewayToApplication(this.applicationId, gatewayId, assign)
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
-        (res: ApiResponse) => this.appService.showSnack(res.message),
+        (res: ApiResponse) => {
+          this.appService.showSnack(res.message);
+          if (assign) {
+            this.gateways.push(gateway);
+          } else {
+            this.gateways.splice(this.gateways.findIndex(g => g.id === gatewayId), 1);
+          }
+          this.dataSource.data = this.gateways;
+        },
         (err: HttpErrorResponse) => this.appService.handleGenericError(err)
       );
   }

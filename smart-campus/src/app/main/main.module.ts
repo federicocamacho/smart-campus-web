@@ -16,6 +16,7 @@ import { ApplicationComponent } from './pages/applications/application/applicati
 import { GatewaysComponent } from './pages/gateways/gateways.component';
 import { GatewayComponent } from './pages/gateways/gateway/gateway.component';
 import { GatewaysByApplicationComponent } from './components/gateways-by-application/gateways-by-application.component';
+import { GatewaySelectionDialogComponent } from './components/gateway-selection-dialog/gateway-selection-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,11 @@ import { GatewaysByApplicationComponent } from './components/gateways-by-applica
     ApplicationComponent,
     GatewaysComponent,
     GatewayComponent,
-    GatewaysByApplicationComponent
+    GatewaysByApplicationComponent,
+    GatewaySelectionDialogComponent
+  ],
+  entryComponents: [
+    GatewaySelectionDialogComponent
   ],
   imports: [
     AppRoutingModule,
