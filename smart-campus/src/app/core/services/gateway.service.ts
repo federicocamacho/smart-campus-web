@@ -57,4 +57,27 @@ export class GatewayService {
   public deleteGatewayById(gatewayId: number): Observable<ApiResponse> {
     return this.http.delete<ApiResponse>(`${ environment.adminService }/gateways/gateway/${ gatewayId }`, Util.options());
   }
+
+  /**
+   * Creates a new gateway.
+   *
+   * @date 2019-04-07
+   * @param gateway - Gateway to be created.
+   * @returns the Gateway with its id after creation.
+   */
+  public createGateway(gateway: Gateway): Observable<Gateway> {
+    return this.http.post<Gateway>(`${ environment.adminService }/gateways/gateway`, gateway, Util.options());
+  }
+
+  /**
+   * Updates an existing gateway.
+   *
+   * @date 2019-04-07
+   * @param gateway - Gateway to be updated.
+   * @returns the Gateway with the information as it was saved.
+   */
+  public updateGateway(gateway: Gateway): Observable<Gateway> {
+    return this.http.put<Gateway>(`${ environment.adminService }/gateways/gateway/${ gateway.id }`,
+      gateway, Util.options());
+  }
 }

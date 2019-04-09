@@ -14,14 +14,16 @@ export class Gateway {
   public processes: Process[];
   public applications: Application[];
   public alive: boolean;
+  public userId: number;
 
   constructor(
-    id: number,
-    name: string,
-    description: string,
-    ip: string,
-    applications: Application[],
-    alive: boolean,
+    id?: number,
+    name?: string,
+    description?: string,
+    ip?: string,
+    userId?: number,
+    applications: Application[] = [],
+    alive?: boolean,
     properties: GatewayProperty[] = [],
     devices: Device[] = [],
     processes: Process[] = []) {
