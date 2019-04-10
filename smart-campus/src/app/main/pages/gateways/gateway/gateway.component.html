@@ -1,3 +1,57 @@
-<p>
-  gateway works!
-</p>
+<form class="gateway-form" #gatewayForm="ngForm" (ngSubmit)="saveOrUpdateGateway()">
+    <div
+      fxLayout="column"
+      scAnimated="fadeIn"
+      class="gateway-card default-shadow">
+      <div
+        fxLayout="row"
+        fxLayoutAlign="space-between center"
+        class="section-title-container">
+        <h2 class="section-title">
+          {{ gatewayId ? 'Gateway: ' + gateway?.name : 'Nuevo Gateway' }}
+        </h2>
+      </div>
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre del gateway</mat-label>
+        <input matInput
+          name="name" #name="ngModel"
+          type="text" placeholder="Nombre del gateway"
+          required="true" [(ngModel)]="gateway.name"/>
+        <mat-error *ngIf="name.hasError('required')">
+          Nombre de gateway requerido.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Descripción del gateway</mat-label>
+        <input matInput
+          name="description" #description="ngModel"
+          type="text" placeholder="Descripción de la aplicación"
+          required="true" [(ngModel)]="gateway.description"/>
+        <mat-error *ngIf="name.hasError('required')">
+          Nombre de aplicación requerido.
+        </mat-error>
+      </mat-form-field>
+      <div
+        fxLayout="row"
+        fxLayoutAlign="end"
+        class="button-container">
+        <button mat-raised-button
+          fxFlex="20%" fxFlex.sm="40%" fxFlex.xs="100%"
+          color="primary"
+          type="submit"
+          [disabled]="appService.isFormInvalid(gatewayForm)">
+          {{ gatewayId ? 'Guardar' : 'Crear' }}
+        </button>
+      </div>
+    </div>
+  </form>
+  <div
+    *ngIf="gatewayId"
+    class="gateway-card default-shadow"
+    style="margin-top: 30px; color: #20aee3">
+    <h4>Procesos asignados:</h4>
+    <!-- <sc-gateways-by-application
+      [gateways]="application.gateways"
+      [applicationId]="applicationId">
+    </sc-gateways-by-application> -->
+  </div>
