@@ -5,7 +5,7 @@
       <mat-label>Gateway:</mat-label>
       <mat-select [(value)]="selectedGateway">
         <mat-option
-          *ngFor="let gateway of data"
+          *ngFor="let gateway of gateways"
           [value]="gateway">
           {{ gateway.name }}
         </mat-option>

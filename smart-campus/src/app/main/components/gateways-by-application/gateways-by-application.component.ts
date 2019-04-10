@@ -13,6 +13,7 @@ import { ApiResponse } from 'src/app/shared/models/api-response';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AppService } from 'src/app/app.service';
 import { GatewaySelectionDialogComponent } from '../gateway-selection-dialog/gateway-selection-dialog.component';
+import { GatewayService } from 'src/app/core/services/gateway.service';
 
 @Component({
   selector: 'sc-gateways-by-application',
@@ -27,6 +28,7 @@ export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysF
   constructor(
     private appService: AppService,
     private applicationService: ApplicationService,
+    private gatewayService: GatewayService,
     private dialog: MatDialog) {
     super(null, null);
     this.displayedColumns = [ 'name', 'description', 'ip', 'alive', 'actions' ];
@@ -41,9 +43,24 @@ export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysF
   }
 
   public onAssignGateway(): void {
+    if (this.gatewayService.gateways) {
+      this.prepareAssignmentsDialog(this.gatewayService.gateways);
+    } else {
+      this.gatewayService.getGatewaysByUserId(this.appService.user.id)
+        .pipe(take(1), takeUntil(this.destroyed))
+        .subscribe(
+          (gateways: Gateway[]) => this.prepareAssignmentsDialog(gateways),
+          (err: HttpErrorResponse) => this.appService.handleGenericError(err));
+    }
+  }
+
+  private prepareAssignmentsDialog(userGateways: Gateway[]): void {
+    // filter the gateways excluding the ones that are already assigned.
+    const assignableGateways = [ ...userGateways ];
+    assignableGateways.filter(gateway => this.gateways.indexOf(gateway) < 0);
     const assignDialog = this.dialog.open(GatewaySelectionDialogComponent, {
       width: '500px',
-      data: this.gateways
+      data: assignableGateways
     });
 
     assignDialog.afterClosed()
