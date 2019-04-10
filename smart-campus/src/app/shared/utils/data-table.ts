@@ -16,8 +16,8 @@ export abstract class DataTable<T, U> extends Subscribable {
   protected abstract filterPredicate: (data: T, filter: string) => boolean;
 
   constructor(
-    protected activatedRoute: ActivatedRoute,
-    protected router: Router) {
+    protected activatedRoute: ActivatedRoute = null,
+    protected router: Router = null) {
     super();
     this.dataSource = new MatTableDataSource();
   }
@@ -43,7 +43,7 @@ export abstract class DataTable<T, U> extends Subscribable {
   }
 
   /**
-   * Triggered when pressing "Edit" application button.
+   * Triggered when pressing "Edit" button.
    *
    * @date 2019-04-04
    * @param id - id of the application to be edited.

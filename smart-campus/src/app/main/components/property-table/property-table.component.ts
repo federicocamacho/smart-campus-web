@@ -1,0 +1,107 @@
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { MatTableDataSource, MatDialog } from '@angular/material';
+
+import { DataTable } from 'src/app/shared/utils/data-table';
+import { Property } from 'src/app/shared/models/property';
+import { PropertiesFilter } from 'src/app/shared/models/types';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data';
+import { take, takeUntil } from 'rxjs/operators';
+import { Util } from 'src/app/shared/utils/util';
+
+@Component({
+  selector: 'sc-property-table',
+  templateUrl: './property-table.component.html',
+  styleUrls: ['./property-table.component.css']
+})
+export class PropertyTableComponent extends DataTable<Property, PropertiesFilter> implements OnInit, OnChanges {
+
+  /**
+   * Receives the list of the properties to be displayed.
+   */
+  @Input() properties: Property[];
+
+  public dataSource: MatTableDataSource<Property>;
+
+  /**
+   * Creates an instance of PropertyTableComponent.
+   */
+  constructor(private dialog: MatDialog) {
+      super();
+      this.displayedColumns = [ 'type', 'name', 'value', 'actions' ];
+  }
+
+  ngOnInit() {
+    super.initDataTable();
+  }
+
+  ngOnChanges() {
+    this.dataSource.data = this.properties;
+    console.log('Property-Table onChanges gets executed.')
+  }
+
+  /**
+   * Triggered when pressing "Create app" button.
+   *
+   * @date 2019-04-03
+   */
+  public onCreateRecord(): void {
+    //this.router.navigate([ '0' ], { relativeTo: this.activatedRoute });
+  }
+
+  /**
+   * Triggered when pressing "Edit" button.
+   *
+   * @date 2019-04-04
+   * @param id - id of the application to be edited.
+   */
+  public onEditRecord(id: number): void {
+    //this.router.navigate([ id ], { relativeTo: this.activatedRoute });
+  }
+
+  /**
+   * Triggered when pressing "Delete" button.
+   *
+   * @date 2019-04-04
+   * @param index - index of the property to be deleted.
+   */
+  public onDeleteRecord(index: number, name: string): void {
+    console.log('Borrando');
+    const deleteDialog = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: new DialogData(
+        'Eliminar propiedad',
+        `Está seguro que desea eliminar la propiedad ${ name }`,
+        index)
+    });
+
+    deleteDialog.afterClosed()
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(result => {
+        if (result) {
+         this.dataSource.data.splice(index, 1);
+         console.log(this.paginator);
+        } else {
+          return null;
+        }
+      });
+  }
+
+  /**
+   * Filter function to be applied to the table.
+   */
+  protected filterPredicate: (data: Property, filter: string) => boolean = (data: Property, filter: string) => {
+    switch (this.filterType) {
+      case 'TYPE':
+      return Util.stringContains(data.type, filter);
+      case 'NAME':
+        return Util.stringContains(data.name, filter);
+      case 'VALUE':
+        return Util.stringContains(data.value, filter);
+      case 'NONE':
+        return true;
+    }
+  }
+}

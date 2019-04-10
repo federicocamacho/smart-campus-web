@@ -11,6 +11,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { MaterialModule } from '../libs/material.module';
 import { ClickOutsideDirective } from './directives/click-outside.directive';
+import { PropertyTypePipe } from './pipes/property-type.pipe';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     ClickOutsideDirective,
     ConfirmDialogComponent,
     LoaderComponent,
+    PropertyTypePipe
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
     FlexLayoutModule,
     FormsModule,
     LoaderComponent,
-    HttpClientModule
+    HttpClientModule,
+    PropertyTypePipe
   ]
 })
 export class SharedModule { }

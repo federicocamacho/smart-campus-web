@@ -1,13 +1,13 @@
-import { ProcessProperty } from './process-property';
+import { Property } from './property';
 
 export class Process {
 
   public id: number;
   public name: string;
   public description: string;
-  public properties: ProcessProperty[];
+  public properties: Property[];
 
-  constructor(id: number, name: string, description: string, properties: ProcessProperty[] = []) {
+  constructor(id: number, name: string, description: string, properties: Property[] = []) {
     this.id = id;
     this.name = name;
     this.description = description;

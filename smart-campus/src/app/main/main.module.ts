@@ -17,6 +17,8 @@ import { GatewaysComponent } from './pages/gateways/gateways.component';
 import { GatewayComponent } from './pages/gateways/gateway/gateway.component';
 import { GatewaysByApplicationComponent } from './components/gateways-by-application/gateways-by-application.component';
 import { GatewaySelectionDialogComponent } from './components/gateway-selection-dialog/gateway-selection-dialog.component';
+import { PropertyTableComponent } from './components/property-table/property-table.component';
+import { PropertyTypePipe } from '../shared/pipes/property-type.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { GatewaySelectionDialogComponent } from './components/gateway-selection-
     GatewaysComponent,
     GatewayComponent,
     GatewaysByApplicationComponent,
-    GatewaySelectionDialogComponent
+    GatewaySelectionDialogComponent,
+    PropertyTableComponent
   ],
   entryComponents: [
     GatewaySelectionDialogComponent
