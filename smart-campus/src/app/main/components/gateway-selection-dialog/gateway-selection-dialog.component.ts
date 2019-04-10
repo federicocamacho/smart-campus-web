@@ -11,12 +11,14 @@ import { Gateway } from 'src/app/shared/models/gateway';
 export class GatewaySelectionDialogComponent implements OnInit {
 
   public selectedGateway: Gateway;
+  public gateways: Gateway[];
 
   constructor(
     public dialogRef: MatDialogRef<GatewaySelectionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Gateway[]) { }
 
   ngOnInit() {
+    this.gateways = this.data;
   }
 
 }
