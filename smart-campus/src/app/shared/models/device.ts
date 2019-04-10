@@ -1,5 +1,5 @@
 import { ThingType } from './types';
-import { DeviceProperty } from './device-property';
+import { Property } from './property';
 
 export class Device {
 
@@ -8,9 +8,9 @@ export class Device {
   public description: string;
   public type: ThingType;
   public gatewayId: number;
-  public properties: DeviceProperty[];
+  public properties: Property[];
 
-  constructor(id: number, name: string, description: string, type: ThingType, gatewayId: number, properties: DeviceProperty[] = []) {
+  constructor(id: number, name: string, description: string, type: ThingType, gatewayId: number, properties: Property[] = []) {
     this.id = id;
     this.name = name;
     this.description = description;

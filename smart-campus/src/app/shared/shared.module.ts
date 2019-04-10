@@ -11,6 +11,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import { MaterialModule } from '../libs/material.module';
+import { PropertyTypePipe } from './pipes/property-type.pipe';
 
 /**
  * Imports and exports all general Directives, Pipes and Components.
@@ -24,6 +25,7 @@ import { MaterialModule } from '../libs/material.module';
     ClickOutsideDirective,
     ConfirmDialogComponent,
     LoaderComponent,
+    PropertyTypePipe
   ],
   imports: [
     CommonModule,
@@ -44,7 +46,8 @@ import { MaterialModule } from '../libs/material.module';
     FlexLayoutModule,
     FormsModule,
     LoaderComponent,
-    HttpClientModule
+    HttpClientModule,
+    PropertyTypePipe
   ]
 })
 export class SharedModule { }

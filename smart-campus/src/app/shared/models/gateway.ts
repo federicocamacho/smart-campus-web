@@ -1,7 +1,8 @@
-import { GatewayProperty } from './gateway-property';
+
+import { Application } from './application';
 import { Device } from './device';
 import { Process } from './process';
-import { Application } from './application';
+import { Property } from './property';
 
 export class Gateway {
 
@@ -9,7 +10,7 @@ export class Gateway {
   public name: string;
   public description: string;
   public ip: string;
-  public properties: GatewayProperty[];
+  public properties: Property[];
   public devices: Device[];
   public processes: Process[];
   public applications: Application[];
@@ -24,7 +25,7 @@ export class Gateway {
     userId?: number,
     applications: Application[] = [],
     alive?: boolean,
-    properties: GatewayProperty[] = [],
+    properties: Property[] = [],
     devices: Device[] = [],
     processes: Process[] = []) {
       this.id = id;

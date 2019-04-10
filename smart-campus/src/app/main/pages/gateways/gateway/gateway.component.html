@@ -31,6 +31,7 @@
           Nombre de aplicación requerido.
         </mat-error>
       </mat-form-field>
+      <sc-property-table [properties]="gateway.properties"></sc-property-table>
       <div
         fxLayout="row"
         fxLayoutAlign="end"
@@ -45,6 +46,7 @@
       </div>
     </div>
   </form>
+
   <div
     *ngIf="gatewayId"
     class="gateway-card default-shadow"
