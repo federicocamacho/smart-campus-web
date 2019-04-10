@@ -1,20 +1,72 @@
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { ViewChild } from '@angular/core';
-import { Subscribable } from './subscribable';
 import { Router, ActivatedRoute } from '@angular/router';
 
+import { Subscribable } from './subscribable';
+
+/**
+ * General Datatable class, used to show all the data tables in the application.
+ * Uses Angular's material Table with sorting, filtering and pagination.
+ * Extend this class in all components that contain a Datatable
+ * and in their OnInit lifecycle method call the initDataTable() method.
+ *
+ * @date 2019-04-09
+ * @export
+ * @template T - Object to be desplayed in the table.
+ * @template U - Type of the filter to be applied, by default the 'NONE' filter is applied.
+ */
 export abstract class DataTable<T, U> extends Subscribable {
 
+  /**
+   * Columns to be displayed in the table.
+   *
+   */
   public displayedColumns: string[];
+
+  /**
+   * Angular Material Table Data Source, stores the information displayed in the table.
+   *
+   */
   public dataSource: MatTableDataSource<T>;
+
+  /**
+   * Filter to be applied as a string, by default it's empy.
+   *
+   */
   public filterValue = '';
+
+  /**
+   * Type of the filter to be applied, by default 'NONE' it's applied.
+   *
+   */
   public filterType: U | 'NONE' = 'NONE';
 
+  /**
+   * Reference to Material paginator.
+   *
+   */
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  /**
+   * Reference to Material sort.
+   *
+   */
   @ViewChild(MatSort) sort: MatSort;
 
+  /**
+   * Filtering funtion to be applied over the data.
+   * Use the filterType to know which filter is selected to generate your own filtering function.
+   * Return true in the predicate when the element matches the filter currently applied.
+   *
+   */
   protected abstract filterPredicate: (data: T, filter: string) => boolean;
 
+  /**
+   * Creates an instance of DataTable.
+   * @date 2019-04-09
+   * @param activatedRoute - Angular's activated route.
+   * @param router - Angular's router.
+   */
   constructor(
     protected activatedRoute: ActivatedRoute,
     protected router: Router) {
@@ -52,6 +104,12 @@ export abstract class DataTable<T, U> extends Subscribable {
     this.router.navigate([ id ], { relativeTo: this.activatedRoute });
   }
 
+  /**
+   * Executed when the filter type is changed.
+   *
+   * @date 2019-04-09
+   * @param newFilterType - New filter type selected.
+   */
   public onFilterTypeChange(newFilterType: U): void {
     this.filterValue = '';
     this.applyFilter();

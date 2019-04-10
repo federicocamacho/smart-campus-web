@@ -18,6 +18,12 @@ import {
 } from '@angular/material';
 import { getSpanishPaginatorIntl } from 'src/spanish-paginator-intl';
 
+/**
+ * Angular Material imports and exports to make them available in the whole application.
+ *
+ * @date 2019-04-09
+ * @export
+ */
 @NgModule({
   declarations: [],
   imports: [

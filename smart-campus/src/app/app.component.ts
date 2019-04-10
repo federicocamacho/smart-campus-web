@@ -1,6 +1,12 @@
-import { Component } from '@angular/core';
 import { AppService } from './app.service';
+import { Component } from '@angular/core';
 
+/**
+ * Main component used to bootstrap the application.
+ *
+ * @date 2019-04-09
+ * @export
+ */
 @Component({
   selector: 'sc-root',
   templateUrl: './app.component.html',

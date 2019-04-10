@@ -1,20 +1,26 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource, MatDialog } from '@angular/material';
+import { take, takeUntil } from 'rxjs/operators';
 
-import { DataTable } from 'src/app/shared/utils/data-table';
-import { Gateway } from 'src/app/shared/models/gateway';
-import { GatewaysFilter } from 'src/app/shared/models/types';
-import { Util } from 'src/app/shared/utils/util';
+import { ApiResponse } from 'src/app/shared/models/api-response';
+import { ApplicationService } from 'src/app/core/services/application.service';
+import { AppService } from 'src/app/app.service';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data';
-import { take, takeUntil } from 'rxjs/operators';
-import { ApplicationService } from 'src/app/core/services/application.service';
-import { ApiResponse } from 'src/app/shared/models/api-response';
-import { HttpErrorResponse } from '@angular/common/http';
-import { AppService } from 'src/app/app.service';
-import { GatewaySelectionDialogComponent } from '../gateway-selection-dialog/gateway-selection-dialog.component';
+import { DataTable } from 'src/app/shared/utils/data-table';
+import { Gateway } from 'src/app/shared/models/gateway';
 import { GatewayService } from 'src/app/core/services/gateway.service';
+import { GatewaysFilter } from 'src/app/shared/models/types';
+import { GatewaySelectionDialogComponent } from 'src/app/main/components/gateway-selection-dialog/gateway-selection-dialog.component';
+import { Util } from 'src/app/shared/utils/util';
 
+/**
+ * Displays a Datatable with all the Gateways assigned to an Application.
+ *
+ * @date 2019-04-09
+ * @export
+ */
 @Component({
   selector: 'sc-gateways-by-application',
   templateUrl: './gateways-by-application.component.html',
@@ -22,9 +28,26 @@ import { GatewayService } from 'src/app/core/services/gateway.service';
 })
 export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysFilter> implements OnInit, OnChanges {
 
+  /**
+   * Gateways assigned to the application.
+   *
+   */
   @Input() gateways: Gateway[];
+
+  /**
+   * Id of the application.
+   *
+   */
   @Input() applicationId: number;
 
+  /**
+   * Creates an instance of GatewaysByApplicationComponent.
+   * @date 2019-04-09
+   * @param appService - Main Service.
+   * @param applicationService - Applications management Service.
+   * @param gatewayService - Gateways management Service.
+   * @param dialog - Material dialog reference.
+   */
   constructor(
     private appService: AppService,
     private applicationService: ApplicationService,
@@ -42,6 +65,14 @@ export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysF
     this.dataSource = new MatTableDataSource(this.gateways);
   }
 
+  /**
+   * Executed when pressing the 'Assign Gateway' button.
+   * Loads the gateways of the user stored in the Gateway service or retrieving it from the backend if they are not present yet.
+   * Then shows the Assignment dialog (GatewaySelectionDialogComponent) with all the assignable gateways and listens for the selection
+   * of a Gateway to assign it.
+   *
+   * @date 2019-04-09
+   */
   public onAssignGateway(): void {
     if (this.gatewayService.gateways) {
       this.prepareAssignmentsDialog(this.gatewayService.gateways);
@@ -54,10 +85,18 @@ export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysF
     }
   }
 
+  /**
+   * Shows the assignment dialog with the Gateways assignables as options,
+   * when any is selected then it's asigned (calling the REST service from the Bacend).
+   *
+   * @date 2019-04-09
+   * @param userGateways - Gateways that belong to the user.
+   */
   private prepareAssignmentsDialog(userGateways: Gateway[]): void {
     // filter the gateways excluding the ones that are already assigned.
-    const assignableGateways = [ ...userGateways ];
-    assignableGateways.filter(gateway => this.gateways.indexOf(gateway) < 0);
+    let assignableGateways = [ ...userGateways ];
+    assignableGateways = assignableGateways
+      .filter(gateway => this.gateways.findIndex(g => g.id === gateway.id) < 0);
     const assignDialog = this.dialog.open(GatewaySelectionDialogComponent, {
       width: '500px',
       data: assignableGateways
@@ -70,6 +109,13 @@ export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysF
       .subscribe((gateway: Gateway) => gateway ? this.assignGateway(gateway.id, true, gateway) : null);
   }
 
+  /**
+   * Executed when pressing the 'Unassign gateway' button for a given Gateway.
+   * Opens the ConfirmationDialogComponent and if confirmed then the Gateway is unassigned.
+   *
+   * @date 2019-04-09
+   * @param gateway - Gateway to be unassigned.
+   */
   public onUnassignGateway(gateway: Gateway): void {
     const unassignDialog = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
@@ -86,6 +132,14 @@ export class GatewaysByApplicationComponent extends DataTable<Gateway, GatewaysF
       .subscribe(result => result ? this.assignGateway(result, false) : null);
   }
 
+  /**
+   * Assigns or unassigns a gateway to the current application calling the REST service.
+   *
+   * @date 2019-04-09
+   * @param gatewayId - id of the gateway to be assigned/unassigned.
+   * @param assign - true to assign the gateway, false to unassign it.
+   * @param [gateway] - gateway to be assigned (only necessary for assignment).
+   */
   private assignGateway(gatewayId: number, assign: boolean, gateway?: Gateway): void {
     this.applicationService.assignGatewayToApplication(this.applicationId, gatewayId, assign)
       .pipe(take(1), takeUntil(this.destroyed))
