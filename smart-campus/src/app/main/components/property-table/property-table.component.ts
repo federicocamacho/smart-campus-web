@@ -1,12 +1,14 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
-
-import { DataTable } from 'src/app/shared/utils/data-table';
-import { Property } from 'src/app/shared/models/property';
-import { PropertiesFilter } from 'src/app/shared/models/types';
-import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
-import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data';
 import { take, takeUntil } from 'rxjs/operators';
+
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
+import { DataTable } from 'src/app/shared/utils/data-table';
+import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data';
+import { Property } from 'src/app/shared/models/property';
+import { PropertyEditionDialogComponent } from '../property-edition-dialog/property-edition-dialog.component';
+import { PropertiesFilter } from 'src/app/shared/models/types';
+import { PropertyDialog } from '../property-edition-dialog/property-dialog';
 import { Util } from 'src/app/shared/utils/util';
 
 @Component({
@@ -46,17 +48,53 @@ export class PropertyTableComponent extends DataTable<Property, PropertiesFilter
    * @date 2019-04-03
    */
   public onCreateRecord(): void {
-    //this.router.navigate([ '0' ], { relativeTo: this.activatedRoute });
+    const createDialog = this.dialog.open(PropertyEditionDialogComponent, {
+      width: '500px',
+      data: new PropertyDialog(this.dataSource.data, new Property(), null, true)
+    });
+
+    createDialog.afterClosed()
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(result => {
+        if (result) {
+          this.filterType = 'NONE';
+          this.filterValue = '';
+          this.dataSource = new MatTableDataSource(this.dataSource.data);
+          this.dataSource.paginator = this.paginator;
+          this.applyFilter();
+          setTimeout(() => this.dataSource.paginator.lastPage(), 100);
+        } else {
+          return null;
+        }
+      });
   }
 
   /**
    * Triggered when pressing "Edit" button.
    *
    * @date 2019-04-04
-   * @param id - id of the application to be edited.
+   * @param property - property to be updated.
    */
-  public onEditRecord(id: number): void {
-    //this.router.navigate([ id ], { relativeTo: this.activatedRoute });
+  public onEditProperty(property: Property): void {
+    const editDialog = this.dialog.open(PropertyEditionDialogComponent, {
+      width: '500px',
+      data: new PropertyDialog(this.dataSource.data, new Property(property.name, property.type, property.value), property, false)
+    });
+
+    editDialog.afterClosed()
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(result => {
+        if (result) {
+          this.dataSource = new MatTableDataSource(this.dataSource.data);
+          this.dataSource.paginator = this.paginator;
+        } else {
+          return null;
+        }
+      });
   }
 
   /**
