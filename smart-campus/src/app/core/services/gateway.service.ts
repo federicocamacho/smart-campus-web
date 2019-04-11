@@ -1,12 +1,19 @@
 import { Injectable } from '@angular/core';
-import { CoreModule } from '../core.module';
-import { Gateway } from 'src/app/shared/models/gateway';
-import { Observable } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { Util } from 'src/app/shared/utils/util';
 import { HttpClient } from '@angular/common/http';
-import { ApiResponse } from 'src/app/shared/models/api-response';
+import { Observable } from 'rxjs';
 
+import { ApiResponse } from 'src/app/shared/models/api-response';
+import { CoreModule } from 'src/app/core/core.module';
+import { environment } from 'src/environments/environment';
+import { Gateway } from 'src/app/shared/models/gateway';
+import { Util } from 'src/app/shared/utils/util';
+
+/**
+ * Service to manage gateways.
+ *
+ * @date 2019-04-09
+ * @export
+ */
 @Injectable({
   providedIn: CoreModule
 })
@@ -80,4 +87,5 @@ export class GatewayService {
     return this.http.put<Gateway>(`${ environment.adminService }/gateways/gateway/${ gateway.id }`,
       gateway, Util.options());
   }
+
 }

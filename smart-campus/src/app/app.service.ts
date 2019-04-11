@@ -4,23 +4,51 @@ import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { NgModel, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { ApiError } from './shared/models/api-error';
-import { User } from './shared/models/user';
-import { Util } from './shared/utils/util';
+import { ApiError } from 'src/app/shared/models/api-error';
+import { User } from 'src/app/shared/models/user';
+import { Util } from 'src/app/shared/utils/util';
 
+/**
+ * Application glogal service, used to store general information and some utility methods required in a singleton class.
+ *
+ * @date 2019-04-09
+ * @export
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class AppService {
 
+  /**
+   * User logged in, null if no user is logged in yet.
+   *
+   */
   public user: User;
 
+  /**
+   * Indicates if the user's interaction is blocked in the app showing the robot loader if set to true.
+   *
+   */
   public isBusy: boolean;
 
+  /**
+   * Creates an instance of AppService.
+   * @date 2019-04-09
+   * @param router - Angular router.
+   * @param snackBar - Angular snackbar reference.
+   */
   constructor(private router: Router, private snackBar: MatSnackBar) {
     this.isBusy = false;
   }
 
+  /**
+   * Verifies if the user is authenticated or not, checking first in the user stored in memory,
+   * if the user is not found there then it checks if exists in the browser's session storage,
+   * if it's obtained from there is also set in the user variable.
+   *
+   * @date 2019-04-09
+   * @returns true if the user is authenticated, false otherwise.
+   */
   public isUserAuthenticated(): boolean {
     if (this.user) {
       return true;
@@ -55,6 +83,13 @@ export class AppService {
     return model.invalid && (model.dirty || model.touched);
   }
 
+  /**
+   * Handles a general HttpErrorResponse (client side error, timeout, server-side error).
+   *
+   * @date 2019-04-09
+   * @param err - Error to be handled.
+   * @param [showError=true] - Show the message as a Snackbar (using Material's snackbar).
+   */
   public handleGenericError(err: HttpErrorResponse, showError: boolean = true): void {
     let error: ApiError;
     if (err.error instanceof Error) {
@@ -80,6 +115,12 @@ export class AppService {
     }
   }
 
+  /**
+   * Authenticates the user in the platform.
+   *
+   * @date 2019-04-09
+   * @param user - user to be authenticated.
+   */
   public authenticate(user: User): void {
     this.user = user;
     sessionStorage.clear();
@@ -87,6 +128,14 @@ export class AppService {
     this.router.navigate(['/dashboard']);
   }
 
+  /**
+   * Shows a Snackbar (Angular Material's) with a given message.
+   *
+   * @date 2019-04-09
+   * @param message - Message to be show.
+   * @param [action='OK'] - Button action.
+   * @param [config=Util.snackOptions()] - Snackbar configuration.
+   */
   public showSnack(message: string, action: string = 'OK', config: MatSnackBarConfig = Util.snackOptions()): void {
     this.snackBar.dismiss();
     this.snackBar.open(message, action, config);

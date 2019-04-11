@@ -1,9 +1,8 @@
 /**
- * Confirm Dialog data object.
+ * Confirmation Dialog data object.
  *
  * @date 2019-01-19
  * @export
- * @class DialogData
  */
 export class DialogData {
 

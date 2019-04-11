@@ -1,6 +1,12 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
+/**
+ * Sections card shown in the dashboard.
+ *
+ * @date 2019-04-09
+ * @export
+ */
 @Component({
   selector: 'sc-section-card',
   templateUrl: './section-card.component.html',
@@ -40,7 +46,7 @@ export class SectionCardComponent {
 
   /**
    * Creates an instance of SectionCardComponent.
-   * @param router
+   * @param router - Angular router.
    */
   constructor(private router: Router) {}
 

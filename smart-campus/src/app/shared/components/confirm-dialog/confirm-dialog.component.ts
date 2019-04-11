@@ -17,8 +17,8 @@ export class ConfirmDialogComponent {
 
   /**
    * Creates an instance of ConfirmDialogComponent.
-   * @param dialogRef reference to the dialog.
-   * @param data to be passed to the dialog.
+   * @param dialogRef - reference to the dialog.
+   * @param data - to be passed to the dialog.
    */
   constructor(
     public dialogRef: MatDialogRef<ConfirmDialogComponent>,

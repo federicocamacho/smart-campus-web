@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { CoreModule } from '../core.module';
-import { environment } from '../../../environments/environment';
-import { User } from '../../shared/models/user';
-import { Util } from '../../shared/utils/util';
 import { ApiResponse } from 'src/app/shared/models/api-response';
+import { CoreModule } from 'src/app/core/core.module';
+import { environment } from 'src/environments/environment';
+import { User } from 'src/app/shared/models/user';
+import { Util } from 'src/app/shared/utils/util';
 
 /**
  * Service to manage users and authentication.
@@ -19,14 +19,20 @@ import { ApiResponse } from 'src/app/shared/models/api-response';
 })
 export class UserService {
 
+  /**
+   * Creates an instance of UserService.
+   * @date 2019-04-09
+   * @param http - Angular's HTTP client.
+   */
   constructor(private http: HttpClient) { }
-/**
- * Authenticates the user.
- *
- * @date 2019-04-04
- * @param user - user to be authenticated.
- * @returns an Observable wrapping the User object containing the information about the logged in user.
- */
+
+  /**
+   * Authenticates the user.
+   *
+   * @date 2019-04-04
+   * @param user - user to be authenticated.
+   * @returns an Observable wrapping the User object containing the information about the logged in user.
+   */
   public login(user: User): Observable<User> {
     return this.http.post<User>(`${ environment.adminService }/users/authentication`, user, Util.options());
   }
