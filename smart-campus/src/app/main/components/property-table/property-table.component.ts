@@ -64,15 +64,15 @@ export class PropertyTableComponent extends DataTable<Property, PropertiesFilter
    *
    * @date 2019-04-04
    * @param index - index of the property to be deleted.
+   * @param property - property to be deleted.
    */
-  public onDeleteRecord(index: number, name: string): void {
-    console.log('Borrando');
+  public onDeleteRecord(property: Property): void {
     const deleteDialog = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
       data: new DialogData(
         'Eliminar propiedad',
-        `Está seguro que desea eliminar la propiedad ${ name }`,
-        index)
+        `Está seguro que desea eliminar la propiedad ${ property.name }`,
+        property)
     });
 
     deleteDialog.afterClosed()
@@ -81,8 +81,10 @@ export class PropertyTableComponent extends DataTable<Property, PropertiesFilter
         takeUntil(this.destroyed))
       .subscribe(result => {
         if (result) {
-         this.dataSource.data.splice(index, 1);
-         console.log(this.paginator);
+          const propertyIndex = this.dataSource.data.findIndex(dataSourceProperty => dataSourceProperty.type === property.type
+          && dataSourceProperty.name === property.name);
+          this.dataSource.data.splice(propertyIndex, 1);
+          this.afterRecordDeleted();
         } else {
           return null;
         }
