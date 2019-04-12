@@ -49,7 +49,7 @@ export class DevicesComponent extends DataTable<Device, DevicesFilter> implement
     private dialog: MatDialog,
     protected router: Router) {
       super(activatedRoute, router);
-      this.displayedColumns = [ 'type', 'name', 'description', 'actions' ];
+      this.displayedColumns = [ 'id', 'type', 'name', 'description', 'actions' ];
       this.gatewaysSelect = [];
   }
 
@@ -136,8 +136,10 @@ export class DevicesComponent extends DataTable<Device, DevicesFilter> implement
 
   protected filterPredicate: (data: Device, filter: string) => boolean = (data: Device, filter: string) => {
     switch (this.filterType) {
+      case 'ID':
+        return Util.stringContains(String(data.id), filter);
       case 'NAME':
-      return Util.stringContains(data.name, filter);
+        return Util.stringContains(data.name, filter);
       case 'DESCRIPTION':
         return Util.stringContains(data.description, filter);
       case 'TYPE':

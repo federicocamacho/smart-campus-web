@@ -49,7 +49,7 @@ export class ProcessesComponent extends DataTable<Process, ProcessesFilter> impl
     private dialog: MatDialog,
     protected router: Router) {
       super(activatedRoute, router);
-      this.displayedColumns = [ 'name', 'description', 'alive', 'actions' ];
+      this.displayedColumns = [ 'id', 'name', 'description', 'alive', 'actions' ];
       this.gatewaysSelect = [];
   }
 
@@ -136,8 +136,10 @@ export class ProcessesComponent extends DataTable<Process, ProcessesFilter> impl
 
   protected filterPredicate: (data: Process, filter: string) => boolean = (data: Process, filter: string) => {
     switch (this.filterType) {
+      case 'ID':
+        return Util.stringContains(String(data.id), filter);
       case 'NAME':
-      return Util.stringContains(data.name, filter);
+        return Util.stringContains(data.name, filter);
       case 'DESCRIPTION':
         return Util.stringContains(data.description, filter);
       case 'IS_ALIVE':

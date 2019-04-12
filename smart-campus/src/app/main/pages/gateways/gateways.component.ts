@@ -48,7 +48,7 @@ export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implem
     private dialog: MatDialog,
     protected router: Router) {
       super(activatedRoute, router);
-      this.displayedColumns = [ 'name', 'description', 'ip', 'alive', 'actions' ];
+      this.displayedColumns = [ 'id', 'name', 'description', 'ip', 'alive', 'actions' ];
       this.applicationsSelect = [];
   }
 
@@ -139,8 +139,10 @@ export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implem
 
   protected filterPredicate: (data: Gateway, filter: string) => boolean = (data: Gateway, filter: string) => {
     switch (this.filterType) {
+      case 'ID':
+      return Util.stringContains(String(data.id), filter);
       case 'NAME':
-      return Util.stringContains(data.name, filter);
+        return Util.stringContains(data.name, filter);
       case 'DESCRIPTION':
         return Util.stringContains(data.description, filter);
       case 'IP':

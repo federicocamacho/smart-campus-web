@@ -2,10 +2,10 @@ export type PropertyType = 'CONFIG' | 'REPORTED' | 'INFORMATIVE';
 export type ThingType = 'GATEWAY' | 'SENSOR' | 'ACTUATOR';
 
 // Filter types.
-export type ApplicationsFilter = 'NAME' | 'DESCRIPTION';
-export type GatewaysFilter = 'NAME' | 'DESCRIPTION' | 'IP' | 'IS_ALIVE' | 'APPLICATION';
-export type ProcessesFilter = 'NAME' | 'DESCRIPTION' | 'IS_ALIVE' | 'GATEWAY';
-export type DevicesFilter = 'TYPE' | 'NAME' | 'DESCRIPTION' | 'GATEWAY';
+export type ApplicationsFilter = 'ID' | 'NAME' | 'DESCRIPTION';
+export type GatewaysFilter = 'ID' | 'NAME' | 'DESCRIPTION' | 'IP' | 'IS_ALIVE' | 'APPLICATION';
+export type ProcessesFilter = 'ID' | 'NAME' | 'DESCRIPTION' | 'IS_ALIVE' | 'GATEWAY';
+export type DevicesFilter = 'ID' | 'TYPE' | 'NAME' | 'DESCRIPTION' | 'GATEWAY';
 export type PropertiesFilter = 'TYPE' | 'NAME' | 'VALUE';
 
 
