@@ -5,5 +5,7 @@ export type ThingType = 'GATEWAY' | 'SENSOR' | 'ACTUATOR';
 export type ApplicationsFilter = 'NAME' | 'DESCRIPTION';
 export type GatewaysFilter = 'NAME' | 'DESCRIPTION' | 'IP' | 'IS_ALIVE' | 'APPLICATION';
 export type ProcessesFilter = 'NAME' | 'DESCRIPTION' | 'IS_ALIVE' | 'GATEWAY';
+export type DevicesFilter = 'TYPE' | 'NAME' | 'DESCRIPTION' | 'GATEWAY';
 export type PropertiesFilter = 'TYPE' | 'NAME' | 'VALUE';
+
 

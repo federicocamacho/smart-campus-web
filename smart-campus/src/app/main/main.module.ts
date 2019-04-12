@@ -21,6 +21,8 @@ import { PropertyTableComponent } from './components/property-table/property-tab
 import { PropertyEditionDialogComponent } from './components/property-edition-dialog/property-edition-dialog.component';
 import { ProcessesComponent } from './pages/processes/processes.component';
 import { ProcessComponent } from './pages/processes/process/process.component';
+import { DevicesComponent } from './pages/devices/devices.component';
+import { DeviceComponent } from './pages/devices/device/device.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +43,9 @@ import { ProcessComponent } from './pages/processes/process/process.component';
     PropertyTableComponent,
     PropertyEditionDialogComponent,
     ProcessesComponent,
-    ProcessComponent
+    ProcessComponent,
+    DevicesComponent,
+    DeviceComponent
   ],
   entryComponents: [
     GatewaySelectionDialogComponent,

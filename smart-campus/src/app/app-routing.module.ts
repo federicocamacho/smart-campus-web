@@ -7,6 +7,8 @@ import { AuthenticationGuard } from './core/guards/authentication.guard';
 import { AuthenticationComponent } from './main/pages/authentication/authentication.component';
 import { DashboardGuard } from './core/guards/dashboard.guard';
 import { DashboardTemplateComponent } from './main/templates/dashboard-template/dashboard-template.component';
+import { DeviceComponent } from './main/pages/devices/device/device.component';
+import { DevicesComponent } from './main/pages/devices/devices.component';
 import { GatewayComponent } from './main/pages/gateways/gateway/gateway.component';
 import { GatewaysComponent } from './main/pages/gateways/gateways.component';
 import { LoginComponent } from './main/components/login/login.component';
@@ -71,6 +73,15 @@ const routes: Routes = [
       {
         path: 'processes/:id',
         component: ProcessComponent
+      },
+      {
+        path: 'devices',
+        component: DevicesComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'devices/:id',
+        component: DeviceComponent
       }
     ],
     canActivate: [ DashboardGuard ]

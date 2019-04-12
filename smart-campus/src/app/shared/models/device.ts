@@ -10,7 +10,7 @@ export class Device {
   public gatewayId: number;
   public properties: Property[];
 
-  constructor(id: number, name: string, description: string, type: ThingType, gatewayId: number, properties: Property[] = []) {
+  constructor(id?: number, name?: string, description?: string, type?: ThingType, gatewayId?: number, properties: Property[] = []) {
     this.id = id;
     this.name = name;
     this.description = description;

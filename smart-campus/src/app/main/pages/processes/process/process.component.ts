@@ -142,7 +142,6 @@ export class ProcessComponent extends Subscribable implements OnInit {
     }
 
     this.gatewayService.gateways.forEach(gateway => this.gatewaysSelect.push(gateway));
-    console.log(this.gatewaysSelect);
   }
 
 }
