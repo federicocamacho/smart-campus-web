@@ -59,14 +59,14 @@ export class GatewayComponent extends Subscribable implements OnInit {
     if (this.gatewayId) {
       this.updateGateway();
     } else {
-      this.createApplication();
+      this.createGateway();
     }
   }
 
   /**
    * Create a new gateway.
    */
-  private createApplication(): void {
+  private createGateway(): void {
     this.gateway.userId = this.appService.user.id;
     this.gatewayService.createGateway(this.gateway)
     .pipe(take(1), takeUntil(this.destroyed))

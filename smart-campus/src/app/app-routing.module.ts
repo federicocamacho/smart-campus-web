@@ -12,6 +12,8 @@ import { GatewaysComponent } from './main/pages/gateways/gateways.component';
 import { LoginComponent } from './main/components/login/login.component';
 import { NotFoundComponent } from './main/pages/not-found/not-found.component';
 import { PasswordRecoveryComponent } from './main/components/password-recovery/password-recovery.component';
+import { ProcessComponent } from './main/pages/processes/process/process.component';
+import { ProcessesComponent } from './main/pages/processes/processes.component';
 import { SigninComponent } from './main/components/signin/signin.component';
 
 const routes: Routes = [
@@ -60,6 +62,15 @@ const routes: Routes = [
       {
         path: 'gateways/:id',
         component: GatewayComponent
+      },
+      {
+        path: 'processes',
+        component: ProcessesComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'processes/:id',
+        component: ProcessComponent
       }
     ],
     canActivate: [ DashboardGuard ]

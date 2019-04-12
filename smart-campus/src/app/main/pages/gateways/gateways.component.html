@@ -1,3 +1,4 @@
+<div [ngStyle]="{'display': (gatewaysReady && applicationsReady ? 'block' : 'none')}">
 <div
   fxLayout="row"
   fxLayoutAlign="space-between center"
@@ -186,4 +187,5 @@
     style="border-radius: 4px;"
     [pageSizeOptions]="[5, 10, 20]"
   ></mat-paginator>
+</div>
 </div>

@@ -25,7 +25,7 @@
         <mat-label>Descripción del gateway</mat-label>
         <input matInput
           name="description" #description="ngModel"
-          type="text" placeholder="Descripción de la aplicación"
+          type="text" placeholder="Descripción de la gateway"
           required="true" [(ngModel)]="gateway.description"/>
         <mat-error *ngIf="name.hasError('required')">
           Nombre de aplicación requerido.

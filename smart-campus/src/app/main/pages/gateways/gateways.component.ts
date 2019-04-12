@@ -13,6 +13,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { DataTable } from 'src/app/shared/utils/data-table';
 import { Util } from 'src/app/shared/utils/util';
 import { Application } from 'src/app/shared/models/application';
+import { ApplicationService } from 'src/app/core/services/application.service';
 
 @Component({
   selector: 'sc-gateways',
@@ -21,21 +22,28 @@ import { Application } from 'src/app/shared/models/application';
 })
 export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implements OnInit {
 
-  public dataSource: MatTableDataSource<Gateway>;
-
+  /**
+   * Stores the applications that belong to the user logged in.
+   */
   public applicationsSelect: Application[];
 
   /**
+   * Indicates if the called web service to get the list of gateways has finished.
+   */
+  public gatewaysReady: boolean;
+
+  /**
+   * Indicates if the called web service to get the list of applications has finished.
+   */
+  public applicationsReady: boolean;
+
+  /**
    * Creates an instance of GatewaysComponent.
-   * @param activatedRoute
-   * @param appService
-   * @param gatewayService
-   * @param dialog
-   * @param router
    */
   constructor(
     protected activatedRoute: ActivatedRoute,
     private appService: AppService,
+    private applicationService: ApplicationService,
     public gatewayService: GatewayService,
     private dialog: MatDialog,
     protected router: Router) {
@@ -47,6 +55,7 @@ export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implem
   ngOnInit() {
     super.initDataTable();
     this.getGateways();
+    this.getApplications();
   }
 
   /**
@@ -104,8 +113,25 @@ export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implem
     .pipe(take(1), takeUntil(this.destroyed))
     .subscribe(
       (gateways: Gateway[]) => {
+        this.gatewaysReady = true;
         this.gatewayService.gateways = gateways;
         this.dataSource.data = gateways;
+      },
+      (err: HttpErrorResponse) => this.appService.handleGenericError(err));
+  }
+
+  /**
+   * Retrieves the applications for the user logged in.
+   *
+   * @date 2019-04-04
+   */
+  private getApplications(): void {
+    this.applicationService.getApplicationsForUser(this.appService.user.id)
+    .pipe(take(1), takeUntil(this.destroyed))
+    .subscribe(
+      (applications: Application[]) => {
+        this.applicationsReady = true;
+        this.applicationService.applications = applications;
         this.buildApplicationsSelect();
       },
       (err: HttpErrorResponse) => this.appService.handleGenericError(err));
@@ -134,19 +160,10 @@ export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implem
    *
    */
   private buildApplicationsSelect(): void {
-    if (!this.gatewayService.gateways) {
+    if (!this.applicationService.applications) {
       return;
     }
-    for (const gateway of this.gatewayService.gateways) {
-      if (!gateway.applications) {
-        continue;
-      }
 
-      for (const application of gateway.applications) {
-        if (!this.applicationsSelect.find(applicationSelect => applicationSelect.id === application.id)) {
-          this.applicationsSelect.push(application);
-        }
-      }
-    }
+    this.applicationService.applications.forEach(application => this.applicationsSelect.push(application));
   }
 }
