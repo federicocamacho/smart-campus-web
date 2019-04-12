@@ -134,7 +134,6 @@ export class ProcessComponent extends Subscribable implements OnInit {
 
   /**
    * Builds the list of selectable gateways for the filter.
-   *
    */
   private buildGatewaysSelect(): void {
     if (!this.gatewayService.gateways) {
