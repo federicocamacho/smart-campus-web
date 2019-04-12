@@ -17,6 +17,8 @@ import { PasswordRecoveryComponent } from './main/components/password-recovery/p
 import { ProcessComponent } from './main/pages/processes/process/process.component';
 import { ProcessesComponent } from './main/pages/processes/processes.component';
 import { SigninComponent } from './main/components/signin/signin.component';
+import { UsersComponent } from './main/pages/users/users.component';
+import { UserComponent } from './main/pages/users/user/user.component';
 
 const routes: Routes = [
   {
@@ -82,6 +84,15 @@ const routes: Routes = [
       {
         path: 'devices/:id',
         component: DeviceComponent
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'users/:id',
+        component: UserComponent
       }
     ],
     canActivate: [ DashboardGuard ]

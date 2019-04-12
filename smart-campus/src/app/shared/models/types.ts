@@ -7,5 +7,5 @@ export type GatewaysFilter = 'ID' | 'NAME' | 'DESCRIPTION' | 'IP' | 'IS_ALIVE' |
 export type ProcessesFilter = 'ID' | 'NAME' | 'DESCRIPTION' | 'IS_ALIVE' | 'GATEWAY';
 export type DevicesFilter = 'ID' | 'TYPE' | 'NAME' | 'DESCRIPTION' | 'GATEWAY';
 export type PropertiesFilter = 'TYPE' | 'NAME' | 'VALUE';
-
+export type UsersFilter = 'ID' | 'NAME' | 'USERNAME';
 

@@ -23,6 +23,8 @@ import { ProcessesComponent } from './pages/processes/processes.component';
 import { ProcessComponent } from './pages/processes/process/process.component';
 import { DevicesComponent } from './pages/devices/devices.component';
 import { DeviceComponent } from './pages/devices/device/device.component';
+import { UsersComponent } from './pages/users/users.component';
+import { UserComponent } from './pages/users/user/user.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +47,9 @@ import { DeviceComponent } from './pages/devices/device/device.component';
     ProcessesComponent,
     ProcessComponent,
     DevicesComponent,
-    DeviceComponent
+    DeviceComponent,
+    UsersComponent,
+    UserComponent
   ],
   entryComponents: [
     GatewaySelectionDialogComponent,

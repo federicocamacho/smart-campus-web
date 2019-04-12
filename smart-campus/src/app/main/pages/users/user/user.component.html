@@ -1,0 +1,35 @@
+<form class="user-form" #userForm="ngForm" (ngSubmit)="saveOrUpdateApplication()">
+  <div fxLayout="column" scAnimated="fadeIn" class="user-card default-shadow">
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="section-title-container">
+      <h2 class="section-title">
+        {{ userId ? 'Usuario: ' + user?.name : 'Nuevo usuario' }}
+      </h2>
+    </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre de la aplicación</mat-label>
+      <input matInput name="name" #name="ngModel" type="text" placeholder="Nombre de la aplicación" required="true"
+        [(ngModel)]="user.name" />
+      <mat-error *ngIf="name.hasError('required')">
+        Nombre requerido.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre de usuario</mat-label>
+      <input matInput name="username" #username="ngModel" type="text" placeholder="Nombre de usuario"
+        required="true" [(ngModel)]="user.username" />
+      <mat-error *ngIf="name.hasError('required')">
+        Nombre de usuario requerido.
+      </mat-error>
+    </mat-form-field>
+    <div fxLayout="row" fxLayoutAlign="end" class="button-container">
+      <button mat-raised-button fxFlex="20%" fxFlex.sm="40%" fxFlex.xs="100%" color="primary" type="submit"
+        [disabled]="appService.isFormInvalid(userForm)">
+        {{ userId ? 'Guardar' : 'Crear' }}
+      </button>
+    </div>
+  </div>
+</form>
+<div *ngIf="userId" class="user-card default-shadow" style="margin-top: 30px">
+  <!-- <sc-gateways-by-user [gateways]="user.gateways" [userId]="userId">
+  </sc-gateways-by-user> -->
+</div>
