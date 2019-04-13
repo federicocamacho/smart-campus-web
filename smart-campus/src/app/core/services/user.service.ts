@@ -20,6 +20,11 @@ import { Util } from 'src/app/shared/utils/util';
 export class UserService {
 
   /**
+   * Stores the users of the logged user (admin-only).
+   */
+  public users: User[];
+
+  /**
    * Creates an instance of UserService.
    * @date 2019-04-09
    * @param http - Angular's HTTP client.
@@ -34,7 +39,7 @@ export class UserService {
    * @returns an Observable wrapping the User object containing the information about the logged in user.
    */
   public login(user: User): Observable<User> {
-    return this.http.post<User>(`${ environment.adminService }/users/authentication`, user, Util.options());
+    return this.http.post<User>(`${environment.adminService}/users/authentication`, user, Util.options());
   }
 
   /**
@@ -45,7 +50,7 @@ export class UserService {
    * @returns an Observable wrapping the User object containing the information about the created in user.
    */
   public signin(user: User): Observable<User> {
-    return this.http.post<User>(`${ environment.adminService }/users/user`, user, Util.options());
+    return this.http.post<User>(`${environment.adminService}/users/user`, user, Util.options());
   }
 
   /**
@@ -56,7 +61,7 @@ export class UserService {
    * @returns an ApiResponse that indicates if the operation was successful or not.
    */
   public recoverPassword(email: string): Observable<ApiResponse> {
-    return this.http.get<ApiResponse>(`${ environment.adminService }/users/pass/${ email }`, Util.options());
+    return this.http.get<ApiResponse>(`${environment.adminService}/users/pass/${email}`, Util.options());
   }
 
   /**
@@ -68,8 +73,57 @@ export class UserService {
    */
   public deleteUser(id: number): Observable<ApiResponse> {
     return this.http
-      .delete<ApiResponse>(`${environment.adminService}/users/user/${ id }`,
-      Util.options());
+      .delete<ApiResponse>(`${environment.adminService}/users/user/${id}`,
+        Util.options());
+  }
+
+  /**
+   * Consumes get users REST service.
+   *
+   * @date 2019-04-12
+   * @returns an {@link Observable} with the response.
+   */
+  public getUsers(): Observable<User[]> {
+    return this.http
+      .get<User[]>(`${environment.adminService}/users`,
+        Util.options());
+  }
+
+  /**
+   * Consumes get user REST service.
+   *
+   * @date 2019-04-12
+   * @param id of the user to be obtained.
+   * @returns an {@link Observable} with the response.
+   */
+  public getUser(id: number): Observable<User> {
+    console.log('get user' + id)
+    return this.http
+      .get<User>(`${environment.adminService}/users/user/${id}`,
+        Util.options());
+  }
+
+  /**
+   * Creates a new user.
+   *
+   * @date 2019-04-07
+   * @param user - User to be created.
+   * @returns the User with its id after creation.
+   */
+  public createUser(user: User): Observable<User> {
+    return this.http.post<User>(`${environment.adminService}/users/user`, user, Util.options());
+  }
+
+  /**
+   * Updates an existing user.
+   *
+   * @date 2019-04-07
+   * @param user - User to be updated.
+   * @returns the Application with the information as it was saved.
+   */
+  public updateUser(user: User): Observable<User> {
+    return this.http.put<User>(`${environment.adminService}/users/user/${user.id}`,
+      user, Util.options());
   }
 
 }

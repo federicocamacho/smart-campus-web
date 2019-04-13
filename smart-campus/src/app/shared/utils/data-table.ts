@@ -125,4 +125,16 @@ export abstract class DataTable<T, U> extends Subscribable {
     this.dataSource.filter = this.filterValue;
   }
 
+  /**
+   * Updates the data to be shown, goes to the previous page if necessary and applies the current filter.
+   */
+  public afterRecordDeleted(): void {
+    this.dataSource = new MatTableDataSource(this.dataSource.data);
+    this.dataSource.paginator = this.paginator;
+    if (this.dataSource.data.length % this.dataSource.paginator.pageSize === 0) {
+      this.dataSource.paginator.previousPage();
+    }
+    this.applyFilter();
+  }
+
 }

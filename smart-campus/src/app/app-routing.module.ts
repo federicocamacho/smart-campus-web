@@ -7,12 +7,18 @@ import { AuthenticationGuard } from './core/guards/authentication.guard';
 import { AuthenticationComponent } from './main/pages/authentication/authentication.component';
 import { DashboardGuard } from './core/guards/dashboard.guard';
 import { DashboardTemplateComponent } from './main/templates/dashboard-template/dashboard-template.component';
+import { DeviceComponent } from './main/pages/devices/device/device.component';
+import { DevicesComponent } from './main/pages/devices/devices.component';
 import { GatewayComponent } from './main/pages/gateways/gateway/gateway.component';
 import { GatewaysComponent } from './main/pages/gateways/gateways.component';
 import { LoginComponent } from './main/components/login/login.component';
 import { NotFoundComponent } from './main/pages/not-found/not-found.component';
 import { PasswordRecoveryComponent } from './main/components/password-recovery/password-recovery.component';
+import { ProcessComponent } from './main/pages/processes/process/process.component';
+import { ProcessesComponent } from './main/pages/processes/processes.component';
 import { SigninComponent } from './main/components/signin/signin.component';
+import { UsersComponent } from './main/pages/users/users.component';
+import { UserComponent } from './main/pages/users/user/user.component';
 
 const routes: Routes = [
   {
@@ -60,6 +66,33 @@ const routes: Routes = [
       {
         path: 'gateways/:id',
         component: GatewayComponent
+      },
+      {
+        path: 'processes',
+        component: ProcessesComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'processes/:id',
+        component: ProcessComponent
+      },
+      {
+        path: 'devices',
+        component: DevicesComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'devices/:id',
+        component: DeviceComponent
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+        pathMatch: 'full'
+      },
+      {
+        path: 'users/:id',
+        component: UserComponent
       }
     ],
     canActivate: [ DashboardGuard ]

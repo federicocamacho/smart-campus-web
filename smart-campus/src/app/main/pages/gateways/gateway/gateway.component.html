@@ -1,4 +1,4 @@
-<form class="gateway-form" #gatewayForm="ngForm" (ngSubmit)="saveOrUpdateGateway()">
+<form class="gateway-form" #gatewayForm="ngForm">
     <div
       fxLayout="column"
       scAnimated="fadeIn"
@@ -25,12 +25,22 @@
         <mat-label>Descripción del gateway</mat-label>
         <input matInput
           name="description" #description="ngModel"
-          type="text" placeholder="Descripción de la aplicación"
+          type="text" placeholder="Descripción de la gateway"
           required="true" [(ngModel)]="gateway.description"/>
         <mat-error *ngIf="name.hasError('required')">
           Nombre de aplicación requerido.
         </mat-error>
       </mat-form-field>
+      <mat-form-field appearance="outline">
+          <mat-label>Ip del gateway</mat-label>
+          <input matInput
+            name="ip" #description="ngModel"
+            type="text" placeholder="Ip del gateway"
+            required="true" [(ngModel)]="gateway.ip"/>
+          <mat-error *ngIf="name.hasError('required')">
+          Ip del gateway requerida.
+          </mat-error>
+        </mat-form-field>
       <sc-property-table [properties]="gateway.properties"></sc-property-table>
       <div
         fxLayout="row"
@@ -40,7 +50,8 @@
           fxFlex="20%" fxFlex.sm="40%" fxFlex.xs="100%"
           color="primary"
           type="submit"
-          [disabled]="appService.isFormInvalid(gatewayForm)">
+          [disabled]="appService.isFormInvalid(gatewayForm)"
+          (click)="saveOrUpdateGateway()">
           {{ gatewayId ? 'Guardar' : 'Crear' }}
         </button>
       </div>

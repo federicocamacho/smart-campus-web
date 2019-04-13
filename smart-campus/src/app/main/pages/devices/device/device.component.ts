@@ -1,73 +1,72 @@
+import { Device } from 'src/app/shared/models/device';
 import { Component, OnInit } from '@angular/core';
-import { Subscribable } from 'src/app/shared/utils/subscribable';
-import { HttpErrorResponse } from '@angular/common/http';
-import { take, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 
+import { Gateway } from 'src/app/shared/models/gateway';
+import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { AppService } from 'src/app/app.service';
 import { GatewayService } from 'src/app/core/services/gateway.service';
-import { Process } from 'src/app/shared/models/process';
-import { ProcessService } from 'src/app/core/services/process.service';
-import { Gateway } from 'src/app/shared/models/gateway';
+import { DeviceService } from 'src/app/core/services/device.service';
+import { take, takeUntil } from 'rxjs/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'sc-process',
-  templateUrl: './process.component.html',
-  styleUrls: ['./process.component.css']
+  selector: 'sc-device',
+  templateUrl: './device.component.html',
+  styleUrls: ['./device.component.css']
 })
-export class ProcessComponent extends Subscribable implements OnInit {
+export class DeviceComponent extends Subscribable implements OnInit {
 
   /**
-   * Lists of gateways associated to the current processes.
+   * Lists of gateways associated to the current devicees.
    */
   public gatewaysSelect: Gateway[];
 
   /**
-   * Stores the process id.
-   * 0 if it's a new process.
+   * Stores the device id.
+   * 0 if it's a new device.
    */
-  public processId: number;
+  public deviceId: number;
 
   /**
-   * Process object to be used.
+   * Device object to be used.
    */
-  public process: Process;
+  public device: Device;
 
   /**
-   * Creates an instance of ProcessComponent.
+   * Creates an instance of DeviceComponent.
    */
   constructor(
     public appService: AppService,
     private gatewayService: GatewayService,
-    private processService: ProcessService,
+    private deviceService: DeviceService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {
       super();
-      this.process = new Process();
+      this.device = new Device();
       this.gatewaysSelect = [];
     }
 
   /**
-   * Gets the process id from the url.
+   * Gets the device id from the url.
    * If the id is different from zero the gateway is requested from the backend.
-   *
    */
   ngOnInit() {
-    this.processId = Number(this.activatedRoute.snapshot.params.id);
+    this.deviceId = Number(this.activatedRoute.snapshot.params.id);
     this.getGateways();
-    if (this.processId) {
-      this.getProcess();
+    if (this.deviceId) {
+      this.getDevice();
     }
   }
 
   /**
-   * Gets the current process by id from the backend.
+   * Gets the current device by id from the backend.
    */
-  private getProcess(): void {
-    this.processService.getProcessById(this.processId)
+  private getDevice(): void {
+    this.deviceService.getDeviceById(this.deviceId)
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
-        (process: Process) => this.process = process,
+        (device: Device) => this.device = device,
         (err: HttpErrorResponse) => {
           this.appService.handleGenericError(err);
           this.router.navigate([ '..' ], { relativeTo: this.activatedRoute });
@@ -75,24 +74,24 @@ export class ProcessComponent extends Subscribable implements OnInit {
   }
 
   /**
-   * Saves or updates the current process.
+   * Saves or updates the current device.
    */
-  public saveOrUpdateProcess(): void {
-    if (this.processId) {
-      this.updateProcess();
+  public saveOrUpdateDevice(): void {
+    if (this.deviceId) {
+      this.updateDevice();
     } else {
-      this.createProcess();
+      this.createDevice();
     }
   }
 
   /**
-   * Create a new process.
+   * Create a new device.
    */
-  private createProcess(): void {
-    this.processService.createProcess(this.process)
+  private createDevice(): void {
+    this.deviceService.createDevice(this.device)
     .pipe(take(1), takeUntil(this.destroyed))
     .subscribe(
-      (process: Process) => {
+      (device: Device) => {
         this.router.navigate([ '..' ], { relativeTo: this.activatedRoute });
         this.appService.showSnack('Proceso creado correctamente.');
       },
@@ -103,12 +102,12 @@ export class ProcessComponent extends Subscribable implements OnInit {
   /**
    * Updates the current gateway with the new data.
    */
-  private updateProcess(): void {
-    this.processService.updateProcess(this.process)
+  private updateDevice(): void {
+    this.deviceService.updateDevice(this.device)
     .pipe(take(1), takeUntil(this.destroyed))
     .subscribe(
-      (process: Process) => {
-        this.process = process;
+      (device: Device) => {
+        this.device = device;
         this.appService.showSnack('Proceso actualizado correctamente.');
       },
       (err: HttpErrorResponse) => this.appService.handleGenericError(err)
@@ -142,5 +141,4 @@ export class ProcessComponent extends Subscribable implements OnInit {
 
     this.gatewayService.gateways.forEach(gateway => this.gatewaysSelect.push(gateway));
   }
-
 }

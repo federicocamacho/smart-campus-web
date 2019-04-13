@@ -41,7 +41,7 @@ export class ApplicationsComponent extends DataTable<Application, ApplicationsFi
     private dialog: MatDialog,
     protected router: Router) {
       super(activatedRoute, router);
-      this.displayedColumns = [ 'name', 'description', 'actions' ];
+      this.displayedColumns = [ 'id', 'name', 'description', 'actions' ];
   }
 
   ngOnInit() {
@@ -112,10 +112,15 @@ export class ApplicationsComponent extends DataTable<Application, ApplicationsFi
   }
 
   protected filterPredicate: (data: Application, filter: string) => boolean = (data: Application, filter: string) => {
-    if (this.filterType === 'NAME') {
-      return Util.stringContains(data.name, filter);
-    } else {
-      return Util.stringContains(data.description, filter);
+    switch (this.filterType) {
+      case 'ID':
+        return Util.stringContains(String(data.id), filter);
+      case 'NAME':
+        return Util.stringContains(data.name, filter);
+      case 'DESCRIPTION':
+        return Util.stringContains(data.description, filter);
+      case 'NONE':
+        return true;
     }
   }
 

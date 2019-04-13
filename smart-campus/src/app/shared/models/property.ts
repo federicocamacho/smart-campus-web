@@ -6,7 +6,7 @@ export class Property {
   public name: string;
   public value: string;
 
-  constructor(name: string, type: PropertyType, value: string) {
+  constructor(name: string = '', type: PropertyType = 'CONFIG', value: string = '') {
     this.name = name;
     this.type = type;
     this.value = value;
