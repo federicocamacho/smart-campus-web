@@ -46,7 +46,7 @@ export class UserComponent extends Subscribable implements OnInit {
         });
   }
 
-  public saveOrUpdateApplication(): void {
+  public saveOrUpdateUser(): void {
     if (this.userId) {
       this.updateUser();
     } else {

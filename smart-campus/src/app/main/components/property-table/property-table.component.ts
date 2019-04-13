@@ -38,8 +38,10 @@ export class PropertyTableComponent extends DataTable<Property, PropertiesFilter
   }
 
   ngOnChanges() {
+    if (!this.properties) {
+      this.properties = [];
+    }
     this.dataSource.data = this.properties;
-    console.log('Property-Table onChanges gets executed.')
   }
 
   /**
