@@ -18,15 +18,16 @@ export class UserComponent extends Subscribable implements OnInit {
 
   public userId: number;
   public user: User;
+  public confirmPassword: string;
 
   constructor(
     public appService: AppService,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router) {
-      super();
-      this.user = new User();
-    }
+    super();
+    this.user = new User();
+  }
 
   ngOnInit() {
     this.userId = Number(this.activatedRoute.snapshot.params.id);
@@ -42,41 +43,21 @@ export class UserComponent extends Subscribable implements OnInit {
         (user: User) => this.user = user,
         (err: HttpErrorResponse) => {
           this.appService.handleGenericError(err);
-          this.router.navigate([ '..' ], { relativeTo: this.activatedRoute });
+          this.router.navigate(['..'], { relativeTo: this.activatedRoute });
         });
   }
 
-  public saveOrUpdateUser(): void {
-    if (this.userId) {
-      this.updateUser();
-    } else {
-      this.createUser();
-    }
-  }
-
-  private createUser(): void {
+  public createUser(): void {
     this.user.id = this.appService.user.id;
     this.userService.createUser(this.user)
-    .pipe(take(1), takeUntil(this.destroyed))
-    .subscribe(
-      (user: User) => {
-        this.router.navigate([ '..' ], { relativeTo: this.activatedRoute });
-        this.appService.showSnack('Aplicación creada correctamente.');
-      },
-      (err: HttpErrorResponse) => this.appService.handleGenericError(err)
-    );
-  }
-
-  private updateUser(): void {
-    this.userService.updateUser(this.user)
-    .pipe(take(1), takeUntil(this.destroyed))
-    .subscribe(
-      (user: User) => {
-        this.user = user;
-        this.appService.showSnack('Aplicación actualizada correctamente.');
-      },
-      (err: HttpErrorResponse) => this.appService.handleGenericError(err)
-    );
+      .pipe(take(1), takeUntil(this.destroyed))
+      .subscribe(
+        (user: User) => {
+          this.router.navigate(['..'], { relativeTo: this.activatedRoute });
+          this.appService.showSnack('Usuario creado correctamente.');
+        },
+        (err: HttpErrorResponse) => this.appService.handleGenericError(err)
+      );
   }
 
 }
