@@ -5,20 +5,13 @@
       <input 
         class="login-input" name="username" #username="ngModel"
         type="text" placeholder="Usuario"
-        required="true" minlength="4"
+        required="true"
         [(ngModel)]="login.username"/>
       <div  *ngIf="appService.isModelInvalid(username)">
         <mat-icon
           class="validation-icon"
           *ngIf="username.errors?.required"
           matTooltip="Nombre de usuario requerido"
-          matTooltipClass="validation-tooltip">
-          report_problem
-        </mat-icon>
-        <mat-icon
-          class="validation-icon"
-          *ngIf="username.errors?.minlength"
-          matTooltip="Nombre de usuario debe tener minimo 4 caracteres"
           matTooltipClass="validation-tooltip">
           report_problem
         </mat-icon>
@@ -30,20 +23,13 @@
       <input 
         class="login-input" name="password" #password="ngModel"
         type="password" placeholder="Contraseña"
-        required="true" minlength="4"
+        required="true"
         [(ngModel)]="login.password"/>
       <div  *ngIf="appService.isModelInvalid(password)">
         <mat-icon
           class="validation-icon"
           *ngIf="password.errors?.required"
           matTooltip="Contraseña requerida"
-          matTooltipClass="validation-tooltip">
-          report_problem
-        </mat-icon>
-        <mat-icon
-          class="validation-icon"
-          *ngIf="password.errors?.minlength"
-          matTooltip="Contraseña debe tener minimo 4 caracteres"
           matTooltipClass="validation-tooltip">
           report_problem
         </mat-icon>
