@@ -5,19 +5,13 @@
       <input 
         class="login-input" name="newUsername" #newUsername="ngModel"
         type="text" placeholder="Usuario"
-        required="true" minlength="4"
+        required="true"
         [(ngModel)]="signin.username"/>
       <div *ngIf="appService.isModelInvalid(newUsername)">
         <mat-icon
           class="validation-icon"
           *ngIf="newUsername.errors?.required"
           matTooltip="Nombre de usuario requerido">
-          report_problem
-        </mat-icon>
-        <mat-icon
-          class="validation-icon"
-          *ngIf="newUsername.errors?.minlength"
-          matTooltip="Nombre de usuario debe tener minimo 4 caracteres">
           report_problem
         </mat-icon>
       </div>
@@ -28,7 +22,7 @@
       <input 
         class="login-input" name="newName" #newName="ngModel"
         type="text" placeholder="Nombre"
-        required="true" minlength="8"
+        required="true"
         [(ngModel)]="signin.name"/>
       <div *ngIf="appService.isModelInvalid(newName)">
         <mat-icon
@@ -37,13 +31,6 @@
           matTooltip="Nombre requerido"
           matTooltipClass="validation-tooltip">
         report_problem
-        </mat-icon>
-        <mat-icon
-          class="validation-icon"
-          *ngIf="newName.errors?.minlength"
-          matTooltip="Nombre debe tener minimo 8 caracteres"
-          matTooltipClass="validation-tooltip">
-          report_problem
         </mat-icon>
       </div>
     </div>
@@ -78,20 +65,13 @@
       <input 
         class="login-input" name="newPassword" #newPassword="ngModel"
         type="password" placeholder="Contraseña"
-        required="true" minlength="4"
+        required="true"
         [(ngModel)]="signin.password"/>
       <div  *ngIf="appService.isModelInvalid(newPassword)">
         <mat-icon
           class="validation-icon"
           *ngIf="newPassword.errors?.required"
           matTooltip="Contraseña requerida"
-          matTooltipClass="validation-tooltip">
-          report_problem
-        </mat-icon>
-        <mat-icon
-          class="validation-icon"
-          *ngIf="newPassword.errors?.minlength"
-          matTooltip="Contraseña debe tener minimo 4 caracteres"
           matTooltipClass="validation-tooltip">
           report_problem
         </mat-icon>
@@ -103,7 +83,7 @@
       <input 
         class="login-input" name="newPasswordRepeat" #newPasswordRepeat="ngModel"
         type="password" placeholder="Repetir Contraseña"
-        required="true" minlength="4" [equal]="signin.password"
+        required="true" [equal]="signin.password"
         [(ngModel)]="passwordCheck" />
       <div *ngIf="appService.isModelInvalid(newPasswordRepeat)">
         <mat-icon

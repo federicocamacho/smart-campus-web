@@ -11,6 +11,11 @@ body {
     background-color: #fafafa;
 }
 
+sc-user-card {
+  position: relative;
+  z-index: 5;
+}
+
 sc-loader {
     z-index: 9999;
     position: absolute;

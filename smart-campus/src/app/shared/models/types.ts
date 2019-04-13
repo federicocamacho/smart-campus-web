@@ -4,8 +4,8 @@ export type ThingType = 'GATEWAY' | 'SENSOR' | 'ACTUATOR';
 // Filter types.
 export type ApplicationsFilter = 'ID' | 'NAME' | 'DESCRIPTION';
 export type GatewaysFilter = 'ID' | 'NAME' | 'DESCRIPTION' | 'IP' | 'IS_ALIVE' | 'APPLICATION';
-export type ProcessesFilter = 'ID' | 'NAME' | 'DESCRIPTION' | 'IS_ALIVE' | 'GATEWAY';
 export type DevicesFilter = 'ID' | 'TYPE' | 'NAME' | 'DESCRIPTION' | 'GATEWAY';
+export type ProcessesFilter = 'ID' | 'NAME' | 'DESCRIPTION' | 'IS_ALIVE' | 'GATEWAY';
 export type PropertiesFilter = 'TYPE' | 'NAME' | 'VALUE';
 export type UsersFilter = 'ID' | 'NAME' | 'USERNAME';
 

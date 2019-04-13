@@ -19,12 +19,12 @@ import { GatewaysByApplicationComponent } from './components/gateways-by-applica
 import { GatewaySelectionDialogComponent } from './components/gateway-selection-dialog/gateway-selection-dialog.component';
 import { PropertyTableComponent } from './components/property-table/property-table.component';
 import { PropertyEditionDialogComponent } from './components/property-edition-dialog/property-edition-dialog.component';
-import { ProcessesComponent } from './pages/processes/processes.component';
-import { ProcessComponent } from './pages/processes/process/process.component';
 import { DevicesComponent } from './pages/devices/devices.component';
 import { DeviceComponent } from './pages/devices/device/device.component';
 import { UsersComponent } from './pages/users/users.component';
 import { UserComponent } from './pages/users/user/user.component';
+import { ProcessesComponent } from './pages/processes/processes.component';
+import { ProcessComponent } from './pages/processes/process/process.component';
 
 @NgModule({
   declarations: [
