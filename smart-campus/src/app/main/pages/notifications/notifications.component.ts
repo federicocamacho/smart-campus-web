@@ -62,9 +62,9 @@ export class NotificationsComponent extends DataTable<Notification, Notification
     private notificationService: NotificationService,
     private processService: ProcessService) {
     super();
-    this.displayedColumns = [ 'gateway', 'process', 'alive', 'read', 'timestamp' ];
+    this.displayedColumns = [ 'gateway', 'process', 'alive', 'read', 'timestamp', 'actions' ];
     this.gatewaysSelect = [];
-    this.processSelect = [];
+    this.processSelect = [ new Process(0, 'Ninguno') ];
   }
 
   ngOnInit() {
@@ -152,7 +152,26 @@ export class NotificationsComponent extends DataTable<Notification, Notification
   }
 
   public toggleExpansion(notification: Notification): void {
-    this.expandedElement = this.expandedElement === notification ? null : notification;
+    if (this.expandedElement === notification) {
+      this.expandedElement = null;
+    } else {
+      this.expandedElement = notification;
+      // changed selection, then mark the notification as read.
+      if (!notification.read) {
+        this.notificationService.unreadNotificationsCount--;
+        notification.read = true;
+        this.markNotificationAsRead(this.appService.user.id, [ notification.id ]);
+      }
+    }
+  }
+
+  private markNotificationAsRead(userId: number, notificationIds: number[]): void {
+    this.notificationService.markNotificationsAsRead(userId, notificationIds)
+      .pipe(take(1), takeUntil(this.destroyed))
+      .subscribe(
+        (res: ApiResponse) => {},
+        (err: HttpErrorResponse) => this.appService.handleGenericError(err)
+      );
   }
 
   protected filterPredicate: (data: Notification, filter: string) => boolean = (data: Notification, filter: string) => {
