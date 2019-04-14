@@ -82,13 +82,11 @@ export class ApplicationsComponent extends DataTable<Application, ApplicationsFi
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
         (res: ApiResponse) => {
-          this.appService.showSnack('Aplicación eliminada correctamente.');
-          this.applicationService.applications.splice(
-            this.applicationService.applications.findIndex(application => application.id === id), 1);
-          this.dataSource = new MatTableDataSource(this.applicationService.applications);
-          this.dataSource.paginator = this.paginator;
-          if (this.applicationService.applications.length % this.dataSource.paginator.pageSize === 0) {
-            this.dataSource.paginator.previousPage();
+          this.appService.showSnack(res.message);
+          if (res.successful) {
+            this.applicationService.applications.splice(
+              this.applicationService.applications.findIndex(application => application.id === id), 1);
+            this.afterRecordDeleted();
           }
         },
         (err: HttpErrorResponse) => this.appService.handleGenericError(err)

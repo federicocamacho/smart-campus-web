@@ -12,6 +12,7 @@ import { ClickOutsideDirective } from './directives/click-outside.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import { MaterialModule } from '../libs/material.module';
 import { PropertyTypePipe } from './pipes/property-type.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 /**
  * Imports and exports all general Directives, Pipes and Components.
@@ -33,7 +34,8 @@ import { PropertyTypePipe } from './pipes/property-type.pipe';
     FlexLayoutModule,
     FormsModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    BrowserAnimationsModule
   ],
   entryComponents: [
     ConfirmDialogComponent
@@ -47,7 +49,8 @@ import { PropertyTypePipe } from './pipes/property-type.pipe';
     FormsModule,
     LoaderComponent,
     HttpClientModule,
-    PropertyTypePipe
+    PropertyTypePipe,
+    BrowserAnimationsModule
   ]
 })
 export class SharedModule { }
