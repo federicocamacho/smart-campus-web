@@ -8,4 +8,4 @@ export type DevicesFilter = 'ID' | 'TYPE' | 'NAME' | 'DESCRIPTION' | 'GATEWAY';
 export type ProcessesFilter = 'ID' | 'NAME' | 'DESCRIPTION' | 'IS_ALIVE' | 'GATEWAY';
 export type PropertiesFilter = 'TYPE' | 'NAME' | 'VALUE';
 export type UsersFilter = 'ID' | 'NAME' | 'USERNAME';
-
+export type NotificationsFilter = 'GATEWAY' | 'PROCESS' | 'IS_ALIVE' | 'READ' | 'TIMESTAMP' | 'MESSAGE';

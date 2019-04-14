@@ -1,15 +1,19 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { Section } from 'src/app/shared/models/section';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { take, takeUntil } from 'rxjs/operators';
+import { Subscribable } from 'src/app/shared/utils/subscribable';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'sc-dashboard-template',
   templateUrl: './dashboard-template.component.html',
   styleUrls: ['./dashboard-template.component.css']
 })
-export class DashboardTemplateComponent {
+export class DashboardTemplateComponent extends Subscribable implements OnInit {
 
   /**
    * Name of the currently authenticated user.
@@ -34,7 +38,12 @@ export class DashboardTemplateComponent {
    * @date 2019-01-09
    * @param router Angular Router.
    */
-  constructor(private router: Router, public appService: AppService, public dashboardService: DashboardService) {
+  constructor(
+    public appService: AppService,
+    public dashboardService: DashboardService,
+    public notificationService: NotificationService,
+    private router: Router) {
+    super();
     appService.isBusy = false;
     this.openMenu = false;
     this.sections = new Array();
@@ -45,6 +54,10 @@ export class DashboardTemplateComponent {
     this.sections.push(new Section('Usuarios', 'Gestiona tus usuarios', '/dashboard/users', 'supervised_user_circle', '#000'));
   }
 
+  ngOnInit() {
+    this.getUnreadNotificationsCount();
+  }
+
   /**
    * Navigate to application's home page.
    *
@@ -52,16 +65,38 @@ export class DashboardTemplateComponent {
    */
   public goHome(): void {
     this.router.navigate(['/dashboard']);
+    this.openMenu = false;
+  }
+
+  /**
+   * Navigate to application's page.
+   *
+   * @param path to navigate.
+   */
+  public navigateToSection(path: string): void {
+    this.router.navigate([path]);
+    this.openMenu = false;
+  }
+
+  private getUnreadNotificationsCount(): void {
+    this.notificationService.getUnreadNotificationsCount(this.appService.user.id)
+      .pipe(take(1), takeUntil(this.destroyed))
+      .subscribe(
+        (count: number) => this.notificationService.unreadNotificationsCount = count,
+        (err: HttpErrorResponse) => this.appService.handleGenericError(err)
+      );
   }
 
   public toggleUserCard(event: Event): void {
     this.dashboardService.isUserCardOpened = !this.dashboardService.isUserCardOpened;
+    this.openMenu = false;
     event.stopPropagation();
   }
 
-  public closeUserCard(): void {
+  public closeUserCard(event: Event): void {
     if (this.dashboardService.isUserCardOpened) {
       this.dashboardService.isUserCardOpened = false;
     }
+    event.stopPropagation();
   }
 }

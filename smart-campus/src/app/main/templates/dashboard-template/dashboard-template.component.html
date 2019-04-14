@@ -4,8 +4,15 @@
       class="menu-item"
       *ngFor="let section of sections"
       [ngStyle]="{'color': section.cardColor}"
-      style="height: 28px">
-      <mat-icon [ngStyle]="{'font-size': openMenu ? '24px': '0px'}">{{section.materialIconName}}</mat-icon> - {{section.title}}
+      (click)="navigateToSection(section.url)"
+      [routerLink]="section.url"
+      routerLinkActive='active'>
+      <div>
+        <mat-icon [ngStyle]="{'display': openMenu ? '': 'none', 'transition': 'all 1.5s'}">{{section.materialIconName}}</mat-icon>
+        <div>
+          <label>{{section.title}}</label>
+        </div>
+      </div>
     </div>
   </menu>
   <nav class="navbar" fxLayout="row" fxFlexFill>
@@ -40,9 +47,19 @@
     </div>
     <div class="navbar-collapse" fxFlex="20">
       <ul class="navbar-nav" fxFlex fxLayout="row" fxLayoutAlign="end">
+        <li class="nav-item" fxFlex="50px" style="margin: auto;">
+          <button mat-icon-button>
+            <mat-icon
+              [matBadge]="notificationService.unreadNotificationsCount"
+              matBadgeColor="warn"
+              [matBadgeHidden]="!notificationService.unreadNotificationsCount">
+              notifications
+            </mat-icon>
+          </button>
+        </li>
         <li
-          class="nav-item user-item" fxFlexFill
-          style="padding-right: 10px;"
+          class="nav-item user-item" fxFlex
+          style="padding-right: 10px; padding-left: 0px;"
           (click)="toggleUserCard($event)">
           <img
             src="assets/imgs/user.png"
@@ -63,7 +80,7 @@
   [ngStyle]="{
     visibility: dashboardService.isUserCardOpened ? 'visible' : 'hidden'
   }"
-  (clickOutside)="closeUserCard()"
+  (clickOutside)="closeUserCard($event)"
   imageUrl="assets/imgs/user.png"
   [username]="appService.user?.username"
   [email]="appService.user?.email"

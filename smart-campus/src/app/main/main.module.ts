@@ -26,6 +26,7 @@ import { UserComponent } from './pages/users/user/user.component';
 import { ProcessesComponent } from './pages/processes/processes.component';
 import { ProcessComponent } from './pages/processes/process/process.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { NotificationsComponent } from './pages/notifications/notifications.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     DeviceComponent,
     UsersComponent,
     UserComponent,
-    ProfileComponent
+    ProfileComponent,
+    NotificationsComponent
   ],
   entryComponents: [
     GatewaySelectionDialogComponent,

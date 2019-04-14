@@ -20,6 +20,7 @@ import { SigninComponent } from './main/components/signin/signin.component';
 import { UsersComponent } from './main/pages/users/users.component';
 import { UserComponent } from './main/pages/users/user/user.component';
 import { ProfileComponent } from './main/pages/profile/profile.component';
+import { NotificationsComponent } from './main/pages/notifications/notifications.component';
 
 const routes: Routes = [
   {
@@ -98,6 +99,10 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent
+      },
+      {
+        path: 'notifications',
+        component: NotificationsComponent
       }
     ],
     canActivate: [ DashboardGuard ]
