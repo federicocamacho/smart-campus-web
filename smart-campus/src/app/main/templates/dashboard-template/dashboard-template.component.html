@@ -1,6 +1,27 @@
 <header class="default-shadow">
+  <menu class="menu-container" [ngClass]="{'close': !openMenu }">
+    <div
+      class="menu-item"
+      *ngFor="let section of sections"
+      [ngStyle]="{'color': section.cardColor}"
+      (click)="navigateToSection(section.url)"
+      [routerLink]="section.url"
+      routerLinkActive='active'>
+      <div>
+        <mat-icon [ngStyle]="{'display': openMenu ? '': 'none', 'transition': 'all 1.5s'}">{{section.materialIconName}}</mat-icon>
+        <div>
+          <label>{{section.title}}</label>
+        </div>
+      </div>
+    </div>
+  </menu>
   <nav class="navbar" fxLayout="row" fxFlexFill>
-    <div fxFlex="60" fxFlexOffset="20%" class="navbar-header" (click)="goHome()">
+    <div fxFlex="20">
+      <div class="menu-icon-container" (click)="openMenu = !openMenu">
+        <mat-icon>menu</mat-icon>
+      </div>
+    </div>
+    <div fxFlex="60" class="navbar-header" (click)="goHome()">
       <a
         class="navbar-brand"
         fxLayout="row"
@@ -38,7 +59,7 @@
         </li>
         <li
           class="nav-item user-item" fxFlex
-          style="padding-right: 10px;"
+          style="padding-right: 10px; padding-left: 0px;"
           (click)="toggleUserCard($event)">
           <img
             src="assets/imgs/user.png"
@@ -59,44 +80,21 @@
   [ngStyle]="{
     visibility: dashboardService.isUserCardOpened ? 'visible' : 'hidden'
   }"
-  (clickOutside)="closeUserCard()"
+  (clickOutside)="closeUserCard($event)"
   imageUrl="assets/imgs/user.png"
   [username]="appService.user?.username"
   [email]="appService.user?.email"
   [name]="appService.user?.name">
 </sc-user-card>
 <div class="page-wrapper">
-  <div fxLayout="row wrap" fxLayoutAlign="space-evenly center" fxLayoutGap="20px">
+  <div class="section-card-container" fxLayout="row wrap" fxLayoutAlign="space-evenly center" fxLayoutGap="20px">
     <sc-section-card
-      title="Aplicaciones"
-      description="Gestiona tus apps"
-      url="/dashboard/applications"
-      materialIconName="apps"
-      cardColor="#24d2b5"></sc-section-card>
-    <sc-section-card
-      title="Gateways"
-      description="Gestiona tus gateways"
-      url="/dashboard/gateways"
-      materialIconName="business"
-      cardColor="#007bff"></sc-section-card>
-    <sc-section-card
-      title="Procesos"
-      description="Gestiona tus procesos"
-      url="/dashboard/processes"
-      materialIconName="widgets"
-      cardColor="#ff5c6c"></sc-section-card>
-    <sc-section-card
-      title="Dispositivos"
-      description="Gestiona tus dispositivos"
-      url="/dashboard/devices"
-      materialIconName="device_hub"
-      cardColor="#6772e5"></sc-section-card>
-    <sc-section-card
-      title="Usuarios"
-      description="Gestiona los usuarios"
-      url="/dashboard/users"
-      materialIconName="supervised_user_circle"
-      cardColor="#000"></sc-section-card>
+      *ngFor="let section of sections"
+      [title]="section.title"
+      [description]="section.description"
+      [url]="section.url"
+      [materialIconName]="section.materialIconName"
+      [cardColor]="section.cardColor"></sc-section-card>
   </div>
   <router-outlet></router-outlet>
 </div>

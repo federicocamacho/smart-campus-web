@@ -5,7 +5,6 @@ import { AuthenticationComponent } from './pages/authentication/authentication.c
 import { SigninComponent } from './components/signin/signin.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { DashboardTemplateComponent } from './templates/dashboard-template/dashboard-template.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MaterialModule } from '../libs/material.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -35,7 +34,6 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
     SigninComponent,
     PasswordRecoveryComponent,
     DashboardTemplateComponent,
-    NotFoundComponent,
     UserCardComponent,
     SectionCardComponent,
     ApplicationsComponent,

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
+import { Section } from 'src/app/shared/models/section';
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { take, takeUntil } from 'rxjs/operators';
 import { Subscribable } from 'src/app/shared/utils/subscribable';
@@ -21,6 +22,18 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
   @Input() userName: string;
 
   /**
+   * List of system's sections.
+   *
+   */
+  public sections: Array<Section>;
+
+  /**
+   * True when the vertical left menu is visible, otherwise is false.
+   *
+   */
+  public openMenu: boolean;
+
+  /**
    * Creates an instance of HeaderComponent.
    * @date 2019-01-09
    * @param router Angular Router.
@@ -32,6 +45,13 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
     private router: Router) {
     super();
     appService.isBusy = false;
+    this.openMenu = false;
+    this.sections = new Array();
+    this.sections.push(new Section('Aplicaciones', 'Gestiona tus apps', '/dashboard/applications', 'apps', '#24d2b5'));
+    this.sections.push(new Section('Gateways', 'Gestiona tus gateways', '/dashboard/gateways', 'business', '#007bff'));
+    this.sections.push(new Section('Procesos', 'Gestiona tus procesos', '/dashboard/processes', 'widgets', '#ff5c6c'));
+    this.sections.push(new Section('Dispositivos', 'Gestiona tus dispositivos', '/dashboard/devices', 'device_hub', '#6772e5'));
+    this.sections.push(new Section('Usuarios', 'Gestiona tus usuarios', '/dashboard/users', 'supervised_user_circle', '#000'));
   }
 
   ngOnInit() {
@@ -45,6 +65,17 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
    */
   public goHome(): void {
     this.router.navigate(['/dashboard']);
+    this.openMenu = false;
+  }
+
+  /**
+   * Navigate to application's page.
+   *
+   * @param path to navigate.
+   */
+  public navigateToSection(path: string): void {
+    this.router.navigate([path]);
+    this.openMenu = false;
   }
 
   private getUnreadNotificationsCount(): void {
@@ -58,12 +89,14 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
 
   public toggleUserCard(event: Event): void {
     this.dashboardService.isUserCardOpened = !this.dashboardService.isUserCardOpened;
+    this.openMenu = false;
     event.stopPropagation();
   }
 
-  public closeUserCard(): void {
+  public closeUserCard(event: Event): void {
     if (this.dashboardService.isUserCardOpened) {
       this.dashboardService.isUserCardOpened = false;
     }
+    event.stopPropagation();
   }
 }

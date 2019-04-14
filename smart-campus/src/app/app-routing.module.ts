@@ -12,7 +12,6 @@ import { DevicesComponent } from './main/pages/devices/devices.component';
 import { GatewayComponent } from './main/pages/gateways/gateway/gateway.component';
 import { GatewaysComponent } from './main/pages/gateways/gateways.component';
 import { LoginComponent } from './main/components/login/login.component';
-import { NotFoundComponent } from './main/pages/not-found/not-found.component';
 import { PasswordRecoveryComponent } from './main/components/password-recovery/password-recovery.component';
 import { ProcessComponent } from './main/pages/processes/process/process.component';
 import { ProcessesComponent } from './main/pages/processes/processes.component';
@@ -108,12 +107,8 @@ const routes: Routes = [
     canActivate: [ DashboardGuard ]
   },
   {
-    path: 'not-found',
-    component: NotFoundComponent
-  },
-  {
     path: '**',
-    redirectTo: '/not-found',
+    redirectTo: '/dashboard',
     pathMatch: 'full'
   }
 ];
