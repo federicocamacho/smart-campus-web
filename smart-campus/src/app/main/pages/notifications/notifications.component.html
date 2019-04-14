@@ -145,9 +145,10 @@
             <div fxLayout="row">
               <span class="mobile-label">Leído:</span>
               <span>
-                <i class="material-icons" style="color: green">
-                  {{ row.read ? 'done_all' : 'mail' }}
-                </i>
+                <i *ngIf="row.read; else unread" class="material-icons" style="color: green">done_all</i>
+                <ng-template #unread>
+                    <i #unread class="material-icons" style="color: #5c5c5cde">mail</i>
+                </ng-template>
               </span>
             </div>
           </td>
