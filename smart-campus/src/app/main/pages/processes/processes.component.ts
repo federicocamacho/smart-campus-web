@@ -160,8 +160,11 @@ export class ProcessesComponent extends DataTable<Process, ProcessesFilter> impl
     if (!this.gatewayService.gateways) {
       return;
     }
-
     this.gatewayService.gateways.forEach(gateway => this.gatewaysSelect.push(gateway));
+  }
+
+  public onCloneRecord(): void {
+    console.log('Hasta aqui llegué, hagale');
   }
 
 }
