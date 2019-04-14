@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  adminService: 'http://192.168.1.69:8090'
+  adminService: 'http://localhost:8090'
 };
 
 /*
