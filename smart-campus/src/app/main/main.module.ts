@@ -26,6 +26,7 @@ import { ProcessesComponent } from './pages/processes/processes.component';
 import { ProcessComponent } from './pages/processes/process/process.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
+import { ProcessesByGatewayComponent } from './components/processes-by-gateway/processes-by-gateway.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
     UsersComponent,
     UserComponent,
     ProfileComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    ProcessesByGatewayComponent
   ],
   entryComponents: [
     GatewaySelectionDialogComponent,
