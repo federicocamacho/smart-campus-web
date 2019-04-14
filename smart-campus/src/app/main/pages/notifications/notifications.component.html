@@ -1,0 +1,87 @@
+<div [ngStyle]="{'display': (gatewaysReady && processesReady ? 'block' : 'none')}">
+  <div
+    fxLayout="row"
+    fxLayoutAlign="space-between center"
+    class="section-title-container">
+    <div>
+      <h2 class="section-title">Notificaciones</h2>
+      <h5 class="section-subtitle">Gestiona tus notificaciones.</h5>
+    </div>
+  </div>
+  <div
+    fxLayout="row"
+    fxLayout.xs="column"
+    fxLayoutGap="20px"
+    class="filter-container">
+    <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%">
+      <mat-label>Filtrar por:</mat-label>
+      <mat-select [(value)]="filterType" (selectionChange)="onFilterTypeChange($event.value)">
+        <mat-option value="NONE">Ninguno</mat-option>
+        <mat-option value="GATEWAY">Gateway</mat-option>
+        <mat-option value="PROCESS">Proceso</mat-option>
+        <mat-option value="IS_ALIVE">Estado</mat-option>
+        <mat-option value="READ">Leído</mat-option>
+        <mat-option value="TIMESTAMP">Fecha</mat-option>
+        <mat-option value="MESSAGE">Mensaje</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div [ngSwitch]="filterType" fxFlex="80%" fxFlex.sm="50%" fxFlex.xs="100%">
+      <mat-form-field fxFlex="30%" fxFlex.sm="50%" fxFlex.xs="100%" *ngSwitchCase="'MESSAGE'">
+        <input
+          matInput
+          type="text"
+          placeholder="Valor:"
+          (keyup)="applyFilter()"
+          [(ngModel)]="filterValue"/>
+        <button
+          mat-button
+          *ngIf="filterValue"
+          matSuffix
+          mat-icon-button
+          aria-label="Clear"
+          (click)="filterValue = ''; applyFilter()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%" *ngSwitchCase="'IS_ALIVE'">
+        <mat-label>Estado:</mat-label>
+        <mat-select [(value)]="filterValue" (selectionChange)="applyFilter()">
+          <mat-option value="true">Activo</mat-option>
+          <mat-option value="false">Inactivo</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%" *ngSwitchCase="'GATEWAY'">
+        <mat-label>Gateway:</mat-label>
+        <mat-select [(value)]="filterValue" (selectionChange)="applyFilter()">
+          <mat-option *ngFor="let item of gatewaysSelect" [value]="item.id">{{ item.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%" *ngSwitchCase="'PROCESS'">
+        <mat-label>Proceso:</mat-label>
+        <mat-select [(value)]="filterValue" (selectionChange)="applyFilter()">
+          <mat-option *ngFor="let item of processSelect" [value]="item.id">{{ item.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%" *ngSwitchCase="'READ'">
+        <mat-label>Leído:</mat-label>
+        <mat-select [(value)]="filterValue" (selectionChange)="applyFilter()">
+          <mat-option value="true">Leído</mat-option>
+          <mat-option value="false">No leído</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div fxFlex="100%" fxLayout="row" fxLayout.xs="column" *ngSwitchCase="'TIMESTAMP'">
+        <mat-form-field fxFlex="50%" fxFlex.xs="100%">
+          <input matInput [matDatepicker]="startDatePicker" placeholder="Desde" [(ngModel)]="startDate">
+          <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+          <mat-datepicker #startDatePicker></mat-datepicker>
+          <button mat-button matSuffix mat-icon-button
+            *ngIf="startDate"
+            aria-label="Clear"
+            (click)="startDate = null; applyFilter()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>

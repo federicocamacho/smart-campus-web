@@ -1,7 +1,6 @@
 <header class="default-shadow">
   <nav class="navbar" fxLayout="row" fxFlexFill>
-    <div fxFlex="20"></div>
-    <div fxFlex="60" class="navbar-header" (click)="goHome()">
+    <div fxFlex="60" fxFlexOffset="20%" class="navbar-header" (click)="goHome()">
       <a
         class="navbar-brand"
         fxLayout="row"
@@ -27,8 +26,18 @@
     </div>
     <div class="navbar-collapse" fxFlex="20">
       <ul class="navbar-nav" fxFlex fxLayout="row" fxLayoutAlign="end">
+        <li class="nav-item" fxFlex="50px" style="margin: auto;">
+          <button mat-icon-button>
+            <mat-icon
+              [matBadge]="notificationService.unreadNotificationsCount"
+              matBadgeColor="warn"
+              [matBadgeHidden]="!notificationService.unreadNotificationsCount">
+              notifications
+            </mat-icon>
+          </button>
+        </li>
         <li
-          class="nav-item user-item" fxFlexFill
+          class="nav-item user-item" fxFlex
           style="padding-right: 10px;"
           (click)="toggleUserCard($event)">
           <img
