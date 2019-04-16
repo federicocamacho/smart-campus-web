@@ -34,7 +34,7 @@ export class DeviceComponent extends Subscribable implements OnInit {
   public device: Device;
 
   /**
-   * True if we are going to clone a process, otherwise is false.
+   * True if we are going to clone a device, otherwise is false.
    *
    */
   private clone: boolean;
