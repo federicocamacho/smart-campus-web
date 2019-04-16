@@ -95,4 +95,21 @@ export class Util {
     return endOfDay;
   }
 
+  /**
+   * Indicates if a given date is today.
+   *
+   * @date 2019-04-15
+   * @param date - date to be verified. Nullable.
+   * @returns true if the given date is today, false if it's any other day or if it's null.
+   */
+  public static isToday(date: Date): boolean {
+    if (!date) {
+      return null;
+    }
+    const today = new Date();
+    return date.getFullYear() === today.getFullYear() &&
+      date.getMonth() === today.getMonth() &&
+      date.getDate() === today.getDate();
+  }
+
 }

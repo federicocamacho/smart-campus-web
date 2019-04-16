@@ -1,0 +1,27 @@
+<div
+  class="notifications-card-container default-shadow"
+  fxFlex="270px" fxFlex.lt-sm="100%" flexLayout="col" fxFlexFill>
+  <div
+    class="notification-container"
+    *ngFor="let notification of notifications">
+    <h3 class="notification-title" *ngIf="notification.processId; else gatewayNotifTitle;">
+      {{ 'Proceso: ' + notification.processName }}
+    </h3>
+    <ng-template #gatewayNotifTitle>
+        <h3 class="notification-title">
+          {{ 'Gateway: ' + notification.gatewayName }}
+        </h3>
+    </ng-template>
+    <h5 class="notification-status">
+      {{ notification.alive ? 'Disponible' : 'Inactivo' }}
+    </h5>
+    <h5 class="notification-timestamp" *ngIf="isToday(notification.timestamp); else timestampOtherDay">
+      {{ notification.timestamp | date: 'H:mm' }}
+    </h5>
+    <ng-template #timestampOtherDay>
+      <h5 class="notification-timestamp">
+        {{ notification.timestamp | date: 'yyyyy/MM/dd H:mm' }}
+      </h5>
+    </ng-template>
+  </div>
+</div>

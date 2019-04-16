@@ -47,7 +47,10 @@
     </div>
     <div class="navbar-collapse" fxFlex="20">
       <ul class="navbar-nav" fxFlex fxLayout="row" fxLayoutAlign="end">
-        <li class="nav-item" fxFlex="50px" style="margin: auto;">
+        <li
+          class="nav-item" fxFlex="50px"
+          style="margin: auto;"
+          (click)="toggleNotificationsCard($event)">
           <button mat-icon-button>
             <mat-icon
               [matBadge]="notificationService.unreadNotificationsCount"
@@ -74,6 +77,14 @@
     </div>
   </nav>
 </header>
+<sc-notifications-card
+  scClickOutside
+  scAnimated="fadeInDownBig"
+  [ngStyle]="{
+    visibility: dashboardService.isNotificationsCardOpened ? 'visible' : 'hidden'
+  }"
+  (clickOutside)="closeNotificationsCard($event)">
+</sc-notifications-card>
 <sc-user-card
   scClickOutside
   scAnimated="fadeInDownBig"

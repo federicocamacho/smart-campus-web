@@ -19,6 +19,12 @@ export class DashboardService {
   public isUserCardOpened: boolean;
 
   /**
+   * Indicates if the notifications card is opened or not.
+   *
+   */
+  public isNotificationsCardOpened: boolean;
+
+  /**
    * Creates an instance of DashboardService.
    * @date 2019-04-09
    */

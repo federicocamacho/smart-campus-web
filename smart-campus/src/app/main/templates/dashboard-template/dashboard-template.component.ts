@@ -89,6 +89,9 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
 
   public toggleUserCard(event: Event): void {
     this.dashboardService.isUserCardOpened = !this.dashboardService.isUserCardOpened;
+    if (this.dashboardService.isUserCardOpened) {
+      this.dashboardService.isNotificationsCardOpened = false;
+    }
     this.openMenu = false;
     event.stopPropagation();
   }
@@ -96,6 +99,22 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
   public closeUserCard(event: Event): void {
     if (this.dashboardService.isUserCardOpened) {
       this.dashboardService.isUserCardOpened = false;
+    }
+    event.stopPropagation();
+  }
+
+  public toggleNotificationsCard(event: Event): void {
+    this.dashboardService.isNotificationsCardOpened = !this.dashboardService.isNotificationsCardOpened;
+    if (this.dashboardService.isNotificationsCardOpened) {
+      this.dashboardService.isUserCardOpened = false;
+    }
+    this.openMenu = false;
+    event.stopPropagation();
+  }
+
+  public closeNotificationsCard(event: Event): void {
+    if (this.dashboardService.isNotificationsCardOpened) {
+      this.dashboardService.isNotificationsCardOpened = false;
     }
     event.stopPropagation();
   }

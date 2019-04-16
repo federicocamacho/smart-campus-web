@@ -28,6 +28,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { ProcessesByGatewayComponent } from './components/processes-by-gateway/processes-by-gateway.component';
 import { DevicesByGatewayComponent } from './components/devices-by-gateway/devices-by-gateway.component';
+import { NotificationsCardComponent } from './components/notifications-card/notifications-card.component';
 import localeES from '@angular/common/locales/es';
 
 registerLocaleData(localeES, 'es');
@@ -57,7 +58,8 @@ registerLocaleData(localeES, 'es');
     ProfileComponent,
     NotificationsComponent,
     ProcessesByGatewayComponent,
-    DevicesByGatewayComponent
+    DevicesByGatewayComponent,
+    NotificationsCardComponent
   ],
   entryComponents: [
     GatewaySelectionDialogComponent,

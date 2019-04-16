@@ -80,7 +80,7 @@ export class NotificationService {
    * @returns an Api Response indicating if the operation succeeded or not.
    */
   public deleteNotification(notificationId: number): Observable<ApiResponse> {
-    return this.http.delete<ApiResponse>(`${ environment.adminService }/notifications/notification/${ notificationId }`, Util.options())
+    return this.http.delete<ApiResponse>(`${ environment.adminService }/notifications/notification/${ notificationId }`, Util.options());
   }
 
 }
