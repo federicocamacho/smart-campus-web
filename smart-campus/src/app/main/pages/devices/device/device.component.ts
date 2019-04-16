@@ -34,6 +34,12 @@ export class DeviceComponent extends Subscribable implements OnInit {
   public device: Device;
 
   /**
+   * True if we are going to clone a process, otherwise is false.
+   *
+   */
+  private clone: boolean;
+
+  /**
    * Creates an instance of DeviceComponent.
    */
   constructor(
@@ -54,6 +60,7 @@ export class DeviceComponent extends Subscribable implements OnInit {
    */
   ngOnInit() {
     this.deviceId = Number(this.activatedRoute.snapshot.params.id);
+    this.clone = this.activatedRoute.snapshot.queryParams.clone === 'true';
     this.getGateways();
     if (this.deviceId) {
       this.getDevice();
@@ -83,7 +90,7 @@ export class DeviceComponent extends Subscribable implements OnInit {
    * Saves or updates the current device.
    */
   public saveOrUpdateDevice(): void {
-    if (this.deviceId) {
+    if (this.deviceId && !this.clone) {
       this.updateDevice();
     } else {
       this.createDevice();
@@ -144,7 +151,6 @@ export class DeviceComponent extends Subscribable implements OnInit {
     if (!this.gatewayService.gateways) {
       return;
     }
-
     this.gatewayService.gateways.forEach(gateway => this.gatewaysSelect.push(gateway));
   }
 }

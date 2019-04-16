@@ -82,6 +82,19 @@ export class DevicesComponent extends DataTable<Device, DevicesFilter> implement
   }
 
   /**
+   * Redirects to the clone page.
+   *
+   * @param id - id of the device to be cloned.
+   */
+  public onCloneRecord(id: string) {
+    this.router.navigate(['/dashboard/devices/' + id], {
+      queryParams: {
+        clone: true
+      }
+    });
+  }
+
+  /**
    *  Deletes the device identified by its id.
    *
    * @date 2019-04-05
