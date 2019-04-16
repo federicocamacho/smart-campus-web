@@ -163,7 +163,12 @@ export class ProcessesComponent extends DataTable<Process, ProcessesFilter> impl
     this.gatewayService.gateways.forEach(gateway => this.gatewaysSelect.push(gateway));
   }
 
-  public onCloneRecord(): void {
+  public onCloneRecord(id: string): void {
+    this.router.navigate(['/dashboard/processes/' + id], {
+      queryParams: {
+        clone: true
+      }
+    });
     console.log('Hasta aqui llegué, hagale');
   }
 
