@@ -44,6 +44,7 @@ export class DeviceComponent extends Subscribable implements OnInit {
     private router: Router) {
       super();
       this.device = new Device();
+      this.device.properties = [];
       this.gatewaysSelect = [];
     }
 
@@ -66,7 +67,12 @@ export class DeviceComponent extends Subscribable implements OnInit {
     this.deviceService.getDeviceById(this.deviceId)
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
-        (device: Device) => this.device = device,
+        (device: Device) => {
+          this.device = device;
+          if (this.device && !this.device.properties) {
+            this.device.properties = [];
+          }
+        },
         (err: HttpErrorResponse) => {
           this.appService.handleGenericError(err);
           this.router.navigate([ '..' ], { relativeTo: this.activatedRoute });

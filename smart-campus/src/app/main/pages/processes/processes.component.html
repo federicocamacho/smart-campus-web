@@ -136,6 +136,21 @@
           <button
             class="desktop-action"
             mat-icon-button
+            style="color: rgb(103, 114, 229)"
+            (click)="onCloneRecord(element.id)">
+            <mat-icon>file_copy</mat-icon>
+          </button>
+          <button
+            class="mobile-action edit-mobile-action"
+            mat-stroked-button
+            mat-button
+            color="primary"
+            (click)="onCloneRecord(element.id)">
+            <mat-icon style="margin-right: 3px;">file_copy</mat-icon>Clonar
+          </button>
+          <button
+            class="desktop-action"
+            mat-icon-button
             style="color: rgb(36, 210, 181)"
             (click)="onEditRecord(element.id)">
             <mat-icon>edit</mat-icon>
