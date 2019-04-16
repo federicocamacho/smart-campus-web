@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticationComponent } from './pages/authentication/authentication.component';
 import { SigninComponent } from './components/signin/signin.component';
@@ -27,7 +27,9 @@ import { ProcessComponent } from './pages/processes/process/process.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { NotificationsComponent } from './pages/notifications/notifications.component';
 import { ProcessesByGatewayComponent } from './components/processes-by-gateway/processes-by-gateway.component';
+import localeES from '@angular/common/locales/es';
 
+registerLocaleData(localeES, 'es');
 @NgModule({
   declarations: [
     AuthenticationComponent,
@@ -64,6 +66,9 @@ import { ProcessesByGatewayComponent } from './components/processes-by-gateway/p
     CommonModule,
     MaterialModule,
     SharedModule
+  ],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es' }
   ]
 })
 export class MainModule { }

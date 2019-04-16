@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { MatSortable, MatDialog, MatDatepickerInputEvent } from '@angular/material';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { ApiResponse } from 'src/app/shared/models/api-response';
 import { AppService } from 'src/app/app.service';
+import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { DataTable } from 'src/app/shared/utils/data-table';
+import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data';
 import { Gateway } from 'src/app/shared/models/gateway';
 import { GatewayService } from 'src/app/core/services/gateway.service';
 import { Notification } from 'src/app/shared/models/notification';
@@ -14,7 +17,6 @@ import { NotificationsFilter } from 'src/app/shared/models/types';
 import { Process } from 'src/app/shared/models/process';
 import { ProcessService } from 'src/app/core/services/process.service';
 import { Util } from 'src/app/shared/utils/util';
-import { MatSortable } from '@angular/material';
 
 @Component({
   selector: 'sc-notifications',
@@ -50,14 +52,36 @@ export class NotificationsComponent extends DataTable<Notification, Notification
    */
   public gatewaysReady: boolean;
 
+  /**
+   * Stores the filter for Start Date.
+   *
+   */
   public startDate: Date;
 
+  /**
+   * Stores the filter for Start Date.
+   *
+   */
   public endDate: Date;
 
+  /**
+   * Store the item expanded in the table when opening the details of a notification.
+   *
+   */
   public expandedElement: Notification | null;
 
+  /**
+   * Creates an instance of NotificationsComponent.
+   * @date 2019-04-15
+   * @param appService - Application main service.
+   * @param dialog - Material Dialog reference.
+   * @param gatewayService - Gateway management service.
+   * @param notificationService - Notification management service.
+   * @param processService - Process management service.
+   */
   constructor(
     private appService: AppService,
+    private dialog: MatDialog,
     private gatewayService: GatewayService,
     private notificationService: NotificationService,
     private processService: ProcessService) {
@@ -69,15 +93,22 @@ export class NotificationsComponent extends DataTable<Notification, Notification
 
   ngOnInit() {
     super.initDataTable();
-    // by default sort by timestamp
+
+    // by default sort by timestamp.
     this.sort.sort(({id: 'timestamp', start: 'desc'}) as MatSortable);
     this.dataSource.sort = this.sort;
 
+    // load the notifications and all the objects needed for filters.
     this.getNotifications();
     this.getGateways();
     this.getProcesses();
   }
 
+  /**
+   * Retrieves the notifications for the current user.
+   *
+   * @date 2019-04-15
+   */
   private getNotifications(): void {
     this.notificationService.getNotificationsByUser(this.appService.user.id)
       .pipe(take(1), takeUntil(this.destroyed))
@@ -107,6 +138,11 @@ export class NotificationsComponent extends DataTable<Notification, Notification
         (err: HttpErrorResponse) => this.appService.handleGenericError(err));
   }
 
+  /**
+   * Fills the gatewaysSelect field used to show the gateways that belong to the user when applying the Gateways filter.
+   *
+   * @date 2019-04-15
+   */
   private buildGatewaysSelect(): void {
     if (!this.gatewayService.gateways) {
       return;
@@ -115,6 +151,11 @@ export class NotificationsComponent extends DataTable<Notification, Notification
     this.gatewayService.gateways.forEach(gateway => this.gatewaysSelect.push(gateway));
   }
 
+  /**
+   * Retrieves the processes for the user logged in.
+   *
+   * @date 2019-04-15
+   */
   private getProcesses(): void {
     this.processService.getProcessesByUserId(this.appService.user.id)
       .pipe(take(1), takeUntil(this.destroyed))
@@ -127,6 +168,11 @@ export class NotificationsComponent extends DataTable<Notification, Notification
       );
   }
 
+  /**
+   * Fills the processSelect field used to show the processes that belong to the user when applying the Process filter.
+   *
+   * @date 2019-04-15
+   */
   private buildProcessesSelect(): void {
     if (!this.processService.processes) {
       return;
@@ -135,22 +181,55 @@ export class NotificationsComponent extends DataTable<Notification, Notification
     this.processService.processes.forEach(process => this.processSelect.push(process));
   }
 
+  /**
+   * Triggered when pressing "Delete" application button.
+   *
+   * @date 2019-04-04
+   * @param id - id of the application to be deleted.
+   */
   public onDeleteRecord(id: number): void {
+    const deleteDialog = this.dialog.open(ConfirmDialogComponent, {
+      width: '350px',
+      data: new DialogData(
+        'Eliminar notificación',
+        `Está seguro que desea eliminar la notificación`,
+        id)
+    });
+
+    deleteDialog.afterClosed()
+      .pipe(
+        take(1),
+        takeUntil(this.destroyed))
+      .subscribe(result => result ? this.deleteNotification(result) : null);
+  }
+
+  /**
+   * Deletes a notification consuming the REST Service, removing it from the in-memory list.
+   *
+   * @date 2019-04-15
+   * @param id - id of the notification to be removed.
+   */
+  private deleteNotification(id: number): void {
     this.notificationService.deleteNotification(id)
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
         (res: ApiResponse) => {
           this.appService.showSnack(res.message);
-          if (res.successful) {
-            this.notificationService.notifications.splice(
-              this.notificationService.notifications.findIndex(notification => notification.id === id), 1);
-            this.afterRecordDeleted();
-          }
+          this.notificationService.notifications.splice(
+            this.notificationService.notifications.findIndex(notification => notification.id === id), 1);
+          this.dataSource.data = this.notificationService.notifications;
+          this.afterRecordDeleted();
         },
         (err: HttpErrorResponse) => this.appService.handleGenericError(err)
       );
   }
 
+  /**
+   * Opens or closses the details of a given notification.
+   *
+   * @date 2019-04-15
+   * @param notification - notification to be opened.
+   */
   public toggleExpansion(notification: Notification): void {
     if (this.expandedElement === notification) {
       this.expandedElement = null;
@@ -165,6 +244,13 @@ export class NotificationsComponent extends DataTable<Notification, Notification
     }
   }
 
+  /**
+   * Marks a given notification as read.
+   *
+   * @date 2019-04-15
+   * @param userId - id of the user logged in.
+   * @param notificationIds - ids of the notifications to be marked as read.
+   */
   private markNotificationAsRead(userId: number, notificationIds: number[]): void {
     this.notificationService.markNotificationsAsRead(userId, notificationIds)
       .pipe(take(1), takeUntil(this.destroyed))
@@ -174,6 +260,48 @@ export class NotificationsComponent extends DataTable<Notification, Notification
       );
   }
 
+  /**
+   * Triggered when the Start Date filter is changed.
+   *
+   * @date 2019-04-15
+   * @param event - MatDatepickerInputEvent event.
+   */
+  public startDateChanged(event: MatDatepickerInputEvent<Date>): void {
+    this.startDate = event.value;
+    this.filterValue =
+      `${ this.startDate ? this.startDate.toUTCString() : 'null' } - ${ this.endDate ? this.endDate.toUTCString() : 'null' }`;
+    this.applyFilter();
+  }
+
+  /**
+   * Triggered when the End Date filter is changed.
+   *
+   * @date 2019-04-15
+   * @param event - MatDatepickerInputEvent event.
+   */
+  public endDateChanged(event: MatDatepickerInputEvent<Date>): void {
+    this.endDate = Util.endOfDay(event.value);
+    this.filterValue =
+      `${ this.startDate ? this.startDate.toUTCString() : 'null' } - ${ this.endDate ? this.endDate.toUTCString() : 'null' }`;
+    this.applyFilter();
+  }
+
+  /**
+   * Executed when the filter type is changed. Overrided because it's necessary to clean also the dates filters.
+   *
+   * @date 2019-04-15
+   * @param newFilterType - the new Filter applied.
+   */
+  public onFilterTypeChange(newFilterType: NotificationsFilter): void {
+    this.startDate = null;
+    this.endDate = null;
+    super.onFilterTypeChange(newFilterType);
+  }
+
+  /**
+   * Filtering function applied over the elements in the table.
+   *
+   */
   protected filterPredicate: (data: Notification, filter: string) => boolean = (data: Notification, filter: string) => {
     switch (this.filterType) {
       case 'NONE': return true;
@@ -183,14 +311,20 @@ export class NotificationsComponent extends DataTable<Notification, Notification
       case 'GATEWAY': return data.gatewayId === Number(filter);
       case 'PROCESS': return data.processId === Number(filter);
       case 'TIMESTAMP':
-        if (!this.startDate && !this.endDate) {
+        const timestampUTC = new Date(data.timestamp).getTime();
+        const startUTC = Util.toMilisUTC(this.startDate);
+        const endUTC = Util.toMilisUTC(this.endDate);
+        if (!startUTC && !endUTC) {
           return true;
-        } else if (this.startDate && !this.endDate) {
-
+        } else if (startUTC && !endUTC) {
+          // since one specific day
+          return startUTC <= timestampUTC;
         } else if (!this.startDate && this.endDate) {
-
+          // until one specific day
+          return timestampUTC <= endUTC;
         } else {
-
+          // a range of dates
+          return startUTC <= timestampUTC && timestampUTC <= endUTC;
         }
     }
   }
