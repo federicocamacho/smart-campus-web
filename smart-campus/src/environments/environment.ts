@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  adminService: 'https://admin.serveo.net'
+  adminService: 'http://localhost:8090'
 };
 
 /*
