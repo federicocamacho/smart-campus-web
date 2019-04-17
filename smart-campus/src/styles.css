@@ -16,6 +16,11 @@ sc-user-card {
   z-index: 5;
 }
 
+sc-notifications-card {
+  position: relative;
+  z-index: 5;
+}
+
 sc-loader {
     z-index: 9999;
     position: absolute;

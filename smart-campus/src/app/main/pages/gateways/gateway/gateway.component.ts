@@ -17,6 +17,12 @@ export class GatewayComponent extends Subscribable implements OnInit {
   public gatewayId: number;
   public gateway: Gateway;
 
+  /**
+   * True if we are going to clone a gateway, otherwise is false.
+   *
+   */
+  public clone: boolean;
+
   constructor(
     public appService: AppService,
     private gatewayService: GatewayService,
@@ -33,6 +39,7 @@ export class GatewayComponent extends Subscribable implements OnInit {
    */
   ngOnInit() {
     this.gatewayId = Number(this.activatedRoute.snapshot.params.id);
+    this.clone = this.activatedRoute.snapshot.queryParams.clone === 'true';
     if (this.gatewayId) {
       this.getGateway();
     }
@@ -45,7 +52,13 @@ export class GatewayComponent extends Subscribable implements OnInit {
     this.gatewayService.getGatewayById(this.gatewayId)
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
-        (gateway: Gateway) => this.gateway = gateway,
+        (gateway: Gateway) => {
+          this.gateway = gateway;
+          if (this.clone) {
+            this.gateway.devices = new Array();
+            this.gateway.processes = new Array();
+          }
+        },
         (err: HttpErrorResponse) => {
           this.appService.handleGenericError(err);
           this.router.navigate([ '..' ], { relativeTo: this.activatedRoute });
@@ -56,7 +69,7 @@ export class GatewayComponent extends Subscribable implements OnInit {
    * Saves or updates the current gateway.
    */
   public saveOrUpdateGateway(): void {
-    if (this.gatewayId) {
+    if (this.gatewayId && !this.clone) {
       this.updateGateway();
     } else {
       this.createGateway();
@@ -68,6 +81,9 @@ export class GatewayComponent extends Subscribable implements OnInit {
    */
   private createGateway(): void {
     this.gateway.userId = this.appService.user.id;
+    if (this.clone) {
+      this.gateway.id = null;
+    }
     this.gatewayService.createGateway(this.gateway)
     .pipe(take(1), takeUntil(this.destroyed))
     .subscribe(

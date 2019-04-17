@@ -50,4 +50,66 @@ export class Util {
     return value.toLowerCase().includes(other.trim().toLowerCase());
   }
 
+  /**
+   * Returns the miliseconds of a date in UTC timezone.
+   *
+   * @date 2019-04-15
+   * @param date - date to be transformed. Nullable.
+   * @returns the miliseconds in UTC, null if the date is null.
+   */
+  public static toMilisUTC(date: Date): number {
+    if (!date) {
+      return null;
+    }
+    return Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(),
+    date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds());
+  }
+
+  /**
+   * Transforms the Date to UTC.
+   *
+   * @date 2019-04-15
+   * @param date - date to be transformed. Nullable.
+   * @returns the Date in UTC, null if the date is null.
+   */
+  public static toUTC(date: Date): Date {
+    if (!date) {
+      return null;
+    }
+    return new Date(this.toMilisUTC(date));
+  }
+
+  /**
+   * Returns a new Date exact of the given one but with the hours set to be end of the day.
+   *
+   * @date 2019-04-15
+   * @param date - date to be transformed. Nullable.
+   * @returns the Date in end of the Day, null if the date is null.
+   */
+  public static endOfDay(date: Date): Date {
+    if (!date) {
+      return null;
+    }
+    const endOfDay = new Date(date);
+    endOfDay.setHours(23, 59, 59);
+    return endOfDay;
+  }
+
+  /**
+   * Indicates if a given date is today.
+   *
+   * @date 2019-04-15
+   * @param date - date to be verified. Nullable.
+   * @returns true if the given date is today, false if it's any other day or if it's null.
+   */
+  public static isToday(date: Date): boolean {
+    if (!date) {
+      return null;
+    }
+    const today = new Date();
+    return date.getFullYear() === today.getFullYear() &&
+      date.getMonth() === today.getMonth() &&
+      date.getDate() === today.getDate();
+  }
+
 }

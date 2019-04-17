@@ -83,7 +83,7 @@ export class UserCardComponent extends Subscribable {
    */
   public onProfileClicked(): void {
     this.dashboardService.isUserCardOpened = false;
-    this.router.navigate(['/profile']);
+    this.router.navigate([ '/dashboard', 'profile' ]);
   }
 
   /**

@@ -34,6 +34,12 @@ export class ProcessComponent extends Subscribable implements OnInit {
   public process: Process;
 
   /**
+   * True if we are going to clone a process, otherwise is false.
+   *
+   */
+  private clone: boolean;
+
+  /**
    * Creates an instance of ProcessComponent.
    */
   constructor(
@@ -54,6 +60,7 @@ export class ProcessComponent extends Subscribable implements OnInit {
    */
   ngOnInit() {
     this.processId = Number(this.activatedRoute.snapshot.params.id);
+    this.clone = this.activatedRoute.snapshot.queryParams.clone === 'true';
     this.getGateways();
     if (this.processId) {
       this.getProcess();
@@ -78,7 +85,7 @@ export class ProcessComponent extends Subscribable implements OnInit {
    * Saves or updates the current process.
    */
   public saveOrUpdateProcess(): void {
-    if (this.processId) {
+    if (this.processId && !this.clone) {
       this.updateProcess();
     } else {
       this.createProcess();

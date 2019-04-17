@@ -1,11 +1,10 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgModule, LOCALE_ID } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 import { AuthenticationComponent } from './pages/authentication/authentication.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { PasswordRecoveryComponent } from './components/password-recovery/password-recovery.component';
 import { DashboardTemplateComponent } from './templates/dashboard-template/dashboard-template.component';
-import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { MaterialModule } from '../libs/material.module';
 import { AppRoutingModule } from '../app-routing.module';
 import { SharedModule } from '../shared/shared.module';
@@ -25,7 +24,14 @@ import { UsersComponent } from './pages/users/users.component';
 import { UserComponent } from './pages/users/user/user.component';
 import { ProcessesComponent } from './pages/processes/processes.component';
 import { ProcessComponent } from './pages/processes/process/process.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { NotificationsComponent } from './pages/notifications/notifications.component';
+import { ProcessesByGatewayComponent } from './components/processes-by-gateway/processes-by-gateway.component';
+import { DevicesByGatewayComponent } from './components/devices-by-gateway/devices-by-gateway.component';
+import { NotificationsCardComponent } from './components/notifications-card/notifications-card.component';
+import localeES from '@angular/common/locales/es';
 
+registerLocaleData(localeES, 'es');
 @NgModule({
   declarations: [
     AuthenticationComponent,
@@ -33,7 +39,6 @@ import { ProcessComponent } from './pages/processes/process/process.component';
     SigninComponent,
     PasswordRecoveryComponent,
     DashboardTemplateComponent,
-    NotFoundComponent,
     UserCardComponent,
     SectionCardComponent,
     ApplicationsComponent,
@@ -49,7 +54,12 @@ import { ProcessComponent } from './pages/processes/process/process.component';
     DevicesComponent,
     DeviceComponent,
     UsersComponent,
-    UserComponent
+    UserComponent,
+    ProfileComponent,
+    NotificationsComponent,
+    ProcessesByGatewayComponent,
+    DevicesByGatewayComponent,
+    NotificationsCardComponent
   ],
   entryComponents: [
     GatewaySelectionDialogComponent,
@@ -60,6 +70,9 @@ import { ProcessComponent } from './pages/processes/process/process.component';
     CommonModule,
     MaterialModule,
     SharedModule
+  ],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'es' }
   ]
 })
 export class MainModule { }

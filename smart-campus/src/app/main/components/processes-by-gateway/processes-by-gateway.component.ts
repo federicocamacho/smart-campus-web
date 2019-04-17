@@ -1,5 +1,5 @@
 import { ProcessService } from './../../../core/services/process.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 
 import { DataTable } from 'src/app/shared/utils/data-table';
@@ -17,11 +17,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Util } from 'src/app/shared/utils/util';
 
 @Component({
-  selector: 'sc-processes',
-  templateUrl: './processes.component.html',
-  styleUrls: ['./processes.component.css']
+  selector: 'sc-processes-by-gateway',
+  templateUrl: './processes-by-gateway.component.html',
+  styleUrls: ['./processes-by-gateway.component.css']
 })
-export class ProcessesComponent extends DataTable<Process, ProcessesFilter> implements OnInit {
+export class ProcessesByGatewayComponent extends DataTable<Process, ProcessesFilter> implements OnChanges {
+
+  @Input() processes: Process[];
 
   /**
    * Lists of gateways associated to the current processes.
@@ -51,12 +53,16 @@ export class ProcessesComponent extends DataTable<Process, ProcessesFilter> impl
       super(activatedRoute, router);
       this.displayedColumns = [ 'id', 'name', 'description', 'alive', 'actions' ];
       this.gatewaysSelect = [];
+      this.processes = [];
   }
 
-  ngOnInit() {
-    super.initDataTable();
-    this.getProcesses();
-    this.getGateways();
+  ngOnChanges() {
+    if (this.processes && this.processes.length > 0) {
+      super.initDataTable();
+      this.processesReady = true;
+      this.dataSource.data = this.processes;
+      this.getGateways();
+    }
   }
 
   /**
@@ -92,29 +98,12 @@ export class ProcessesComponent extends DataTable<Process, ProcessesFilter> impl
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
         (res: ApiResponse) => {
-          this.processService.processes.splice(
-            this.processService.processes.findIndex(process => process.id === id), 1);
+          this.dataSource.data.splice(
+            this.dataSource.data.findIndex(process => process.id === id), 1);
           this.afterRecordDeleted();
         },
         (err: HttpErrorResponse) => this.appService.handleGenericError(err)
       );
-  }
-
-  /**
-   * Retrieves the processes for the user logged in.
-   *
-   * @date 2019-04-04
-   */
-  private getProcesses(): void {
-    this.processService.getProcessesByUserId(this.appService.user.id)
-    .pipe(take(1), takeUntil(this.destroyed))
-    .subscribe(
-      (processes: Process[]) => {
-        this.processService.processes = processes;
-        this.processesReady = true;
-        this.dataSource.data = processes;
-      },
-      (err: HttpErrorResponse) => this.appService.handleGenericError(err));
   }
 
   /**
@@ -160,20 +149,8 @@ export class ProcessesComponent extends DataTable<Process, ProcessesFilter> impl
     if (!this.gatewayService.gateways) {
       return;
     }
-    this.gatewayService.gateways.forEach(gateway => this.gatewaysSelect.push(gateway));
-  }
 
-  /**
-   * Redirects to the clone page.
-   *
-   * @param id - id of the process to be cloned.
-   */
-  public onCloneRecord(id: string): void {
-    this.router.navigate(['/dashboard/processes/' + id], {
-      queryParams: {
-        clone: true
-      }
-    });
+    this.gatewayService.gateways.forEach(gateway => this.gatewaysSelect.push(gateway));
   }
 
 }

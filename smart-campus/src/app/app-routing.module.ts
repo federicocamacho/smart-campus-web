@@ -12,13 +12,14 @@ import { DevicesComponent } from './main/pages/devices/devices.component';
 import { GatewayComponent } from './main/pages/gateways/gateway/gateway.component';
 import { GatewaysComponent } from './main/pages/gateways/gateways.component';
 import { LoginComponent } from './main/components/login/login.component';
-import { NotFoundComponent } from './main/pages/not-found/not-found.component';
 import { PasswordRecoveryComponent } from './main/components/password-recovery/password-recovery.component';
 import { ProcessComponent } from './main/pages/processes/process/process.component';
 import { ProcessesComponent } from './main/pages/processes/processes.component';
 import { SigninComponent } from './main/components/signin/signin.component';
 import { UsersComponent } from './main/pages/users/users.component';
 import { UserComponent } from './main/pages/users/user/user.component';
+import { ProfileComponent } from './main/pages/profile/profile.component';
+import { NotificationsComponent } from './main/pages/notifications/notifications.component';
 
 const routes: Routes = [
   {
@@ -93,17 +94,21 @@ const routes: Routes = [
       {
         path: 'users/:id',
         component: UserComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
+      },
+      {
+        path: 'notifications',
+        component: NotificationsComponent
       }
     ],
     canActivate: [ DashboardGuard ]
   },
   {
-    path: 'not-found',
-    component: NotFoundComponent
-  },
-  {
     path: '**',
-    redirectTo: '/not-found',
+    redirectTo: '/dashboard',
     pathMatch: 'full'
   }
 ];

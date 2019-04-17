@@ -1,0 +1,9 @@
+.notifications-card-container {
+  top: 80px;
+  right: 5px;
+  background-color: white;
+  position: fixed;
+  height: 265px !important;
+  border-radius: 5px;
+  z-index: 999;
+}

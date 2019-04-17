@@ -34,6 +34,12 @@ export class DeviceComponent extends Subscribable implements OnInit {
   public device: Device;
 
   /**
+   * True if we are going to clone a device, otherwise is false.
+   *
+   */
+  private clone: boolean;
+
+  /**
    * Creates an instance of DeviceComponent.
    */
   constructor(
@@ -44,6 +50,7 @@ export class DeviceComponent extends Subscribable implements OnInit {
     private router: Router) {
       super();
       this.device = new Device();
+      this.device.properties = [];
       this.gatewaysSelect = [];
     }
 
@@ -53,6 +60,7 @@ export class DeviceComponent extends Subscribable implements OnInit {
    */
   ngOnInit() {
     this.deviceId = Number(this.activatedRoute.snapshot.params.id);
+    this.clone = this.activatedRoute.snapshot.queryParams.clone === 'true';
     this.getGateways();
     if (this.deviceId) {
       this.getDevice();
@@ -66,7 +74,12 @@ export class DeviceComponent extends Subscribable implements OnInit {
     this.deviceService.getDeviceById(this.deviceId)
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
-        (device: Device) => this.device = device,
+        (device: Device) => {
+          this.device = device;
+          if (this.device && !this.device.properties) {
+            this.device.properties = [];
+          }
+        },
         (err: HttpErrorResponse) => {
           this.appService.handleGenericError(err);
           this.router.navigate([ '..' ], { relativeTo: this.activatedRoute });
@@ -77,7 +90,7 @@ export class DeviceComponent extends Subscribable implements OnInit {
    * Saves or updates the current device.
    */
   public saveOrUpdateDevice(): void {
-    if (this.deviceId) {
+    if (this.deviceId && !this.clone) {
       this.updateDevice();
     } else {
       this.createDevice();
@@ -138,7 +151,6 @@ export class DeviceComponent extends Subscribable implements OnInit {
     if (!this.gatewayService.gateways) {
       return;
     }
-
     this.gatewayService.gateways.forEach(gateway => this.gatewaysSelect.push(gateway));
   }
 }

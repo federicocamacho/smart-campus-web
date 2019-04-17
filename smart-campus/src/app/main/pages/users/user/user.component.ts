@@ -47,11 +47,7 @@ export class UserComponent extends Subscribable implements OnInit {
         });
   }
 
-  public saveOrUpdateApplication(): void {
-    this.createUser();
-  }
-
-  private createUser(): void {
+  public createUser(): void {
     this.user.id = this.appService.user.id;
     this.userService.createUser(this.user)
       .pipe(take(1), takeUntil(this.destroyed))

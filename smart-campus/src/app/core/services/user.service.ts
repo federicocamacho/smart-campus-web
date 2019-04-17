@@ -73,8 +73,7 @@ export class UserService {
    */
   public deleteUser(id: number): Observable<ApiResponse> {
     return this.http
-      .delete<ApiResponse>(`${environment.adminService}/users/user/${id}`,
-        Util.options());
+      .delete<ApiResponse>(`${environment.adminService}/users/user/${id}`, Util.options());
   }
 
   /**
@@ -85,8 +84,7 @@ export class UserService {
    */
   public getUsers(): Observable<User[]> {
     return this.http
-      .get<User[]>(`${environment.adminService}/users`,
-        Util.options());
+      .get<User[]>(`${environment.adminService}/users`, Util.options());
   }
 
   /**
@@ -97,10 +95,8 @@ export class UserService {
    * @returns an {@link Observable} with the response.
    */
   public getUser(id: number): Observable<User> {
-    console.log('get user' + id)
     return this.http
-      .get<User>(`${environment.adminService}/users/user/${id}`,
-        Util.options());
+      .get<User>(`${environment.adminService}/users/user/${id}`, Util.options());
   }
 
   /**
@@ -122,8 +118,7 @@ export class UserService {
    * @returns the Application with the information as it was saved.
    */
   public updateUser(user: User): Observable<User> {
-    return this.http.put<User>(`${environment.adminService}/users/user/${user.id}`,
-      user, Util.options());
+    return this.http.put<User>(`${environment.adminService}/users/user/${user.id}`, user, Util.options());
   }
 
 }
