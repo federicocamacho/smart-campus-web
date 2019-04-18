@@ -87,6 +87,7 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
     this.processes = new Array();
     this.topics = new Array();
     this.searchAlreadyDone = false;
+    this.filterType = 'APPLICATION';
   }
 
   ngOnInit() {
@@ -104,11 +105,8 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
       .subscribe(
       (data: Data[]) => {
         this.dataSource.data = data.map(dataE => {
-          // const gateway = this.gateways.find(gatewayE => gatewayE.id === dataE.gatewayId);
-          // const process = this.processes.find(processE => processE.id === dataE.processId);
-          // Descomentar las 2 lineas de arriba y borrar las de abajo cuando Kevin arregle el servicio.
-          const gateway = this.gateways.find(gatewayE => gatewayE.id === dataE.processId);
-          const process = this.processes.find(processE => processE.id === dataE.gatewayId);
+          const gateway = this.gateways.find(gatewayE => gatewayE.id === dataE.gatewayId);
+          const process = this.processes.find(processE => processE.id === dataE.processId);
           if (gateway) {
             dataE.gatewayName = gateway.name;
           }
