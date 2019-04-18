@@ -7,6 +7,9 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { take, takeUntil } from 'rxjs/operators';
 import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RxStompService } from '@stomp/ng2-stompjs';
+import { Message } from '@stomp/stompjs';
+import { Notification } from 'src/app/shared/models/notification';
 
 @Component({
   selector: 'sc-dashboard-template',
@@ -42,7 +45,8 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
     public appService: AppService,
     public dashboardService: DashboardService,
     public notificationService: NotificationService,
-    private router: Router) {
+    private router: Router,
+    private rxStompService: RxStompService) {
     super();
     appService.isBusy = false;
     this.openMenu = false;
@@ -56,6 +60,20 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
 
   ngOnInit() {
     this.getUnreadNotificationsCount();
+    this.subscribeToNotifications();
+  }
+
+  private subscribeToNotifications(): void {
+    this.rxStompService.watch(`notifications/${ this.appService.user.id }`)
+    .pipe(takeUntil(this.destroyed))
+    .subscribe((message: Message) => {
+      try {
+        const notification = JSON.parse(message.body);
+        console.log(notification);
+      } catch (err) {
+        console.error('An error occurred parsing a notification', err);
+      }
+    });
   }
 
   /**
