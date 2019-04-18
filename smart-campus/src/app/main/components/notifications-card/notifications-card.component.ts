@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { take, takeUntil } from 'rxjs/operators';
 
+import { ApiResponse } from 'src/app/shared/models/api-response';
 import { AppService } from 'src/app/app.service';
 import { Notification } from 'src/app/shared/models/notification';
 import { NotificationService } from 'src/app/core/services/notification.service';
+import { Router } from '@angular/router';
 import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { Util } from 'src/app/shared/utils/util';
-import { Router } from '@angular/router';
 
 /**
  * Notifications card component.
@@ -24,12 +25,6 @@ import { Router } from '@angular/router';
 export class NotificationsCardComponent extends Subscribable implements OnInit {
 
   /**
-   * Stores the notifications displayed in the card.
-   *
-   */
-  public notifications: Notification[];
-
-  /**
    * Creates an instance of NotificationsCardComponent.
    * @date 2019-04-15
    * @param appService - Main service.
@@ -38,10 +33,9 @@ export class NotificationsCardComponent extends Subscribable implements OnInit {
    */
   constructor(
     private appService: AppService,
-    private notificationService: NotificationService,
+    public notificationService: NotificationService,
     private router: Router) {
       super();
-      this.notifications = [];
     }
 
   ngOnInit() {
@@ -49,15 +43,15 @@ export class NotificationsCardComponent extends Subscribable implements OnInit {
   }
 
   /**
-   * Retrieves the 10 first notifications for the user consuming the get notifications REST service.
+   * Retrieves the notifications for the user consuming the get notifications REST service.
    *
    * @date 2019-04-15
    */
   private getNotifications(): void {
-    this.notificationService.getNotificationsByUser(this.appService.user.id, 0, 10)
+    this.notificationService.getNotificationsByUser(this.appService.user.id)
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
-        (notifications: Notification[]) => this.notifications = notifications,
+        (notifications: Notification[]) => this.notificationService.notifications = notifications,
         (err: HttpErrorResponse) => this.appService.handleGenericError(err)
       );
   }
@@ -83,6 +77,32 @@ export class NotificationsCardComponent extends Subscribable implements OnInit {
    */
   public seeAll(): void {
     this.router.navigate([ '/dashboard', 'notifications' ]);
+  }
+
+  public openNotification(notificationId: number): void {
+    this.router.navigate([ '/dashboard', 'notifications' ], { queryParams: { selected: String(notificationId) }});
+  }
+
+  public markAsRead(notification: Notification): void {
+    notification.read = true;
+    this.notificationService.unreadNotificationsCount--;
+    this.markNotificationAsRead(this.appService.user.id, [ notification.id ]);
+  }
+
+  /**
+   * Marks a given notification as read.
+   *
+   * @date 2019-04-15
+   * @param userId - id of the user logged in.
+   * @param notificationIds - ids of the notifications to be marked as read.
+   */
+  private markNotificationAsRead(userId: number, notificationIds: number[]): void {
+    this.notificationService.markNotificationsAsRead(userId, notificationIds)
+      .pipe(take(1), takeUntil(this.destroyed))
+      .subscribe(
+        (res: ApiResponse) => {},
+        (err: HttpErrorResponse) => this.appService.handleGenericError(err)
+      );
   }
 
 }
