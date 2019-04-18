@@ -72,6 +72,8 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
    */
   searchAlreadyDone: boolean;
 
+  protected filterPredicate: (data: Data, filter: string) => boolean;
+
   constructor(
     public applicationService: ApplicationService,
     private appService: AppService,
@@ -96,8 +98,10 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
     this.getGateways();
   }
 
-  protected filterPredicate: (data: Data, filter: string) => boolean;
 
+  /**
+   * Get the data from the server.
+   */
   getData() {
     this.dataService
       .getData(this.filterType, this.filterValue, this.startDate, this.endDate)
@@ -120,6 +124,9 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
       (err: HttpErrorResponse) => this.appService.handleGenericError(err));;
   }
 
+  /**
+   * Updates the filterType
+   */
   onFilterTypeChange(filterType) {
     this.filterType = filterType;
     this.filterValue = undefined;
@@ -185,7 +192,18 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
     this.endDate = Util.endOfDay(event.value);
   }
 
+  /**
+   * Show or hide a payload.
+   */
   public toggleExpansion(data: Data): void {
     this.expandedElement =  this.expandedElement === data ? null : data;
+  }
+
+  /**
+   * Exports the table to an excel file.
+   *
+   */
+  public saveExcel() {
+    Util.exportAsExcelFile(this.dataSource.data, 'data');
   }
 }

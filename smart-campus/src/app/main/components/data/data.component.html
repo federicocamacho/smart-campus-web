@@ -15,39 +15,27 @@
   <div [ngSwitch]="filterType" fxFlex="80%" fxFlex.sm="50%" fxFlex.xs="100%">
     <mat-form-field fxFlex="100%" fxFlex.sm="100%" fxFlex.xs="100%" *ngSwitchCase="'APPLICATION'">
       <mat-label>Aplicación:</mat-label>
-      <mat-select *ngIf="applications.length > 0; else noApplicationsMessage" [(value)]="filterValue" >
+      <mat-select [(value)]="filterValue" >
         <mat-option *ngFor="let application of applications" [value]="application.id">{{application.name}}</mat-option>
       </mat-select>
-      <ng-template #noApplicationsMessage>
-        <mat-label>No hay aplicaciones registradas</mat-label>
-      </ng-template>
     </mat-form-field>
     <mat-form-field fxFlex="100%" fxFlex.sm="100%" fxFlex.xs="100%" *ngSwitchCase="'GATEWAY'">
       <mat-label>Gateway:</mat-label>
-      <mat-select *ngIf="gateways.length > 0; else noGatewaysMessage" [(value)]="filterValue" >
+      <mat-select [(value)]="filterValue" >
         <mat-option *ngFor="let gateway of gateways" [value]="gateway.id">{{gateway.name}}</mat-option>
       </mat-select>
-      <ng-template #noGatewaysMessage>
-        <mat-label>No hay gateways registrados</mat-label>
-      </ng-template>
     </mat-form-field>
     <mat-form-field fxFlex="100%" fxFlex.sm="100%" fxFlex.xs="100%" *ngSwitchCase="'PROCESS'">
       <mat-label>Proceso:</mat-label>
-      <mat-select *ngIf="processes.length > 0; else noProcessesMessage" [(value)]="filterValue" >
+      <mat-select [(value)]="filterValue" >
         <mat-option *ngFor="let process of processes" [value]="process.id">{{process.name}}</mat-option>
       </mat-select>
-      <ng-template #noProcessesMessage>
-        <mat-label>No hay procesos registrados</mat-label>
-      </ng-template>
     </mat-form-field>
     <mat-form-field fxFlex="100%" fxFlex.sm="100%" fxFlex.xs="100%" *ngSwitchCase="'TOPIC'">
       <mat-label>Tópico:</mat-label>
-      <mat-select *ngIf="topics.length > 0; else noTopicsMessage" [(value)]="filterValue" >
+      <mat-select [(value)]="filterValue" >
         <mat-option *ngFor="let topic of topics" [value]="topic">{{topic}}</mat-option>
       </mat-select>
-      <ng-template #noTopicsMessage>
-        <mat-label>No hay tópicos registrados</mat-label>
-      </ng-template>
     </mat-form-field>
   </div>
   <div *ngIf="filterType !== 'NONE'" fxFlex="100%" fxFlex.gt-md="40%" fxLayout="row" fxLayout.xs="column"
@@ -83,71 +71,82 @@
     mat-raised-button
     color="primary"
     (click)="getData()"
+    [disabled]="!filterType || !filterValue || !startDate || !endDate"
   >
     <mat-icon style="font-size: 20px">search</mat-icon>Consultar
   </button>
 </div>
 <div scAnimated="fadeIn" class="table-container" [class.hide]="!searchAlreadyDone">
-    <table
-      class="generic-table"
-      mat-table multiTemplateDataRows matSort
-      [dataSource]="dataSource"
-      style="width: 100%">
-
-      <!-- GatewayName Column -->
-      <ng-container matColumnDef="gatewayName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Gateway</th>
-          <td mat-cell *matCellDef="let row">
-            <div fxLayout="row">
-              <span class="mobile-label">Gateway:</span> {{ row.gatewayName }}
-            </div>
-          </td>
-        </ng-container>
-
-      <!-- Process Column -->
-      <ng-container matColumnDef="processName">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Proceso</th>
-        <td mat-cell *matCellDef="let row">
-          <div fxLayout="row">
-            <span class="mobile-label">Proceso:</span> {{ row.processName }}
-          </div>
-        </td>
-      </ng-container>
-
-      <!-- Timestamp Column -->
-      <ng-container matColumnDef="timestamp">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
-        <td mat-cell *matCellDef="let row">
-          <div fxLayout="row">
-            <span class="mobile-label">Fecha:</span>
-            <span>{{ row.timestamp | date: 'MMMM, d yyyy H:mm' }}</span>
-          </div>
-        </td>
-      </ng-container>
-
-      <!-- Message (Expanded Column) -->
-      <ng-container matColumnDef="payload">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-          <div
-            class="data-payload"
-            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-            {{ element.payload }}
-          </div>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row
-        class="data-payload-row"
-        [class.data-payload-expanded]="expandedElement === row"
-        *matRowDef="let row; columns: displayedColumns;"
-        (click)="toggleExpansion(row)">
-      </tr>
-      <tr mat-row *matRowDef="let row; columns: ['payload']" class="data-detail-row"></tr>
-    </table>
-
-    <mat-paginator
-      style="border-radius: 4px;"
-      [pageSizeOptions]="[5, 10, 20]">
-    </mat-paginator>
+  <div style="text-align: right;">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="saveExcel()"
+    >
+      <mat-icon style="font-size: 20px">cloud_download</mat-icon> Exportar XLSX
+    </button>
   </div>
+
+  <table
+    class="generic-table"
+    mat-table multiTemplateDataRows matSort
+    [dataSource]="dataSource"
+    style="width: 100%">
+
+    <!-- GatewayName Column -->
+    <ng-container matColumnDef="gatewayName">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Gateway</th>
+        <td mat-cell *matCellDef="let row">
+          <div fxLayout="row">
+            <span class="mobile-label">Gateway:</span> {{ row.gatewayName }}
+          </div>
+        </td>
+      </ng-container>
+
+    <!-- Process Column -->
+    <ng-container matColumnDef="processName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Proceso</th>
+      <td mat-cell *matCellDef="let row">
+        <div fxLayout="row">
+          <span class="mobile-label">Proceso:</span> {{ row.processName }}
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Timestamp Column -->
+    <ng-container matColumnDef="timestamp">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha</th>
+      <td mat-cell *matCellDef="let row">
+        <div fxLayout="row">
+          <span class="mobile-label">Fecha:</span>
+          <span>{{ row.timestamp | date: 'MMMM, d yyyy H:mm' }}</span>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Message (Expanded Column) -->
+    <ng-container matColumnDef="payload">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div
+          class="data-payload"
+          [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          {{ element.payload }}
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row
+      class="data-payload-row"
+      [class.data-payload-expanded]="expandedElement === row"
+      *matRowDef="let row; columns: displayedColumns;"
+      (click)="toggleExpansion(row)">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['payload']" class="data-detail-row"></tr>
+  </table>
+
+  <mat-paginator
+    style="border-radius: 4px;"
+    [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>
