@@ -4,6 +4,7 @@ import { MatSortable, MatDialog, MatDatepickerInputEvent } from '@angular/materi
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { take, takeUntil } from 'rxjs/operators';
 
+import { ActivatedRoute, Params } from '@angular/router';
 import { ApiResponse } from 'src/app/shared/models/api-response';
 import { AppService } from 'src/app/app.service';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
@@ -80,12 +81,13 @@ export class NotificationsComponent extends DataTable<Notification, Notification
    * @param processService - Process management service.
    */
   constructor(
+    protected activatedRoute: ActivatedRoute,
     private appService: AppService,
     private dialog: MatDialog,
     private gatewayService: GatewayService,
     private notificationService: NotificationService,
     private processService: ProcessService) {
-    super();
+    super(activatedRoute);
     this.displayedColumns = [ 'gateway', 'process', 'alive', 'read', 'timestamp', 'actions' ];
     this.gatewaysSelect = [];
     this.processSelect = [ new Process(0, 'Ninguno') ];
@@ -95,7 +97,7 @@ export class NotificationsComponent extends DataTable<Notification, Notification
     super.initDataTable();
 
     // by default sort by timestamp.
-    this.sort.sort(({id: 'timestamp', start: 'desc'}) as MatSortable);
+    this.sort.sort(({ id: 'timestamp', start: 'desc' }) as MatSortable);
     this.dataSource.sort = this.sort;
 
     // load the notifications and all the objects needed for filters.
@@ -116,6 +118,7 @@ export class NotificationsComponent extends DataTable<Notification, Notification
         (notifications: Notification[]) => {
           this.notificationService.notifications = notifications;
           this.dataSource.data = notifications;
+          this.openSelectedNotification();
         },
         (err: HttpErrorResponse) => this.appService.handleGenericError(err)
       );
@@ -221,6 +224,25 @@ export class NotificationsComponent extends DataTable<Notification, Notification
           this.afterRecordDeleted();
         },
         (err: HttpErrorResponse) => this.appService.handleGenericError(err)
+      );
+  }
+
+  /**
+   * Opens the selected notification if the page was accessed using a 'selected' query param.
+   *
+   * @date 2019-04-18
+   */
+  private openSelectedNotification(): void {
+    this.activatedRoute.queryParams
+      .pipe(takeUntil(this.destroyed))
+      .subscribe(
+        (params: Params) => {
+          const selectedNotification = Number(params.selected);
+          const notification = this.notificationService.notifications.find(notif => notif.id === selectedNotification);
+          if (notification) {
+            this.toggleExpansion(notification);
+          }
+        }
       );
   }
 
