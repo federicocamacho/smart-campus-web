@@ -59,7 +59,7 @@
 </form>
 
 <div
-  *ngIf="gatewayId"
+  *ngIf="gatewayId && !clone"
   class="gateway-card default-shadow"
   style="margin-top: 30px; color: #20aee3">
   <h2>Procesos</h2>
@@ -68,7 +68,7 @@
 </div>
 
 <div
-  *ngIf="gatewayId"
+  *ngIf="gatewayId && !clone"
   class="gateway-card default-shadow"
   style="margin-top: 30px; color: #20aee3">
   <sc-devices-by-gateway

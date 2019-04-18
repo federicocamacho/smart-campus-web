@@ -4,3 +4,7 @@
     color: #22aee3;
     font-size: 14px;
 }
+
+::ng-deep .actions-cell {
+  width: 145px;
+}

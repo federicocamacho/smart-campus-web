@@ -165,7 +165,19 @@ export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implem
     if (!this.applicationService.applications) {
       return;
     }
-
     this.applicationService.applications.forEach(application => this.applicationsSelect.push(application));
+  }
+
+  /**
+   * Redirects to the clone page.
+   *
+   * @param id - id of the gateway to be cloned.
+   */
+  public onCloneRecord(id: string): void {
+    this.router.navigate(['/dashboard/gateways/' + id], {
+      queryParams: {
+        clone: true
+      }
+    });
   }
 }
