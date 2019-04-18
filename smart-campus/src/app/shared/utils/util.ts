@@ -112,4 +112,15 @@ export class Util {
       date.getDate() === today.getDate();
   }
 
+  /**
+   * Return an string with the date formated in yyyy-mm-dd
+   *
+   * @param date - Date to be formated
+   * @returns Date formated in yyyy-mm-dd
+   */
+  public static formatDate(date: Date): string {
+    return new Date(date.getTime() - (date.getTimezoneOffset() * 60000 ))
+    .toISOString()
+    .split('T')[0];
+  }
 }

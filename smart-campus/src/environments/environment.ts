@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  adminService: 'http://localhost:8090'
+  adminService: 'http://localhost:8090',
+  dataService: 'http://localhost:8091'
 };
 
 /*

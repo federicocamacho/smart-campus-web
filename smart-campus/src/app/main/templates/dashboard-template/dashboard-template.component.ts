@@ -52,6 +52,7 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
     this.sections.push(new Section('Procesos', 'Gestiona tus procesos', '/dashboard/processes', 'widgets', '#ff5c6c'));
     this.sections.push(new Section('Dispositivos', 'Gestiona tus dispositivos', '/dashboard/devices', 'device_hub', '#6772e5'));
     this.sections.push(new Section('Usuarios', 'Gestiona tus usuarios', '/dashboard/users', 'supervised_user_circle', '#000'));
+
   }
 
   ngOnInit() {

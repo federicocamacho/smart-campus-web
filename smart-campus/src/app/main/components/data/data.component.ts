@@ -1,0 +1,193 @@
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { MatDatepickerInputEvent } from '@angular/material';
+
+import { take, takeUntil } from 'rxjs/operators';
+
+import { Data } from 'src/app/shared/models/data';
+import { Application } from 'src/app/shared/models/application';
+import { DataTable } from 'src/app/shared/utils/data-table';
+import { DataFilter } from 'src/app/shared/models/types';
+import { Gateway } from 'src/app/shared/models/gateway';
+import { Process } from 'src/app/shared/models/process';
+import { ApplicationService } from 'src/app/core/services/application.service';
+import { AppService } from 'src/app/app.service';
+import { GatewayService } from 'src/app/core/services/gateway.service';
+import { ProcessService } from 'src/app/core/services/process.service';
+import { Util } from 'src/app/shared/utils/util';
+import { DataService } from 'src/app/core/services/data.service';
+
+@Component({
+  selector: 'sc-data',
+  templateUrl: './data.component.html',
+  styleUrls: ['./data.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', display: 'none'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
+})
+export class DataComponent extends DataTable<Data, DataFilter> implements OnInit {
+
+  /**
+   * List of platform's applications.
+   */
+  applications: Application[];
+
+  /**
+   * List of platform's gateways.
+   */
+  gateways: Gateway[];
+
+  /**
+   * List of platform's processes.
+   */
+  processes: Process[];
+
+  /**
+   * List of platform's topics.
+   */
+  topics: string[];
+
+  /**
+   * Start query date.
+   */
+  startDate: Date;
+
+  /**
+   * End query date.
+   */
+  endDate: Date;
+
+  /**
+   * Data element that's displayed.
+   */
+  expandedElement: Data;
+
+  /**
+   * True after the first search, otherwise is false.
+   */
+  searchAlreadyDone: boolean;
+
+  constructor(
+    public applicationService: ApplicationService,
+    private appService: AppService,
+    public gatewayService: GatewayService,
+    public processService: ProcessService,
+    public dataService: DataService,
+    private cdr: ChangeDetectorRef
+  ) {
+    super();
+    this.displayedColumns = [ 'gatewayName', 'processName', 'timestamp' ];
+    this.applications = new Array();
+    this.gateways = new Array();
+    this.processes = new Array();
+    this.topics = new Array();
+    this.searchAlreadyDone = false;
+  }
+
+  ngOnInit() {
+    super.initDataTable();
+    this.getApplications();
+    this.getGateways();
+  }
+
+  protected filterPredicate: (data: Data, filter: string) => boolean;
+
+  getData() {
+    this.dataService
+      .getData(this.filterType, this.filterValue, this.startDate, this.endDate)
+      .pipe(take(1), takeUntil(this.destroyed))
+      .subscribe(
+      (data: Data[]) => {
+        this.dataSource.data = data.map(dataE => {
+          // const gateway = this.gateways.find(gatewayE => gatewayE.id === dataE.gatewayId);
+          // const process = this.processes.find(processE => processE.id === dataE.processId);
+          // Descomentar las 2 lineas de arriba y borrar las de abajo cuando Kevin arregle el servicio.
+          const gateway = this.gateways.find(gatewayE => gatewayE.id === dataE.processId);
+          const process = this.processes.find(processE => processE.id === dataE.gatewayId);
+          if (gateway) {
+            dataE.gatewayName = gateway.name;
+          }
+          if (process) {
+            dataE.processName = process.name;
+          }
+          return dataE;
+        });
+        this.searchAlreadyDone = true;
+      },
+      (err: HttpErrorResponse) => this.appService.handleGenericError(err));;
+  }
+
+  onFilterTypeChange(filterType) {
+    this.filterType = filterType;
+    this.filterValue = undefined;
+    this.cdr.detectChanges();
+  }
+
+  /**
+   * Retrieves the application for the user logged in.
+   */
+  private getApplications(): void {
+    this.applicationService.getApplicationsForUser(this.appService.user.id)
+    .pipe(take(1), takeUntil(this.destroyed))
+    .subscribe(
+      (applications: Application[]) => {
+        this.applications = applications;
+      },
+      (err: HttpErrorResponse) => this.appService.handleGenericError(err));
+  }
+
+  /**
+   * Retrieves the gateway for the user logged in.
+   *
+   */
+  private getGateways(): void {
+    this.gatewayService.getGatewaysByUserId(this.appService.user.id)
+    .pipe(take(1), takeUntil(this.destroyed))
+    .subscribe(
+      (gateways: Gateway[]) => {
+        this.gateways = gateways;
+        if (gateways.length > 0) {
+          for (const gateway of gateways) {
+            for (const process of gateway.processes) {
+              this.processes.push(process);
+              const property = process.properties.find(e => e.name === 'TOPIC' && e.type === 'CONFIG');
+              if (property) {
+                const topic = property.value;
+                this.topics.push(topic);
+              }
+            }
+          }
+        }
+      },
+      (err: HttpErrorResponse) => this.appService.handleGenericError(err));
+  }
+
+  /**
+   * Triggered when the Start Date filter is changed.
+   *
+   * @date 2019-04-15
+   * @param event - MatDatepickerInputEvent event.
+   */
+  public startDateChanged(event: MatDatepickerInputEvent<Date>): void {
+    this.startDate = event.value;
+  }
+
+  /**
+   * Triggered when the End Date filter is changed.
+   *
+   * @date 2019-04-15
+   * @param event - MatDatepickerInputEvent event.
+   */
+  public endDateChanged(event: MatDatepickerInputEvent<Date>): void {
+    this.endDate = Util.endOfDay(event.value);
+  }
+
+  public toggleExpansion(data: Data): void {
+    this.expandedElement =  this.expandedElement === data ? null : data;
+  }
+}
