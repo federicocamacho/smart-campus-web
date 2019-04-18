@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   adminService: 'http://localhost:8090',
   brokerUrl: 'ws://127.0.0.1:61614/ws',
+  dataService: 'http://localhost:8091'
 };
 
 /*
