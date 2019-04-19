@@ -56,6 +56,7 @@ export class GatewaysComponent extends DataTable<Gateway, GatewaysFilter> implem
     super.initDataTable();
     this.getGateways();
     this.getApplications();
+    this.defaultSort();
   }
 
   /**

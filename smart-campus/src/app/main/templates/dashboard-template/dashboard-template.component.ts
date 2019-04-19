@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
@@ -7,13 +7,16 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { take, takeUntil } from 'rxjs/operators';
 import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { HttpErrorResponse } from '@angular/common/http';
+import { RxStompService } from '@stomp/ng2-stompjs';
+import { Message } from '@stomp/stompjs';
+import { Notification } from 'src/app/shared/models/notification';
 
 @Component({
   selector: 'sc-dashboard-template',
   templateUrl: './dashboard-template.component.html',
   styleUrls: ['./dashboard-template.component.css']
 })
-export class DashboardTemplateComponent extends Subscribable implements OnInit {
+export class DashboardTemplateComponent extends Subscribable implements OnInit, OnDestroy {
 
   /**
    * Name of the currently authenticated user.
@@ -33,6 +36,8 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
    */
   public openMenu: boolean;
 
+  public newNotification: Notification;
+
   /**
    * Creates an instance of HeaderComponent.
    * @date 2019-01-09
@@ -42,7 +47,8 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
     public appService: AppService,
     public dashboardService: DashboardService,
     public notificationService: NotificationService,
-    private router: Router) {
+    private router: Router,
+    private rxStompService: RxStompService) {
     super();
     appService.isBusy = false;
     this.openMenu = false;
@@ -51,11 +57,37 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
     this.sections.push(new Section('Gateways', 'Gestiona tus gateways', '/dashboard/gateways', 'business', '#007bff'));
     this.sections.push(new Section('Procesos', 'Gestiona tus procesos', '/dashboard/processes', 'widgets', '#ff5c6c'));
     this.sections.push(new Section('Dispositivos', 'Gestiona tus dispositivos', '/dashboard/devices', 'device_hub', '#6772e5'));
-    this.sections.push(new Section('Usuarios', 'Gestiona tus usuarios', '/dashboard/users', 'supervised_user_circle', '#000'));
+    if (appService.user.admin) {
+      this.sections.push(new Section('Usuarios', 'Gestiona tus usuarios', '/dashboard/users', 'supervised_user_circle', '#000'));
+    }
+
   }
 
   ngOnInit() {
     this.getUnreadNotificationsCount();
+    this.subscribeToNotifications();
+  }
+
+  ngOnDestroy() {
+    super.ngOnDestroy();
+    this.rxStompService.deactivate();
+  }
+
+  private subscribeToNotifications(): void {
+    this.rxStompService.watch(`notifications/${ this.appService.user.id }`)
+    .pipe(takeUntil(this.destroyed))
+    .subscribe((message: Message) => {
+      try {
+        this.newNotification = JSON.parse(message.body);
+        this.dashboardService.isNotificationShown = true;
+        setTimeout(() => {
+          this.dashboardService.isNotificationShown = false;
+          this.newNotification = null;
+        }, 5000);
+      } catch (err) {
+        console.error('An error occurred parsing a notification', err);
+      }
+    });
   }
 
   /**

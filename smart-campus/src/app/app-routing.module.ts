@@ -20,6 +20,8 @@ import { UsersComponent } from './main/pages/users/users.component';
 import { UserComponent } from './main/pages/users/user/user.component';
 import { ProfileComponent } from './main/pages/profile/profile.component';
 import { NotificationsComponent } from './main/pages/notifications/notifications.component';
+import { DataComponent } from './main/components/data/data.component';
+import { UsersGuard } from './core/guards/users.guard';
 
 const routes: Routes = [
   {
@@ -50,6 +52,10 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardTemplateComponent,
     children: [
+      {
+        path: '',
+        component: DataComponent
+      },
       {
         path: 'applications',
         component: ApplicationsComponent,
@@ -89,7 +95,8 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent,
-        pathMatch: 'full'
+        pathMatch: 'full',
+        canActivate: [ UsersGuard ]
       },
       {
         path: 'users/:id',

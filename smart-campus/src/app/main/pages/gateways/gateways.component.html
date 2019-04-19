@@ -157,6 +157,7 @@
         <button
           class="desktop-action"
           mat-icon-button
+          matTooltip="Clonar"
           style="color: rgb(103, 114, 229)"
           (click)="onCloneRecord(element.id)">
           <mat-icon>file_copy</mat-icon>
@@ -172,6 +173,7 @@
         </button>
         <button
           class="desktop-action"
+          matTooltip="Editar"
           mat-icon-button
           style="color: rgb(36, 210, 181)"
           (click)="onEditRecord(element.id)"
@@ -190,6 +192,7 @@
         <button
           mat-icon-button
           class="desktop-action"
+          matTooltip="Eliminar"
           style="color: red;"
           (click)="onDeleteRecord(element.id, element.name)"
         >

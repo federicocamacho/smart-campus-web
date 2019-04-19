@@ -9,3 +9,4 @@ export type ProcessesFilter = 'ID' | 'NAME' | 'DESCRIPTION' | 'IS_ALIVE' | 'GATE
 export type PropertiesFilter = 'TYPE' | 'NAME' | 'VALUE';
 export type UsersFilter = 'ID' | 'NAME' | 'USERNAME';
 export type NotificationsFilter = 'GATEWAY' | 'PROCESS' | 'IS_ALIVE' | 'READ' | 'TIMESTAMP' | 'MESSAGE';
+export type DataFilter = 'APPLICATION' | 'GATEWAY' | 'PROCESS' | 'TOPIC';

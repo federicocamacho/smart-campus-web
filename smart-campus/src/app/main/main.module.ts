@@ -30,6 +30,8 @@ import { ProcessesByGatewayComponent } from './components/processes-by-gateway/p
 import { DevicesByGatewayComponent } from './components/devices-by-gateway/devices-by-gateway.component';
 import { NotificationsCardComponent } from './components/notifications-card/notifications-card.component';
 import localeES from '@angular/common/locales/es';
+import { DataComponent } from './components/data/data.component';
+import { NotificationCardComponent } from './components/notification-card/notification-card.component';
 
 registerLocaleData(localeES, 'es');
 @NgModule({
@@ -59,7 +61,9 @@ registerLocaleData(localeES, 'es');
     NotificationsComponent,
     ProcessesByGatewayComponent,
     DevicesByGatewayComponent,
-    NotificationsCardComponent
+    NotificationsCardComponent,
+    DataComponent,
+    NotificationCardComponent
   ],
   entryComponents: [
     GatewaySelectionDialogComponent,
