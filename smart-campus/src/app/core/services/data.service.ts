@@ -8,6 +8,7 @@ import { DataFilter } from 'src/app/shared/models/types';
 
 import { environment } from 'src/environments/environment';
 import { Util } from 'src/app/shared/utils/util';
+import { Statistic } from 'src/app/shared/models/statistic';
 
 @Injectable({
   providedIn: CoreModule
@@ -37,4 +38,12 @@ export class DataService {
     query += '&endDate=' + Util.formatDate(endDate);
     return this.http.get<Data[]>(`${ environment.dataService }/data/historic?${ query }`, Util.options());
   }
+
+  /**
+   * Returns the statistics calculated in the backend.
+   */
+  public getStatistics(): Observable<Statistic[]> {
+    return this.http.get<Statistic[]>(`${environment.dataService}/data/statistics`, Util.options());
+  }
+
 }

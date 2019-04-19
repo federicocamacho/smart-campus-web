@@ -32,6 +32,8 @@ import { NotificationsCardComponent } from './components/notifications-card/noti
 import localeES from '@angular/common/locales/es';
 import { DataComponent } from './components/data/data.component';
 import { NotificationCardComponent } from './components/notification-card/notification-card.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
+import { ChartsModule } from 'ng2-charts';
 
 registerLocaleData(localeES, 'es');
 @NgModule({
@@ -63,7 +65,8 @@ registerLocaleData(localeES, 'es');
     DevicesByGatewayComponent,
     NotificationsCardComponent,
     DataComponent,
-    NotificationCardComponent
+    NotificationCardComponent,
+    StatisticsComponent
   ],
   entryComponents: [
     GatewaySelectionDialogComponent,
@@ -71,9 +74,10 @@ registerLocaleData(localeES, 'es');
   ],
   imports: [
     AppRoutingModule,
+    ChartsModule,
     CommonModule,
     MaterialModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'es' }

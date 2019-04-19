@@ -132,10 +132,10 @@ export class Util {
    * Converts a json into a excel file.
    */
   public static exportAsExcelFile(json: any[], excelFileName: string): void {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
-    const workbook: XLSX.WorkBook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-    const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-    Util.saveAsExcelFile(excelBuffer, excelFileName);
+      const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(json);
+      const workbook: XLSX.WorkBook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+      Util.saveAsExcelFile(excelBuffer, excelFileName);
   }
 
   /**
@@ -146,4 +146,34 @@ export class Util {
      FileSaver.saveAs(data, fileName + '_export_' + new  Date().getTime() + EXCEL_EXTENSION);
   }
 
+  public static dayOfWeekToString(day: any) {
+    day = String(day);
+    switch (day) {
+      case '1': return 'Domingo';
+      case '2': return 'Lunes';
+      case '3': return 'Martes';
+      case '4': return 'Miércoles';
+      case '5': return 'Jueves';
+      case '6': return 'Viernes';
+      case '7': return 'Sábado';
+    }
+  }
+
+  public static monthToString(month: any) {
+    month = String(month);
+    switch (month) {
+      case '1': return 'Enero';
+      case '2': return 'Febrero';
+      case '3': return 'Marzo';
+      case '4': return 'Abril';
+      case '5': return 'Mayo';
+      case '6': return 'Junio';
+      case '7': return 'Julio';
+      case '8': return 'Agosto';
+      case '9': return 'Septiembre';
+      case '10': return 'Octubre';
+      case '11': return 'Noviembre';
+      case '12': return 'Diciembre';
+    }
+  }
 }

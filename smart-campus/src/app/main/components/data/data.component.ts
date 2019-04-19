@@ -108,15 +108,17 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
       (data: Data[]) => {
+        const gatewayMap = new Map();
+        const processMap = new Map();
+        for (const gateway of this.gateways) {
+          gatewayMap.set(gateway.id, gateway.name);
+        }
+        for (const process of this.processes) {
+          processMap.set(process.id, process.name);
+        }
         this.dataSource.data = data.map(dataE => {
-          const gateway = this.gateways.find(gatewayE => gatewayE.id === dataE.gatewayId);
-          const process = this.processes.find(processE => processE.id === dataE.processId);
-          if (gateway) {
-            dataE.gatewayName = gateway.name;
-          }
-          if (process) {
-            dataE.processName = process.name;
-          }
+          dataE.gatewayName = gatewayMap.get(Number(dataE.gatewayId));
+          dataE.processName = processMap.get(Number(dataE.processId));
           return dataE;
         });
         this.searchAlreadyDone = true;
