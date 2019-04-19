@@ -1,4 +1,4 @@
-import { StatisticPk } from './statisticPk';
+import { StatisticPk } from './statistic-pk';
 
 export class Statistic {
   public id: StatisticPk;
