@@ -42,8 +42,8 @@ export class DataService {
   /**
    * Returns the statistics calculated in the backend.
    */
-  public getStatistics(): Observable<DataStatistic[]> {
-    return this.http.get<DataStatistic[]>(`${environment.dataService}/data/statistics`, Util.options());
+  public getStatistics(userId: number): Observable<DataStatistic[]> {
+    return this.http.get<DataStatistic[]>(`${environment.dataService}/data/statistics/${userId}`, Util.options());
   }
 
 }

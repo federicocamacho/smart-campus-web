@@ -1,25 +1,25 @@
-<div *ngIf="chartReady">
+<div *ngIf="chartReady" class="default-shadow" style="background-color: #ffffff; padding: 10px; margin: 10px;">
   <mat-tab-group>
     <mat-tab *ngFor="let chart of charts" [label]="chart.label">
-      <div style="display: inline-flex; width: 100%;">
-          <div style="width: 50%">
+      <div class="chart-container">
+          <div>
               <canvas baseChart
               [datasets]="statistics.gatewayId[chart.property].barChartData"
               [labels]="statistics.gatewayId[chart.property].barChartLabels"
               [options]="barChartOptions"
-              [legend]="barChartLegend"
+              [legend]="true"
               [chartType]="barChartType">
               </canvas>
               <div style="text-align: center">
                   <label>Gateway</label>
               </div>
             </div>
-          <div style="width: 50%">
+          <div>
             <canvas baseChart
             [datasets]="statistics.processId[chart.property].barChartData"
             [labels]="statistics.processId[chart.property].barChartLabels"
             [options]="barChartOptions"
-            [legend]="barChartLegend"
+            [legend]="true"
             [chartType]="barChartType">
             </canvas>
             <div style="text-align: center">
@@ -27,11 +27,15 @@
             </div>
           </div>
       </div>
-      <div>
-        <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-          <mat-button-toggle value="bold">Bold</mat-button-toggle>
-          <mat-button-toggle value="italic">Italic</mat-button-toggle>
-          <mat-button-toggle value="underline">Underline</mat-button-toggle>
+      <div style="display: grid;">
+        <mat-button-toggle-group
+          style="margin: auto;"
+          name="fontStyle"
+          aria-label="Font Style"
+          (change)="changeChart($event)">
+          <mat-button-toggle [checked]="barChartType === 'bar'" value="bar"><mat-icon>bar_chart</mat-icon></mat-button-toggle>
+          <mat-button-toggle [checked]="barChartType === 'line'" value="line"><mat-icon>timeline</mat-icon></mat-button-toggle>
+          <mat-button-toggle [checked]="barChartType === 'pie'" value="pie"><mat-icon>pie_chart</mat-icon></mat-button-toggle>
         </mat-button-toggle-group>
       </div>
     </mat-tab>

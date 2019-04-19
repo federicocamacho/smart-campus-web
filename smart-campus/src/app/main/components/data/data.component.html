@@ -3,7 +3,7 @@
   <h2 class="section-title">Consulta de datos</h2>
   <br>
 </div>
-<div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="filter-container">
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="filter-container" >
   <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%">
     <mat-label>Consultar por:</mat-label>
     <mat-select [value]="filterType" (selectionChange)="onFilterTypeChange($event.value)">
