@@ -57,6 +57,7 @@ export class ProcessesComponent extends DataTable<Process, ProcessesFilter> impl
     super.initDataTable();
     this.getProcesses();
     this.getGateways();
+    this.defaultSort();
   }
 
   /**

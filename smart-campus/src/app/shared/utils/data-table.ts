@@ -1,4 +1,4 @@
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatSortable } from '@angular/material';
 import { ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -83,6 +83,16 @@ export abstract class DataTable<T, U> extends Subscribable {
     this.dataSource.sort = this.sort;
     this.dataSource.sortingDataAccessor = (data, attribute) => data[attribute];
     this.dataSource.filterPredicate = this.filterPredicate;
+  }
+
+  /**
+   * Sort by name asc.
+   *
+   * @date 2019-04-19
+   */
+  protected defaultSort(): void {
+    this.sort.sort(({ id: 'name', start: 'asc' }) as MatSortable);
+    this.dataSource.sort = this.sort;
   }
 
   /**

@@ -57,6 +57,7 @@ export class DevicesComponent extends DataTable<Device, DevicesFilter> implement
     super.initDataTable();
     this.getDevices();
     this.getGateways();
+    this.defaultSort();
   }
 
   /**

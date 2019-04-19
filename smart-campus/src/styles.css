@@ -166,6 +166,7 @@ input.login-input.ng-invalid.ng-touched::placeholder {
   .generic-table .mobile-action {
     display: inline-block;
     font-size: 12px;
+    margin: 5px;
   }
 
   .generic-table .mat-header-row {

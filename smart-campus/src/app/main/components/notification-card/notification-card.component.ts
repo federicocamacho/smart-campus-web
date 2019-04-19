@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { Notification } from 'src/app/shared/models/notification';
 import { Router } from '@angular/router';
-import { Util } from 'src/app/shared/utils/util';
+
 import { DashboardService } from 'src/app/core/services/dashboard.service';
+import { Notification } from 'src/app/shared/models/notification';
+import { Util } from 'src/app/shared/utils/util';
 
 @Component({
   selector: 'sc-notification-card',
@@ -13,7 +14,9 @@ export class NotificationCardComponent {
 
   @Input() notification: Notification;
 
-  constructor(private dashboardService: DashboardService, private router: Router) { }
+  constructor(
+    private dashboardService: DashboardService,
+    private router: Router) { }
 
   public openNotification(notificationId: number) {
     this.router.navigate([ '/dashboard', 'notifications' ], { queryParams: { selected: String(notificationId) }});

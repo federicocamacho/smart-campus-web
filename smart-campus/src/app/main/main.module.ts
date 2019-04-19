@@ -29,13 +29,15 @@ import { NotificationsComponent } from './pages/notifications/notifications.comp
 import { ProcessesByGatewayComponent } from './components/processes-by-gateway/processes-by-gateway.component';
 import { DevicesByGatewayComponent } from './components/devices-by-gateway/devices-by-gateway.component';
 import { NotificationsCardComponent } from './components/notifications-card/notifications-card.component';
-import localeES from '@angular/common/locales/es';
 import { DataComponent } from './components/data/data.component';
 import { NotificationCardComponent } from './components/notification-card/notification-card.component';
 import { StatisticsComponent } from './components/statistics/statistics.component';
 import { ChartsModule } from 'ng2-charts';
 
+import localeES from '@angular/common/locales/es';
+import { NotificationDialogComponent } from './components/notification-dialog/notification-dialog.component';
 registerLocaleData(localeES, 'es');
+
 @NgModule({
   declarations: [
     AuthenticationComponent,
@@ -66,11 +68,13 @@ registerLocaleData(localeES, 'es');
     NotificationsCardComponent,
     DataComponent,
     NotificationCardComponent,
-    StatisticsComponent
+    StatisticsComponent,
+    NotificationDialogComponent
   ],
   entryComponents: [
     GatewaySelectionDialogComponent,
-    PropertyEditionDialogComponent
+    PropertyEditionDialogComponent,
+    NotificationDialogComponent
   ],
   imports: [
     AppRoutingModule,
