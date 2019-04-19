@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AppService } from 'src/app/app.service';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
@@ -16,7 +16,7 @@ import { Notification } from 'src/app/shared/models/notification';
   templateUrl: './dashboard-template.component.html',
   styleUrls: ['./dashboard-template.component.css']
 })
-export class DashboardTemplateComponent extends Subscribable implements OnInit {
+export class DashboardTemplateComponent extends Subscribable implements OnInit, OnDestroy {
 
   /**
    * Name of the currently authenticated user.
@@ -35,6 +35,8 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
    *
    */
   public openMenu: boolean;
+
+  public newNotification: Notification;
 
   /**
    * Creates an instance of HeaderComponent.
@@ -66,13 +68,22 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
     this.subscribeToNotifications();
   }
 
+  ngOnDestroy() {
+    super.ngOnDestroy();
+    this.rxStompService.deactivate();
+  }
+
   private subscribeToNotifications(): void {
     this.rxStompService.watch(`notifications/${ this.appService.user.id }`)
     .pipe(takeUntil(this.destroyed))
     .subscribe((message: Message) => {
       try {
-        const notification = JSON.parse(message.body);
-        console.log(notification);
+        this.newNotification = JSON.parse(message.body);
+        this.dashboardService.isNotificationShown = true;
+        setTimeout(() => {
+          this.dashboardService.isNotificationShown = false;
+          this.newNotification = null;
+        }, 5000);
       } catch (err) {
         console.error('An error occurred parsing a notification', err);
       }

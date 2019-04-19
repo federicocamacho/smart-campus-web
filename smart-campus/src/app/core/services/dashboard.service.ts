@@ -24,6 +24,8 @@ export class DashboardService {
    */
   public isNotificationsCardOpened: boolean;
 
+  public isNotificationShown: boolean;
+
   /**
    * Creates an instance of DashboardService.
    * @date 2019-04-09

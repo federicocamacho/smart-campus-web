@@ -109,3 +109,7 @@
   </div>
   <router-outlet></router-outlet>
 </div>
+<sc-notification-card
+  *ngIf="dashboardService.isNotificationShown"
+  [notification]="newNotification">
+</sc-notification-card>
