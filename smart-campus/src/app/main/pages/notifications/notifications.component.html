@@ -143,7 +143,7 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Leído</th>
           <td mat-cell *matCellDef="let row">
             <div fxLayout="row">
-              <span class="mobile-label">Leído:</span>
+              <span class="mobile-label">Leída:</span>
               <span>
                 <i *ngIf="row.read; else unread" class="material-icons" style="color: green">done_all</i>
                 <ng-template #unread>
@@ -208,7 +208,7 @@
         *matRowDef="let row; columns: displayedColumns;"
         (click)="toggleExpansion(row)">
       </tr>
-      <tr mat-row *matRowDef="let row; columns: ['message']" class="notification-detail-row"></tr>
+      <tr fxHide.xs mat-row *matRowDef="let row; columns: ['message']" class="notification-detail-row"></tr>
     </table>
 
     <mat-paginator

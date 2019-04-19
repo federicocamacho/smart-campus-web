@@ -9,6 +9,7 @@ import { NotificationService } from 'src/app/core/services/notification.service'
 import { Router } from '@angular/router';
 import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { Util } from 'src/app/shared/utils/util';
+import { DashboardService } from 'src/app/core/services/dashboard.service';
 
 /**
  * Notifications card component.
@@ -33,6 +34,7 @@ export class NotificationsCardComponent extends Subscribable implements OnInit {
    */
   constructor(
     private appService: AppService,
+    private dashboardService: DashboardService,
     public notificationService: NotificationService,
     private router: Router) {
       super();
@@ -77,6 +79,7 @@ export class NotificationsCardComponent extends Subscribable implements OnInit {
    */
   public seeAll(): void {
     this.router.navigate([ '/dashboard', 'notifications' ]);
+    this.dashboardService.isNotificationsCardOpened = false;
   }
 
   public openNotification(notificationId: number): void {

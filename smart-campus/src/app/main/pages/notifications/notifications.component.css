@@ -19,3 +19,13 @@ tr.notification-message-row:not(.notification-message-expanded):active {
 .notification-message-row td {
     border-bottom-width: 0;
 }
+
+@media screen and (max-width: 599px) {
+    tr.notification-message-row:not(.notification-message-expanded):hover {
+        background: white;
+    }
+    
+    tr.notification-message-row:not(.notification-message-expanded):active {
+        background: white;
+    }
+}

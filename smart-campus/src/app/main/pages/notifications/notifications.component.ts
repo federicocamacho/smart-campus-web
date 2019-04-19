@@ -18,6 +18,8 @@ import { NotificationsFilter } from 'src/app/shared/models/types';
 import { Process } from 'src/app/shared/models/process';
 import { ProcessService } from 'src/app/core/services/process.service';
 import { Util } from 'src/app/shared/utils/util';
+import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
+import { NotificationDialogComponent } from '../../components/notification-dialog/notification-dialog.component';
 
 @Component({
   selector: 'sc-notifications',
@@ -71,6 +73,10 @@ export class NotificationsComponent extends DataTable<Notification, Notification
    */
   public expandedElement: Notification | null;
 
+  public mobileRows: string[];
+
+  private isMobile: boolean;
+
   /**
    * Creates an instance of NotificationsComponent.
    * @date 2019-04-15
@@ -83,18 +89,21 @@ export class NotificationsComponent extends DataTable<Notification, Notification
   constructor(
     protected activatedRoute: ActivatedRoute,
     private appService: AppService,
+    private breakpointObserver: BreakpointObserver,
     private dialog: MatDialog,
     private gatewayService: GatewayService,
     private notificationService: NotificationService,
     private processService: ProcessService) {
     super(activatedRoute);
     this.displayedColumns = [ 'gateway', 'process', 'alive', 'read', 'timestamp', 'actions' ];
+    this.mobileRows = [ ...this.displayedColumns, 'message' ];
     this.gatewaysSelect = [];
     this.processSelect = [ new Process(0, 'Ninguno') ];
   }
 
   ngOnInit() {
     super.initDataTable();
+    this.observeMobile();
 
     // by default sort by timestamp.
     this.sort.sort(({ id: 'timestamp', start: 'desc' }) as MatSortable);
@@ -104,6 +113,12 @@ export class NotificationsComponent extends DataTable<Notification, Notification
     this.getNotifications();
     this.getGateways();
     this.getProcesses();
+  }
+
+  private observeMobile(): void {
+    this.breakpointObserver.observe([ Breakpoints.XSmall ])
+      .pipe(takeUntil(this.destroyed))
+      .subscribe((bp: BreakpointState) => this.isMobile = bp.matches);
   }
 
   /**
@@ -257,6 +272,9 @@ export class NotificationsComponent extends DataTable<Notification, Notification
       this.expandedElement = null;
     } else {
       this.expandedElement = notification;
+      if (this.isMobile) {
+        this.openNotificationDetail(notification);
+      }
       // changed selection, then mark the notification as read.
       if (!notification.read) {
         this.notificationService.unreadNotificationsCount--;
@@ -264,6 +282,13 @@ export class NotificationsComponent extends DataTable<Notification, Notification
         this.markNotificationAsRead(this.appService.user.id, [ notification.id ]);
       }
     }
+  }
+
+  private openNotificationDetail(notification: Notification): void {
+    this.dialog.open(NotificationDialogComponent, {
+      width: '350px',
+      data: notification
+    });
   }
 
   /**
