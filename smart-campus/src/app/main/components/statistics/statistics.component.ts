@@ -89,6 +89,9 @@ export class StatisticsComponent extends Subscribable implements OnInit {
       this.dataService.getStatistics().pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
         (statistics: Statistic[]) => {
+          if (statistics.length === 0) {
+            return;
+          }
           for (const statistic of statistics) {
             let type = '';
             let subtype = '';
