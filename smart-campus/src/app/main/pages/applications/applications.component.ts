@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
 
+import { ApiResponse } from 'src/app/shared/models/api-response';
 import { Application } from 'src/app/shared/models/application';
 import { ApplicationService } from 'src/app/core/services/application.service';
 import { AppService } from 'src/app/app.service';
 import { ApplicationsFilter } from 'src/app/shared/models/types';
-import { Util } from 'src/app/shared/utils/util';
-import { ApiResponse } from 'src/app/shared/models/api-response';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
 import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data';
 import { DataTable } from 'src/app/shared/utils/data-table';
+import { Util } from 'src/app/shared/utils/util';
 
 /**
  * Page to manage all the user's applications.
@@ -47,6 +47,7 @@ export class ApplicationsComponent extends DataTable<Application, ApplicationsFi
   ngOnInit() {
     super.initDataTable();
     this.getApplications();
+    this.defaultSort();
   }
 
   /**
