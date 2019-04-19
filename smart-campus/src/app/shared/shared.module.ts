@@ -13,6 +13,7 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { MaterialModule } from '../libs/material.module';
 import { PropertyTypePipe } from './pipes/property-type.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ExportExcelButtonComponent } from './components/export-excel-button/export-excel-button.component';
 
 /**
  * Imports and exports all general Directives, Pipes and Components.
@@ -26,7 +27,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ClickOutsideDirective,
     ConfirmDialogComponent,
     LoaderComponent,
-    PropertyTypePipe
+    PropertyTypePipe,
+    ExportExcelButtonComponent
   ],
   imports: [
     CommonModule,
@@ -50,7 +52,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     LoaderComponent,
     HttpClientModule,
     PropertyTypePipe,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ExportExcelButtonComponent
   ]
 })
 export class SharedModule { }

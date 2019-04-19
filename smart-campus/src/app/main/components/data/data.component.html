@@ -79,15 +79,8 @@
 </div>
 <div scAnimated="fadeIn" class="table-container" [class.hide]="!searchAlreadyDone">
   <div style="text-align: right;">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="saveExcel()"
-    >
-      <mat-icon style="font-size: 20px">cloud_download</mat-icon> Exportar XLSX
-    </button>
+    <sc-export-excel-button [json]="dataSource.data" filename="data"></sc-export-excel-button>
   </div>
-
   <table
     class="generic-table"
     mat-table multiTemplateDataRows matSort

@@ -8,22 +8,26 @@
     <h2 class="section-title">Gateways</h2>
     <h5 class="section-subtitle">Gestiona tus gateways.</h5>
   </div>
-  <button
-    mat-raised-button
-    color="primary"
-    fxHide.xs
-    (click)="onCreateRecord()"
-  >
-    <mat-icon style="font-size: 20px">add</mat-icon>Crear nuevo
-  </button>
-  <button
-    mat-mini-fab
-    color="primary"
-    fxHide.gt-xs
-    (click)="onCreateRecord()"
-  >
-    <mat-icon style="font-size: 20px">add</mat-icon>
-  </button>
+  <div>
+    <sc-export-excel-button [json]="dataSource.data" filename="gateways"></sc-export-excel-button>
+    <button
+      mat-raised-button
+      color="primary"
+      fxHide.xs
+      (click)="onCreateRecord()"
+    >
+      <mat-icon style="font-size: 20px">add</mat-icon>Crear nuevo
+    </button>
+    <button
+      mat-mini-fab
+      color="primary"
+      fxHide.gt-xs
+      (click)="onCreateRecord()"
+    >
+      <mat-icon style="font-size: 20px">add</mat-icon>
+    </button>
+  </div>
+
 </div>
 <div
   fxLayout="row"
