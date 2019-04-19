@@ -1,6 +1,6 @@
 import { DataStatisticPk } from './data-statistic-pk';
 
-export class Statistic {
+export class DataStatistic {
   public id: DataStatisticPk;
   public count: number;
 

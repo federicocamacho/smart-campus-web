@@ -1,6 +1,6 @@
-import { StatisticDetail } from './statistic-detail';
+import { StatisticDetail } from 'src/app/shared/models/statistic-detail';
 
-export class StatisticSubtype {
+export class DataStatisticSubtype {
   hour: StatisticDetail;
   dayOfWeek: StatisticDetail;
   dayOfMonth: StatisticDetail;

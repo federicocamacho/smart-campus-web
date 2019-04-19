@@ -8,7 +8,7 @@ import { DataFilter } from 'src/app/shared/models/types';
 
 import { environment } from 'src/environments/environment';
 import { Util } from 'src/app/shared/utils/util';
-import { Statistic } from 'src/app/shared/models/statistic';
+import { DataStatistic } from 'src/app/shared/models/data-statistic';
 
 @Injectable({
   providedIn: CoreModule
@@ -42,8 +42,8 @@ export class DataService {
   /**
    * Returns the statistics calculated in the backend.
    */
-  public getStatistics(): Observable<Statistic[]> {
-    return this.http.get<Statistic[]>(`${environment.dataService}/data/statistics`, Util.options());
+  public getStatistics(): Observable<DataStatistic[]> {
+    return this.http.get<DataStatistic[]>(`${environment.dataService}/data/statistics`, Util.options());
   }
 
 }

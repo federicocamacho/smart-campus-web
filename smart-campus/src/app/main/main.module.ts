@@ -31,7 +31,7 @@ import { DevicesByGatewayComponent } from './components/devices-by-gateway/devic
 import { NotificationsCardComponent } from './components/notifications-card/notifications-card.component';
 import { DataComponent } from './components/data/data.component';
 import { NotificationCardComponent } from './components/notification-card/notification-card.component';
-import { StatisticsComponent } from './components/statistics/statistics.component';
+import { DataStatisticsComponent } from './components/data-statistics/data-statistics.component';
 import { ChartsModule } from 'ng2-charts';
 
 import localeES from '@angular/common/locales/es';
@@ -68,7 +68,7 @@ registerLocaleData(localeES, 'es');
     NotificationsCardComponent,
     DataComponent,
     NotificationCardComponent,
-    StatisticsComponent,
+    DataStatisticsComponent,
     NotificationDialogComponent
   ],
   entryComponents: [

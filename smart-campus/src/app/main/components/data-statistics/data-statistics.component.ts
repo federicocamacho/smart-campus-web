@@ -5,24 +5,24 @@ import { take, takeUntil } from 'rxjs/operators';
 
 import { DataService } from 'src/app/core/services/data.service';
 import { Subscribable } from 'src/app/shared/utils/subscribable';
-import { Statistic } from 'src/app/shared/models/statistic';
+import { DataStatistic } from 'src/app/shared/models/data-statistic';
 import { AppService } from 'src/app/app.service';
-import { StatisticType } from 'src/app/main/components/statistics/statistic-type';
+import { DataStatisticType } from 'src/app/main/components/data-statistics/data-statistic-type';
 import { ProcessService } from 'src/app/core/services/process.service';
 import { GatewayService } from 'src/app/core/services/gateway.service';
 import { forkJoin } from 'rxjs';
 import { Util } from 'src/app/shared/utils/util';
 
 @Component({
-  selector: 'sc-statistics',
-  templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.css']
+  selector: 'sc-data-statistics',
+  templateUrl: './data-statistics.component.html',
+  styleUrls: ['./data-statistics.component.css']
 })
-export class StatisticsComponent extends Subscribable implements OnInit {
+export class DataStatisticsComponent extends Subscribable implements OnInit {
 
   public chartReady: boolean;
 
-  public statistics: StatisticType;
+  public statistics: DataStatisticType;
 
   public charts: Array<any>;
 
@@ -52,7 +52,7 @@ export class StatisticsComponent extends Subscribable implements OnInit {
     private cdr: ChangeDetectorRef
   ) {
     super();
-    this.statistics = new StatisticType();
+    this.statistics = new DataStatisticType();
     this.charts = new Array();
     this.charts.push({
       label: 'Hora',
@@ -88,7 +88,7 @@ export class StatisticsComponent extends Subscribable implements OnInit {
       }
       this.dataService.getStatistics().pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
-        (statistics: Statistic[]) => {
+        (statistics: DataStatistic[]) => {
           if (statistics.length === 0) {
             return;
           }
@@ -96,11 +96,15 @@ export class StatisticsComponent extends Subscribable implements OnInit {
             let type = '';
             let subtype = '';
             if (statistic.id.gatewayId) {
-              type = 'gatewayId';
               statistic.id.gatewayId = gatewaysMap[statistic.id.gatewayId];
+              if (statistic.id.gatewayId) {
+                type = 'gatewayId';
+              }
             } else if (statistic.id.processId) {
-              type = 'processId';
               statistic.id.processId = processesMap[statistic.id.processId];
+              if (statistic.id.processId) {
+                type = 'processId';
+              }
             }
             if (statistic.id.hour) {
               subtype = 'hour';
@@ -110,10 +114,14 @@ export class StatisticsComponent extends Subscribable implements OnInit {
             } else if (statistic.id.dayOfMonth) {
               subtype = 'dayOfMonth';
             } else if (statistic.id.month) {
-              subtype = 'month';
               statistic.id.month = Util.monthToString(statistic.id.month);
+              if (statistic.id.month) {
+                subtype = 'month';
+              }
             }
-            this.statistics[type][subtype].addElement(statistic, type, subtype);
+            if (type && subtype) {
+              this.statistics[type][subtype].addDataElement(statistic, type, subtype);
+            }
           }
           this.chartReady = true;
           this.cdr.detectChanges();

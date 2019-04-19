@@ -1,4 +1,4 @@
-export class StatisticPk {
+export class DataStatisticPk {
   gatewayId: string;
   processId: string;
   hour: string;
