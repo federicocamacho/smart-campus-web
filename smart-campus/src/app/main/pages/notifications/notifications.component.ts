@@ -256,6 +256,9 @@ export class NotificationsComponent extends DataTable<Notification, Notification
           const notification = this.notificationService.notifications.find(notif => notif.id === selectedNotification);
           if (notification) {
             this.toggleExpansion(notification);
+            const index = this.dataSource.filteredData.findIndex(not => not.id === selectedNotification);
+            this.paginator.pageIndex = Math.floor(index / this.paginator.pageSize);
+            this.dataSource.paginator = this.paginator;
           }
         }
       );

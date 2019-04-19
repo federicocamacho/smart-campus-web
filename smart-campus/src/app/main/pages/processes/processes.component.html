@@ -119,7 +119,7 @@
           <td mat-cell *matCellDef="let row">
             <div fxLayout="row">
               <span class="mobile-label">Estado:</span>
-              <span style="margin: auto;">
+              <span style="margin: auto;" [matTooltip]="row.alive ? 'Activo' : 'Inactivo'">
                 <i class="material-icons" [ngStyle]="{'color' : (row.alive ? 'green' : 'red')}">fiber_manual_record</i>
               </span>
             </div>
