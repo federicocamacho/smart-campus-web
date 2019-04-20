@@ -125,6 +125,8 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
           this.statusChartLabels = [];
           const aliveData = [];
           const deathData = [];
+          stats.changes = stats.changes
+            .sort((a, b) => new Date(a.sentDate).getTime() - new Date(b.sentDate).getTime());
           for (const statusChange of stats.changes) {
             this.statusChartLabels.push(this.dateToChartString(statusChange.sentDate));
             aliveData.push(statusChange.alive);

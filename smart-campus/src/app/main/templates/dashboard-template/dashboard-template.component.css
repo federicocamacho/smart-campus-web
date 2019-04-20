@@ -149,9 +149,6 @@ ul {
   .section-card-container {
     display: none !important;
   }
-}
-
-@media (min-width: 559px) {
   .menu-icon-container {
     display: none !important;
   }
@@ -160,5 +157,8 @@ ul {
   }
 }
 
-
-
+@media screen and (min-width: 558px) and (max-width: 959px) {
+  sc-section-card:last-child {
+    margin-right: 20px;
+  }
+}

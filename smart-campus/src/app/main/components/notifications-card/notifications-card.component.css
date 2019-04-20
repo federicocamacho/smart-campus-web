@@ -59,10 +59,9 @@
 .notification-status {
   font-weight: 100;
   font-size: 11px;
-  width: 70px;
+  width: 85px;
   text-align: center;
   color: white;
-  background-color: red;
   border-radius: 7px;
   padding: 1px 0;
 }
