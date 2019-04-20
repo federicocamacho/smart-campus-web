@@ -79,7 +79,7 @@
   </button>
 </div>
 <div scAnimated="fadeIn" class="table-container" [class.hide]="!searchAlreadyDone">
-  <div style="text-align: right;">
+  <div style="text-align: right;" *ngIf="dataSource.data.length > 0">
     <sc-export-excel-button [json]="dataSource.data" filename="data"></sc-export-excel-button>
   </div>
   <table

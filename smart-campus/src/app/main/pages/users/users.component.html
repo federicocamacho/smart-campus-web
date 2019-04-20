@@ -4,7 +4,11 @@
     <h5 class="section-subtitle">Gestiona los usuarios.</h5>
   </div>
   <div>
-    <sc-export-excel-button [json]="dataSource.data" filename="usuarios"></sc-export-excel-button>
+    <sc-export-excel-button
+      *ngIf="dataSource.data.length > 0"
+      [json]="dataSource.data"
+      filename="usuarios">
+    </sc-export-excel-button>
     <button mat-raised-button color="primary" fxHide.xs (click)="onCreateRecord()">
       <mat-icon style="font-size: 20px">add</mat-icon>Crear nuevo
     </button>

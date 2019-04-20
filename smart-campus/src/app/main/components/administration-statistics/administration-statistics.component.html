@@ -3,14 +3,19 @@
   *ngIf="chartsReady"
   class="statistics-component" fxLayout="row wrap" fxLayout.lt-md="column">
   <!-- Entities charts-->
-  <div fxFlex="50%" fxFlex.lt-md="100%">
+  <div
+    [fxFlex]="statistics.gatewaysAlive + statistics.gatewaysDeath + statistics.processesAlive + statistics.processesDeath > 0 ? '50%' : '100%'" fxFlex.lt-md="100%">
     <div fxLayout="col wrap" fxFlexFill>
       <!-- Gateways and Processes chart -->
       <div fxLayout="row wrap" fxLayout.xs="column" fxFlex="100%" fxLayoutGap="10px" style="margin-bottom: 10px">
         <!-- Your gateways -->
-        <div class="default-shadow stat-card">
+        <div
+          class="default-shadow stat-card"
+          fxLayout="column" fxLayoutAlign="center"
+          style="border-bottom: 3px solid rgb(0, 123, 255)">
           <h4 class="chart-title">Tus gateways</h4>
           <canvas baseChart
+            *ngIf="statistics.gatewaysAlive + statistics.gatewaysDeath > 0; else noGateways"
             [data]="gatewayData"
             [labels]="aliveChartsLabel"
             chartType="pie"
@@ -18,11 +23,20 @@
             [colors]="aliveChartsColors"
             legend="Tus Gateways">
           </canvas>
+          <ng-template #noGateways>
+            <div class="count-container" fxFlex>
+              <h3 class="count-title">0</h3>
+            </div>
+          </ng-template>
         </div>
         <!-- Your processes -->
-        <div class="default-shadow stat-card">
+        <div
+          class="default-shadow stat-card"
+          fxLayout="column" fxLayoutAlign="center"
+          style="border-bottom: 3px solid rgb(255, 92, 108)">
           <h4 class="chart-title">Tus procesos</h4>
           <canvas baseChart
+            *ngIf="statistics.processesAlive + statistics.processesDeath > 0; else noProcesses"
             [data]="gatewayData"
             [labels]="aliveChartsLabel"
             chartType="pie"
@@ -30,6 +44,11 @@
             [colors]="aliveChartsColors"
             legend="Tus Gateways">
           </canvas>
+          <ng-template #noProcesses>
+            <div class="count-container" fxFlex>
+              <h3 class="count-title">0</h3>
+            </div>
+          </ng-template>
         </div>
       </div>
       <!-- Applications and Devices stat -->
@@ -48,7 +67,7 @@
         <div
           class="default-shadow stat-card count-card"
           fxLayout="column" fxLayoutAlign="center"
-          style="border-bottom: 3px solid rgb(255, 92, 108)">
+          style="border-bottom: 3px solid rgb(103, 114, 229)">
           <h4 class="chart-title" fxFlex="20px">Tus dispositivos</h4>
           <div class="count-container" fxFlex>
             <h3 class="count-title">{{ statistics.devices }}</h3>
@@ -59,6 +78,7 @@
   </div>
   <!-- Changes chart -->
   <div
+    *ngIf="statistics.gatewaysAlive + statistics.gatewaysDeath + statistics.processesAlive + statistics.processesDeath > 0"
     fxLayout="column wrap" fxFlex="50%"
     class="default-shadow stat-card"
     style="margin-bottom: 10px">

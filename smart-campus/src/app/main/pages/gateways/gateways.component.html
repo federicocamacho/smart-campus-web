@@ -9,7 +9,11 @@
     <h5 class="section-subtitle">Gestiona tus gateways.</h5>
   </div>
   <div>
-    <sc-export-excel-button [json]="dataSource.data" filename="gateways"></sc-export-excel-button>
+    <sc-export-excel-button
+      *ngIf="dataSource.data.length > 0"
+      [json]="dataSource.data"
+      filename="gateways">
+    </sc-export-excel-button>
     <button
       mat-raised-button
       color="primary"
