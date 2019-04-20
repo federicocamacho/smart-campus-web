@@ -36,6 +36,7 @@ import { ChartsModule } from 'ng2-charts';
 
 import localeES from '@angular/common/locales/es';
 import { NotificationDialogComponent } from './components/notification-dialog/notification-dialog.component';
+import { AdministrationStatisticsComponent } from './components/administration-statistics/administration-statistics.component';
 registerLocaleData(localeES, 'es');
 
 @NgModule({
@@ -69,7 +70,8 @@ registerLocaleData(localeES, 'es');
     DataComponent,
     NotificationCardComponent,
     DataStatisticsComponent,
-    NotificationDialogComponent
+    NotificationDialogComponent,
+    AdministrationStatisticsComponent
   ],
   entryComponents: [
     GatewaySelectionDialogComponent,

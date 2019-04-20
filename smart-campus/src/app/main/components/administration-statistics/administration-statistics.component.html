@@ -1,0 +1,73 @@
+<div
+  scAnimated="fadeIn"
+  *ngIf="chartsReady"
+  class="statistics-component" fxLayout="row wrap" fxLayout.lt-md="column">
+  <!-- Entities charts-->
+  <div fxFlex="50%" fxFlex.lt-md="100%">
+    <div fxLayout="col wrap" fxFlexFill>
+      <!-- Gateways and Processes chart -->
+      <div fxLayout="row wrap" fxLayout.xs="column" fxFlex="100%" fxLayoutGap="10px" style="margin: 10px 0">
+        <!-- Your gateways -->
+        <div class="default-shadow stat-card">
+          <h4 class="chart-title">Tus gateways</h4>
+          <canvas baseChart
+            [data]="gatewayData"
+            [labels]="aliveChartsLabel"
+            chartType="pie"
+            [options]="chartOptions"
+            [colors]="aliveChartsColors"
+            legend="Tus Gateways">
+          </canvas>
+        </div>
+        <!-- Your processes -->
+        <div class="default-shadow stat-card">
+          <h4 class="chart-title">Tus procesos</h4>
+          <canvas baseChart
+            [data]="gatewayData"
+            [labels]="aliveChartsLabel"
+            chartType="pie"
+            [options]="chartOptions"
+            [colors]="aliveChartsColors"
+            legend="Tus Gateways">
+          </canvas>
+        </div>
+      </div>
+      <!-- Applications and Devices stat -->
+      <div fxLayout="row wrap" fxLayout.xs="column" fxFlex="100%" fxLayoutGap="10px" style="margin: 10px 0">
+        <!-- Your applications -->
+        <div
+          class="default-shadow stat-card count-card"
+          fxLayout="column" fxLayoutAlign="center"
+          style="border-bottom: 3px solid rgb(36, 210, 181)">
+          <h4 class="chart-title" fxFlex="20px">Tus aplicaciones</h4>
+          <div class="count-container" fxFlex>
+            <h3 class="count-title">{{ statistics.applications }}</h3>
+          </div>
+        </div>
+        <!-- Your devices -->
+        <div
+          class="default-shadow stat-card count-card"
+          fxLayout="column" fxLayoutAlign="center"
+          style="border-bottom: 3px solid rgb(255, 92, 108)">
+          <h4 class="chart-title" fxFlex="20px">Tus dispositivos</h4>
+          <div class="count-container" fxFlex>
+            <h3 class="count-title">{{ statistics.devices }}</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Changes chart -->
+  <div
+    fxLayout="column wrap" fxFlex="50%"
+    class="default-shadow stat-card"
+    style="margin: 10px 0">
+    <h4 class="chart-title">Cambios de estado</h4>
+    <canvas baseChart
+      [datasets]="statusChartData"
+      [labels]="statusChartLabels"
+      [colors]="aliveChartsColors"
+      chartType="bar">
+    </canvas>
+  </div>
+</div>
