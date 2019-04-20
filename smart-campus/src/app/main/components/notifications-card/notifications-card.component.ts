@@ -108,4 +108,15 @@ export class NotificationsCardComponent extends Subscribable implements OnInit {
       );
   }
 
+  /**
+   * Callback used to filter notifications to hide the read or hidden ones.
+   *
+   * @date 2019-04-19
+   * @param notification - notification to be filtered.
+   * @returns true if the notification matches the filter, false otherwise.
+   */
+  public filterCallback(notification: Notification): boolean {
+    return !notification.read && !notification.hidden;
+  }
+
 }

@@ -10,6 +10,7 @@ export class Notification {
   public read: boolean;
   public timestamp: Date;
   public message: string;
+  public hidden: boolean;
 
   constructor(
     id: number,
