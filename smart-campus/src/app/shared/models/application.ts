@@ -1,4 +1,5 @@
 import { Gateway } from './gateway';
+import { Entity } from './entity';
 
 /**
  * Represents an Application.
@@ -6,9 +7,8 @@ import { Gateway } from './gateway';
  * @date 2019-03-30
  * @export
  */
-export class Application {
+export class Application extends Entity {
 
-  public id: number;
   public name: string;
   public userId: number;
   public description: string;
@@ -23,6 +23,7 @@ export class Application {
    * @param userId of the owner of the Application.
    */
   constructor(id?: number, name?: string, description?: string, userId?: number) {
+    super();
     this.id = id;
     this.name = name;
     this.description = description;

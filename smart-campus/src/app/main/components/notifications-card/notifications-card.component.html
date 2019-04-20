@@ -6,7 +6,7 @@
       class="notifications-list"
       *ngIf="notificationService.unreadNotificationsCount > 0; else noUnreadNotifications">
       <div scAnimated="fadeIn"
-        *ngFor="let notification of notificationService.notifications | callbackFilter: filterCallback | slice:0:10">
+        *ngFor="let notification of notificationService.notifications | callbackFilter:filterCallback | slice:0:10; trackBy:identity">
         <div class="notification-container" (click)="openNotification(notification.id)">
           <div
             class="notification-img-container"

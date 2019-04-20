@@ -1,6 +1,7 @@
 import { DataStatistic } from 'src/app/shared/models/data-statistic';
 
 export class StatisticDetail {
+
   barChartLabels: string[];
   barChartData: any[];
 
@@ -9,7 +10,7 @@ export class StatisticDetail {
     this.barChartData = new Array();
   }
 
-  addDataElement(statistic: DataStatistic, type: string, subtype: string) {
+  public addDataElement(statistic: DataStatistic, type: string, subtype: string): void {
     type = String(statistic.id[type]);
     subtype = String(statistic.id[subtype]);
     let chartDataSets = this.barChartData.find(e => e.label === type);

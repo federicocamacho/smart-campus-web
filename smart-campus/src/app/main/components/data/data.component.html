@@ -18,30 +18,48 @@
     <mat-form-field fxFlex="100%" fxFlex.sm="100%" fxFlex.xs="100%" *ngSwitchCase="'APPLICATION'">
       <mat-label>Aplicación:</mat-label>
       <mat-select [(value)]="filterValue" >
-        <mat-option *ngFor="let application of applications" [value]="application.id">{{application.name}}</mat-option>
+        <mat-option
+          *ngFor="let application of applications; trackBy:identity"
+          [value]="application.id">
+          {{application.name}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field fxFlex="100%" fxFlex.sm="100%" fxFlex.xs="100%" *ngSwitchCase="'GATEWAY'">
       <mat-label>Gateway:</mat-label>
       <mat-select [(value)]="filterValue" >
-        <mat-option *ngFor="let gateway of gateways" [value]="gateway.id">{{gateway.name}}</mat-option>
+        <mat-option
+          *ngFor="let gateway of gateways; trackBy:identity"
+          [value]="gateway.id">
+          {{gateway.name}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field fxFlex="100%" fxFlex.sm="100%" fxFlex.xs="100%" *ngSwitchCase="'PROCESS'">
       <mat-label>Proceso:</mat-label>
       <mat-select [(value)]="filterValue" >
-        <mat-option *ngFor="let process of processes" [value]="process.id">{{process.name}}</mat-option>
+        <mat-option
+          *ngFor="let process of processes; trackBy:identity"
+          [value]="process.id">
+          {{process.name}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field fxFlex="100%" fxFlex.sm="100%" fxFlex.xs="100%" *ngSwitchCase="'TOPIC'">
       <mat-label>Tópico:</mat-label>
       <mat-select [(value)]="filterValue" >
-        <mat-option *ngFor="let topic of topics" [value]="topic">{{topic}}</mat-option>
+        <mat-option
+          *ngFor="let topic of topics; trackBy:topicIdentity"
+          [value]="topic">
+          {{topic}}
+        </mat-option>
       </mat-select>
     </mat-form-field>
   </div>
-  <div *ngIf="filterType !== 'NONE'" fxFlex="100%" fxFlex.gt-md="40%" fxLayout="row" fxLayout.xs="column"
-  fxLayoutGap="20px">
+  <div
+    fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px"
+    fxFlex="100%" fxFlex.gt-md="40%"
+    *ngIf="filterType !== 'NONE'">
     <mat-form-field fxFlex="50%" fxFlex.xs="100%">
       <input matInput ngDefaultControl [matDatepicker]="startDatePicker" placeholder="Desde"
         name="startDate" [value]="startDate" (dateChange)="startDateChanged($event)" (dateInput)="startDateChanged($event)">

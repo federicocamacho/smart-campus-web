@@ -37,7 +37,7 @@
           <h4 class="chart-title">Tus procesos</h4>
           <canvas baseChart
             *ngIf="statistics.processesAlive + statistics.processesDeath > 0; else noProcesses"
-            [data]="gatewayData"
+            [data]="processData"
             [labels]="aliveChartsLabel"
             chartType="pie"
             [options]="chartOptions"

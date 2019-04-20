@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 import { Gateway } from 'src/app/shared/models/gateway';
+import { Subscribable } from 'src/app/shared/utils/subscribable';
 
 /**
  * Dialog to select a Gateway to assign it to an application.
@@ -14,7 +15,7 @@ import { Gateway } from 'src/app/shared/models/gateway';
   templateUrl: './gateway-selection-dialog.component.html',
   styleUrls: ['./gateway-selection-dialog.component.css']
 })
-export class GatewaySelectionDialogComponent implements OnInit {
+export class GatewaySelectionDialogComponent extends Subscribable implements OnInit {
 
   /**
    * Gateway selected in the current dialog to be assigned.
@@ -37,7 +38,9 @@ export class GatewaySelectionDialogComponent implements OnInit {
    */
   constructor(
     public dialogRef: MatDialogRef<GatewaySelectionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Gateway[]) { }
+    @Inject(MAT_DIALOG_DATA) public data: Gateway[]) {
+      super();
+    }
 
   ngOnInit() {
     this.gateways = this.data;

@@ -1,6 +1,7 @@
 import { DataStatisticPk } from './data-statistic-pk';
 
 export class Statistic {
+
   public id: DataStatisticPk;
   public count: number;
 
@@ -8,4 +9,5 @@ export class Statistic {
     this.id = id;
     this.count = count;
   }
+
 }
