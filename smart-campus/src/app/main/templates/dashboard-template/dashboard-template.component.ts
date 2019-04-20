@@ -77,16 +77,17 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit, 
     this.rxStompService.watch(`notifications/${ this.appService.user.id }`)
     .pipe(takeUntil(this.destroyed))
     .subscribe((message: Message) => {
+      this.dashboardService.refreshStatistics.emit();
       try {
         this.newNotification = JSON.parse(message.body);
-        this.dashboardService.isNotificationShown = true;
-        setTimeout(() => {
-          this.dashboardService.isNotificationShown = false;
-          this.newNotification = null;
-        }, 5000);
       } catch (err) {
         console.error('An error occurred parsing a notification', err);
       }
+      this.dashboardService.isNotificationShown = true;
+      setTimeout(() => {
+        this.dashboardService.isNotificationShown = false;
+        this.newNotification = null;
+      }, 5000);
     });
   }
 

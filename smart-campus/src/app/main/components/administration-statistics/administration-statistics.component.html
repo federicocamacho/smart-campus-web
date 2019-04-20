@@ -6,7 +6,7 @@
   <div fxFlex="50%" fxFlex.lt-md="100%">
     <div fxLayout="col wrap" fxFlexFill>
       <!-- Gateways and Processes chart -->
-      <div fxLayout="row wrap" fxLayout.xs="column" fxFlex="100%" fxLayoutGap="10px" style="margin: 10px 0">
+      <div fxLayout="row wrap" fxLayout.xs="column" fxFlex="100%" fxLayoutGap="10px" style="margin-bottom: 10px">
         <!-- Your gateways -->
         <div class="default-shadow stat-card">
           <h4 class="chart-title">Tus gateways</h4>
@@ -33,7 +33,7 @@
         </div>
       </div>
       <!-- Applications and Devices stat -->
-      <div fxLayout="row wrap" fxLayout.xs="column" fxFlex="100%" fxLayoutGap="10px" style="margin: 10px 0">
+      <div fxLayout="row wrap" fxLayout.xs="column" fxFlex="100%" fxLayoutGap="10px" style="margin-bottom: 10px">
         <!-- Your applications -->
         <div
           class="default-shadow stat-card count-card"
@@ -61,12 +61,11 @@
   <div
     fxLayout="column wrap" fxFlex="50%"
     class="default-shadow stat-card"
-    style="margin: 10px 0">
+    style="margin-bottom: 10px">
     <h4 class="chart-title">Cambios de estado</h4>
     <canvas baseChart
       [datasets]="statusChartData"
       [labels]="statusChartLabels"
-      [colors]="aliveChartsColors"
       chartType="bar">
     </canvas>
   </div>

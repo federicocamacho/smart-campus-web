@@ -1,13 +1,21 @@
-import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/app/core/services/data.service';
-import { Subscribable } from 'src/app/shared/utils/subscribable';
-import { AppService } from 'src/app/app.service';
-import { takeUntil, take } from 'rxjs/operators';
-import { AdminStatistics } from 'src/app/shared/models/admin-statistics';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { takeUntil, take } from 'rxjs/operators';
 import { ChartOptions, ChartDataSets } from 'chart.js';
+
+import { AdminStatistics } from 'src/app/shared/models/admin-statistics';
+import { AppService } from 'src/app/app.service';
+import { DataService } from 'src/app/core/services/data.service';
+import { DashboardService } from 'src/app/core/services/dashboard.service';
+import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { Util } from 'src/app/shared/utils/util';
 
+/**
+ * Administrations statistics component.
+ *
+ * @date 2019-04-20
+ * @export
+ */
 @Component({
   selector: 'sc-administration-statistics',
   templateUrl: './administration-statistics.component.html',
@@ -15,34 +23,97 @@ import { Util } from 'src/app/shared/utils/util';
 })
 export class AdministrationStatisticsComponent extends Subscribable implements OnInit {
 
+  /**
+   * Indicates if all the information neeeded for the charts was already retrieved.
+   *
+   */
   public chartsReady: boolean;
 
+  /**
+   * Stores all the administration statistics retrieved.
+   *
+   */
   public statistics: AdminStatistics;
+
+  /**
+   * Stores gateway's information in the format required for the pie chart.
+   *
+   */
   public gatewayData: number[] = [];
+
+  /**
+   * Stores process' information in the format required for the pie chart.
+   *
+   */
   public processData: number[] = [];
+
+  /**
+   * Labels used in the charts for all 'Alive', 'Death' chart types.
+   *
+   */
   public aliveChartsLabel: string[] = [ 'Activos', 'Inactivos' ];
+
+  /**
+   * Data set for the status changes chart.
+   *
+   */
   public statusChartData: ChartDataSets[] = [];
+
+  /**
+   * Labels used for status changes charts, this are filled with the dates of the changes.
+   *
+   */
   public statusChartLabels: string[] = [];
+
+  /**
+   * Colors used for the 'Alive', 'Death' chart types.
+   *
+   */
   public aliveChartsColors = [
     {
       backgroundColor: [ 'rgb(36, 210, 181)', 'rgb(255, 92, 108)' ]
     }
   ];
 
+  /**
+   * Default chart options.
+   *
+   */
   public chartOptions: ChartOptions = {
     responsive: true,
   };
 
+  /**
+   * Creates an instance of AdministrationStatisticsComponent.
+   * @date 2019-04-20
+   * @param appService - Angular main service.
+   * @param cdr - Angular's change detector reference.
+   * @param dashboardService - Dashboard management service.
+   * @param dataService - Data and Statistics management service.
+   */
   constructor(
     private appService: AppService,
+    private cdr: ChangeDetectorRef,
+    private dashboardService: DashboardService,
     private dataService: DataService) {
     super();
   }
 
   ngOnInit() {
     this.getStatistics();
+    this.dashboardService.refreshStatistics
+      .pipe(takeUntil(this.destroyed))
+      .subscribe(_ => {
+        this.getStatistics();
+        this.cdr.detectChanges();
+      });
   }
 
+  /**
+   * Retrieves the administration statistics consuming the REST service.
+   *
+   * @date 2019-04-20
+   */
   private getStatistics(): void {
     this.dataService.getAdminStatistics(this.appService.user.id)
       .pipe(take(1), takeUntil(this.destroyed))
@@ -79,6 +150,13 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
       );
   }
 
+  /**
+   * Converts a date (in string or date format) to a String (short) used for the charts.
+   *
+   * @date 2019-04-20
+   * @param dateString - date to be transformed.
+   * @returns a short string representation for the Date in the current timezone.
+   */
   private dateToChartString(dateString: string | Date): string {
     const date = new Date(dateString);
     if (Util.isToday(date)) {
