@@ -7,7 +7,6 @@ import { AdminStatistics } from 'src/app/shared/models/admin-statistics';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ChartOptions, ChartDataSets } from 'chart.js';
 import { Util } from 'src/app/shared/utils/util';
-import { start } from 'repl';
 
 @Component({
   selector: 'sc-administration-statistics',
