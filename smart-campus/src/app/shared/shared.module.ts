@@ -15,6 +15,7 @@ import { PropertyTypePipe } from './pipes/property-type.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExportExcelButtonComponent } from './components/export-excel-button/export-excel-button.component';
 import { CallbackFilterPipe } from './pipes/callback-filter.pipe';
+import { DeviceTypePipe } from './pipes/device-type.pipe';
 
 /**
  * Imports and exports all general Directives, Pipes and Components.
@@ -30,7 +31,8 @@ import { CallbackFilterPipe } from './pipes/callback-filter.pipe';
     LoaderComponent,
     PropertyTypePipe,
     ExportExcelButtonComponent,
-    CallbackFilterPipe
+    CallbackFilterPipe,
+    DeviceTypePipe
   ],
   imports: [
     CommonModule,
@@ -50,6 +52,7 @@ import { CallbackFilterPipe } from './pipes/callback-filter.pipe';
     ClickOutsideDirective,
     ConfirmDialogComponent,
     CustomFormsModule,
+    DeviceTypePipe,
     FlexLayoutModule,
     FormsModule,
     LoaderComponent,
