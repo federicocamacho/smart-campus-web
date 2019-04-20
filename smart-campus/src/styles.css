@@ -150,6 +150,15 @@ input.login-input.ng-invalid.ng-touched::placeholder {
   display: none;
 }
 
+.error-message {
+  border-bottom: 4px solid #ff5c6c !important;
+  background-color: #ffffff;
+  color: #323232;
+}
+.error-message .mat-button-wrapper {
+  color: #ff5c6c !important;
+}
+
 @media screen and (max-width: 599px) {
   .generic-table .mobile-label {
     min-width: 80px;
@@ -231,12 +240,12 @@ input.login-input.ng-invalid.ng-touched::placeholder {
   width: 8px;
   background-color: #f5f5f5;
 }
-  
+
 ::-webkit-scrollbar-thumb {
   border-radius: 10px;
   background-color: #c7c7c7;
 }
-  
+
 ::-webkit-scrollbar-track {
   border-radius: 10px;
   background-color: #f5f5f5;

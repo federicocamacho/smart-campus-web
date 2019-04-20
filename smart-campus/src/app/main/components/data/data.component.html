@@ -4,7 +4,7 @@
   <h2 class="section-title">Consulta de datos</h2>
   <br>
 </div>
-<div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="filter-container">
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="20px" class="filter-container" >
   <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%">
     <mat-label>Consultar por:</mat-label>
     <mat-select [value]="filterType" (selectionChange)="onFilterTypeChange($event.value)">
@@ -80,15 +80,8 @@
 </div>
 <div scAnimated="fadeIn" class="table-container" [class.hide]="!searchAlreadyDone">
   <div style="text-align: right;">
-    <button
-      mat-raised-button
-      color="primary"
-      (click)="saveExcel()"
-    >
-      <mat-icon style="font-size: 20px">cloud_download</mat-icon> Exportar XLSX
-    </button>
+    <sc-export-excel-button [json]="dataSource.data" filename="data"></sc-export-excel-button>
   </div>
-
   <table
     class="generic-table"
     mat-table multiTemplateDataRows matSort

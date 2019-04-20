@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChartType, ChartDataSets, ChartOptions } from 'chart.js';
+import { ChartType, ChartOptions } from 'chart.js';
 import { take, takeUntil } from 'rxjs/operators';
 
 import { DataService } from 'src/app/core/services/data.service';
@@ -20,15 +20,26 @@ import { Util } from 'src/app/shared/utils/util';
 })
 export class DataStatisticsComponent extends Subscribable implements OnInit {
 
+  /**
+   * True when the charts are ready.
+   */
   public chartReady: boolean;
 
+  /**
+   * Stores the statistics.
+   */
   public statistics: DataStatisticType;
 
+  /**
+   * Charts that are going to be displayed.
+   */
   public charts: Array<any>;
 
+  /**
+   * Charts default options.
+   */
   public barChartOptions: ChartOptions = {
     responsive: true,
-    // We use these empty structures as placeholders for dynamic theming.
     scales: { xAxes: [{}], yAxes: [{}] },
     plugins: {
       datalabels: {
@@ -37,12 +48,11 @@ export class DataStatisticsComponent extends Subscribable implements OnInit {
       }
     }
   };
-  public barChartLabels: string[] = [];
-  public barChartType: ChartType = 'line';
-  public barChartLegend = true;
 
-  public barChartData: ChartDataSets[] = [
-  ];
+  /**
+   * Default chart type.
+   */
+  public barChartType: ChartType = 'line';
 
   constructor(
     private dataService: DataService,
@@ -72,6 +82,9 @@ export class DataStatisticsComponent extends Subscribable implements OnInit {
     });
    }
 
+  /**
+   * Loads statistics.
+   */
   ngOnInit() {
     forkJoin(
       this.gatewayService.getGatewaysByUserId(this.appService.user.id),
@@ -86,7 +99,7 @@ export class DataStatisticsComponent extends Subscribable implements OnInit {
       for (const process of responses[1]) {
         processesMap[process.id] = process.name;
       }
-      this.dataService.getStatistics().pipe(take(1), takeUntil(this.destroyed))
+      this.dataService.getStatistics(this.appService.user.id).pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
         (statistics: DataStatistic[]) => {
           if (statistics.length === 0) {
@@ -133,4 +146,10 @@ export class DataStatisticsComponent extends Subscribable implements OnInit {
 
   }
 
+  /**
+   * Change the current chart.
+   */
+  changeChart(chart) {
+    this.barChartType = chart.value;
+  }
 }

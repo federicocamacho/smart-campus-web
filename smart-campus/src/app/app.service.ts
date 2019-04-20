@@ -107,11 +107,11 @@ export class AppService {
         error = ApiError.fromGeneric(err);
       }
     }
-    console.log(error);
+    console.error(error);
     this.isBusy = false;
 
     if (showError) {
-      this.showSnack(error.message);
+      this.showSnack(error.message, 'OK', Util.snackOptions(), true);
     }
   }
 
@@ -136,8 +136,11 @@ export class AppService {
    * @param [action='OK'] - Button action.
    * @param [config=Util.snackOptions()] - Snackbar configuration.
    */
-  public showSnack(message: string, action: string = 'OK', config: MatSnackBarConfig = Util.snackOptions()): void {
+  public showSnack(message: string, action: string = 'OK', config: MatSnackBarConfig = Util.snackOptions(), isError?: boolean): void {
     this.snackBar.dismiss();
+    if (isError) {
+      config.panelClass = 'error-message';
+    }
     this.snackBar.open(message, action, config);
   }
 

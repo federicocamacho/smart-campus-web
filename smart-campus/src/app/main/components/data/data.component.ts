@@ -201,11 +201,4 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
     this.expandedElement =  this.expandedElement === data ? null : data;
   }
 
-  /**
-   * Exports the table to an excel file.
-   *
-   */
-  public saveExcel() {
-    Util.exportAsExcelFile(this.dataSource.data, 'data');
-  }
 }
