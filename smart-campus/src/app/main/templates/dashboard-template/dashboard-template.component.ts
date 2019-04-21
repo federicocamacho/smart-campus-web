@@ -77,7 +77,6 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit, 
     this.rxStompService.watch(`notifications/${ this.appService.user.id }`)
     .pipe(takeUntil(this.destroyed))
     .subscribe((message: Message) => {
-      this.dashboardService.refreshStatistics.emit();
       try {
         this.newNotification = JSON.parse(message.body);
       } catch (err) {

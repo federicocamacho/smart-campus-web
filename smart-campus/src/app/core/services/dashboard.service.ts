@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter, OnDestroy } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import { CoreModule } from 'src/app/core/core.module';
 
@@ -11,7 +11,7 @@ import { CoreModule } from 'src/app/core/core.module';
 @Injectable({
   providedIn: CoreModule
 })
-export class DashboardService implements OnDestroy {
+export class DashboardService {
 
   /**
    * Indicates if the user card is opened or not.
@@ -32,20 +32,9 @@ export class DashboardService implements OnDestroy {
   public isNotificationShown: boolean;
 
   /**
-   * Emits an event any time it's necessary to refresh the administration statistics.
-   *
-   */
-  public refreshStatistics: EventEmitter<void> = new EventEmitter();
-
-  /**
    * Creates an instance of DashboardService.
    * @date 2019-04-09
    */
   constructor() { }
-
-  ngOnDestroy() {
-    this.refreshStatistics.complete();
-    this.refreshStatistics = null;
-  }
 
 }

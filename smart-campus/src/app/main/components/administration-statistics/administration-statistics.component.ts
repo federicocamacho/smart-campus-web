@@ -9,6 +9,9 @@ import { DataService } from 'src/app/core/services/data.service';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { Util } from 'src/app/shared/utils/util';
+import { RxStompService } from '@stomp/ng2-stompjs';
+import { Message } from '@stomp/stompjs';
+import { Statistic } from 'src/app/shared/models/statistic';
 
 /**
  * Administrations statistics component.
@@ -93,20 +96,14 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
    */
   constructor(
     private appService: AppService,
-    private cdr: ChangeDetectorRef,
-    private dashboardService: DashboardService,
-    private dataService: DataService) {
+    private dataService: DataService,
+    private rxStompService: RxStompService) {
     super();
   }
 
   ngOnInit() {
     this.getStatistics();
-    this.dashboardService.refreshStatistics
-      .pipe(takeUntil(this.destroyed))
-      .subscribe(_ => {
-        this.getStatistics();
-        this.cdr.detectChanges();
-      });
+    this.subscribeToUpdates();
   }
 
   /**
@@ -132,26 +129,52 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
             aliveData.push(statusChange.alive);
             deathData.push(statusChange.death);
           }
-          this.statusChartData = [
+          this.statusChartData.push(
             {
               data: aliveData,
               label: 'Disponible',
               backgroundColor: 'rgb(36, 210, 181)',
               hoverBackgroundColor: 'green'
-            },
+            }
+          );
+          this.statusChartData.push(
             {
               data: deathData,
               label: 'No disponible',
               backgroundColor: 'rgb(255, 92, 108)',
               hoverBackgroundColor: 'red'
             }
-          ];
+          );
           this.chartsReady = true;
         },
         (err: HttpErrorResponse) => this.appService.handleGenericError(err)
       );
   }
 
+  private subscribeToUpdates(): void {
+    this.rxStompService.watch(`updates/${ this.appService.user.id }`)
+    .pipe(takeUntil(this.destroyed))
+    .subscribe((message: Message) => {
+      try {
+        const stat: AdminStatistics = JSON.parse(message.body);
+        console.log('update received', stat);
+        if (this.statistics) {
+          this.statistics.gatewaysAlive += stat.gatewaysAlive;
+          this.statistics.gatewaysDeath += stat.gatewaysDeath;
+          this.statistics.processesAlive += stat.processesAlive;
+          this.statistics.processesDeath += stat.processesDeath;
+          const statusChange = stat.changes[0];
+          this.gatewayData = [ this.statistics.gatewaysAlive, this.statistics.gatewaysDeath ];
+          this.processData = [ this.statistics.processesAlive, this.statistics.processesDeath ];
+          this.statusChartLabels.push(this.dateToChartString(statusChange.sentDate));
+          this.statusChartData[0].data.push(statusChange.alive);
+          this.statusChartData[1].data.push(statusChange.death);
+        }
+      } catch (err) {
+        console.error('An error occurred parsing a notification', err);
+      }
+    });
+  }
   /**
    * Converts a date (in string or date format) to a String (short) used for the charts.
    *
