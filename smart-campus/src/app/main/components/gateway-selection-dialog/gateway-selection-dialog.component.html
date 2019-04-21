@@ -5,7 +5,7 @@
       <mat-label>Gateway:</mat-label>
       <mat-select [(value)]="selectedGateway">
         <mat-option
-          *ngFor="let gateway of gateways"
+          *ngFor="let gateway of gateways; trackBy:identity"
           [value]="gateway">
           {{ gateway.name }}
         </mat-option>

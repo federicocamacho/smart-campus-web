@@ -9,7 +9,11 @@
     <h5 class="section-subtitle">Gestiona tus gateways.</h5>
   </div>
   <div>
-    <sc-export-excel-button [json]="dataSource.data" filename="gateways"></sc-export-excel-button>
+    <sc-export-excel-button
+      *ngIf="dataSource.data.length > 0"
+      [json]="dataSource.data"
+      filename="gateways">
+    </sc-export-excel-button>
     <button
       mat-raised-button
       color="primary"
@@ -82,7 +86,11 @@
   <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%" *ngIf="filterType === 'APPLICATION'">
     <mat-label>Valor:</mat-label>
     <mat-select [(value)]="filterValue" (selectionChange)="applyFilter()">
-      <mat-option *ngFor="let item of applicationsSelect" [value]="item.id">{{ item.name }}</mat-option>
+      <mat-option
+        *ngFor="let item of applicationsSelect; trackBy:identity"
+        [value]="item.id">
+        {{ item.name }}
+      </mat-option>
     </mat-select>
 </mat-form-field>
 </div>

@@ -1,12 +1,13 @@
+import { Entity } from './entity';
+
 /**
  * User of the application.
  *
  * @date 2019-03-30
  * @export
  */
-export class User {
+export class User extends Entity {
 
-  public id: number;
   public name: string;
   public username: string;
   public email: string;
@@ -23,6 +24,7 @@ export class User {
    * @param admin indicates if the user is an administrator or not.
    */
   constructor(id?: number, name?: string, username?: string, email?: string, admin?: boolean) {
+    super();
     this.id = id;
     this.email = email;
     this.name = name;

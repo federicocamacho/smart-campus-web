@@ -201,4 +201,16 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
     this.expandedElement =  this.expandedElement === data ? null : data;
   }
 
+  /**
+   * Used for callback in trackBy for topics.
+   *
+   * @date 2019-04-20
+   * @param index - index of the element.
+   * @param item - item to be tracked.
+   * @returns - the identifier, in this case, the topic name.
+   */
+  public topicIdentity(index: number, item: string): string {
+    return item;
+  }
+
 }

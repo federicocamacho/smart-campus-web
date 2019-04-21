@@ -8,7 +8,11 @@
       <h5 class="section-subtitle">Gestiona tus procesos.</h5>
     </div>
     <div>
-      <sc-export-excel-button [json]="dataSource.data" filename="procesos"></sc-export-excel-button>
+      <sc-export-excel-button
+        *ngIf="dataSource.data.length > 0"
+        [json]="dataSource.data"
+        filename="procesos">
+      </sc-export-excel-button>
       <button
         mat-raised-button
         color="primary"

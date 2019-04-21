@@ -53,7 +53,11 @@
       <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%" *ngSwitchCase="'GATEWAY'">
         <mat-label>Gateway:</mat-label>
         <mat-select [(value)]="filterValue" (selectionChange)="applyFilter()">
-          <mat-option *ngFor="let item of gatewaysSelect" [value]="item.id">{{ item.name }}</mat-option>
+          <mat-option
+            *ngFor="let item of gatewaysSelect; trackBy:identity"
+            [value]="item.id">
+            {{ item.name }}
+          </mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%" *ngSwitchCase="'PROCESS'">

@@ -3,6 +3,7 @@ import { ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Subscribable } from './subscribable';
+import { Entity } from '../models/entity';
 
 /**
  * General Datatable class, used to show all the data tables in the application.
@@ -146,5 +147,4 @@ export abstract class DataTable<T, U> extends Subscribable {
     }
     this.applyFilter();
   }
-
 }

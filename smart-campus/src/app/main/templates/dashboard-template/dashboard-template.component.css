@@ -160,5 +160,8 @@ ul {
   }
 }
 
-
-
+@media screen and (min-width: 558px) and (max-width: 1092px) {
+  sc-section-card:last-child {
+    margin-right: 20px;
+  }
+}

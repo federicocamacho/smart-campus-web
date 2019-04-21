@@ -34,7 +34,11 @@
       <mat-form-field appearance="outline">
         <mat-label>Gateway al que pertenece:</mat-label>
         <mat-select matInput name="selectGateway" #selectGateway="ngModel" [(ngModel)]="process.gatewayId" required>
-          <mat-option *ngFor="let item of gatewaysSelect" [value]="item.id">{{ item.name }}</mat-option>
+          <mat-option
+            *ngFor="let item of gatewaysSelect; trackBy:identity"
+            [value]="item.id">
+            {{ item.name }}
+          </mat-option>
         </mat-select>
         <mat-error *ngIf="selectGateway.hasError('required')">
         Gateway al que pertenece requerido.

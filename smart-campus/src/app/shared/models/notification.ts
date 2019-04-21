@@ -1,6 +1,7 @@
-export class Notification {
+import { Entity } from './entity';
 
-  public id: number;
+export class Notification extends Entity {
+
   public gatewayId: number;
   public gatewayName: string;
   public userId: number;
@@ -10,6 +11,7 @@ export class Notification {
   public read: boolean;
   public timestamp: Date;
   public message: string;
+  public hidden: boolean;
 
   constructor(
     id: number,
@@ -22,6 +24,7 @@ export class Notification {
     read: boolean,
     timestamp: Date,
     message: string) {
+      super();
       this.id = id;
       this.userId = userId;
       this.gatewayId = gatewayId;

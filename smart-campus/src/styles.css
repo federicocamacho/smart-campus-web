@@ -206,6 +206,7 @@ input.login-input.ng-invalid.ng-touched::placeholder {
 
   .generic-table tr.mat-row {
     height: unset;
+    padding-top: 20px;
   }
 
   .generic-table td.mat-cell {
