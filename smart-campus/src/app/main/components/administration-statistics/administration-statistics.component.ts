@@ -50,6 +50,10 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
    */
   public processData: number[] = [];
 
+  public aliveData: number[] = [];
+
+  public deathData: number[] = [];
+
   /**
    * Labels used in the charts for all 'Alive', 'Death' chart types.
    *
@@ -120,18 +124,16 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
           this.gatewayData = [ stats.gatewaysAlive, stats.gatewaysDeath ];
           this.processData = [ stats.processesAlive, stats.processesDeath ];
           this.statusChartLabels = [];
-          const aliveData = [];
-          const deathData = [];
           stats.changes = stats.changes
             .sort((a, b) => new Date(a.sentDate).getTime() - new Date(b.sentDate).getTime());
           for (const statusChange of stats.changes) {
             this.statusChartLabels.push(this.dateToChartString(statusChange.sentDate));
-            aliveData.push(statusChange.alive);
-            deathData.push(statusChange.death);
+            this.aliveData.push(statusChange.alive);
+            this.deathData.push(statusChange.death);
           }
           this.statusChartData.push(
             {
-              data: aliveData,
+              data: this.aliveData,
               label: 'Disponible',
               backgroundColor: 'rgb(36, 210, 181)',
               hoverBackgroundColor: 'green'
@@ -139,7 +141,7 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
           );
           this.statusChartData.push(
             {
-              data: deathData,
+              data: this.deathData,
               label: 'No disponible',
               backgroundColor: 'rgb(255, 92, 108)',
               hoverBackgroundColor: 'red'
@@ -167,8 +169,8 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
           this.gatewayData = [ this.statistics.gatewaysAlive, this.statistics.gatewaysDeath ];
           this.processData = [ this.statistics.processesAlive, this.statistics.processesDeath ];
           this.statusChartLabels.push(this.dateToChartString(statusChange.sentDate));
-          this.statusChartData[0].data.push(statusChange.alive);
-          this.statusChartData[1].data.push(statusChange.death);
+          this.aliveData.push(statusChange.alive);
+          this.deathData.push(statusChange.death);
         }
       } catch (err) {
         console.error('An error occurred parsing a notification', err);
