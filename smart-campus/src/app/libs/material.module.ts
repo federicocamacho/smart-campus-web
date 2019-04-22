@@ -17,7 +17,9 @@ import {
   MatPaginatorIntl,
   MatBadgeModule,
   MatDatepickerModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatTabsModule,
+  MatButtonToggleModule
 } from '@angular/material';
 import { getSpanishPaginatorIntl } from 'src/spanish-paginator-intl';
 
@@ -46,7 +48,9 @@ import { getSpanishPaginatorIntl } from 'src/spanish-paginator-intl';
     MatPaginatorModule,
     MatSortModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTabsModule,
+    MatButtonToggleModule
   ],
   exports: [
     MatButtonModule,
@@ -64,7 +68,9 @@ import { getSpanishPaginatorIntl } from 'src/spanish-paginator-intl';
     MatPaginatorModule,
     MatSortModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatTabsModule,
+    MatButtonToggleModule
   ],
   providers: [
     { provide: MatPaginatorIntl, useValue: getSpanishPaginatorIntl() }

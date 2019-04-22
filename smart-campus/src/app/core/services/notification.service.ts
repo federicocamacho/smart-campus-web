@@ -74,6 +74,7 @@ export class NotificationService {
 
   /**
    * Removes a notification identified by its id.
+   * This is not a deletion from the database but is just hide the notifications.
    *
    * @date 2019-04-14
    * @param notificationId - id of the notification

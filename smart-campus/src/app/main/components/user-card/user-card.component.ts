@@ -120,7 +120,6 @@ export class UserCardComponent extends Subscribable {
     this.dashboardService.isUserCardOpened = false;
     this.appService.user = null;
     sessionStorage.clear();
-    console.log('login out');
     this.router.navigate(['/login']);
   }
 

@@ -7,20 +7,27 @@
       <h2 class="section-title">Procesos</h2>
       <h5 class="section-subtitle">Gestiona tus procesos.</h5>
     </div>
-    <button
-      mat-raised-button
-      color="primary"
-      fxHide.xs
-      (click)="onCreateRecord()">
-      <mat-icon style="font-size: 20px">add</mat-icon>Crear nuevo
-    </button>
-    <button
-      mat-mini-fab
-      color="primary"
-      fxHide.gt-xs
-      (click)="onCreateRecord()">
-      <mat-icon style="font-size: 20px">add</mat-icon>
-    </button>
+    <div>
+      <sc-export-excel-button
+        *ngIf="dataSource.data.length > 0"
+        [json]="dataSource.data"
+        filename="procesos">
+      </sc-export-excel-button>
+      <button
+        mat-raised-button
+        color="primary"
+        fxHide.xs
+        (click)="onCreateRecord()">
+        <mat-icon style="font-size: 20px">add</mat-icon>Crear nuevo
+      </button>
+      <button
+        mat-mini-fab
+        color="primary"
+        fxHide.gt-xs
+        (click)="onCreateRecord()">
+        <mat-icon style="font-size: 20px">add</mat-icon>
+      </button>
+    </div>
   </div>
   <div
     fxLayout="row"
@@ -119,7 +126,7 @@
           <td mat-cell *matCellDef="let row">
             <div fxLayout="row">
               <span class="mobile-label">Estado:</span>
-              <span>
+              <span style="margin: auto;" [matTooltip]="row.alive ? 'Activo' : 'Inactivo'">
                 <i class="material-icons" [ngStyle]="{'color' : (row.alive ? 'green' : 'red')}">fiber_manual_record</i>
               </span>
             </div>

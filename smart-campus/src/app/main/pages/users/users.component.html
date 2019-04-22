@@ -3,12 +3,20 @@
     <h2 class="section-title">Usuarios</h2>
     <h5 class="section-subtitle">Gestiona los usuarios.</h5>
   </div>
-  <button mat-raised-button color="primary" fxHide.xs (click)="onCreateRecord()">
-    <mat-icon style="font-size: 20px">add</mat-icon>Crear nuevo
-  </button>
-  <button mat-mini-fab color="primary" fxHide.gt-xs (click)="onCreateRecord()">
-    <mat-icon style="font-size: 20px">add</mat-icon>
-  </button>
+  <div>
+    <sc-export-excel-button
+      *ngIf="dataSource.data.length > 0"
+      [json]="dataSource.data"
+      filename="usuarios">
+    </sc-export-excel-button>
+    <button mat-raised-button color="primary" fxHide.xs (click)="onCreateRecord()">
+      <mat-icon style="font-size: 20px">add</mat-icon>Crear nuevo
+    </button>
+    <button mat-mini-fab color="primary" fxHide.gt-xs (click)="onCreateRecord()">
+      <mat-icon style="font-size: 20px">add</mat-icon>
+    </button>
+  </div>
+
 </div>
 <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" class="filter-container">
   <mat-form-field fxFlex="20%" fxFlex.sm="50%" fxFlex.xs="100%">

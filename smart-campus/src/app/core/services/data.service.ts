@@ -4,10 +4,11 @@ import { Observable } from 'rxjs';
 
 import { CoreModule } from 'src/app/core/core.module';
 import { Data } from 'src/app/shared/models/data';
-import { DataFilter } from 'src/app/shared/models/types';
 
 import { environment } from 'src/environments/environment';
 import { Util } from 'src/app/shared/utils/util';
+import { DataStatistic } from 'src/app/shared/models/data-statistic';
+import { AdminStatistics } from 'src/app/shared/models/admin-statistics';
 
 @Injectable({
   providedIn: CoreModule
@@ -37,4 +38,19 @@ export class DataService {
     query += '&endDate=' + Util.formatDate(endDate);
     return this.http.get<Data[]>(`${ environment.dataService }/data/historic?${ query }`, Util.options());
   }
+
+  /**
+   * Returns the statistics calculated in the backend.
+   */
+  public getStatistics(userId: number): Observable<DataStatistic[]> {
+    return this.http.get<DataStatistic[]>(`${environment.dataService}/data/statistics/${userId}`, Util.options());
+  }
+
+  /**
+   * Returns the administration statistics calculated in the backend.
+   */
+  public getAdminStatistics(userId: number): Observable<AdminStatistics> {
+    return this.http.get<AdminStatistics>(`${ environment.adminService }/statistics/${ userId }`, Util.options());
+  }
+
 }

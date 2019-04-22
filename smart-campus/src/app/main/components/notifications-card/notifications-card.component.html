@@ -6,8 +6,8 @@
       class="notifications-list"
       *ngIf="notificationService.unreadNotificationsCount > 0; else noUnreadNotifications">
       <div scAnimated="fadeIn"
-        *ngFor="let notification of notificationService.notifications; let i = index">
-        <div class="notification-container" *ngIf="!notification.read && i < 10" (click)="openNotification(notification.id)">
+        *ngFor="let notification of notificationService.notifications | callbackFilter:filterCallback | slice:0:10; trackBy:identity">
+        <div class="notification-container" (click)="openNotification(notification.id)">
           <div
             class="notification-img-container"
             fxFlex="50px"
@@ -27,7 +27,9 @@
                   <span>{{ notification.gatewayName }}</span>
                 </h3>
             </ng-template>
-            <h5 class="notification-status">
+            <h5
+              class="notification-status"
+              [ngStyle]="{ 'background-color': notification.alive ? 'rgb(36, 210, 181)' : 'rgb(255, 92, 108)' }">
               {{ notification.alive ? 'DISPONIBLE' : 'INACTIVO' }}
             </h5>
             <h5 class="notification-timestamp" *ngIf="isToday(notification.timestamp); else timestampOtherDay">

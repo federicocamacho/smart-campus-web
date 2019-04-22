@@ -1,4 +1,5 @@
 export class Section {
+
   public title: string;
   public description: string;
   public url: string;
@@ -8,12 +9,11 @@ export class Section {
   /**
    * Creates an instance of Section.
    *
-   * @param {string} [title] of the section.
-   * @param {string} [description] of the section.
-   * @param {string} [url] of the section.
-   * @param {string} [materialIconName] of the section's card.
-   * @param {string} [cardColor] of the section's card.
-   * @memberof Section
+   * @param [title] of the section.
+   * @param [description] of the section.
+   * @param [url] of the section.
+   * @param [materialIconName] of the section's card.
+   * @param [cardColor] of the section's card.
    */
   constructor(title?: string, description?: string, url?: string, materialIconName?: string, cardColor?: string) {
     this.title = title;

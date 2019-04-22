@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+
 import { CoreModule } from 'src/app/core/core.module';
 
 /**
@@ -24,6 +25,10 @@ export class DashboardService {
    */
   public isNotificationsCardOpened: boolean;
 
+  /**
+   * Indicates if the notification card (alert) is shown or not.
+   *
+   */
   public isNotificationShown: boolean;
 
   /**

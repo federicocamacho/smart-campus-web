@@ -108,15 +108,17 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
       (data: Data[]) => {
+        const gatewayMap = new Map();
+        const processMap = new Map();
+        for (const gateway of this.gateways) {
+          gatewayMap.set(gateway.id, gateway.name);
+        }
+        for (const process of this.processes) {
+          processMap.set(process.id, process.name);
+        }
         this.dataSource.data = data.map(dataE => {
-          const gateway = this.gateways.find(gatewayE => gatewayE.id === dataE.gatewayId);
-          const process = this.processes.find(processE => processE.id === dataE.processId);
-          if (gateway) {
-            dataE.gatewayName = gateway.name;
-          }
-          if (process) {
-            dataE.processName = process.name;
-          }
+          dataE.gatewayName = gatewayMap.get(Number(dataE.gatewayId));
+          dataE.processName = processMap.get(Number(dataE.processId));
           return dataE;
         });
         this.searchAlreadyDone = true;
@@ -200,10 +202,15 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
   }
 
   /**
-   * Exports the table to an excel file.
+   * Used for callback in trackBy for topics.
    *
+   * @date 2019-04-20
+   * @param index - index of the element.
+   * @param item - item to be tracked.
+   * @returns - the identifier, in this case, the topic name.
    */
-  public saveExcel() {
-    Util.exportAsExcelFile(this.dataSource.data, 'data');
+  public topicIdentity(index: number, item: string): string {
+    return item;
   }
+
 }

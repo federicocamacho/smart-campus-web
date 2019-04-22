@@ -3,10 +3,10 @@ import { Application } from './application';
 import { Device } from './device';
 import { Process } from './process';
 import { Property } from './property';
+import { Entity } from './entity';
 
-export class Gateway {
+export class Gateway extends Entity {
 
-  public id: number;
   public name: string;
   public description: string;
   public ip: string;
@@ -28,6 +28,7 @@ export class Gateway {
     properties: Property[] = [],
     devices: Device[] = [],
     processes: Process[] = []) {
+      super();
       this.id = id;
       this.name = name;
       this.description = description;

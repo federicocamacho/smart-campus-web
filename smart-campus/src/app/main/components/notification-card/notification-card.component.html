@@ -21,7 +21,9 @@
           <span>{{ notification.gatewayName }}</span>
         </h3>
     </ng-template>
-    <h5 class="notification-status">
+    <h5
+      class="notification-status"
+      [ngStyle]="{ 'background-color': notification.alive ? 'rgb(36, 210, 181)' : 'rgb(255, 92, 108)' }">
       {{ notification.alive ? 'DISPONIBLE' : 'INACTIVO' }}
     </h5>
     <h5 class="notification-timestamp" *ngIf="isToday(notification.timestamp); else timestampOtherDay">
