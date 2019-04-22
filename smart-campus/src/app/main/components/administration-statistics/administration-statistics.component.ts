@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntil, take } from 'rxjs/operators';
 import { ChartOptions, ChartDataSets } from 'chart.js';
@@ -6,12 +6,10 @@ import { ChartOptions, ChartDataSets } from 'chart.js';
 import { AdminStatistics } from 'src/app/shared/models/admin-statistics';
 import { AppService } from 'src/app/app.service';
 import { DataService } from 'src/app/core/services/data.service';
-import { DashboardService } from 'src/app/core/services/dashboard.service';
 import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { Util } from 'src/app/shared/utils/util';
 import { RxStompService } from '@stomp/ng2-stompjs';
 import { Message } from '@stomp/stompjs';
-import { Statistic } from 'src/app/shared/models/statistic';
 
 /**
  * Administrations statistics component.
