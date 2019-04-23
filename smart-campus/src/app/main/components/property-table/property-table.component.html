@@ -119,11 +119,13 @@
         *matCellDef="let element; let i = index"
         class="actions-cell"
       >
+      <div *ngIf="element.type !== 'REPORTED'">
         <button
           class="desktop-action"
           mat-icon-button
           style="color: rgb(36, 210, 181)"
           (click)="onEditProperty(element)"
+          *ngIf="propertyCanBeEdited(element)"
         >
           <mat-icon>edit</mat-icon>
         </button>
@@ -133,6 +135,7 @@
           mat-button
           color="primary"
           (click)="onEditProperty(element)"
+          *ngIf="propertyCanBeEdited(element)"
         >
           <mat-icon style="margin-right: 3px;">edit</mat-icon>Editar
         </button>
@@ -141,6 +144,7 @@
           class="desktop-action"
           style="color: red;"
           (click)="onDeleteRecord(element)"
+          *ngIf="propertyCanBeDeleted(element)"
         >
           <mat-icon>delete</mat-icon>
         </button>
@@ -150,9 +154,11 @@
           mat-button
           color="warn"
           (click)="onDeleteRecord(element)"
+          *ngIf="propertyCanBeDeleted(element)"
         >
           <mat-icon>delete</mat-icon> Eliminar
         </button>
+      </div>
       </td>
     </ng-container>
 

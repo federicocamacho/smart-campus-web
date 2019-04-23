@@ -6,7 +6,7 @@
     <div fxLayout="column" scAnimated="fadeIn">
       <mat-form-field fxFlex="100%" appearance="outline">
         <mat-label>Tipo:</mat-label>
-        <mat-select [(value)]="data.newProperty.type" (selectionChange)="checkIfPropertyExist()">
+        <mat-select [(value)]="data.newProperty.type" (selectionChange)="checkIfPropertyExist()" [disabled]="data.onlyValueModifiable">
           <mat-option value="CONFIG">Configuración</mat-option>
           <mat-option value="INFORMATIVE">Informativa</mat-option>
         </mat-select>
@@ -20,6 +20,7 @@
           type="text"
           placeholder="Nombre"
           required="true"
+          [disabled]="data.onlyValueModifiable"
           (keyup)="checkIfPropertyExist()"
           [(ngModel)]="data.newProperty.name"
         />

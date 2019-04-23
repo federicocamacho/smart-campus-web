@@ -10,6 +10,7 @@ import { PropertyEditionDialogComponent } from '../property-edition-dialog/prope
 import { PropertiesFilter } from 'src/app/shared/models/types';
 import { PropertyDialog } from '../property-edition-dialog/property-dialog';
 import { Util } from 'src/app/shared/utils/util';
+import { PropertyRule } from './property-rule.class';
 
 @Component({
   selector: 'sc-property-table',
@@ -23,7 +24,10 @@ export class PropertyTableComponent extends DataTable<Property, PropertiesFilter
    */
   @Input() properties: Property[];
 
-  public dataSource: MatTableDataSource<Property>;
+  /**
+   * Receives the list properties which has rules.
+   */
+  @Input() propertyRules: PropertyRule[];
 
   /**
    * Creates an instance of PropertyTableComponent.
@@ -31,6 +35,7 @@ export class PropertyTableComponent extends DataTable<Property, PropertiesFilter
   constructor(private dialog: MatDialog) {
       super();
       this.displayedColumns = [ 'type', 'name', 'value', 'actions' ];
+      this.propertyRules = [];
   }
 
   ngOnInit() {
@@ -80,9 +85,14 @@ export class PropertyTableComponent extends DataTable<Property, PropertiesFilter
    * @param property - property to be updated.
    */
   public onEditProperty(property: Property): void {
+    if (!this.propertyCanBeEdited(property) || property.type === 'REPORTED') {
+      return;
+    }
+
     const editDialog = this.dialog.open(PropertyEditionDialogComponent, {
       width: '500px',
-      data: new PropertyDialog(this.dataSource.data, new Property(property.name, property.type, property.value), property, false)
+      data: new PropertyDialog(this.dataSource.data, new Property(property.name, property.type, property.value),
+        property, false, this.propertyOnlyValueModifiable(property))
     });
 
     editDialog.afterClosed()
@@ -107,6 +117,10 @@ export class PropertyTableComponent extends DataTable<Property, PropertiesFilter
    * @param property - property to be deleted.
    */
   public onDeleteRecord(property: Property): void {
+    if (!this.propertyCanBeDeleted(property) || property.type === 'REPORTED') {
+      return;
+    }
+
     const deleteDialog = this.dialog.open(ConfirmDialogComponent, {
       width: '350px',
       data: new DialogData(
@@ -129,6 +143,54 @@ export class PropertyTableComponent extends DataTable<Property, PropertiesFilter
           return null;
         }
       });
+  }
+
+  /**
+   * Indicates if the passed property can be deleted or not.
+   *
+   * @param property - Property to be analyzed.
+   */
+  public propertyCanBeDeleted(property: Property): boolean {
+    const foundPropertyRule = this.propertyRules.find(propertyRule => propertyRule.type === property.type &&
+      propertyRule.name === property.name);
+
+    if (foundPropertyRule && !foundPropertyRule.canBeDeleted) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Indicates if the passed property can be edited or not.
+   *
+   * @param property - Property to be analyzed.
+   */
+  public propertyCanBeEdited(property: Property): boolean {
+    const foundPropertyRule = this.propertyRules.find(propertyRule => propertyRule.type === property.type &&
+      propertyRule.name === property.name);
+
+    if (foundPropertyRule && !foundPropertyRule.canBeEdited) {
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * Indicates if only the value can be modified of the passed property.
+   *
+   * @param property - Property to be analyzed.
+   */
+  private propertyOnlyValueModifiable(property: Property): boolean {
+    const foundPropertyRule = this.propertyRules.find(propertyRule => propertyRule.type === property.type &&
+      propertyRule.name === property.name);
+
+    if (foundPropertyRule && !foundPropertyRule.onlyValueModifiable) {
+      return false;
+    }
+
+    return true;
   }
 
   /**

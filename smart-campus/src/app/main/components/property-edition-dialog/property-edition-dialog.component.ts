@@ -56,9 +56,12 @@ export class PropertyEditionDialogComponent implements OnInit {
     if (this.data.isCreation) {
       this.data.currentProperties.push(this.data.newProperty);
     } else {
+      if (this.data.onlyValueModifiable) {
+        this.data.oldProperty.value = this.data.newProperty.value;
+        return;
+      }
       this.data.oldProperty.name = this.data.newProperty.name;
       this.data.oldProperty.type = this.data.newProperty.type;
-      this.data.oldProperty.value = this.data.newProperty.value;
     }
   }
 
