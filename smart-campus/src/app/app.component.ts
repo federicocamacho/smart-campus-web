@@ -1,5 +1,8 @@
 import { AppService } from './app.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Subscribable } from './shared/utils/subscribable';
+import { RxStompService } from '@stomp/ng2-stompjs';
+import { take, takeUntil } from 'rxjs/operators';
 
 /**
  * Main component used to bootstrap the application.
@@ -12,11 +15,24 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent extends Subscribable implements OnInit {
 
   public title: string;
 
-  constructor(public appService: AppService) {
+  constructor(public appService: AppService, private rxStompService: RxStompService) {
+    super();
     this.title = 'Smart Campus';
+  }
+
+  ngOnInit() {
+    this.rxStompService.webSocketErrors$
+      .pipe(take(1), takeUntil(this.destroyed)).subscribe(
+        (event: Event) => {
+          if (event.type === 'error') {
+            console.error('An error occurred with the broker. Stopping subscription.');
+            this.rxStompService.deactivate();
+          }
+        }
+      );
   }
 }
