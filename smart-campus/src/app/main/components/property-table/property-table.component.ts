@@ -186,11 +186,11 @@ export class PropertyTableComponent extends DataTable<Property, PropertiesFilter
     const foundPropertyRule = this.propertyRules.find(propertyRule => propertyRule.type === property.type &&
       propertyRule.name === property.name);
 
-    if (foundPropertyRule && !foundPropertyRule.onlyValueModifiable) {
-      return false;
+    if (foundPropertyRule && foundPropertyRule.onlyValueModifiable) {
+      return true;
     }
 
-    return true;
+    return false;
   }
 
   /**
