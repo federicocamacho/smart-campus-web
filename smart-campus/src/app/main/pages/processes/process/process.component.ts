@@ -9,6 +9,8 @@ import { GatewayService } from 'src/app/core/services/gateway.service';
 import { Process } from 'src/app/shared/models/process';
 import { ProcessService } from 'src/app/core/services/process.service';
 import { Gateway } from 'src/app/shared/models/gateway';
+import { PropertyRule } from 'src/app/main/components/property-table/property-rule.class';
+import { Property } from 'src/app/shared/models/property';
 
 @Component({
   selector: 'sc-process',
@@ -40,6 +42,12 @@ export class ProcessComponent extends Subscribable implements OnInit {
   private clone: boolean;
 
   /**
+   * Property's rules to apply in the table.
+   *
+   */
+  public propertyRules: PropertyRule[];
+
+  /**
    * Creates an instance of ProcessComponent.
    */
   constructor(
@@ -50,7 +58,9 @@ export class ProcessComponent extends Subscribable implements OnInit {
     private router: Router) {
       super();
       this.process = new Process();
+      this.process.properties = [new Property('topic', 'CONFIG', '')];
       this.gatewaysSelect = [];
+      this.propertyRules = [new PropertyRule('CONFIG', 'topic', false, true, true)];
     }
 
   /**
@@ -74,7 +84,17 @@ export class ProcessComponent extends Subscribable implements OnInit {
     this.processService.getProcessById(this.processId)
       .pipe(take(1), takeUntil(this.destroyed))
       .subscribe(
-        (process: Process) => this.process = process,
+        (process: Process) => {
+          if (!process.properties) {
+            process.properties = [];
+          }
+
+          if (!process.properties.some(property => property.name === 'topic' && property.type === 'CONFIG')) {
+            process.properties.push(new Property('topic', 'CONFIG', ''));
+          }
+
+          this.process = process;
+        },
         (err: HttpErrorResponse) => {
           this.appService.handleGenericError(err);
           this.router.navigate([ '..' ], { relativeTo: this.activatedRoute });

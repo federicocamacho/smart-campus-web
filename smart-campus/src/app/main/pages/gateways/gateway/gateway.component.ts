@@ -38,8 +38,7 @@ export class GatewayComponent extends Subscribable implements OnInit {
     private router: Router) {
       super();
       this.gateway = new Gateway();
-      this.propertyRules = [new PropertyRule('CONFIG', 'db_cleanup_time', false, true, true),
-      new PropertyRule('CONFIG', 'broker_url', false, false, false)];
+      this.propertyRules = [new PropertyRule('CONFIG', 'broker_url', false, false, false)];
     }
 
   /**
