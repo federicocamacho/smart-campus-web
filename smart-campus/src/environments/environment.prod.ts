@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  adminService: 'http://fe6d7de4.ngrok.io',
-  dataService: 'http://fe6d7de4.ngrok.io',
-  brokerUrl : 'ws://0.tcp.ngrok.io:10882/ws'
+  adminService: 'http://909ef2df.ngrok.io',
+  dataService: 'http://909ef2df.ngrok.io',
+  brokerUrl : 'ws://0.tcp.ngrok.io:18210/ws'
 };
