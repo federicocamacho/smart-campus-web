@@ -6,6 +6,7 @@ export class PropertyDialog {
     public currentProperties: Property[],
     public newProperty: Property,
     public oldProperty: Property,
-    public isCreation: boolean
+    public isCreation: boolean,
+    public onlyValueModifiable: boolean = false
   ) {}
 }

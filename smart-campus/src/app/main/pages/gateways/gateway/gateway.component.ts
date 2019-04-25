@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscribable } from 'src/app/shared/utils/subscribable';
-import { Gateway } from 'src/app/shared/models/gateway';
-import { AppService } from 'src/app/app.service';
-import { GatewayService } from 'src/app/core/services/gateway.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
 import { HttpErrorResponse } from '@angular/common/http';
+
+import { AppService } from 'src/app/app.service';
+import { Gateway } from 'src/app/shared/models/gateway';
+import { GatewayService } from 'src/app/core/services/gateway.service';
+import { PropertyRule } from 'src/app/main/components/property-table/property-rule.class';
 
 @Component({
   selector: 'sc-gateway',
@@ -16,6 +18,12 @@ export class GatewayComponent extends Subscribable implements OnInit {
 
   public gatewayId: number;
   public gateway: Gateway;
+
+  /**
+   * Property's rules to apply in the table.
+   *
+   */
+  public propertyRules: PropertyRule[];
 
   /**
    * True if we are going to clone a gateway, otherwise is false.
@@ -30,6 +38,7 @@ export class GatewayComponent extends Subscribable implements OnInit {
     private router: Router) {
       super();
       this.gateway = new Gateway();
+      this.propertyRules = [new PropertyRule('CONFIG', 'broker_url', false, false, false)];
     }
 
   /**
