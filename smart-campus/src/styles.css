@@ -129,6 +129,10 @@ input.login-input.ng-invalid.ng-touched::placeholder {
   border-bottom-width: 2px;
 }
 
+.generic-table .mat-row {
+  background-color: white !important;
+}
+
 .generic-table .mat-row:hover {
   background-color: #f6f6f6;
 }

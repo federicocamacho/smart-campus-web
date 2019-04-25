@@ -1,9 +1,11 @@
 {
-  "name": "smart-campus",
+  "name": "Smart Campus",
   "short_name": "smart-campus",
-  "theme_color": "#4caf50",
-  "background_color": "#fafafa",
-  "display": "standalone",
+  "theme_color": "transparent",
+  "background_color": "transparent",
+  "display": "fullscreen",
+  "description": "Plataforma de administración de Arquitectura IoT Smart Campus",
+  "orientation": "any",
   "scope": "/",
   "start_url": "/",
   "icons": [

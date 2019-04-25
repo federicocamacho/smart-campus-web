@@ -1,18 +1,18 @@
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MatTableDataSource, MatDialog } from '@angular/material';
-import { Router, ActivatedRoute } from '@angular/router';
 import { take, takeUntil } from 'rxjs/operators';
 
-import { AppService } from 'src/app/app.service';
-import { UsersFilter } from 'src/app/shared/models/types';
-import { Util } from 'src/app/shared/utils/util';
 import { ApiResponse } from 'src/app/shared/models/api-response';
+import { AppService } from 'src/app/app.service';
 import { ConfirmDialogComponent } from 'src/app/shared/components/confirm-dialog/confirm-dialog.component';
-import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data';
 import { DataTable } from 'src/app/shared/utils/data-table';
-import { UserService } from 'src/app/core/services/user.service';
+import { DialogData } from 'src/app/shared/components/confirm-dialog/dialog-data';
+import { UsersFilter } from 'src/app/shared/models/types';
 import { User } from 'src/app/shared/models/user';
+import { Util } from 'src/app/shared/utils/util';
+import { UserService } from 'src/app/core/services/user.service';
 
 /**
  * Page to manage all the users.
@@ -47,6 +47,7 @@ export class UsersComponent extends DataTable<User, UsersFilter> implements OnIn
   ngOnInit() {
     super.initDataTable();
     this.getUsers();
+    this.defaultSort();
   }
 
   /**
