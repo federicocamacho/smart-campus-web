@@ -83,7 +83,7 @@
   </div>
   <div scAnimated="fadeIn" class="table-container">
     <table
-      class="generic-table"
+      class="generic-table default-shadow"
       mat-table
       [dataSource]="dataSource"
       matSort
@@ -135,28 +135,12 @@
 
       <!-- Actions Column -->
       <ng-container matColumnDef="actions">
-        <th mat-header-cell *matHeaderCellDef style="width: 85px;"></th>
+        <th mat-header-cell *matHeaderCellDef></th>
         <td
           mat-cell
           *matCellDef="let element; let i = index"
           class="actions-cell">
-          <button
-            class="desktop-action"
-            mat-icon-button
-            matTooltip="Clonar"
-            style="color: rgb(103, 114, 229)"
-            (click)="onCloneRecord(element.id)">
-            <mat-icon>file_copy</mat-icon>
-          </button>
-          <button
-            class="mobile-action edit-mobile-action"
-            mat-stroked-button
-            mat-button
-            style="color: rgb(103, 114, 229)"
-            color="primary"
-            (click)="onCloneRecord(element.id)">
-            <mat-icon style="margin-right: 3px;">file_copy</mat-icon>Clonar
-          </button>
+          <!-- Edit action -->
           <button
             class="desktop-action"
             mat-icon-button
@@ -173,6 +157,7 @@
             (click)="onEditRecord(element.id)">
             <mat-icon style="margin-right: 3px;">edit</mat-icon>Editar
           </button>
+          <!-- Delete action -->
           <button
             mat-icon-button
             class="desktop-action"
@@ -189,6 +174,85 @@
             (click)="onDeleteRecord(element.id, element.name)">
             <mat-icon>delete</mat-icon> Eliminar
           </button>
+          <!-- Deployable use dropdown -->
+          <ng-container *ngIf="isDeployable(element); else notDeployable">
+            <!-- Dropdown button -->
+            <button
+              class="desktop-action"
+              [matMenuTriggerFor]="menu"
+              mat-icon-button
+              matTooltip="Ver más"
+              style="color: black">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <button
+              class="mobile-action edit-mobile-action"
+              [matMenuTriggerFor]="menu"
+              mat-stroked-button
+              mat-button
+              style="color: black"
+              color="primary">
+              <mat-icon style="margin-right: 3px; margin-top: -2px;">more_vert</mat-icon>Ver más
+            </button>
+            <!-- Dropdown options -->
+            <mat-menu #menu="matMenu">
+              <button
+                class="dropdown-action"
+                mat-menu-item
+                color="primary"
+                (click)="onCloneRecord(element.id)">
+                <mat-icon style="color: rgb(103, 114, 229)">file_copy</mat-icon>Clonar
+              </button>
+              <ng-container
+                *ngIf="!element.alive; else processDeath">
+                <button
+                  class="dropdown-action"
+                  mat-menu-item
+                  color="primary"
+                  (click)="onDeployProcess(element, true)">
+                  <mat-icon>play_arrow</mat-icon>Desplegar
+                </button>
+              </ng-container>
+              <ng-template #processDeath>
+                <button
+                  class="dropdown-action"
+                  mat-menu-item
+                  color="primary"
+                  (click)="onDeployProcess(element, false)">
+                  <mat-icon style="color: rgb(255, 92, 108)">stop</mat-icon>Detener
+                </button>
+                <!-- Re deploy -->
+                <button
+                  class="dropdown-action"
+                  mat-menu-item
+                  color="primary"
+                  (click)="onDeployProcess(element, true)">
+                  <mat-icon style="color: rgb(36, 210, 181);">refresh</mat-icon>Reiniciar
+                </button>
+              </ng-template>
+            </mat-menu>
+            <!-- Copy action -->
+          </ng-container>
+          <!-- Copy action -->
+          <ng-template #notDeployable>
+            <button
+              class="desktop-action"
+              mat-icon-button
+              matTooltip="Clonar"
+              style="color: rgb(103, 114, 229)"
+              (click)="onCloneRecord(element.id)">
+              <mat-icon>file_copy</mat-icon>
+            </button>
+            <button
+              class="mobile-action edit-mobile-action"
+              mat-stroked-button
+              mat-button
+              style="color: rgb(103, 114, 229)"
+              color="primary"
+              (click)="onCloneRecord(element.id)">
+              <mat-icon style="margin-right: 3px;">file_copy</mat-icon>Clonar
+            </button>
+          </ng-template>
         </td>
       </ng-container>
 

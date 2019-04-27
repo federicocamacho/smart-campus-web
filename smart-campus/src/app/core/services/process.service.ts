@@ -81,4 +81,17 @@ export class ProcessService {
     return this.http.put<Process>(`${ environment.adminService }/processes/process/${ process.id }`,
       process, Util.options());
   }
+
+  /**
+   * Deploys a given process.
+   *
+   * @date 2019-04-24
+   * @param processId id of the process to be deployed/undeployed.
+   * @param deploy true to deploy it or re-deploy it, false to stop it.
+   * @returns an ApiResponse that indicates if the operation succeeded or not.
+   */
+  public deployProcess(processId: number, deploy: boolean): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(
+      `${ environment.adminService }/processes/process/${ processId }/deploy/${ deploy }`, null, Util.options());
+  }
 }

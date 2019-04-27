@@ -1,10 +1,10 @@
 export class ApiResponse {
 
-  public successful: boolean;
+  public sucessful: boolean;
   public message: string;
 
-  constructor(successful: boolean, message?: string) {
-    this.successful = successful;
+  constructor(sucessful: boolean, message?: string) {
+    this.sucessful = sucessful;
     this.message = message;
   }
 

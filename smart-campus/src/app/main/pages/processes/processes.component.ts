@@ -1,6 +1,6 @@
 import { ProcessService } from './../../../core/services/process.service';
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { DataTable } from 'src/app/shared/utils/data-table';
 import { Process } from 'src/app/shared/models/process';
@@ -175,6 +175,45 @@ export class ProcessesComponent extends DataTable<Process, ProcessesFilter> impl
         clone: true
       }
     });
+  }
+
+  /**
+   * Checks if the given process is deployable, checking if the process jar property exists
+   *
+   * @date 2019-04-27
+   * @param process - process to be deployed.
+   * @returns true if the process is deployable, false otherwise.
+   */
+  public isDeployable(process: Process): boolean {
+    if (!process.properties) {
+      return false;
+    }
+    return process.properties
+      .some(property => property.name.trim().toLowerCase() === 'process_jar' && property.type === 'CONFIG');
+  }
+
+  /**
+   * Executed when the user deploys/redeploys/undeploys the given process.
+   *
+   * @date 2019-04-27
+   * @param process - process to be deployed.
+   * @param deploy true if the process must be deployed/re-deployed false to stop it.
+   */
+  public onDeployProcess(process: Process, deploy: boolean): void {
+    this.processService.deployProcess(process.id, deploy)
+      .pipe(take(1), takeUntil(this.destroyed))
+      .subscribe(
+        (res: ApiResponse) => {
+          if (res.sucessful) {
+            console.log(process);
+            process.alive = deploy;
+            this.appService.showSnack(deploy ? 'Proceso desplegado correctamente' : 'Proceso detenido correctamente',
+            'OK', Util.snackOptions(), false);
+          } else {
+            this.appService.showSnack(res.message);
+          }
+        },
+        (err: HttpErrorResponse) => this.appService.handleGenericError(err));
   }
 
 }

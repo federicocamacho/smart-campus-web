@@ -18,4 +18,5 @@ export class Process extends Entity {
     this.alive = alive;
     this.gatewayId = gatewayId;
   }
+
 }
