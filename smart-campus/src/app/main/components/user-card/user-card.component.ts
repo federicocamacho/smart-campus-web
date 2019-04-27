@@ -100,7 +100,7 @@ export class UserCardComponent extends Subscribable {
         takeUntil(this.destroyed))
       .subscribe(
         (res: ApiResponse) => {
-          if (res.successful) {
+          if (res.sucessful) {
             this.onLogoutClicked();
             this.appService.showSnack('Usuario eliminado correctamente.');
           } else {

@@ -84,7 +84,7 @@ export class ApplicationsComponent extends DataTable<Application, ApplicationsFi
       .subscribe(
         (res: ApiResponse) => {
           this.appService.showSnack(res.message);
-          if (res.successful) {
+          if (res.sucessful) {
             this.applicationService.applications.splice(
               this.applicationService.applications.findIndex(application => application.id === id), 1);
             this.afterRecordDeleted();
