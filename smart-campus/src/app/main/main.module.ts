@@ -32,6 +32,7 @@ import { NotificationsCardComponent } from './components/notifications-card/noti
 import { DataComponent } from './components/data/data.component';
 import { NotificationCardComponent } from './components/notification-card/notification-card.component';
 import { DataStatisticsComponent } from './components/data-statistics/data-statistics.component';
+import { ProcessDataComponent } from './pages/process-data/process-data.component';
 import { ChartsModule } from 'ng2-charts';
 
 import localeES from '@angular/common/locales/es';
@@ -57,6 +58,7 @@ registerLocaleData(localeES, 'es');
     PropertyTableComponent,
     PropertyEditionDialogComponent,
     ProcessesComponent,
+    ProcessDataComponent,
     ProcessComponent,
     DevicesComponent,
     DeviceComponent,

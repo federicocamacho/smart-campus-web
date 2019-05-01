@@ -1,5 +1,5 @@
 import { AppService } from './app.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscribable } from './shared/utils/subscribable';
 import { RxStompService } from '@stomp/ng2-stompjs';
 import { take, takeUntil } from 'rxjs/operators';
@@ -15,7 +15,7 @@ import { take, takeUntil } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent extends Subscribable implements OnInit {
+export class AppComponent extends Subscribable implements OnInit, OnDestroy {
 
   public title: string;
 

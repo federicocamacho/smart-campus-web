@@ -22,6 +22,7 @@ import { ProfileComponent } from './main/pages/profile/profile.component';
 import { NotificationsComponent } from './main/pages/notifications/notifications.component';
 import { DataComponent } from './main/components/data/data.component';
 import { UsersGuard } from './core/guards/users.guard';
+import { ProcessDataComponent } from './main/pages/process-data/process-data.component';
 
 const routes: Routes = [
   {
@@ -112,6 +113,10 @@ const routes: Routes = [
       }
     ],
     canActivate: [ DashboardGuard ]
+  },
+  {
+    path: 'data',
+    component: ProcessDataComponent
   },
   {
     path: '**',
