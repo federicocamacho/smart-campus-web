@@ -6,7 +6,7 @@ import { IMessage } from '@stomp/stompjs';
 import { ChartDataSets } from 'chart.js';
 import { Label, BaseChartDirective } from 'ng2-charts';
 import { ExternalService, BroadcastMessage, BroadcastResponse } from 'src/app/core/services/external.service';
-import { MqttService, SubscriptionGrant } from 'ngx-mqtt-client';
+import { MqttService, IMqttMessage } from 'ngx-mqtt';
 
 @Component({
   selector: 'sc-process-data',
@@ -57,37 +57,29 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
   }
 
   private connectMqtt(): void {
-    this.mqttService.subscribeTo<ProcessMessage>('potenciometro')
-      .subscribe({
-          next: (msg: SubscriptionGrant | ProcessMessage) => {
-              if (msg instanceof SubscriptionGrant) {
-                  console.log('Subscribed to fooBar topic!');
-              } else {
-                try {
-                  console.log(msg);
-                  const date = new Date();
-                  this.data.push(Number(msg.payload));
-                  this.lineChartData = [
-                    {
-                      data: this.data
-                    }
-                  ];
-                  const measurement = Number(msg.payload);
-                  const ledValue = measurement > 3 ? '1' : '0';
-                  this.externalService.notifyActuatorData(new BroadcastMessage(ledValue, 'led'))
-                    .pipe(take(1), takeUntil(this.destroyed))
-                    .subscribe((res: BroadcastResponse[]) => console.error(res));
-                  this.lineChartLabels
-                    .push(`${ String(date.getHours()) }:${ String(date.getMinutes()) }:${ String(date.getSeconds()) }`);
-                  this.chart.chart.update();
-                } catch (err) {
-                  console.error(err);
-                }
-              }
-          },
-          error: (error: Error) => {
-            console.error(error);
-          }
+    this.mqttService.observe('potenciometro')
+      .subscribe((message: IMqttMessage) => {
+        const msg = message.payload.toString();
+        try {
+          console.log(msg);
+          const date = new Date();
+          this.data.push(Number(msg));
+          this.lineChartData = [
+            {
+              data: this.data
+            }
+          ];
+          const measurement = Number(msg);
+          const ledValue = measurement > 3 ? '1' : '0';
+          this.externalService.notifyActuatorData(new BroadcastMessage(ledValue, 'led'))
+            .pipe(take(1), takeUntil(this.destroyed))
+            .subscribe((res: BroadcastResponse[]) => console.error(res));
+          this.lineChartLabels
+            .push(`${ String(date.getHours()) }:${ String(date.getMinutes()) }:${ String(date.getSeconds()) }`);
+          this.chart.chart.update();
+        } catch (err) {
+          console.error(err);
+        }
       });
   }
 
