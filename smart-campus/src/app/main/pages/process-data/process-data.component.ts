@@ -62,18 +62,25 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
         const msg = message.payload.toString();
         try {
           console.log(msg);
+          const data: ProcessMessage = JSON.parse(msg);
           const date = new Date();
-          this.data.push(Number(msg));
+          const measurement = Number(data.payload);
+          this.data.push(measurement);
           this.lineChartData = [
             {
               data: this.data
             }
           ];
-          const measurement = Number(msg);
           const ledValue = measurement > 3 ? '1' : '0';
           this.externalService.notifyActuatorData(new BroadcastMessage(ledValue, 'led'))
             .pipe(take(1), takeUntil(this.destroyed))
-            .subscribe((res: BroadcastResponse[]) => console.error(res));
+            .subscribe((res: BroadcastResponse[]) => {
+              if (res && res.length > 0) {
+                console.error(res);
+              } else {
+                console.log('Request sent successfuly');
+              }
+            });
           this.lineChartLabels
             .push(`${ String(date.getHours()) }:${ String(date.getMinutes()) }:${ String(date.getSeconds()) }`);
           this.chart.chart.update();
