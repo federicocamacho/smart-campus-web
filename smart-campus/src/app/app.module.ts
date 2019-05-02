@@ -11,7 +11,7 @@ import { MainModule } from './main/main.module';
 import { SharedModule } from './shared/shared.module';
 import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
 import { stompConfig } from './amqp';
-
+import { NgxMqttClientModule} from 'ngx-mqtt-client';
 /**
  * Application's main module.
  *
@@ -29,7 +29,14 @@ import { stompConfig } from './amqp';
     CoreModule,
     MainModule,
     SharedModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    NgxMqttClientModule.withOptions({
+      manageConnectionManually: true,
+      host: '0.tcp.ngrok.io',
+      protocol: 'ws',
+      port: 12720,
+      path: '/mqtt'
+    })
   ],
   providers: [
     {
