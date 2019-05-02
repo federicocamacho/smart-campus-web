@@ -21,11 +21,17 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
 
   public data: number[] = [];
   public lineChartLabels: Label[] = [];
+  public previousValue = '0';
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   constructor(private externalService: ExternalService, private stompService: RxStompService, private mqttService: MqttService) {
     super();
+    this.lineChartData = [
+      {
+        data: this.data
+      }
+    ];
   }
 
   ngOnInit() {
@@ -62,16 +68,16 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
         const msg = message.payload.toString();
         try {
           console.log(msg);
-          const data: ProcessMessage = JSON.parse(msg);
+          const info: ProcessMessage = JSON.parse(msg);
           const date = new Date();
-          const measurement = Number(data.payload);
+          const measurement = Number(info.payload);
           this.data.push(measurement);
-          this.lineChartData = [
-            {
-              data: this.data
-            }
-          ];
           const ledValue = measurement > 3 ? '1' : '0';
+          if (this.previousValue === ledValue) {
+            return;
+          }
+          this.previousValue = ledValue;
+          console.log('Requesting broadcast', ledValue);
           this.externalService.notifyActuatorData(new BroadcastMessage(ledValue, 'led'))
             .pipe(take(1), takeUntil(this.destroyed))
             .subscribe((res: BroadcastResponse[]) => {
@@ -83,7 +89,6 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
             });
           this.lineChartLabels
             .push(`${ String(date.getHours()) }:${ String(date.getMinutes()) }:${ String(date.getSeconds()) }`);
-          this.chart.chart.update();
         } catch (err) {
           console.error(err);
         }
