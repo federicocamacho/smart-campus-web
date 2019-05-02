@@ -31,7 +31,6 @@ import { NgxMqttClientModule} from 'ngx-mqtt-client';
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     NgxMqttClientModule.withOptions({
-      manageConnectionManually: true,
       host: '0.tcp.ngrok.io',
       protocol: 'ws',
       port: 12720,
