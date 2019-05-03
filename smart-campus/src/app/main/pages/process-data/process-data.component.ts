@@ -73,6 +73,9 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
           const measurement = Number(info.payload);
           this.data.push(measurement);
           const ledValue = measurement > 3 ? '1' : '0';
+          this.lineChartLabels
+            .push(`${ String(date.getHours()) }:${ String(date.getMinutes()) }:${ String(date.getSeconds()) }`);
+          this.chart.chart.update();
           if (this.previousValue === ledValue) {
             return;
           }
@@ -87,8 +90,6 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
                 console.log('Request sent successfuly');
               }
             });
-          this.lineChartLabels
-            .push(`${ String(date.getHours()) }:${ String(date.getMinutes()) }:${ String(date.getSeconds()) }`);
         } catch (err) {
           console.error(err);
         }
