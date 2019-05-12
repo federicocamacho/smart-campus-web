@@ -1,22 +1,23 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { take, takeUntil } from 'rxjs/operators';
+
+import { MqttService, IMqttMessage } from 'ngx-mqtt';
+
 import { AppService } from 'src/app/app.service';
 import { DashboardService } from 'src/app/core/services/dashboard.service';
-import { Section } from 'src/app/shared/models/section';
-import { NotificationService } from 'src/app/core/services/notification.service';
-import { take, takeUntil } from 'rxjs/operators';
-import { Subscribable } from 'src/app/shared/utils/subscribable';
-import { HttpErrorResponse } from '@angular/common/http';
-import { RxStompService } from '@stomp/ng2-stompjs';
-import { Message } from '@stomp/stompjs';
 import { Notification } from 'src/app/shared/models/notification';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { Section } from 'src/app/shared/models/section';
+import { Subscribable } from 'src/app/shared/utils/subscribable';
 
 @Component({
   selector: 'sc-dashboard-template',
   templateUrl: './dashboard-template.component.html',
   styleUrls: ['./dashboard-template.component.css']
 })
-export class DashboardTemplateComponent extends Subscribable implements OnInit, OnDestroy {
+export class DashboardTemplateComponent extends Subscribable implements OnInit {
 
   /**
    * Name of the currently authenticated user.
@@ -46,9 +47,9 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit, 
   constructor(
     public appService: AppService,
     public dashboardService: DashboardService,
+    private mqttService: MqttService,
     public notificationService: NotificationService,
-    private router: Router,
-    private rxStompService: RxStompService) {
+    private router: Router) {
     super();
     appService.isBusy = false;
     this.openMenu = false;
@@ -68,17 +69,12 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit, 
     this.subscribeToNotifications();
   }
 
-  ngOnDestroy() {
-    super.ngOnDestroy();
-    this.rxStompService.deactivate();
-  }
-
   private subscribeToNotifications(): void {
-    this.rxStompService.watch(`notifications/${ this.appService.user.id }`)
+    this.mqttService.observe(`notifications/${ this.appService.user.id }`)
     .pipe(takeUntil(this.destroyed))
-    .subscribe((message: Message) => {
+    .subscribe((message: IMqttMessage) => {
       try {
-        this.newNotification = JSON.parse(message.body);
+        this.newNotification = JSON.parse(message.payload.toString());
       } catch (err) {
         console.error('An error occurred parsing a notification', err);
       }

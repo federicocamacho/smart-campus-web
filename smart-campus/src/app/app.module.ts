@@ -9,8 +9,6 @@ import { CoreModule } from './core/core.module';
 import { environment } from '../environments/environment';
 import { MainModule } from './main/main.module';
 import { SharedModule } from './shared/shared.module';
-import { InjectableRxStompConfig, RxStompService, rxStompServiceFactory } from '@stomp/ng2-stompjs';
-import { stompConfig } from './amqp';
 import {
   MqttModule,
   IMqttServiceOptions
@@ -41,17 +39,6 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     SharedModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
-  ],
-  providers: [
-    {
-      provide: InjectableRxStompConfig,
-      useValue: stompConfig
-    },
-    {
-      provide: RxStompService,
-      useFactory: rxStompServiceFactory,
-      deps: [ InjectableRxStompConfig ]
-    }
   ],
   bootstrap: [AppComponent]
 })

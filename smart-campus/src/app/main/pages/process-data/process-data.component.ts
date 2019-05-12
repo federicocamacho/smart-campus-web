@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RxStompService } from '@stomp/ng2-stompjs';
-import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { takeUntil, take } from 'rxjs/operators';
-import { IMessage } from '@stomp/stompjs';
+
+import { BaseChartDirective, Label } from 'ng2-charts';
 import { ChartDataSets } from 'chart.js';
-import { Label, BaseChartDirective } from 'ng2-charts';
-import { ExternalService, BroadcastMessage, BroadcastResponse } from 'src/app/core/services/external.service';
 import { MqttService, IMqttMessage } from 'ngx-mqtt';
+
+import { ExternalService, BroadcastMessage, BroadcastResponse } from 'src/app/core/services/external.service';
+import { Subscribable } from 'src/app/shared/utils/subscribable';
 
 @Component({
   selector: 'sc-process-data',
@@ -25,7 +25,7 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
-  constructor(private externalService: ExternalService, private stompService: RxStompService, private mqttService: MqttService) {
+  constructor(private externalService: ExternalService, private mqttService: MqttService) {
     super();
     this.lineChartData = [
       {
@@ -36,30 +36,6 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
 
   ngOnInit() {
     this.connectMqtt();
-/*     this.stompService.watch('potenciometro')
-      .pipe(takeUntil(this.destroyed))
-      .subscribe((msg: IMessage) => {
-        try {
-          console.log(msg);
-          const processMessage: ProcessMessage = JSON.parse(msg.body);
-          const date = new Date();
-          this.data.push(Number(processMessage.payload));
-          this.lineChartData = [
-            {
-              data: this.data
-            }
-          ];
-          const measurement = Number(processMessage.payload);
-          const ledValue = measurement > 3 ? '1' : '0';
-          this.externalService.notifyActuatorData(new BroadcastMessage(ledValue, 'led'))
-            .pipe(take(1), takeUntil(this.destroyed))
-            .subscribe((res: BroadcastResponse[]) => console.error(res));
-          this.lineChartLabels.push(`${ String(date.getHours()) }:${ String(date.getMinutes()) }:${ String(date.getSeconds()) }`);
-          this.chart.chart.update();
-        } catch (err) {
-          console.error(err);
-        }
-      }); */
   }
 
   private connectMqtt(): void {
@@ -95,7 +71,6 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
         }
       });
   }
-
 }
 
 export class ProcessMessage {

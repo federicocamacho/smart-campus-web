@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { takeUntil, take } from 'rxjs/operators';
+
 import { ChartOptions, ChartDataSets } from 'chart.js';
+import { MqttService, IMqttMessage } from 'ngx-mqtt';
 
 import { AdminStatistics } from 'src/app/shared/models/admin-statistics';
 import { AppService } from 'src/app/app.service';
 import { DataService } from 'src/app/core/services/data.service';
 import { Subscribable } from 'src/app/shared/utils/subscribable';
 import { Util } from 'src/app/shared/utils/util';
-import { RxStompService } from '@stomp/ng2-stompjs';
-import { Message } from '@stomp/stompjs';
 
 /**
  * Administrations statistics component.
@@ -99,7 +99,7 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
   constructor(
     private appService: AppService,
     private dataService: DataService,
-    private rxStompService: RxStompService) {
+    private mqttService: MqttService) {
     super();
   }
 
@@ -152,28 +152,28 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
   }
 
   private subscribeToUpdates(): void {
-    this.rxStompService.watch(`updates/${ this.appService.user.id }`)
-    .pipe(takeUntil(this.destroyed))
-    .subscribe((message: Message) => {
-      try {
-        const stat: AdminStatistics = JSON.parse(message.body);
-        console.log('update received', stat);
-        if (this.statistics) {
-          this.statistics.gatewaysAlive += stat.gatewaysAlive;
-          this.statistics.gatewaysDeath += stat.gatewaysDeath;
-          this.statistics.processesAlive += stat.processesAlive;
-          this.statistics.processesDeath += stat.processesDeath;
-          const statusChange = stat.changes[0];
-          this.gatewayData = [ this.statistics.gatewaysAlive, this.statistics.gatewaysDeath ];
-          this.processData = [ this.statistics.processesAlive, this.statistics.processesDeath ];
-          this.statusChartLabels.push(this.dateToChartString(statusChange.sentDate));
-          this.aliveData.push(statusChange.alive);
-          this.deathData.push(statusChange.death);
+    this.mqttService.observe(`updates/${ this.appService.user.id }`)
+      .pipe(takeUntil(this.destroyed))
+      .subscribe((message: IMqttMessage) => {
+        try {
+          const stat: AdminStatistics = JSON.parse(message.payload.toString());
+          console.log('update received', stat);
+          if (this.statistics) {
+            this.statistics.gatewaysAlive += stat.gatewaysAlive;
+            this.statistics.gatewaysDeath += stat.gatewaysDeath;
+            this.statistics.processesAlive += stat.processesAlive;
+            this.statistics.processesDeath += stat.processesDeath;
+            const statusChange = stat.changes[0];
+            this.gatewayData = [ this.statistics.gatewaysAlive, this.statistics.gatewaysDeath ];
+            this.processData = [ this.statistics.processesAlive, this.statistics.processesDeath ];
+            this.statusChartLabels.push(this.dateToChartString(statusChange.sentDate));
+            this.aliveData.push(statusChange.alive);
+            this.deathData.push(statusChange.death);
+          }
+        } catch (err) {
+          console.error('An error occurred parsing a notification', err);
         }
-      } catch (err) {
-        console.error('An error occurred parsing a notification', err);
-      }
-    });
+      });
   }
   /**
    * Converts a date (in string or date format) to a String (short) used for the charts.
