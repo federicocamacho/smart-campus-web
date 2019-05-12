@@ -34,7 +34,7 @@
     "ng-pwa-tools": "0.0.15",
     "ng2-charts": "^2.2.2",
     "ngx-custom-validators": "^7.0.0",
-    "ngx-mqtt": "^6.0.0-beta.6",
+    "ngx-mqtt": "^6.0.1",
     "rxjs": "~6.3.3",
     "rxjs-compat": "^6.4.0",
     "tslib": "^1.9.0",
