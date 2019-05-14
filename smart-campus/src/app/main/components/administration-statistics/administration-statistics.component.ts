@@ -184,10 +184,11 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
    */
   private dateToChartString(dateString: string | Date): string {
     const date = new Date(dateString);
+    console.log(date);
     if (Util.isToday(date)) {
       return `${ date.getHours() }:${ date.getMinutes() }`;
     }
-    return `${ Util.monthShort(date.getMonth()) }/${ date.getDay() } ${ date.getHours() }:${ date.getMinutes() }`;
+    return `${ Util.monthShort(date.getMonth() + 1) }/${ date.getDate() } ${ date.getHours() }:${ date.getMinutes() }`;
   }
 
 }

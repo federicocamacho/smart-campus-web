@@ -15,8 +15,8 @@ import {
 } from 'ngx-mqtt';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
-  hostname: '0.tcp.ngrok.io',
-  port: 12720,
+  hostname: environment.brokerUrl,
+  port: environment.brokerPort,
   path: '/mqtt'
 };
 
