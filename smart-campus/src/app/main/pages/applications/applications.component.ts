@@ -122,5 +122,7 @@ export class ApplicationsComponent extends DataTable<Application, ApplicationsFi
         return true;
     }
   }
-
+  showTest() {
+    console.log('Esta es la prueba')
+  }
 }
