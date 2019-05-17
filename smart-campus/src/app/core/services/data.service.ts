@@ -17,10 +17,6 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  /**
-   * Retrieves the device identified by its id.
-   *
-   */
   public getData(filterType: string, filterValue: string | number, startDate: Date, endDate: Date): Observable<Data[]> {
     let query = '';
     switch (filterType) {
@@ -34,9 +30,14 @@ export class DataService {
         query += 'topic='; break;
     }
     query += filterValue;
-    query += '&initialDate=' + Util.formatDate(startDate);
-    query += '&endDate=' + Util.formatDate(endDate);
-    return this.http.get<Data[]>(`${ environment.dataService }/data/historic?${ query }`, Util.options());
+    if (startDate) {
+      query += '&initialDate=' + Util.formatDate(startDate);
+    }
+    if (endDate) {
+      query += '&endDate=' + Util.formatDate(endDate);
+    }
+    return this.http
+      .get<Data[]>(`${ environment.dataService }/data/historic?${ query }`, Util.options());
   }
 
   /**
