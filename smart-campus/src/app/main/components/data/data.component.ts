@@ -123,7 +123,7 @@ export class DataComponent extends DataTable<Data, DataFilter> implements OnInit
         });
         this.searchAlreadyDone = true;
       },
-      (err: HttpErrorResponse) => this.appService.handleGenericError(err));;
+      (err: HttpErrorResponse) => this.appService.handleGenericError(err));
   }
 
   /**

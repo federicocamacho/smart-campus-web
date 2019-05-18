@@ -152,12 +152,11 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
   }
 
   private subscribeToUpdates(): void {
-    this.mqttService.observe(`updates/${ this.appService.user.id }`)
+    this.mqttService.observe(`updates-${ this.appService.user.id }`)
       .pipe(takeUntil(this.destroyed))
       .subscribe((message: IMqttMessage) => {
         try {
           const stat: AdminStatistics = JSON.parse(message.payload.toString());
-          console.log('update received', stat);
           if (this.statistics) {
             this.statistics.gatewaysAlive += stat.gatewaysAlive;
             this.statistics.gatewaysDeath += stat.gatewaysDeath;
@@ -184,7 +183,6 @@ export class AdministrationStatisticsComponent extends Subscribable implements O
    */
   private dateToChartString(dateString: string | Date): string {
     const date = new Date(dateString);
-    console.log(date);
     if (Util.isToday(date)) {
       return `${ date.getHours() }:${ date.getMinutes() }`;
     }

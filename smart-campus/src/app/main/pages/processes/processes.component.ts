@@ -205,7 +205,6 @@ export class ProcessesComponent extends DataTable<Process, ProcessesFilter> impl
       .subscribe(
         (res: ApiResponse) => {
           if (res.sucessful) {
-            console.log(process);
             process.alive = deploy;
             this.appService.showSnack(deploy ? 'Proceso desplegado correctamente' : 'Proceso detenido correctamente',
             'OK', Util.snackOptions(), false);

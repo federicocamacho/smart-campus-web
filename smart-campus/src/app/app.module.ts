@@ -17,7 +17,7 @@ import {
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   hostname: environment.brokerUrl,
   port: environment.brokerPort,
-  path: '/mqtt'
+  path: ''
 };
 
 /**
