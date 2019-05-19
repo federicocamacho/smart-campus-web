@@ -61,8 +61,8 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
         try {
           const info: ProcessMessage = JSON.parse(msg);
           const date = new Date();
-          const measurement = Number(info);
-          // const measurement = Number(info.payload);
+          //const measurement = Number(info);
+          const measurement = Number(info.payload);
           this.dataP.push(measurement);
           const ledValue = measurement > 3 ? '1' : '0';
           this.lineChartLabelsP
@@ -95,8 +95,8 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
           console.log(msg);
           const info: ProcessMessage = JSON.parse(msg);
           const date = new Date();
-          const measurement = Number(info);
-          // const measurement = Number(info.payload);
+          //const measurement = Number(info);
+          const measurement = Number(info.payload);
           this.dataT.push(measurement);
           const ledValue = measurement < 26 ? '1' : '0';
           this.lineChartLabelsT
