@@ -15,40 +15,57 @@ import { Subscribable } from 'src/app/shared/utils/subscribable';
 })
 export class ProcessDataComponent extends Subscribable implements OnInit {
 
-  public lineChartData: ChartDataSets[] = [
-    { data: [], label: 'Proba' }
+  public aliveChartsColors = [
+    {
+      // backgroundColor: [ 'rgb(255, 0, 0)', 'rgb(255, 0 , 0)' ]
+    }
   ];
 
-  public data: number[] = [];
-  public lineChartLabels: Label[] = [];
+  public lineChartDataP: ChartDataSets[] = [];
+  public lineChartDataT: ChartDataSets[] = [];
+
+  public dataP: number[] = [];
+  public dataT: number[] = [];
+  public lineChartLabelsP: Label[] = [];
+  public lineChartLabelsT: Label[] = [];
   public previousValue = '0';
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
   constructor(private externalService: ExternalService, private mqttService: MqttService) {
     super();
-    this.lineChartData = [
+    this.lineChartDataP = [
       {
-        data: this.data
+        data: this.dataP,
+        label: 'Potenciómetro'
+      }
+    ];
+
+    this.lineChartDataT = [
+      {
+        data: this.dataT,
+        label: 'Temperatura'
       }
     ];
   }
 
   ngOnInit() {
-    this.connectMqtt();
+    this.connectMqttPotenciometro();
+    this.connectMqttTemperatura();
   }
 
-  private connectMqtt(): void {
+  private connectMqttPotenciometro(): void {
     this.mqttService.observe('potenciometro')
       .subscribe((message: IMqttMessage) => {
         const msg = message.payload.toString();
         try {
           const info: ProcessMessage = JSON.parse(msg);
           const date = new Date();
+          //const measurement = Number(info);
           const measurement = Number(info.payload);
-          this.data.push(measurement);
+          this.dataP.push(measurement);
           const ledValue = measurement > 3 ? '1' : '0';
-          this.lineChartLabels
+          this.lineChartLabelsP
             .push(`${ String(date.getHours()) }:${ String(date.getMinutes()) }:${ String(date.getSeconds()) }`);
           this.chart.chart.update();
           if (this.previousValue === ledValue) {
@@ -56,6 +73,41 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
           }
           this.previousValue = ledValue;
           this.externalService.notifyActuatorData(new BroadcastMessage(ledValue, 'led'))
+            .pipe(take(1), takeUntil(this.destroyed))
+            .subscribe((res: BroadcastResponse[]) => {
+              if (res && res.length > 0) {
+                console.error(res);
+              } else {
+                console.log('Request sent successfuly');
+              }
+            });
+        } catch (err) {
+          console.error(err);
+        }
+      });
+  }
+
+  private connectMqttTemperatura(): void {
+    this.mqttService.observe('temperatura')
+      .subscribe((message: IMqttMessage) => {
+        const msg = message.payload.toString();
+        try {
+          console.log(msg);
+          const info: ProcessMessage = JSON.parse(msg);
+          const date = new Date();
+          //const measurement = Number(info);
+          const measurement = Number(info.payload);
+          this.dataT.push(measurement);
+          const ledValue = measurement < 26 ? '1' : '0';
+          this.lineChartLabelsT
+            .push(`${ String(date.getHours()) }:${ String(date.getMinutes()) }:${ String(date.getSeconds()) }`);
+          this.chart.chart.update();
+          if (this.previousValue === ledValue) {
+            return;
+          }
+          this.previousValue = ledValue;
+          console.log('Requesting broadcast', ledValue);
+          this.externalService.notifyActuatorData(new BroadcastMessage(ledValue, 'led-solo'))
             .pipe(take(1), takeUntil(this.destroyed))
             .subscribe((res: BroadcastResponse[]) => {
               if (res && res.length > 0) {
