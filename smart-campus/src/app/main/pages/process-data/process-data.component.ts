@@ -59,7 +59,6 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
       .subscribe((message: IMqttMessage) => {
         const msg = message.payload.toString();
         try {
-          console.log(msg);
           const info: ProcessMessage = JSON.parse(msg);
           const date = new Date();
           const measurement = Number(info);
@@ -73,7 +72,6 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
             return;
           }
           this.previousValue = ledValue;
-          console.log('Requesting broadcast', ledValue);
           this.externalService.notifyActuatorData(new BroadcastMessage(ledValue, 'led'))
             .pipe(take(1), takeUntil(this.destroyed))
             .subscribe((res: BroadcastResponse[]) => {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CoreModule } from 'src/app/core/core.module';
+import { Notification } from 'src/app/shared/models/notification';
 
 /**
  * Dashboard service to store global information.
@@ -30,6 +31,12 @@ export class DashboardService {
    *
    */
   public isNotificationShown: boolean;
+
+  /**
+   * Stores the notification to be shown in the card if any.
+   *
+   */
+  public newNotification: Notification;
 
   /**
    * Creates an instance of DashboardService.

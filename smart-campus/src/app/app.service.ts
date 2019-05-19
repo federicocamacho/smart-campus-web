@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { NgModel, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 import { ApiError } from 'src/app/shared/models/api-error';
 import { User } from 'src/app/shared/models/user';
@@ -30,6 +31,12 @@ export class AppService {
    *
    */
   public isBusy: boolean;
+
+  /**
+   * Subject emited any time it's necessary to subscribe to the notifications (after authentication succeedd).
+   *
+   */
+  public subscribeToNotification: Subject<any> = new Subject<any>();
 
   /**
    * Creates an instance of AppService.
@@ -125,6 +132,7 @@ export class AppService {
     this.user = user;
     sessionStorage.clear();
     sessionStorage.setItem('user', JSON.stringify(user));
+    this.subscribeToNotification.next();
     this.router.navigate(['/dashboard']);
   }
 

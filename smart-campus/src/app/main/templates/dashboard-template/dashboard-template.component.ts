@@ -37,8 +37,6 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
    */
   public openMenu: boolean;
 
-  public newNotification: Notification;
-
   /**
    * Creates an instance of HeaderComponent.
    * @date 2019-01-09
@@ -47,7 +45,6 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
   constructor(
     public appService: AppService,
     public dashboardService: DashboardService,
-    private mqttService: MqttService,
     public notificationService: NotificationService,
     private router: Router) {
     super();
@@ -66,24 +63,6 @@ export class DashboardTemplateComponent extends Subscribable implements OnInit {
 
   ngOnInit() {
     this.getUnreadNotificationsCount();
-    this.subscribeToNotifications();
-  }
-
-  private subscribeToNotifications(): void {
-    this.mqttService.observe(`notifications/${ this.appService.user.id }`)
-    .pipe(takeUntil(this.destroyed))
-    .subscribe((message: IMqttMessage) => {
-      try {
-        this.newNotification = JSON.parse(message.payload.toString());
-      } catch (err) {
-        console.error('An error occurred parsing a notification', err);
-      }
-      this.dashboardService.isNotificationShown = true;
-      setTimeout(() => {
-        this.dashboardService.isNotificationShown = false;
-        this.newNotification = null;
-      }, 5000);
-    });
   }
 
   /**
