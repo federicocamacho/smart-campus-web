@@ -29,6 +29,7 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
   public lineChartLabelsP: Label[] = [];
   public lineChartLabelsT: Label[] = [];
   public previousValue = '0';
+  public previousValueT = '0';
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective;
 
@@ -102,10 +103,10 @@ export class ProcessDataComponent extends Subscribable implements OnInit {
           this.lineChartLabelsT
             .push(`${ String(date.getHours()) }:${ String(date.getMinutes()) }:${ String(date.getSeconds()) }`);
           this.chart.chart.update();
-          if (this.previousValue === ledValue) {
+          if (this.previousValueT === ledValue) {
             return;
           }
-          this.previousValue = ledValue;
+          this.previousValueT = ledValue;
           console.log('Requesting broadcast', ledValue);
           this.externalService.notifyActuatorData(new BroadcastMessage(ledValue, 'led-solo'))
             .pipe(take(1), takeUntil(this.destroyed))
